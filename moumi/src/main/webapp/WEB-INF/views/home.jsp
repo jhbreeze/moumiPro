@@ -2,8 +2,16 @@
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
-
+<link href="http://api.nongsaro.go.kr/css/api.css" rel="stylesheet"
+	type="text/css">
+<script type="text/javascript"
+	src="http://api.nongsaro.go.kr/js/framework.js"></script>
+<script type="text/javascript"
+	src="http://api.nongsaro.go.kr/js/openapi_nongsaro.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" rel="stylesheet"/>
+   
 <style>
 .mainBox {
 	margin-top: 25px;
@@ -74,6 +82,49 @@ li {
 }
 </style>
 
+<script type="text/javascript">
+<!--%load_js_plugin("ui")-->
+
+	nongsaroOpenApiRequest.apiKey = "";//농촌진흥청 인증키
+	nongsaroOpenApiRequest.serviceName = "areaBrand";
+	nongsaroOpenApiRequest.operationName = "selectSclCodeLst";
+	nongsaroOpenApiRequest.htmlArea = "nongsaroApiLoadingArea";
+	nongsaroOpenApiRequest.callback = "http://localhost:9090/app/call/ajax_local_callback.jsp";
+</script>
+
+<script>
+	$(document).ready(function() {
+		$.ajax({
+			//ajax 옵션 설정 
+			// 공공데이터 포털 인증키
+			url : "https://api.odcloud.kr/api/3060388/v1/uddi:dacd930e-e26e-4f7c-bde7-ce2cfd272e16?page=1&perPage=10&serviceKey=",
+			type : "GET",
+			dataType : "json",
+				// 요청이 성공시 할 일 처리 
+			success : function(data) {
+				console.log(data, typeof data)
+				data = JSON.stringify(data)
+				console.log(typeof data)
+				data = JSON.parse(data) // String 
+				console.log(typeof data) // Object
+				// 할 일 처리 
+				let apiData = "";
+				$.each(data.data, function(key, value) {
+					apiData += "<tr>";
+					apiData += "<td>" + value.브랜드명+ "</td>";
+					apiData += "<td>" + value.소재지주소+ "</td>";
+					apiData += "</tr>";
+				});
+				// 페이지 단에 붙이기 
+				$('#brand').append(apiData);
+			}
+		});
+	});
+</script>
+
+
+
+
 <div class="mainBox">
 	<h3 class="mainText">MOUMI 분석 서비스</h3>
 	<form class="d-flex searchBox" role="search">
@@ -93,46 +144,55 @@ li {
 </div>
 
 <div class="container body-container">
-	<div class="inner-page"></div>
-	<br>
-	<br>
-	<br>
-	<p class="title">분석 리포트</p>
-	<a href="#" class="more">더보기</a> <br> <br>
-	<div class="container text-center">
-		<div class="row">
-			<c:forEach var="item" begin="0" end="7" step="1" varStatus="status">
-				<div class="col-lg-3 col-md-3">
-					<div class="card" style="width: 18rem;">
-						<img style="height: 280px; width: 285px;"
-							src="${pageContext.request.contextPath}/resources/images/noimage.png" />
-						<div class="card-body">
-							<p class="card-text">분석 리포트 제목</p>
+	<div class="inner-page">
+		<br> <br> <br>
+		<p class="title">분석 리포트</p>
+		<a href="${pageContext.request.contextPath}/report/reportList"
+			class="more">더보기</a> <br> <br>
+		<div class="container text-center">
+			<div class="row">
+				<c:forEach var="item" begin="0" end="7" step="1" varStatus="status">
+					<div class="col-lg-3 col-md-3">
+						<div class="card" style="width: 18rem;">
+							<img style="height: 280px; width: 285px;"
+								src="${pageContext.request.contextPath}/resources/images/noimage.png" />
+							<div class="card-body">
+								<p class="card-text">분석 리포트 제목</p>
+							</div>
 						</div>
+						<br>
+
 					</div>
-					<br>
-
-				</div>
-			</c:forEach>
-
-		</div>
-	</div>
-	<br>
-	<br>
-	<br>
-	<br>
-
-	<p class="title">분석 리포트</p>
-	<div class="container text-center">
-		<div class="row">
-
-			<div class="col-lg-2 col-md-2">
-				<p class="title">우리 농가 살리기</p>
-				<p class="title">우리 지역 살리기</p>
-				<br>
+				</c:forEach>
 
 			</div>
+		</div>
+		<br> <br> <br> <br>
 
+		<p class="title">분석 리포트</p>
+		<div class="container text-center">
+
+			<div class="container">
+				<p class="title">우리 농가 살리기</p>
+
+
+				<div id="nongsaroApiLoadingArea"></div>
+				<div id="nongsaroApiLoadingAreaResult"></div>
+
+				<br> <br>
+
+				<p class="title">우리 지역 살리기</p>
+				<table class="table table-striped table-success text-center" id="brand">
+					<thead class="thead-light">
+						<tr>
+							<th>지역명</th>
+							<th>브랜드명</th>
+						</tr>
+					</thead>
+
+				</table>
+
+			</div>
 		</div>
 	</div>
 </div>
