@@ -12,8 +12,6 @@
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
 <body>
-홈 화면입니다. ~
-
 
 </body>
 </html>

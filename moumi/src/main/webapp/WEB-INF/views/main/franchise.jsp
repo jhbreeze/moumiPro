@@ -11,9 +11,13 @@
 <title>Insert title here</title>
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
-<body>
-홈 화면입니다. ~
+<script>
 
+
+</script>
+<body>
+
+     	<button type="button" id="btnJsonOk2" class="btn">JSON으로 받기 1</button>
 
 </body>
 </html>

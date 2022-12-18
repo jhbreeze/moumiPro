@@ -35,7 +35,11 @@
 							<li><a class="dropdown-item" href="#">자주 묻는 질문</a></li>
 						</ul>
 					</li>
-						
+					
+					<li class="nav-item">
+						<a class="nav-link" style="color:#fff"  href="${pageContext.request.contextPath}/recruit/list">채용</a>
+					</li>
+					
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" style="color:#fff" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 							마이페이지

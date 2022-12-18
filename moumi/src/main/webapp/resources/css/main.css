@@ -78,6 +78,9 @@
     border-top:1px solid #ccc;
 }
 
+.footer-list > li span { color: #767676; }
+
+
 /* menu */
 .menu {
     margin:0px auto;
@@ -118,3 +121,5 @@ ul.nav .current a, ul.nav li:hover > a {
   text-decoration: none;
   background: #ECF4EB;
 }
+
+
