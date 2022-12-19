@@ -6,6 +6,14 @@ public class Franchise {
 	private String address;
 	private String item;
 
+	public String getBrandName() {
+		return brandName;
+	}
+
+	public void setBrandName(String brandName) {
+		this.brandName = brandName;
+	}
+
 	public String getAddress() {
 		return address;
 	}

@@ -82,22 +82,13 @@ li {
 }
 </style>
 
-<script type="text/javascript">
-<!--%load_js_plugin("ui")-->
-
-	nongsaroOpenApiRequest.apiKey = "";//농촌진흥청 인증키
-	nongsaroOpenApiRequest.serviceName = "areaBrand";
-	nongsaroOpenApiRequest.operationName = "selectSclCodeLst";
-	nongsaroOpenApiRequest.htmlArea = "nongsaroApiLoadingArea";
-	nongsaroOpenApiRequest.callback = "http://localhost:9090/app/call/ajax_local_callback.jsp";
-</script>
 
 <script>
 	$(document).ready(function() {
 		$.ajax({
 			//ajax 옵션 설정 
 			// 공공데이터 포털 인증키
-			url : "https://api.odcloud.kr/api/3060388/v1/uddi:dacd930e-e26e-4f7c-bde7-ce2cfd272e16?page=1&perPage=10&serviceKey=",
+			url : "https://api.odcloud.kr/api/3060388/v1/uddi:dacd930e-e26e-4f7c-bde7-ce2cfd272e16?page=1&perPage=10&serviceKey=KAizYtDdo2AYzDzXklWBjNAnwBJq0%2BIahDUm%2FTZKLFK2Fh%2BrMgCMblxsG7mudwtZIqwWXC2XrpMZ9Ea77QWmOA%3D%3D",
 			type : "GET",
 			dataType : "json",
 				// 요청이 성공시 할 일 처리 
@@ -122,6 +113,15 @@ li {
 	});
 </script>
 
+
+<script type="text/javascript">
+<!--%load_js_plugin("ui")-->
+	nongsaroOpenApiRequest.apiKey = "20221216AK1MXVA9FRV2EBTZJ6GZ1G";
+	nongsaroOpenApiRequest.serviceName = "areaBrand";
+	nongsaroOpenApiRequest.operationName = "selectSclCodeLst";
+	nongsaroOpenApiRequest.htmlArea = "nongsaroApiLoadingArea";
+	nongsaroOpenApiRequest.callback = "http://localhost:9090/app/call/ajax_local_callback.jsp";
+</script> -->
 
 
 
