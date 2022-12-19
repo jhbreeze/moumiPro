@@ -77,10 +77,38 @@ function sendOk() {
 	
 }
 
-$("#endDate").click(function(){
-	alert("click");	
-});
+function compareDate(){
+	// 마감일부터 입력하고 시작일 입력하는 경우에는 어떻게 할거니 // check-here
+	
+	// 현재 날짜 구하기
+	let today = new Date();
+	let year = today.getFullYear();
+	let month = today.getMonth()+1;
+	let date = today.getDate();
+	
+	let startDate = $("input[name=startDate]").val();
+	let endDate = $("input[name=endDate]").val(); // yyyy-mm-dd 형식으로 반환 
+	
+	alert(startDate);
+	alert(endDate);
 
+	// 조건 1) 마감일은 모집 시작일 이후
+	if(startDate > endDate) { // 마감일이 시작일보다 이전의 경우
+		alert("모집 마감일은 시작일 이후로 설정해야 합니다.");
+		document.getElementById("endDate").value = ""; // 값 초기화
+	}
+	
+	// 조건 2) 마감일은 현재 날짜 이후
+	if(today > endDate) { // 마감일이 현재 날짜보다 이전의 경우
+		alert("마감일은 오늘 이후로 설정 가능합니다.");
+		document.getElementById("endDate").value = ""; // 값 초기화
+	}
+	console.log(today);
+	console.log(endDate);
+	console.log(today > endDate);
+	
+	// console.log(today > endDate); // today > yesterday T 
+}
 
 </script>
 
@@ -139,8 +167,8 @@ $("#endDate").click(function(){
 						 <td>
 							<div class="d-flex r-date">
 						 		<label class="ms-2">모집 마감일</label>
-								<input type="date" name="endDate" id="endDate" 
-									class="form-control ms-3" style="width: 60%" value="${dto.endDate}">
+								<input type="date" name="endDate" id="endDate" class="form-control ms-3" 
+								style="width: 60%" value="${dto.endDate}" onchange="compareDate();">
 							</div>
 						</td>
 					</tr>
