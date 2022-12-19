@@ -22,5 +22,7 @@ public class HomeController {
 		// 간단한 지도 만들기 및 마커 찍기
 		return "ajax_local_callback";
 	}
+	
+	
 
 }
