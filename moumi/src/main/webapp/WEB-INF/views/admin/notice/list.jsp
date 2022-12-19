@@ -17,7 +17,8 @@ main {
 .body-container {
 	max-width: 1200px;
 	margin: auto;
-	padding: 30px;
+	padding: 10px;
+	
 }
 
 tr {
