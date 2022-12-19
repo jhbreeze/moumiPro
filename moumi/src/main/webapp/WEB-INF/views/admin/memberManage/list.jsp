@@ -4,7 +4,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <div class="body-container">
+    <div class="body-title">
+		<h2><i class="fa-brands fa-perbyte"></i> 제목 </h2>
+    </div>
+    
     <div class="body-main">
-    	<p> 관리자 페이지 입니다.</p>
+    	<p> 템플릿 입니다. </p>
 	</div>
 </div>

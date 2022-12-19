@@ -118,6 +118,7 @@ color: #198754;
 		</li>
 	
 		<li class="menu--item menu--item__has_sub_menu">
+		
 			<label class="menu--link" title="공지 사항 관리">
 				<i class="menu--icon  fa-fw fa-solid fa-person-circle-question"></i>
 				<span class="menu--label">공지사항 관리</span>
@@ -125,7 +126,7 @@ color: #198754;
 
 			<ul class="sub_menu">
 				<li class="sub_menu--item">
-					<a href="#" class="sub_menu--link">공지사항</a>
+					<a href="${pageContext.request.contextPath}/admin/notice/list" class="sub_menu--link">공지사항</a>
 				</li>
 				<li class="sub_menu--item">
 					<a href="#" class="sub_menu--link">자주하는 질문</a>
