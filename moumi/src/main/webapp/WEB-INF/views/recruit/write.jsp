@@ -65,6 +65,15 @@ function sendOk() {
 		return;
 	}
 	
+	// 마감일부터 입력하고 시작일 입력하는 경우, 서버로 전송할 때 check
+	sDate = f.startDate.value;
+	eDate = f.endDate.value;
+	if( sDate > eDate ) {
+		alert("마감일은 모집 시작일 이후로 설정해야 합니다.^^");
+		return;
+	}
+	
+	
 	str = f.content.value; 
 	if(! str){
 		alert("내용을 입력하세요.");
@@ -78,36 +87,35 @@ function sendOk() {
 }
 
 function compareDate(){
-	// 마감일부터 입력하고 시작일 입력하는 경우에는 어떻게 할거니 // check-here
-	
-	// 현재 날짜 구하기
-	let today = new Date();
-	let year = today.getFullYear();
-	let month = today.getMonth()+1;
-	let date = today.getDate();
-	
 	let startDate = $("input[name=startDate]").val();
 	let endDate = $("input[name=endDate]").val(); // yyyy-mm-dd 형식으로 반환 
 	
-	alert(startDate);
-	alert(endDate);
-
 	// 조건 1) 마감일은 모집 시작일 이후
 	if(startDate > endDate) { // 마감일이 시작일보다 이전의 경우
-		alert("모집 마감일은 시작일 이후로 설정해야 합니다.");
+		alert("마감일은 모집 시작일 이후로 설정해야 합니다.");
 		document.getElementById("endDate").value = ""; // 값 초기화
 	}
 	
 	// 조건 2) 마감일은 현재 날짜 이후
-	if(today > endDate) { // 마감일이 현재 날짜보다 이전의 경우
+	let day = new Date();
+	let today = getToday(day);
+	
+	if(today >= endDate) { // 마감일이 현재 날짜보다 이전의 경우
 		alert("마감일은 오늘 이후로 설정 가능합니다.");
 		document.getElementById("endDate").value = ""; // 값 초기화
 	}
-	console.log(today);
-	console.log(endDate);
-	console.log(today > endDate);
+}
+
+function getToday(day){
+	// 현재 날짜 구하기 : 'yyyy-mm-dd' 형식으로 변환
+	let today1 = new Date();
+	let year = today1.getFullYear();
+	let month = today1.getMonth()+1;
+	let date = today1.getDate();
 	
-	// console.log(today > endDate); // today > yesterday T 
+	let today = year + "-" + month + "-" + date; 
+	console.log(today1);
+	return today;
 }
 
 </script>
@@ -159,7 +167,7 @@ function compareDate(){
 						<td>
 							<div class="d-flex r-date">
 								<label class="ms-2">모집 시작일</label>
-								<input type="date" name="startDate" id="startDate" 
+								<input type="date" name="startDate" id="startDate"
 									class="form-control ms-3" style="width: 60%" value="${dto.startDate}">
 							</div>
 						</td>
