@@ -29,7 +29,6 @@ public class RecruitController {
 	
 	@PostMapping("write")
 	public String writeSubmit(Recruit dto, HttpSession session) throws Exception {
-		
 		try {
 			//service.insertRecruit(dto, pathname);
 		} catch (Exception e) {

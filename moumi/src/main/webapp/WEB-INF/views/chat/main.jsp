@@ -7,14 +7,28 @@
 .body-main {
 	max-width: 800px;
 }
+
+.chatBtn { 	
+	background-color: #ECF4EB;
+	font-weight: 600;
+	border: none;
+	border-radius: 15px;
+	
+}
+
+.chatBtn:hover {
+	background-color: #ECF4EB;
+	font-weight: 600;
+}
+
 </style>
 
 <div class="container body-container">
-    <div class="body-title">
-		<h2><i class="icofont-interface"></i> 제목 </h2>
-    </div>
+    <div>
+    	<button type="button" class="btn chatBtn btn-lg shadow">문의하기
+    		<img style="height: 50px; width: 50px;" src="${pageContext.request.contextPath}/resources/moumi/logo/circle.png">
+    	</button>
     
-    <div class="body-main mx-auto">
-		채팅!!!!!
+    
     </div>
 </div>
