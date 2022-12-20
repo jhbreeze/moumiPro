@@ -8,11 +8,14 @@
 	max-width: 800px;
 }
 
+
 .recruit-table tr>td:first-child{
 	background-color: #ECF4EB;
 	font-weight: 600;
 	font: #545454;
 }
+
+.r-date { align-items: center; }
 
 </style>
 
@@ -28,7 +31,7 @@ function sendOk() {
 		return;
 	}
 	
-	str = f.selectCareer.value; // option값 선택하지 않았을 때
+	str = f.categoryNum.value;
 	if(! str){
 		alert("구분을 선택하세요.");
 		return;
@@ -48,8 +51,19 @@ function sendOk() {
 		return;
 	}
 	
-	// 모집기간 설정 
+	str = f.startDate.value;
+	if(! str){
+		alert("모집시작일을 선택하세요.");
+		f.startDate.focus();
+		return;
+	}
 	
+	str = f.endDate.value;
+	if(! str){
+		alert("모집마감일을 선택하세요.");
+		f.endDate.focus();
+		return;
+	}
 	
 	str = f.content.value; 
 	if(! str){
@@ -63,6 +77,38 @@ function sendOk() {
 	
 }
 
+function compareDate(){
+	// 마감일부터 입력하고 시작일 입력하는 경우에는 어떻게 할거니 // check-here
+	
+	// 현재 날짜 구하기
+	let today = new Date();
+	let year = today.getFullYear();
+	let month = today.getMonth()+1;
+	let date = today.getDate();
+	
+	let startDate = $("input[name=startDate]").val();
+	let endDate = $("input[name=endDate]").val(); // yyyy-mm-dd 형식으로 반환 
+	
+	alert(startDate);
+	alert(endDate);
+
+	// 조건 1) 마감일은 모집 시작일 이후
+	if(startDate > endDate) { // 마감일이 시작일보다 이전의 경우
+		alert("모집 마감일은 시작일 이후로 설정해야 합니다.");
+		document.getElementById("endDate").value = ""; // 값 초기화
+	}
+	
+	// 조건 2) 마감일은 현재 날짜 이후
+	if(today > endDate) { // 마감일이 현재 날짜보다 이전의 경우
+		alert("마감일은 오늘 이후로 설정 가능합니다.");
+		document.getElementById("endDate").value = ""; // 값 초기화
+	}
+	console.log(today);
+	console.log(endDate);
+	console.log(today > endDate);
+	
+	// console.log(today > endDate); // today > yesterday T 
+}
 
 </script>
 
@@ -74,7 +120,7 @@ function sendOk() {
 		</ul>
 		
 		<form name="recruitForm" method="post">
-				<table class="table mt-5 recruit-table">
+				<table class="table mt-5 recruit-table border-top">
 					<tr>
 						<td class="col-sm-2 align-middle text-center" scope="row">공고명</td>
 						<td colspan="3">
@@ -85,18 +131,17 @@ function sendOk() {
 					<tr>
 						<td class="col-sm-2 align-middle text-center" scope="row">구분</td>
  						<td colspan="3">
-							<select name="selectCareer" id="selectCareer" class="form-select">
+							<select name="categoryNum" id="categoryNum" class="form-select" style="width: 25%;">
 								<option value="">: : 선택 : :</option>
-								<option value="1" ${dto.career=="1" ? "selected='selected'" : ""}>인턴</option>
-								<option value="2" ${dto.career=="2" ? "selected='selected'" : ""}>신입</option>
-								<option value="3" ${dto.career=="3" ? "selected='selected'" : ""}>경력3년 이하</option>
-								<option value="4" ${dto.career=="4" ? "selected='selected'" : ""}>경력5년 이하</option>
-								<option value="5" ${dto.career=="5" ? "selected='selected'" : ""}>경력7년 이하</option>
-								<option value="6" ${dto.career=="6" ? "selected='selected'" : ""}>경력7년 이상</option>
+								<option value="1" ${dto.categoryNum=="1" ? "selected='selected'" : ""}>인턴</option>
+								<option value="2" ${dto.categoryNum=="2" ? "selected='selected'" : ""}>신입</option>
+								<option value="3" ${dto.categoryNum=="3" ? "selected='selected'" : ""}>경력3년 이하</option>
+								<option value="4" ${dto.categoryNum=="4" ? "selected='selected'" : ""}>경력5년 이하</option>
+								<option value="5" ${dto.categoryNum=="5" ? "selected='selected'" : ""}>경력7년 이하</option>
+								<option value="6" ${dto.categoryNum=="6" ? "selected='selected'" : ""}>경력7년 이상</option>
 							</select>
 						</td>
 					</tr>
-
 					<tr>
 						<td class="col-sm-2 align-middle text-center" scope="row">회사명</td>
 						<td colspan="3">
@@ -112,13 +157,19 @@ function sendOk() {
 					<tr>
 						<td class="col-sm-2 align-middle text-center" scope="row">모집 기간</td>
 						<td>
-							<label>모집시작일</label>
-							<input type="date" name="startDate" id="startDate" class="form-control" value="${dto.startDate}">
+							<div class="d-flex r-date">
+								<label class="ms-2">모집 시작일</label>
+								<input type="date" name="startDate" id="startDate" 
+									class="form-control ms-3" style="width: 60%" value="${dto.startDate}">
+							</div>
 						</td>
-						 <td >&nbsp;~&nbsp; </td>
+						 <td class="align-middle">&nbsp;~&nbsp; </td>
 						 <td>
-						 	<label>모집마감일</label>
-							<input type="date" name="endDate" id="endDate" class="form-control" value="${dto.endDate}">
+							<div class="d-flex r-date">
+						 		<label class="ms-2">모집 마감일</label>
+								<input type="date" name="endDate" id="endDate" class="form-control ms-3" 
+								style="width: 60%" value="${dto.endDate}" onchange="compareDate();">
+							</div>
 						</td>
 					</tr>
 					

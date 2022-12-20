@@ -27,40 +27,45 @@ thead {
     	<p class="text-end m-3 p-2 fw-bold">전체 <span style="color: green">n</span>건</p>
     
 		<table class="table">
-				<thead class="fw-bold">
+			<thead class="fw-bold">
+				<tr>
+					<th>번호</th>
+					<th>구분</th>
+					<th>회사명</th>
+					<th colspan="2">공고명</th>
+					<th colspan="2">모집기간</th>
+				</tr>
+			</thead>
+			
+			<tbody class="text-center">
+				<c:forEach var="dto" items="${list}" varStatus="status">
 					<tr>
-						<th>번호</th>
-						<th>구분</th>
-						<th>회사명</th>
-						<th colspan="2">공고명</th>
-						<th colspan="2">모집기간</th>
+						<td>${dataCount - (page-1) * size - status.index}</td>
+						<td>${dto.num}</td>
+						<td>${dto.career}</td>
+						<td>${dto.corporation}</td>
+						<td colspan="2">
+							<c:url var="url" value="/recruit/article">
+								<c:param name="num" value="${dto.num}"/>
+								<c:param name="page" value="${page}"/>
+								<c:if test="${not empty keyword}">
+									<c:param name="condition" value="${condition}"></c:param>
+									<c:param name="keyword" value="${keyword}"></c:param>
+								</c:if>
+							</c:url>
+							<a href="${url}">${dto.subject}</a>
+						</td>
+						<td colspan="2">${dto.startDate}&nbsp;~&nbsp;${dto.endDate}</td>
 					</tr>
-				</thead>
-				
-				<tbody class="text-center">
-					<c:forEach var="dto" items="${list}" varStatus="status">
-						<tr>
-							<td>${dataCount - (page-1) * size - status.index}</td>
-							<td>
-								<c:url var="url" value="/recruit/article">
-									<c:param name="num" value="${dto.num}"/>
-									<c:param name="page" value="${page}"/>
-									<c:if test="${not empty keyword}">
-										<c:param name="condition" value="${condition}"></c:param>
-										<c:param name="keyword" value="${keyword}"></c:param>
-									</c:if>
-								</c:url>
-								<a href="${url}" class="text-reset">${dto.subject}</a>
-								<c:if test="${dto.replyCount!=0}">(${dto.replyCount})</c:if>
-							</td>
-							<td>1</td>
-							<td>${dto.career}</td>
-							<td>${dto.corporation}</td>
-							<td colspan="2">${dto.subject}</td>
-							<td colspan="2">${dto.startDate} ~ ${dto.endDate}</td>
-						</tr>
-					</c:forEach>
-				</tbody>
+				</c:forEach>
+				<tr>
+					<td>1</td>
+					<td>신입</td>
+					<td>현대자동차</td>
+					<td colspan="2">제네시스 월드와이드 소셜 채널 운영</td>
+					<td colspan="2">2022.12.17&nbsp;~&nbsp;2022.12.17</td>
+				</tr>
+			</tbody>
 		</table>
 			
 			<div class="row board-list-footer">
