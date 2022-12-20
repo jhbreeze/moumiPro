@@ -9,7 +9,7 @@
 <head>
 <title>모으미</title>
 <style type="text/css">
-.background {
+.background, .wrapper {
 	background-color: #ECF4EB
 }
 </style>

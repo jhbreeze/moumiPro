@@ -104,14 +104,14 @@ color: #198754;
 		</li>
 		
 		<li class="menu--item">
-	        <a href="${pageContext.request.contextPath}/admin/memberManage/list" class="menu--link" title="매출 관리">
+	        <a href="${pageContext.request.contextPath}/admin/sales/list" class="menu--link" title="매출 관리">
 				<i class="menu--icon  fa-fw fa-solid bi-receipt"></i>
 				<span class="menu--label">매출 관리</span>
 			</a>
 		</li>
 		
 		<li class="menu--item">
-	        <a href="${pageContext.request.contextPath}/admin/memberManage/list" class="menu--link" title="분석 리포트 관리">
+	        <a href="${pageContext.request.contextPath}/admin/report/list" class="menu--link" title="분석 리포트 관리">
 				<i class="menu--icon  fa-fw fa-solid bi-pen-fill"></i>
 				<span class="menu--label">분석 리포트 관리</span>
 			</a>
@@ -129,34 +129,34 @@ color: #198754;
 					<a href="${pageContext.request.contextPath}/admin/notice/list" class="sub_menu--link">공지사항</a>
 				</li>
 				<li class="sub_menu--item">
-					<a href="#" class="sub_menu--link">자주하는 질문</a>
+					<a href="${pageContext.request.contextPath}/admin/faq/list" class="sub_menu--link">자주하는 질문</a>
 				</li>
 			</ul>
 		</li>
 
 		<li class="menu--item">
-			<a href="#" class="menu--link" title="질문게시판 관리">
+			<a href="${pageContext.request.contextPath}/admin/community/list" class="menu--link" title="질문게시판 관리">
 				<i class="menu--icon  fa-fw fa-regular bi-patch-question-fill"></i>
-				<span class="menu--label">질문게시판 관리</span>
+				<span class="menu--label">브랜드 커뮤니티 관리</span>
 			</a>
 		</li>
 		
 		<li class="menu--item">
-			<a href="#" class="menu--link" title="채팅 관리">
+			<a href="${pageContext.request.contextPath}/admin/chatting/list" class="menu--link" title="채팅 관리">
 				<i class="menu--icon  fa-fw fa-solid bi-chat-dots-fill"></i>
 				<span class="menu--label">채팅 관리</span>
 			</a>
 		</li>
 
 		<li class="menu--item">
-			<a href="#" class="menu--link" title="신고댓글 관리">
+			<a href="${pageContext.request.contextPath}/admin/comment/list" class="menu--link" title="신고댓글 관리">
 				<i class="menu--icon  fa-fw bi-filter-left"></i>
 				<span class="menu--label">신고댓글 관리</span>
 			</a>
 		</li>
 
 		<li class="menu--item">
-			<a href="#" class="menu--link" title="이벤트 관리">
+			<a href="${pageContext.request.contextPath}/admin/event/list" class="menu--link" title="이벤트 관리">
 				<i class="menu--icon  fa-fw fa-solid bi-calendar2-event-fill"></i>
 				<span class="menu--label">이벤트 관리</span>
 			</a>
