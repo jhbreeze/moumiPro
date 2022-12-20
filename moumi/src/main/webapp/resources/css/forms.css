@@ -1,9 +1,9 @@
 ﻿@charset "UTF-8";
 
-.btn {
-	color: #333;
+.btnn {
+	color: white;
 	border: 1px solid #999;
-	background-color: #fff;
+	background-color: #198754;
 	padding: 5px 10px;
 	border-radius: 4px;
 	font-weight: 500;
