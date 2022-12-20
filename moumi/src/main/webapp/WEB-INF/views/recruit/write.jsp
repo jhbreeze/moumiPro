@@ -114,7 +114,6 @@ function getToday(day){
 	let date = today1.getDate();
 	
 	let today = year + "-" + month + "-" + date; 
-	console.log(today1);
 	return today;
 }
 
