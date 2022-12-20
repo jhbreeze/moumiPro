@@ -1,4 +1,3 @@
-
 package com.moumi.app.common;
 
 import java.io.BufferedReader;
@@ -54,8 +53,11 @@ public class APISerializer {
 		try {
 			String s = receiveToString(spec);
 			/*
-			 * <dependency> <groupId>org.json</groupId> <artifactId>json</artifactId>
-			 * <version>20210307</version> </dependency>
+			<dependency>
+				<groupId>org.json</groupId>
+				<artifactId>json</artifactId>
+			 	<version>20210307</version>
+			</dependency>
 			 */
 			JSONObject job = XML.toJSONObject(s);
 			result = job.toString();
