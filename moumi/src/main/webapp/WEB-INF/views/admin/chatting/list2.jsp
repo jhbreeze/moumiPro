@@ -69,7 +69,7 @@ tr:hover {
 	<div class="body-container">
 		<div class="body-title">
 			<h2>
-				<i class="fa-brands fa-perbyte"></i> 채팅관리
+				<i class="fa-brands fa-perbyte"></i> 테스트
 			</h2>
 		</div>
 
