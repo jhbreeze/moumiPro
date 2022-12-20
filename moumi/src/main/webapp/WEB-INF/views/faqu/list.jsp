@@ -38,20 +38,57 @@
 /* nav{
 float: left;
 } */
-ul {
-display:block;
+.side {
 list-style: none;
+font-family:"Malgun Gothic", "맑은 고딕", NanumGothic, 나눔고딕, 돋움, sans-serif;
+font-size: 20px;
+text-decoration: none;
 }
+.side-menu1{
+position:absolute;
+top: 10rem;
+left: 15rem;
+background: #198754;
+width: 9rem;
+height: 3rem;
+text-align: center;
+color: white;
+padding-top: 0.5rem;
+}
+.side-menu2{
+position:absolute;
+top: 14rem;
+left: 15rem;
 
+
+}
+.side-menu2 a{
+color: #198754;
+font-weight: bold;
+
+}
+.side-menu3{
+position:absolute;
+top: 17rem;
+left: 15rem;
+
+}
+.side-menu3 a{
+color: gray;
+
+}
 </style>
 
 <nav>
-	<ul>
-		<li>
-			<a class="active">공지사항</a>
+	<ul class="side">
+		<li class="side-menu1">
+			고객센터
 		</li>
-		<li>
-			<a>자주 묻는 질문</a>
+		<li class="side-menu2">
+			<a href="#">공지사항</a>
+		</li>
+		<li class="side-menu3">
+			<a href="#">자주 묻는 질문</a>
 		</li>
 	</ul>
 </nav>
@@ -60,7 +97,7 @@ list-style: none;
 		<div class="body-title">
 			<h3><i class="bi bi-question-octagon"></i> 공지사항 </h3>
 		</div>
-	<div class="accordion accordion-flush mt-5" id="accordionFlushExample">
+	<div class="accordion accordion-flush mt-2" id="accordionFlushExample">
 	  <div class="accordion-item">
 	    <h2 class="accordion-header" id="flush-headingOne">
 	      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
@@ -70,12 +107,10 @@ list-style: none;
 	      </button>
 	    </h2>
 	    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-	      <div class="accordion-body" style="background: #ECF4EB">
-	      		안녕하세요. MOUMI 입니다.
-				MOUMI 이용권에 관해 설명드립니다.
-				MOUMI BASIC 기본권을 구매하신 회원들께서는  다양한 SNS 채널 별 검색 기능을  사용할 수 있습니다.  
-				안녕하세요. MOUMI 입니다.
-				MOUMI 이용권에 관해 설명드립니다.
+	      <div class="accordion-body" style="background: #ECF4EB; border-radius: 15px;">
+	      		안녕하세요. MOUMI 입니다.<br>
+				MOUMI 이용권에 관해 설명드립니다.<br>
+				MOUMI BASIC 기본권을 구매하신 회원들께서는  다양한 SNS 채널 별 검색 기능을  사용할 수 있습니다.<br>
 		  </div>
 	    </div>
 	  </div>
@@ -101,5 +136,9 @@ list-style: none;
 	  </div>
 	</div>
 	</div>
+</div>
+
+<div class="page-navigation">
+	${dataCount == 0 ? "등록된 게시물이 없습니다." : paging}
 </div>
  
