@@ -3,80 +3,46 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<style type="text/css">
-.container {
-	min-height: 800px;
-}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/admin.css">
+<body>
+	<div class="container">
+		<div class="body-container">
+			<div class="body-title">
+				<h2>
+					<i class="fa-brands fa-perbyte"></i> 이벤트 관리
+				</h2>
+			</div>
 
-main {
-	position: relative;
-	top: -55px;
-	background: white;
-}
+			<div class="body-main">
+				<form name="listForm" method="post">
+					<div class="row board-list-header"></div>
+					<div class="row">
+						<c:forEach var="item" begin="0" end="11" step="1"
+							varStatus="status">
+							<div class="col-lg-3 col-sm-3">
+								<div class="card" style="width: 18rem;">
+									<img style="height: 280px; width: 285px;"
+										src="${pageContext.request.contextPath}/resources/images/noimage.png" />
+									<div class="card-body">
+										<p class="card-text">이벤트 제목</p>
+									</div>
+								</div>
+								<br>
 
-.body-container {
-	min-width: 1200px;
-	margin: auto;
-	padding: 20px;
-	
-}
+							</div>
+						</c:forEach>
 
-tr {
-	font-size: 15px;
-}
 
-tr:hover {
-	background: #fff;
-	box-shadow: 0px 0px 4px rgb(72, 92, 161, 0.4);
-}
-
-.sort {
-	font-size: 10px;
-	border: 1px solid #e2e2e2;
-	width: 50px;
-	height: 20px;
-	border-radius: 20px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.sort-td {
-	width: 80px;
-}
-
-.date-th {
-	width: 100px;
-}
-
-.date-div {
-	text-align: center;
-}
-
-.container {
-	box-shadow: 4px 4px 4px rgb(72, 92, 161, 0.2);
-	border: none;
-	border-radius: 30px;
-	background-color: white;
-	margin: 100px auto;
-}
-
-.btn:active, .btn:focus, .btn:hover {
-	color: #eee;
-}
-</style>
-<div class="container">
-	<div class="body-container">
-		<div class="body-title">
-			<h2>
-				<i class="fa-brands fa-perbyte"></i> 이벤트 관리
-			</h2>
-		</div>
-
-		<div class="body-main">
-			<form name="listForm" method="post">
-				<div class="row board-list-header"></div>
-			</form>
+					</div>
+				</form>
+			</div>
 		</div>
 	</div>
-</div>
+</head>
+</html>

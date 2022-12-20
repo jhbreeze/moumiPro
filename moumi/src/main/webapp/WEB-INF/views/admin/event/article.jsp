@@ -10,6 +10,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css">
+
 </head>
 <body>
 

@@ -24,7 +24,7 @@ public class EventController {
 
 		model.addAttribute("mode", "write");
 
-		return ".event.write";
+		return ".admin.event.write";
 	}
 
 	@PostMapping("write")
@@ -41,7 +41,7 @@ public class EventController {
 	@GetMapping("article")
 	public String article() throws Exception {
 
-		return ".event.article";
+		return ".admin.event.article";
 	}
 
 }
