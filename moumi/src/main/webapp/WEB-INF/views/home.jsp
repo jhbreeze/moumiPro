@@ -2,16 +2,22 @@
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <link href="http://api.nongsaro.go.kr/css/api.css" rel="stylesheet"
 	type="text/css">
 <script type="text/javascript"
 	src="http://api.nongsaro.go.kr/js/framework.js"></script>
 <script type="text/javascript"
 	src="http://api.nongsaro.go.kr/js/openapi_nongsaro.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" rel="stylesheet"/>
-   
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js"></script>
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css"
+	rel="stylesheet" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <style>
 .mainBox {
 	margin-top: 25px;
@@ -36,17 +42,12 @@
 	width: 70px;
 }
 
-.title {
-	color: #198754;
-	font-size: 20px;
-	font-weight: 700;
-}
-
 .keywordDiv {
 	height: 100px;
 	width: 800px;
 	margin: auto;
-	margin-top: 200px;
+	padding: 20px;
+	margin-top: 160px;
 }
 
 .keyword {
@@ -56,6 +57,7 @@
 	border-radius: 35px;
 	float: left;
 	margin-left: 10px;
+	padding: 5px;
 	color: white;
 	font-size: 17px;
 	text-align: center;
@@ -73,12 +75,47 @@ li {
 	margin-right: 30px;
 }
 
+.title {
+	color: #198754;
+	font-size: 20px;
+}
+
 .mainText {
 	font-size: 40px;
 	text-align: center;
+	padding-top: 80px;
 	margin-top: 50px;
 	color: white;
 	text-weight: bold;
+}
+
+.customInput{
+	position: relative;
+    width: 100%;
+    height: 48px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-radius: 24px;
+    border: 0.3px solid white;
+    background-color: white;
+	
+
+}
+
+.inputSearch{
+	border: none;	
+
+}
+
+.btnSearch{
+	background: white;
+	width: 60px;
+	heigth: 20px;
+	border-radius: 90px;
+	padding: 10px;
+	border:none; 
 }
 </style>
 
@@ -86,31 +123,31 @@ li {
 <script>
 	$(document).ready(function() {
 		$.ajax({
-			//ajax 옵션 설정 
-			// 공공데이터 포털 인증키
+		//ajax 옵션 설정 
+		// 공공데이터 포털 인증키
 			url : "https://api.odcloud.kr/api/3060388/v1/uddi:dacd930e-e26e-4f7c-bde7-ce2cfd272e16?page=1&perPage=10&serviceKey=KAizYtDdo2AYzDzXklWBjNAnwBJq0%2BIahDUm%2FTZKLFK2Fh%2BrMgCMblxsG7mudwtZIqwWXC2XrpMZ9Ea77QWmOA%3D%3D",
 			type : "GET",
 			dataType : "json",
-				// 요청이 성공시 할 일 처리 
+			// 요청이 성공시 할 일 처리 
 			success : function(data) {
-				console.log(data, typeof data)
-				data = JSON.stringify(data)
-				console.log(typeof data)
-				data = JSON.parse(data) // String 
-				console.log(typeof data) // Object
-				// 할 일 처리 
-				let apiData = "";
-				$.each(data.data, function(key, value) {
-					apiData += "<tr>";
-					apiData += "<td>" + value.브랜드명+ "</td>";
-					apiData += "<td>" + value.소재지주소+ "</td>";
-					apiData += "</tr>";
-				});
-				// 페이지 단에 붙이기 
-				$('#brand').append(apiData);
+			console.log(data, typeof data)
+			data = JSON.stringify(data)
+			console.log(typeof data)
+			data = JSON.parse(data) // String 
+			console.log(typeof data) // Object
+			// 할 일 처리 
+			let apiData = "";
+			$.each(data.data, function(key, value) {
+			apiData += "<tr>";
+			apiData += "<td>" + value.브랜드명+ "</td>";
+			apiData += "<td>" + value.소재지주소+ "</td>";
+			apiData += "</tr>";
+			});
+			// 페이지 단에 붙이기 
+			$('#brand').append(apiData);
 			}
 		});
-	});
+});
 </script>
 
 
@@ -121,16 +158,21 @@ li {
 	nongsaroOpenApiRequest.operationName = "selectSclCodeLst";
 	nongsaroOpenApiRequest.htmlArea = "nongsaroApiLoadingArea";
 	nongsaroOpenApiRequest.callback = "http://localhost:9090/app/call/ajax_local_callback.jsp";
-</script> 
+</script>
+
 
 
 
 <div class="mainBox">
 	<h3 class="mainText">MOUMI 분석 서비스</h3>
 	<form class="d-flex searchBox" role="search">
-		<input class="form-control me-2 " type="search"
+	<div class="customInput">
+		<input class="form-control mx-3 inputSearch" type="search"
 			placeholder="궁금한 분석 단어를 입력하세요." aria-label="Search">
-		<button class="btn btn-light searchBtn" type="submit">검색</button>
+		<button class="btn btnSearch " type="submit">
+			<i class="fa-solid fa-magnifying-glass"></i>검색
+		</button>
+		</div>
 
 	</form>
 
@@ -182,7 +224,8 @@ li {
 				<br> <br>
 
 				<p class="title">우리 지역 살리기</p>
-				<table class="table table-striped table-success text-center" id="brand">
+				<table class="table table-striped table-success text-center"
+					id="brand">
 					<thead class="thead-light">
 						<tr>
 							<th>지역명</th>
