@@ -11,8 +11,8 @@
 		<div class="body-container">
 			<div class="body-title">
 
-				<h2>
-					<i class="fa-brands fa-perbyte"></i> 이벤트 관리
+				<h2 style="margin-top: 10px;">
+					<i class="fa-sharp fa-solid fa-gift"></i>&nbsp;이벤트 관리
 				</h2>
 			</div>
 
