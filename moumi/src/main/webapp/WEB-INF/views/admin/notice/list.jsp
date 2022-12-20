@@ -75,7 +75,9 @@ tr:hover {
 
 		<div class="body-main">
 			<form name="listForm" method="post">
-				<div class="row board-list-header"></div>
+				<div class="row board-list-header">
+					<div class="col-auto me-auto">1개/1페이지</div>
+				</div>
 			</form>
 		</div>
 	</div>
