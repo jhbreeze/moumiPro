@@ -69,7 +69,7 @@ tr:hover {
 	<div class="body-container">
 		<div class="body-title">
 			<h2>
-				<i class="fa-brands fa-perbyte"></i> 공지사항
+				<i class="fa-brands fa-perbyte"></i> 자주하는 질문 관리
 			</h2>
 		</div>
 
