@@ -42,7 +42,7 @@ float: left;
 list-style: none;
 font-family:"Malgun Gothic", "맑은 고딕", NanumGothic, 나눔고딕, 돋움, sans-serif;
 font-size: 20px;
-text-decoration: none;
+
 }
 .side-menu1{
 position:absolute;
@@ -60,11 +60,11 @@ position:absolute;
 top: 14rem;
 left: 15rem;
 
-
 }
 .side-menu2 a{
 color: #198754;
 font-weight: bold;
+text-decoration: none;
 
 }
 .side-menu3{
@@ -74,30 +74,14 @@ left: 15rem;
 
 }
 .side-menu3 a{
+text-decoration: none;
 color: gray;
 
 }
 </style>
 
-<nav>
-	<ul class="side">
-		<li class="side-menu1">
-			고객센터
-		</li>
-		<li class="side-menu2">
-			<a href="#">공지사항</a>
-		</li>
-		<li class="side-menu3">
-			<a href="#">자주 묻는 질문</a>
-		</li>
-	</ul>
-</nav>
- <div class="container">
-	<div class="body-container">	
-		<div class="body-title">
-			<h3><i class="bi bi-question-octagon"></i> 공지사항 </h3>
-		</div>
-	<div class="accordion accordion-flush mt-2" id="accordionFlushExample">
+
+	<div class="accordion accordion-flush" id="accordionFlushExample">
 	  <div class="accordion-item">
 	    <h2 class="accordion-header" id="flush-headingOne">
 	      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
@@ -135,10 +119,4 @@ color: gray;
 	    </div>
 	  </div>
 	</div>
-	</div>
-</div>
-
-<div class="page-navigation">
-	${dataCount == 0 ? "등록된 게시물이 없습니다." : paging}
-</div>
  
