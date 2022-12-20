@@ -3,17 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/admin.css">
 <body>
 	<div class="container">
 		<div class="body-container">
 			<div class="body-title">
+
 				<h2>
 					<i class="fa-brands fa-perbyte"></i> 이벤트 관리
 				</h2>
@@ -44,5 +41,3 @@
 			</div>
 		</div>
 	</div>
-</head>
-</html>

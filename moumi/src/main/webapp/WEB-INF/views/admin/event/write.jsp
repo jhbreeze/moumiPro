@@ -3,41 +3,56 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
+<style type="text/css">
+tr td:first-child {
+	background: #ECF4EB;
+	text-align: center;
+}
+</style>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="icon" href="data:;base64,iVBORw0KGgo=">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/admin.css">
 
-</head>
 <body>
 	<div class="container">
 		<div class="body-container">
+			<div class="body-title">
+
+				<h2 style="margin-top: 10px;">
+					<i class="fa-sharp fa-solid fa-gift"></i>&nbsp;이벤트 관리
+				</h2>
+			</div>
 			<div class="body-main">
 
 				<form name="productForm" method="post" enctype="multipart/form-data">
 					<table class="table mt-5 write-form">
 						<tr>
-							<td class="table-light col-sm-2">상품명</td>
-							<td><input type="text" name="productName"
-								class="form-control"></td>
+							<td class="table-light col-sm-2">이벤트</td>
+							<td><input type="text" name="eventName" class="form-control"></td>
 						</tr>
 						<tr>
-							<td class="table-light col-sm-2">가격</td>
+							<td class="table-light col-sm-2">할인가</td>
 							<td><input type="text" name="price" class="form-control">
 							</td>
 						</tr>
 						<tr>
-							<td class="table-light col-sm-2">상품설명</td>
+							<td class="table-light col-sm-2">이벤트 시작일</td>
+							<td><input type="date" name="statdate" class="form-control">
+							</td>
+						</tr>
+						<tr>
+							<td class="table-light col-sm-2">이벤트 종료일</td>
+							<td><input type="date" name="endDate" class="form-control">
+							</td>
+						</tr>
+
+						<tr>
+							<td class="table-light col-sm-2">이벤트 내용</td>
 							<td><textarea name="content" id="ir1" class="form-control"
 									style="width: 93%;"></textarea></td>
 						</tr>
 						<tr>
-							<td class="table-light col-sm-2">대표이미지</td>
+							<td class="table-light col-sm-2">대표 이미지</td>
 							<td>
 								<div class="thumbnail-viewer"></div> <input type="file"
 								name="thumbnailFile" accept="image/*" class="form-control"
@@ -46,7 +61,7 @@
 						</tr>
 
 						<tr>
-							<td class="table-light col-sm-2">추가이미지</td>
+							<td class="table-light col-sm-2">추가 이미지</td>
 							<td>
 								<div class="img-grid">
 									<img class="item img-add"
@@ -60,8 +75,8 @@
 
 					<table class="table table-borderless">
 						<tr>
-							<td class="text-center">
-								<button type="button" class="btn btn-dark"
+							<td class="text-center" style="background: white">
+								<button type="button" class="btn btn-success"
 									onclick="submitContents(this.form);">${mode=="update"?"수정완료":"등록완료"}</button>
 								<button type="reset" class="btn btn-light">다시입력</button>
 								<button type="button" class="btn btn-light"
@@ -76,4 +91,3 @@
 	</div>
 
 </body>
-</html>

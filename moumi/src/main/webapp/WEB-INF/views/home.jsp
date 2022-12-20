@@ -121,7 +121,7 @@ li {
 	nongsaroOpenApiRequest.operationName = "selectSclCodeLst";
 	nongsaroOpenApiRequest.htmlArea = "nongsaroApiLoadingArea";
 	nongsaroOpenApiRequest.callback = "http://localhost:9090/app/call/ajax_local_callback.jsp";
-</script> -->
+</script> 
 
 
 
