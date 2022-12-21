@@ -139,7 +139,7 @@ function getToday(day){
 							<select name="categoryNum" id="categoryNum" class="form-select" style="width: 25%;">
 								<option value="">: : 선택 : :</option>
 								<c:forEach var="vo" items="${listCategory}">
-									<option value="{vo.categoryNum}" ${dto.categoryNum=="vo.categoryNum" ? "selected='selected'" : ""}>${vo.career}</option>
+									<option value="${vo.categoryNum}" ${dto.categoryNum==vo.categoryNum? "selected='selected'" : ""}>${vo.career}</option>
 								</c:forEach>
 							</select>
 						</td>
