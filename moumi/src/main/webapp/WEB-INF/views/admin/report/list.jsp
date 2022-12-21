@@ -15,7 +15,7 @@ main {
 }
 
 .body-container {
-	min-width: 1200px;
+	max-width: 1200px;
 	margin: auto;
 	padding: 20px;
 	
@@ -69,7 +69,7 @@ tr:hover {
 	<div class="body-container">
 		<div class="body-title">
 			<h2>
-				<i class="fa-brands fa-perbyte"></i> 분석리포트관리
+				<i class="fa-brands fa-perbyte"></i> 분석 리포트 관리
 			</h2>
 		</div>
 
