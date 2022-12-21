@@ -72,7 +72,6 @@ function check() {
 		return false;
 	}
 	
-	
 	str = f.content.value.trim(); 
 	if(! str || str === "<p><br></p>") {
 		alert("내용을 입력하세요");
