@@ -22,7 +22,8 @@
 .form-control {
 	border-radius: 15px;
 	margin-bottom: 5px;
-	
+	color: #767676;
+	font-size: 15px;
 }
 .inputBox {
 	margin-left: 50px;
@@ -32,6 +33,7 @@
 .longinputBox {
 	margin-left: 50px;
 	margin-right: 60px;
+	margin-bottom: 10px;
 }
 label {
 	color: #767676;
@@ -47,14 +49,98 @@ label {
 }
 .btn {
 	border-radius: 15px;
+	font-size: 15px;
+}
+.btn-outline-success {
 	padding-left:5px;
 	padding-right:5px;
 	background-color: white;
+}
+.btn-success {
+	margin-top: 20px;
+	padding-left:140px;
+	padding-right:140px;
 }
 </style>
 
 
 <script type="text/javascript">
+function memberOk() {
+	const f = document.memberForm;
+	let str;
+
+	str = f.userName.value;
+    if( !/^[가-힣]{2,10}$/.test(str) ) {
+        alert("이름을 다시 입력하세요. ");
+        f.userName.focus();
+        return;
+    }
+	
+    str = f.email1.value.trim();
+    if( !str ) {
+        alert("이메일을 입력하세요. ");
+        f.email1.focus();
+        return;
+    }
+
+    str = f.email2.value.trim();
+    if( !str ) {
+        alert("이메일을 입력하세요. ");
+        f.email2.focus();
+        return;
+    }
+
+	str = f.userId.value;
+	if( !/^[a-z][a-z0-9_]{4,9}$/i.test(str) ) { 
+		alert("아이디를 다시 입력 하세요. ");
+		f.userId.focus();
+		return;
+	}
+
+	let mode = "${mode}";
+	if(mode === "member" && f.userIdValid.value === "false") {
+		str = "아이디 중복 검사가 실행되지 않았습니다.";
+		$("#userId").parent().find(".help-block").html(str);
+		f.userId.focus();
+		return;
+	}
+	
+	str = f.userPwd.value;
+	if( !/^(?=.*[a-z])(?=.*[!@#$%^*+=-]|.*[0-9]).{5,10}$/i.test(str) ) { 
+		alert("패스워드를 다시 입력 하세요. ");
+		f.userPwd.focus();
+		return;
+	}
+
+	if( str !== f.userPwd2.value ) {
+        alert("패스워드가 일치하지 않습니다. ");
+        f.userPwd.focus();
+        return;
+	}
+
+	str = f.userNickname.value;
+	if( ) {
+		
+	}
+	
+	str = f.userGender.value;
+	if( ) {
+		
+	}
+	
+
+    str = f.birth.value;
+    if( !str ) {
+        alert("생년월일를 입력하세요. ");
+        f.birth.focus();
+        return;
+    }
+    
+
+   	f.action = "${pageContext.request.contextPath}/member/${mode}";
+    f.submit();
+}
+
 function userIdCheck() {
 	// 아이디 중복 검사
 	let userId = $("#userId").val();
@@ -115,12 +201,10 @@ function userIdCheck() {
 				
 				<div class="inputBox">
 				  	<label class="form-label" for="selectEmail">이메일</label>
-				  	<div>
-				  		<input type="text" name="email" id="email" class="form-control" value="${dto.email}" placeholder="이메일 형식">
-				  	</div>
-				  	<div class="check">
+				  	<div style="width: 400px;">
+				  		<input type="text" name="email" id="email" class="form-control" value="${dto.email}" placeholder="이메일 형식" style="width: 280px; display: inline-block;">
 						<c:if test="${mode=='member'}">
-							<button type="button" class="btn btn-outline-success" onclick="userIdCheck();">중복검사</button>
+							<button type="button" class="btn btn-outline-success" onclick="userIdCheck();" style="width: 75px;">중복검사</button>
 						</c:if>
 					</div>
 				</div>
@@ -135,12 +219,10 @@ function userIdCheck() {
 				
 				<div class="inputBox">
 				  	<label class="form-label" for="selectEmail">닉네임</label>
-				  	<div>
-				  		<input type="text" name="email" id="email" class="form-control" value="${dto.email}" placeholder="한글/영문/숫자(3~10자)">
-				  	</div>
-				  	<div class="check">
+				  	<div style="width: 400px;">
+				  		<input type="text" name="email" id="email" class="form-control" value="${dto.email}" placeholder="한글/영문/숫자(3~10자)" style="width: 280px; display: inline-block;">
 						<c:if test="${mode=='member'}">
-							<button type="button" class="btn btn-outline-success" onclick="userIdCheck();">중복검사</button>
+							<button type="button" class="btn btn-outline-success" onclick="userIdCheck();" style="width: 75px;">중복검사</button>
 						</c:if>
 					</div>
 				</div>
@@ -148,21 +230,31 @@ function userIdCheck() {
 				<div class="inputBox">
 				  	<label class="form-label" for="gender">성별</label>
 				  	<div>
-				  		<input type="checkbox" name="gender" id="gender" class="form-control" value="${dto.email}" placeholder="한글/영문/숫자(3~10자)">
+						<label>
+		                    <input type="radio" name="gender" value="${dto.gender}"/> 남자 
+		                </label>
+		                <label>
+		                	<input type="radio" name="gender" value="${dto.gender}"/> 여자
+		                </label>
 				  	</div>
-				  	<div class="check">
-						<c:if test="${mode=='member'}">
-							<button type="button" class="btn btn-outline-success" onclick="userIdCheck();">중복검사</button>
-						</c:if>
-					</div>
 				</div>
 				
 				<div class="inputBox">
 			        <label class="form-label" for="birth">생년월일</label>
 		            <input type="date" name="birth" id="birth" class="form-control" value="${dto.birth}" placeholder="1990-01-01">
+			    </div> 
+			     
+			    <div>
+			        <div class="text-center">
+			            <button type="button" name="sendButton" class="btn btn-success" onclick="memberOk();"> ${mode=="member"?"회원가입":"정보수정"} </button>
+						<input type="hidden" name="userIdValid" id="userIdValid" value="false">
+			        </div>
 			    </div>
-				
-				
+			
+			    <div class="row">
+					<p class="form-control-plaintext text-center">${message}</p>
+			    </div>
+			    
 			</form>
 		</div>
 	</div>
