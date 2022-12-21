@@ -7,6 +7,7 @@
 .body-container {
 	max-width: 800px;
 }
+
 .side {
 list-style: none;
 font-family:"Malgun Gothic", "맑은 고딕", NanumGothic, 나눔고딕, 돋움, sans-serif;
@@ -31,9 +32,8 @@ left: 15rem;
 
 }
 .side-menu2 a{
-color: #198754;
-font-weight: bold;
 text-decoration: none;
+color: gray;
 
 }
 .side-menu3{
@@ -43,8 +43,9 @@ left: 15rem;
 
 }
 .side-menu3 a{
+color: #198754;
+font-weight: bold;
 text-decoration: none;
-color: gray;
 
 }
 </style>
@@ -95,7 +96,7 @@ function listPage(page) {
 	const $tab = $("button[role='tab'].active");
 	let categoryNum = $tab.attr("data-categoryNum");
 	
-	let url = "${pageContext.request.contextPath}/faqu/list";
+	let url = "${pageContext.request.contextPath}/faq/list";
 	let query = "pageNo="+page+"&categoryNum="+categoryNum;
 	let search = $('form[name=faqSearchForm]').serialize();
 	query = query+"&"+search;
@@ -143,6 +144,7 @@ function deleteFaq(num, page) {
 }
 </script>
 
+
 <nav>
 	<ul class="side">
 		<li class="side-menu1">
@@ -159,14 +161,34 @@ function deleteFaq(num, page) {
 <div class="container">
 	<div class="body-container">	
 		<div class="body-title">
-			<h3><i class="bi bi-question-octagon"></i> 공지사항 </h3>
+			<h3><i class="bi bi-question-octagon"></i> 자주묻는 질문 </h3>
 		</div>
+		
 	    		
 		<div class="body-main">
+			
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<li class="nav-item" role="presentation">
+					<button class="nav-link active" id="tab-0" data-bs-toggle="tab" data-bs-target="#nav-content" type="button" role="tab" aria-controls="0" aria-selected="true" data-categoryNum="0">모두</button>
+				</li>
+				<li class="nav-item" role="presentation">
+					<button class="nav-link active" id="tab-1" data-bs-toggle="tab" data-bs-target="#nav-content" type="button" role="tab" aria-controls="1" aria-selected="true" data-categoryNum="1">이용권</button>
+				</li>
+				<li class="nav-item" role="presentation">
+					<button class="nav-link active" id="tab-2" data-bs-toggle="tab" data-bs-target="#nav-content" type="button" role="tab" aria-controls="2" aria-selected="true" data-categoryNum="2">결제</button>
+				</li>
+				<c:forEach var="dto" items="${listCategory}" varStatus="status">
+					<li class="nav-item" role="presentation">
+						<button class="nav-link" id="tab-${status.count}" data-bs-toggle="tab" data-bs-target="#nav-content" type="button" role="tab" aria-controls="${status.count}" aria-selected="true" data-categoryNum="${dto.categoryNum}">${dto.category}</button>
+					</li>
+				</c:forEach>
+			</ul>
+			
 			<div class="tab-content pt-2" id="nav-tabContent">
 				<div class="tab-pane fade show active" id="nav-content" role="tabpanel" aria-labelledby="nav-tab-content">
 				</div>
 			</div>
+			
 		</div>
 	</div>
 </div>

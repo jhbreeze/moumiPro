@@ -12,5 +12,15 @@ public class SalesController {
 	public String salesManage() {
 		return ".admin.sales.list";
 	}
+	
+	@RequestMapping("list2")
+	public String salesManage2() {
+		return ".admin.sales.list2";
+	}
+	
+	@RequestMapping("list3")
+	public String salesManage3() {
+		return ".admin.sales.list3";
+	}
 
 }

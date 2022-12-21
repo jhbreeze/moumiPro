@@ -15,7 +15,7 @@ main {
 }
 
 .body-container {
-	min-width: 1200px;
+	max-width: 1200px;
 	margin: auto;
 	padding: 20px;
 	
