@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="recruit">
+	<select id="seq" resultType="Long">
+		SELECT recruit_seq.NEXTVAL FROM dual
+	</select>
+	
+	<insert id="inserRecruit">
+		INSERT INTO recruit(recruitNum, subject, content, regDate, startDate, endDate, 
+			email, userCode, corporation, categoryNum)
+		VALUES(#{recruitNum}, #{subject}, #{content}, SYSDATE, #{startDate}, #{endDate}, 
+			#{email}, userCode, #{corporation}, #{categoryNum})
+	</insert>
+	
+	
+	<select id="listCareerCategory" resultType="com.moumi.app.recruit.Recruit">
+		SELECT categoryNum, career
+		FROM careerCategory
+		ORDER BY categoryNum
+	</select>
+	
+</mapper>

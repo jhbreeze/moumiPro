@@ -3,7 +3,7 @@ package com.moumi.app.recruit;
 import org.springframework.web.multipart.MultipartFile;
 
 public class Recruit {
-	private long num;
+	private long recruitNum;
 	private String subject;
 	private String content;
 	private String reg_date;
@@ -21,12 +21,12 @@ public class Recruit {
 	
 	private int recruitLikeCount;
 
-	public long getNum() {
-		return num;
+	public long getrecruitNum() {
+		return recruitNum;
 	}
 
-	public void setNum(long num) {
-		this.num = num;
+	public void setrecruitNum(long num) {
+		this.recruitNum = num;
 	}
 
 	public String getSubject() {

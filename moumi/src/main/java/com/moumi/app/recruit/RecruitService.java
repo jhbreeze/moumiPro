@@ -18,5 +18,6 @@ public interface RecruitService {
 	public int recruitLikeCount(long num);
 	public boolean userRecruitLiked(Map<String, Object> map); // ??
 	
+	public List<Recruit> listCareerCategory();
 
 }

@@ -18,9 +18,8 @@
 .r-date { align-items: center; }
 
 </style>
-
 <script type="text/javascript">
-function sendOk() {
+function check() {
 	const f = document.recruitForm;
 	let str;
 	
@@ -28,41 +27,41 @@ function sendOk() {
 	if(! str) {
 		alert("공고명을 입력하세요.");
 		f.subject.focus();
-		return;
+		return false;
 	}
 	
 	str = f.categoryNum.value;
 	if(! str){
 		alert("구분을 선택하세요.");
-		return;
+		return false;
 	}
 	
-	str = f.corporation.value; 
+	str = f.corporation.value.trim(); 
 	if(! str){
 		alert("회사명을 입력하세요.");
 		f.corporation.focus();
-		return;
+		return false;
 	}
 	
-	str = f.email.value; 
+	str = f.email.value.trim(); 
 	if(! str){
 		alert("이메일을 입력하세요.");
 		f.email.focus();
-		return;
+		return false;
 	}
 	
 	str = f.startDate.value;
 	if(! str){
 		alert("모집시작일을 선택하세요.");
 		f.startDate.focus();
-		return;
+		return false;
 	}
 	
 	str = f.endDate.value;
 	if(! str){
 		alert("모집마감일을 선택하세요.");
 		f.endDate.focus();
-		return;
+		return false;
 	}
 	
 	// 마감일부터 입력하고 시작일 입력하는 경우, 서버로 전송할 때 check
@@ -70,19 +69,19 @@ function sendOk() {
 	eDate = f.endDate.value;
 	if( sDate > eDate ) {
 		alert("마감일은 모집 시작일 이후로 설정해야 합니다.^^");
-		return;
+		return false;
 	}
 	
 	
-	str = f.content.value; 
-	if(! str){
-		alert("내용을 입력하세요.");
+	str = f.content.value.trim(); 
+	if(! str || str === "<p><br></p>") {
+		alert("내용을 입력하세요");
 		f.content.focus();
-		return;
+		return false;
 	}
 	
 	f.action = "${pageContext.request.contextPath}/recruit/${mode}";
-    f.submit();
+    return true;
 	
 }
 
@@ -126,7 +125,7 @@ function getToday(day){
 			<li class="nav-item"><a class="nav-link active" aria-current="page" href="#">공고 등록 | 수정</a></li>
 		</ul>
 		
-		<form name="recruitForm" method="post">
+		<form name="recruitForm" method="post" enctype="multipart/form-data">
 				<table class="table mt-5 recruit-table border-top">
 					<tr>
 						<td class="col-sm-2 align-middle text-center" scope="row">공고명</td>
@@ -140,12 +139,9 @@ function getToday(day){
  						<td colspan="3">
 							<select name="categoryNum" id="categoryNum" class="form-select" style="width: 25%;">
 								<option value="">: : 선택 : :</option>
-								<option value="1" ${dto.categoryNum=="1" ? "selected='selected'" : ""}>인턴</option>
-								<option value="2" ${dto.categoryNum=="2" ? "selected='selected'" : ""}>신입</option>
-								<option value="3" ${dto.categoryNum=="3" ? "selected='selected'" : ""}>경력3년 이하</option>
-								<option value="4" ${dto.categoryNum=="4" ? "selected='selected'" : ""}>경력5년 이하</option>
-								<option value="5" ${dto.categoryNum=="5" ? "selected='selected'" : ""}>경력7년 이하</option>
-								<option value="6" ${dto.categoryNum=="6" ? "selected='selected'" : ""}>경력7년 이상</option>
+								<c:forEach var="vo" items="${listCategory}">
+									<option value="{vo.categoryNum}" ${dto.categoryNum=="vo.categoryNum" ? "selected='selected'" : ""}>${vo.career}</option>
+								</c:forEach>
 							</select>
 						</td>
 					</tr>
@@ -179,12 +175,12 @@ function getToday(day){
 							</div>
 						</td>
 					</tr>
-					
-					
 					<tr>
 						<td class="col-sm-2 align-middle text-center" scope="row">내용</td>
 						<td colspan="3">
-							<textarea name="content" id="content" class="form-control">${dto.content}</textarea>
+							<textarea class="form-control" name="content" id="ir1" style="width: 93%;">
+								${dto.content}
+							</textarea> 
 						</td>
 					</tr>
 					<tr>
@@ -199,7 +195,7 @@ function getToday(day){
 				<table class="table table-borderless">
  					<tr>
 						<td class="text-center">
-							<button type="button" class="btn btn-success" onclick="sendOk();">${mode=='update'?'수정완료':'등록하기'}&nbsp;<i class="bi bi-check2"></i></button>
+							<button type="button" class="btn btn-success" onclick="submitContents(this.form);">${mode=='update'?'수정완료':'등록하기'}&nbsp;<i class="bi bi-check2"></i></button>
 							<button type="reset" class="btn btn-success">다시입력</button>
 							<button type="button" class="btn btn-success" onclick="location.href='${pageContext.request.contextPath}/recruit/list';">${mode=='update'?'수정취소':'등록취소'}&nbsp;<i class="bi bi-x"></i></button>
 							<c:if test="${mode=='update'}">
@@ -211,8 +207,36 @@ function getToday(day){
 					</tr>
 				</table>
 			</form>
-		
-		
-		
     </div>
 </div>
+
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript">
+var oEditors = [];
+nhn.husky.EZCreator.createInIFrame({
+	oAppRef: oEditors,
+	elPlaceHolder: "ir1",
+	sSkinURI: "${pageContext.request.contextPath}/resources/vendor/se2/SmartEditor2Skin.html",
+	fCreator: "createSEditor2"
+});
+
+function submitContents(elClickedObj) {
+	 oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
+	 try {
+		if(! check()) {
+			return;
+		}
+		
+		elClickedObj.submit();
+		
+	} catch(e) {
+	}
+}
+
+function setDefaultFont() {
+	var sDefaultFont = '돋움';
+	var nFontSize = 12;
+	oEditors.getById["ir1"].setDefaultFont(sDefaultFont, nFontSize);
+}
+</script>
