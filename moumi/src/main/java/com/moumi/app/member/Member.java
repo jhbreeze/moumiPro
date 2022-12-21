@@ -1,7 +1,7 @@
 package com.moumi.app.member;
 
 public class Member {
-	private int userCode;
+	private long userCode;
 	private String userName;
 	private String email;
 	private String pwd;
@@ -12,10 +12,10 @@ public class Member {
 	private String lastLogin;
 	private int userType;
 	
-	public int getUserCode() {
+	public long getUserCode() {
 		return userCode;
 	}
-	public void setUserCode(int userCode) {
+	public void setUserCode(long userCode) {
 		this.userCode = userCode;
 	}
 	public String getUserName() {

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+	<select id="loginMember" parameterType="String" resultType="com.moumi.app.member.Member">
+		SELECT userCode, userType, email, userName, pwd, regDate, lastLogin
+		FROM member m
+		WHERE email = #{email} AND enabled != 0
+	</select>
+	
+	<update id="updateLastLogin" parameterType="String">
+		UPDATE member SET lastLogin = SYSDATE, failureCnt = 0
+		WHERE email = #{email}
+	</update>
+	
+    <select id="memberSeq" resultType="Long">
+       SELECT member_seq.NEXTVAL FROM dual 
+    </select>
+
+    <insert id="insertMember" parameterType="com.moumi.app.member.Member">
+		INSERT INTO member(userCode, email, pwd, nickName, userName, enabled, regDate, failureCnt, lastLogin, userType, gender, birth) 
+        VALUES (#{userCode}, #{email}, #{pwd}, #{nickName}, #{userName}, 0, SYSDATE, 0, SYSDATE, 0, #{gender}, #{birth});	
+    </insert>
+
+	
+    
+	
+	
+</mapper>
