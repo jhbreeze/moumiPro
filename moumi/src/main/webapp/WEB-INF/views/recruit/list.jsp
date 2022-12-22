@@ -103,7 +103,7 @@ $(function(){ // 선생님 질문
 									<c:param name="keyword" value="${keyword}"></c:param>
 								</c:if>
 							</c:url>
-							<a href="${articleUrl}&recruitNum=${dto.recruitNum}">${dto.subject}</a>
+							<a href="${url}">${dto.subject}</a>
 						</td>
 						<td colspan="2">${dto.startDate}&nbsp;~&nbsp;${dto.endDate}</td>
 					</tr>
@@ -113,7 +113,7 @@ $(function(){ // 선생님 질문
 			
 			<div class="page-navigation"></div>
 			
-			<div class="row board-list-footer">
+			<div class="row">
 				<div class="col">
 					<button type="button" class="btn btn-success" onclick="location.href='${pageContext.request.contextPath}/recruit/list';">새로고침</button>
 				</div>
