@@ -167,7 +167,7 @@ li {
 	<h3 class="mainText">MOUMI 분석 서비스</h3>
 	<form class="d-flex searchBox" role="search">
 	<div class="customInput">
-		<input class="form-control mx-3 inputSearch" type="search"
+		<input class="form-control mx-5 inputSearch" type="search"
 			placeholder="궁금한 분석 단어를 입력하세요." aria-label="Search">
 		<button class="btn btnSearch " type="submit">
 			<i class="fa-solid fa-magnifying-glass"></i>검색

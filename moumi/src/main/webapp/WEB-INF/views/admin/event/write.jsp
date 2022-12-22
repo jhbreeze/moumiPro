@@ -3,12 +3,58 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
+
 <style type="text/css">
 tr td:first-child {
 	background: #ECF4EB;
 	text-align: center;
 }
 </style>
+
+
+<script type="text/javascript">
+function check() {
+	const f = document.eventForm;
+	let str;
+
+	if(! f.subject.value) {
+		alert("이벤트명을 입력해주세요.");
+		f.subject.focus();
+		return false;
+	}
+	
+	if(! f.content.value) {
+		alert("내용 입력해주세요.");
+		f.content.focus();
+		return false;
+	}
+	
+	
+	/*
+
+	if(!/^(\d){1,8}$/.test(f.price.value)) {
+		alert("가격을 입력 하세요.");
+		f.price.focus();
+		return false;
+	}
+	
+	str = f.content.value.trim();
+	if( !str || str === "<p><br></p>" ) {
+		alert("상품 설명을 입력하세요.");
+		f.content.focus();
+		return false;
+	}
+
+	if(! f.thumbnailFile.value) {
+		alert("대표 이미지를 등록하세요.");
+		f.thumbnailFile.focus();
+		return false;
+	}
+	 */
+	f.action = "${pageContext.request.contextPath}/admin/event/${mode}";
+	return true;
+}
+</script>
 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/admin.css">
@@ -24,26 +70,27 @@ tr td:first-child {
 			</div>
 			<div class="body-main">
 
-				<form name="productForm" method="post" enctype="multipart/form-data">
+				<form name="eventForm" method="post" enctype="multipart/form-data">
 					<table class="table mt-5 write-form">
 						<tr>
 							<td class="table-light col-sm-2">이벤트</td>
-							<td><input type="text" name="eventName" class="form-control" style="width: 93%;">
+							<td><input type="text" name="subject" class="form-control"
+								style="width: 93%;">
 						</tr>
 						<tr>
 							<td class="table-light col-sm-2">할인가</td>
-							<td><input type="text" name="price" class="form-control" style="width: 93%;">
-							</td>
+							<td><input type="text" name="price" class="form-control"
+								style="width: 93%;"></td>
 						</tr>
 						<tr>
 							<td class="table-light col-sm-2">이벤트 시작일</td>
-							<td><input type="date" name="statdate" class="form-control" style="width: 93%;">
-							</td>
+							<td><input type="date" name="startDate" class="form-control"
+								style="width: 93%;"></td>
 						</tr>
 						<tr>
 							<td class="table-light col-sm-2">이벤트 종료일</td>
-							<td><input type="date" name="endDate" class="form-control" style="width: 93%;">
-							</td>
+							<td><input type="date" name="endDate" class="form-control"
+								style="width: 93%;"></td>
 						</tr>
 
 						<tr>
@@ -91,3 +138,33 @@ tr td:first-child {
 	</div>
 
 </body>
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript">
+var oEditors = [];
+nhn.husky.EZCreator.createInIFrame({
+	oAppRef: oEditors,
+	elPlaceHolder: "ir1",
+	sSkinURI: "${pageContext.request.contextPath}/resources/vendor/se2/SmartEditor2Skin.html",
+	fCreator: "createSEditor2"
+});
+
+function submitContents(elClickedObj) {
+	 oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
+	 try {
+		if(! check()) {
+			return;
+		}
+		
+		elClickedObj.submit();
+		
+	} catch(e) {
+	}
+}
+
+function setDefaultFont() {
+	var sDefaultFont = '돋움';
+	var nFontSize = 12;
+	oEditors.getById["ir1"].setDefaultFont(sDefaultFont, nFontSize);
+}
+</script>
