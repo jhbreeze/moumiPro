@@ -10,10 +10,15 @@
 	</insert>
 	
 	<select id="listEvent" parameterType="map" resultType="com.moumi.app.admin.event.Event">
-		SELECT eventNum, subject, content, thumbnail, regDate
+		SELECT eventNum, subject, content, thumbnail, TO_DATE(regDate, 'yyyy-mm-dd'), TO_DATE(startDate, 'yyyy-mm-dd'), TO_DATE(endDate, 'yyyy-mm-dd')
 		FROM event
 		ORDER BY eventNum DESC
 	</select>
 
-	
+	<select id="readEvent" parameterType="Long" resultType="com.moumi.app.admin.event.Event">
+		SELECT eventNum, userCode, subject, content, thumbnail, regDate
+		FROM event 
+		WHERE eventNum = #{eventNum}
+	</select>
+
 </mapper>
