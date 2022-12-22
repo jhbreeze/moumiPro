@@ -15,6 +15,10 @@ thead {
 	color: green; 
 }
 
+tbody tr:hover {
+	cursor: pointer;
+	background-color: #ECF4EB;
+}
 </style>
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/paginate.js"></script>
@@ -33,8 +37,8 @@ window.addEventListener("load", function(){
 	let dataCount = ${dataCount};
 	let url = "${listUrl}";
 	
-	let total_page = pageCont(dataCoutn, pageSize);
-	let paging = paginUrl(page, total_page, url);
+	let total_page = pageCount(dataCount, pageSize);
+	let paging = pagingUrl(page, total_page, url);
 	
 	document.querySelector(".page-navigation").innerHTML = 
 		dataCount === 0 ? "등록된 게시물이 없습니다":paging;
@@ -43,10 +47,23 @@ window.addEventListener("load", function(){
 </script>
 
 <script type="text/javascript">
-function searchForm() {
-	const f = document.recruitForm;
+function searchList() {
+	const f = document.searchForm;
 	f.submit();
 }
+
+$(function(){ // 선생님 질문
+	$(".recruit-table-tr").click(function(){
+		let rNum = $(this).attr("data-rNum");
+		let page = ${page};
+		let url = "${pageContext.request.contextPath}/recruit/article?";
+		let query = "recruitNum="+rNum+"&page="+page;
+		alert(rNum);	
+	});
+	
+	location.href= url + query ;
+});
+
 </script>
 
 <div class="container body-container">
@@ -60,7 +77,7 @@ function searchForm() {
     		<span style="color: green" >${dataCount - (page-1) * size - status.index}</span>건
     	</p>
     
-		<table class="table">
+		<table class="table recruit-table">
 			<thead class="fw-bold">
 				<tr>
 					<th>번호</th>
@@ -73,8 +90,7 @@ function searchForm() {
 			
 			<tbody class="text-center">
 				<c:forEach var="dto" items="${list}" varStatus="status">
-					<tr>
-						<!-- <td></td>  -->
+					<tr class="recruit-table-tr" data-rNum="${dto.recruitNum}">
 						<td>${dto.recruitNum}</td>
 						<td>${dto.career}</td>
 						<td>${dto.corporation}</td>
@@ -87,7 +103,7 @@ function searchForm() {
 									<c:param name="keyword" value="${keyword}"></c:param>
 								</c:if>
 							</c:url>
-							<a href="${url}">${dto.subject}</a>
+							<a href="${articleUrl}&recruitNum=${dto.recruitNum}">${dto.subject}</a>
 						</td>
 						<td colspan="2">${dto.startDate}&nbsp;~&nbsp;${dto.endDate}</td>
 					</tr>

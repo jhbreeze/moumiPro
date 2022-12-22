@@ -67,9 +67,15 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
-	public Event readEvent(long productNum) {
-		// TODO Auto-generated method stub
-		return null;
+	public Event readEvent(long eventNum) {
+		Event dto = null;
+		try {
+			// 이벤트 게시글 가져오기
+			dto = dao.selectOne("event.readEvent", eventNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
 	}
 
 	@Override

@@ -27,7 +27,7 @@
 		INSERT INTO recruit(recruitNum, subject, content, regDate, startDate, endDate, 
 			email, userCode, corporation, categoryNum)
 		VALUES(#{recruitNum}, #{subject}, #{content}, SYSDATE, #{startDate}, #{endDate}, 
-			#{email}, 2, #{corporation}, #{categoryNum})
+			#{email}, #{userCode}, #{corporation}, #{categoryNum})
 	</insert>
 	
 	<select id="listCareerCategory" resultType="com.moumi.app.recruit.Recruit">

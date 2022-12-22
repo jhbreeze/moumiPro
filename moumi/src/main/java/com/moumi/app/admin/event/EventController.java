@@ -13,16 +13,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-
-
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller("admin.event.eventController")
 @RequestMapping("/admin/event/*")
 public class EventController {
 	@Autowired
 	private EventService service;
-
 
 	@RequestMapping(value = "list")
 	public String list(Model model) throws Exception {
@@ -44,12 +41,12 @@ public class EventController {
 
 	@PostMapping("write")
 	public String writeSubmit(Event dto, HttpSession session, Model model) throws Exception {
-		//SessionInfo info = (SessionInfo) session.getAttribute("member");
+		// SessionInfo info = (SessionInfo) session.getAttribute("member");
 		try {
-			
+
 			String root = session.getServletContext().getRealPath("/");
 			String path = root + "uploads" + File.separator + "event";
-			
+
 			dto.setUserCode(0);
 			service.insertEvent(dto, path);
 		} catch (Exception e) {
@@ -60,11 +57,18 @@ public class EventController {
 	}
 
 	@GetMapping("article")
-	public String article() throws Exception {
+	public String article(@RequestParam long num, Model model) throws Exception {
 
+		try {
+
+			// 이벤트 게시글 가져오기
+			Event dto = service.readEvent(num);
+			model.addAttribute("dto", dto);
+
+		} catch (Exception e) {
+
+		}
 		return ".admin.event.article";
 	}
-
-	
 
 }
