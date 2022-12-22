@@ -1,6 +1,7 @@
 package com.moumi.app.recruit;
 
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,9 +52,7 @@ public class RecruitController {
 		map.put("keyword", keyword);
 		
 		dataCount = service.dataCount(map);
-		if( dataCount != 0 ) {
-			total_page = myUtil.pageCount(dataCount, size);
-		}
+		total_page = myUtil.pageCount(dataCount, size);
 		
 		if(total_page < current_page) {
 			current_page = total_page;
@@ -93,9 +92,11 @@ public class RecruitController {
 	public String writeSubmit(Recruit dto, HttpSession session) throws Exception {
 		 SessionInfo info = (SessionInfo) session.getAttribute("member");
 		try {
-			// 삽입할 때 필요 
-			// dto.setUserCode(info.getuserCode()); // user 코드(회원코드 시퀀스) 
-			// dto.setUserType(info.getUserType()); // userType (3번 일때만 등록이 가능)
+			dto.setUserCode(info.getUserCode()); // user 코드(회원코드 시퀀스) 
+			dto.setUserType(info.getUserType());
+			
+			 // userType (3번 일때만 등록이 가능) && 로그인 안 했을 때 처리 
+			
 			service.insertRecruit(dto, "write");
 		} catch (Exception e) {
 		}
