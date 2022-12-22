@@ -28,14 +28,28 @@ public class RecruitServiceImpl implements RecruitService {
 
 	@Override
 	public List<Recruit> listRecruit(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Recruit> list = null;
+		
+		try {
+			list = dao.selectList("recruit.listRecruit", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 
 	@Override
 	public int dataCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("recruit.dataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
