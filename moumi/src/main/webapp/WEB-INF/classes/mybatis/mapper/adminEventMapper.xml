@@ -4,8 +4,8 @@
 <mapper namespace="event">
 	<insert id="insertEvent" parameterType="com.moumi.app.admin.event.Event">
 		INSERT INTO event(eventNum, userCode, subject, content, 
-				StartDate, endDate, hitCount, regDate)
+				StartDate, endDate, thumbnail, hitCount, regDate)
 		VALUES (event_seq.NEXTVAL, #{userCode}, #{subject}, #{content},
-				#{startDate}, #{endDate}, 0, SYSDATE)
+				#{startDate}, #{endDate}, #{thumbnail}, 0, SYSDATE)
 	</insert>
 </mapper>

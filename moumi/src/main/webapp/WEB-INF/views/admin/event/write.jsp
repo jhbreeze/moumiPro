@@ -30,30 +30,63 @@ function check() {
 	}
 	
 	
-	/*
-
-	if(!/^(\d){1,8}$/.test(f.price.value)) {
-		alert("가격을 입력 하세요.");
-		f.price.focus();
-		return false;
-	}
-	
-	str = f.content.value.trim();
-	if( !str || str === "<p><br></p>" ) {
-		alert("상품 설명을 입력하세요.");
-		f.content.focus();
-		return false;
-	}
-
 	if(! f.thumbnailFile.value) {
 		alert("대표 이미지를 등록하세요.");
 		f.thumbnailFile.focus();
 		return false;
 	}
-	 */
+	
 	f.action = "${pageContext.request.contextPath}/admin/event/${mode}";
 	return true;
 }
+</script>
+
+
+<script type="text/javascript">
+// 대표(썸네일) 이미지
+$(function(){
+	var img = "${dto.thumbnail}";
+	if( img ) {
+		img = "${pageContext.request.contextPath}/uploads/admin/event/"+img;
+		$(".write-form .thumbnail-viewer").empty();
+		$(".write-form .thumbnail-viewer").css("background-image", "url("+img+")");
+	}
+	
+	$(".write-form .thumbnail-viewer").click(function(){
+		$("form[name=eventForm] input[name=thumbnailFile]").trigger("click");
+	});
+	
+	$("form[name=eventForm] input[name=thumbnailFile]").change(function(){
+		let file = this.files[0];
+		
+		if(! file) {
+			$(".write-form .thumbnail-viewer").empty();
+			
+			if( img ) {
+				img = "${pageContext.request.contextPath}/uploads/admin/event/"+img;
+			} else {
+				img = "${pageContext.request.contextPath}/resources/images/add_photo.png";
+			}
+			$(".write-form .thumbnail-viewer").css("background-image", "url("+img+")");
+			
+			return false;
+		}
+		
+		if( ! file.type.match("image.*") ) {
+			this.focus();
+			return false;
+		}
+		
+		var reader = new FileReader();
+		reader.onload = function(e) { // 파일의 내용을 다 읽었으면
+			$(".write-form .thumbnail-viewer").empty();
+			$(".write-form .thumbnail-viewer").css("background-image", "url("+e.target.result+")");
+		};
+		reader.readAsDataURL( file );
+	});
+});
+
+
 </script>
 
 <link rel="stylesheet"
@@ -99,25 +132,13 @@ function check() {
 									style="width: 93%;"></textarea></td>
 						</tr>
 						<tr>
-							<td class="table-light col-sm-2">대표 이미지</td>
+							<td class="table-light col-sm-2">대표이미지</td>
 							<td>
-								<div class="thumbnail-viewer"></div> <input type="file"
-								name="thumbnailFile" accept="image/*" class="form-control"
-								style="display: none;">
+								<div class="thumbnail-viewer"></div> 
+								<input type="file"name="thumbnailFile" accept="image/*" class="form-control"
+								>
 							</td>
 						</tr>
-
-						<tr>
-							<td class="table-light col-sm-2">추가 이미지</td>
-							<td>
-								<div class="img-grid">
-									<img class="item img-add"
-										src="${pageContext.request.contextPath}/resources/images/add_photo.png">
-								</div> <input type="file" name="addFiles" accept="image/*"
-								multiple="multiple" class="form-control" style="display: none;">
-							</td>
-						</tr>
-
 					</table>
 
 					<table class="table table-borderless">

@@ -22,24 +22,11 @@ public class EventServiceImpl implements EventService {
 	public void insertEvent(Event dto, String pathname) throws Exception {
 		try {
 			// 썸네일 이미지
-			//String filename = fileManager.doFileUpload(dto.getThumbnailFile(), pathname);
-			//dto.setThumbnail(filename);
+			String filename = fileManager.doFileUpload(dto.getThumbnailFile(), pathname);
+			dto.setThumbnail(filename);
 
 			System.out.print("inserEvent");
 			dao.insertData("event.insertEvent", dto);
-
-			// 추가 이미지 저장
-//			if (!dto.getAddFiles().isEmpty()) {
-//				for (MultipartFile mf : dto.getAddFiles()) {
-//					filename = fileManager.doFileUpload(mf, pathname);
-//					if (filename == null) {
-//						continue;
-//					}
-//					dto.setFilename(filename);
-//
-//					dao.insertData("product.insertProductFile", dto);
-//				}
-//			}
 
 		} catch (Exception e) {
 			e.printStackTrace();

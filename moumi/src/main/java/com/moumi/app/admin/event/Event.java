@@ -1,5 +1,7 @@
 package com.moumi.app.admin.event;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class Event {
 	private long eventNum;
 	private long userCode;
@@ -9,6 +11,8 @@ public class Event {
 	private String startDate;
 	private String endDate;
 	private int hitCount;
+	private MultipartFile thumbnailFile;
+	private String thumbnail;
 
 	public long getEventNum() {
 		return eventNum;
@@ -72,6 +76,22 @@ public class Event {
 
 	public void setHitCount(int hitCount) {
 		this.hitCount = hitCount;
+	}
+
+	public MultipartFile getThumbnailFile() {
+		return thumbnailFile;
+	}
+
+	public void setThumbnailFile(MultipartFile thumbnailFile) {
+		this.thumbnailFile = thumbnailFile;
+	}
+
+	public String getThumbnail() {
+		return thumbnail;
+	}
+
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
 	}
 
 }
