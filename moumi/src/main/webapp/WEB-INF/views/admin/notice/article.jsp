@@ -126,7 +126,7 @@ tr {
 						<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/admin/notice/update?noticeNum=${dto.noticeNum}&page=${page}';">수정</button>
 						<button type="button" class="btn btn-light"
 											data-bs-toggle="modal" data-bs-target="#exampleModal">
-											삭제</button>
+											삭제 </button>
 					</td>
 					<td class="text-end">
 						<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/admin/notice/list?${query}';">리스트</button>
