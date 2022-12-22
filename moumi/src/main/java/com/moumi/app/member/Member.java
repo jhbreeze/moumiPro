@@ -12,6 +12,13 @@ public class Member {
 	private String lastLogin;
 	private int userType;
 	
+	private String authority;
+	private long stateNum;
+	private int stateCode;
+	private String memo;
+	private String registerCode;
+	private String register_date;
+	
 	public long getUserCode() {
 		return userCode;
 	}
@@ -71,5 +78,43 @@ public class Member {
 	}
 	public void setUserType(int userType) {
 		this.userType = userType;
+	}
+	
+
+	public String getAuthority() {
+		return authority;
+	}
+	public void setAuthority(String authority) {
+		this.authority = authority;
+	}
+	public long getStateNum() {
+		return stateNum;
+	}
+	public void setStateNum(long stateNum) {
+		this.stateNum = stateNum;
+	}
+	public int getStateCode() {
+		return stateCode;
+	}
+	public void setStateCode(int stateCode) {
+		this.stateCode = stateCode;
+	}
+	public String getMemo() {
+		return memo;
+	}
+	public void setMemo(String memo) {
+		this.memo = memo;
+	}
+	public String getRegisterCode() {
+		return registerCode;
+	}
+	public void setRegisterCode(String registerCode) {
+		this.registerCode = registerCode;
+	}
+	public String getRegister_date() {
+		return register_date;
+	}
+	public void setRegister_date(String register_date) {
+		this.register_date = register_date;
 	}
 }

@@ -1,12 +1,18 @@
 package com.moumi.app.member;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller("member.memberController")
@@ -29,12 +35,10 @@ public class MemberController {
 		try {
 			service.insertMember(dto);
 		} catch (DuplicateKeyException e) {
-			// 기본키 중복에 의한 제약 조건 위반
 			model.addAttribute("mode", "member");
 			model.addAttribute("message", "이메일 중복으로 회원가입이 실패했습니다.");
 			return ".member.member";
 		} catch (DataIntegrityViolationException e) {
-			// 데이터형식 오류, 참조키, NOT NULL 등의 제약조건 위반
 			model.addAttribute("mode", "member");
 			model.addAttribute("message", "제약 조건 위반으로 회원가입이 실패했습니다.");
 			return ".member.member";
@@ -56,5 +60,33 @@ public class MemberController {
 	}
 	
 	
+	@RequestMapping(value = "complete")
+	public String complete(@ModelAttribute("message") String message) throws Exception {
+
+		if (message == null || message.length() == 0) // F5를 누른 경우
+			return "redirect:/";
+
+		return ".member.complete";
+	}
+
+	@RequestMapping(value = "login")
+	public String loginForm() {
+		return ".member.login";
+	}
+
+	@RequestMapping(value = "userIdCheck", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> idCheck(@RequestParam String email) throws Exception {
+
+		String p = "true";
+		Member dto = service.readMember(email);
+		if (dto != null) {
+			p = "false";
+		}
+
+		Map<String, Object> model = new HashMap<>();
+		model.put("passed", p);
+		return model;
+	}
 	
 }

@@ -76,23 +76,16 @@ function memberOk() {
         return;
     }
 	
-    str = f.email1.value.trim();
+    str = f.email.value.trim();
     if( !str ) {
         alert("이메일을 입력하세요. ");
         f.email1.focus();
         return;
     }
 
-    str = f.email2.value.trim();
-    if( !str ) {
-        alert("이메일을 입력하세요. ");
-        f.email2.focus();
-        return;
-    }
-
-	str = f.userId.value;
+	str = f.email.value;
 	if( !/^[a-z][a-z0-9_]{4,9}$/i.test(str) ) { 
-		alert("아이디를 다시 입력 하세요. ");
+		alert("이메일을 다시 입력 하세요. ");
 		f.userId.focus();
 		return;
 	}
@@ -119,13 +112,17 @@ function memberOk() {
 	}
 
 	str = f.userNickname.value;
-	if( ) {
-		
+	if( !str ) {
+		alert("닉네임을 입력하세요.");
+		f.userNickname.focus();
+		return;
 	}
 	
 	str = f.userGender.value;
-	if( ) {
-		
+	if( !str ) {
+		alert("성별을 입력하세요.");
+		f.userGender.focus();
+		return;
 	}
 	
 

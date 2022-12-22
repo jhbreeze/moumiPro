@@ -5,7 +5,7 @@
 	<select id="loginMember" parameterType="String" resultType="com.moumi.app.member.Member">
 		SELECT userCode, userType, email, userName, pwd, regDate, lastLogin
 		FROM member m
-		WHERE email = #{email} AND enabled != 0
+		WHERE email = #{email} AND enabled != 1
 	</select>
 	
 	<update id="updateLastLogin" parameterType="String">
@@ -23,7 +23,62 @@
     </insert>
 
 	
-    
+    <!-- 권한 테이블 -->
+    <insert id="insertAuthority" parameterType="com.moumi.app.member.Member">
+    	INSERT INTO memberAuthority(authority, userCode)
+    		VALUES (#{authority}, #{userCode})
+    </insert>
 	
+	<update id="updateAuthority" parameterType="com.moumi.app.member.Member">
+		UPDATE memberAuthority SET authority = #{authority} WHERE userCode = #{userCode}
+	</update>
+	
+	<select id="readMember" parameterType="String" resultType="com.moumi.app.member.Member">
+		SELECT userCode, userType, email, userName, nickName, pwd, enabled,
+			regDate, lastLogin,
+			TO_CHAR(birth, 'YYYY-MM-DD') birth
+		FROM member  
+		WHERE email = #{email}
+	</select>
+
+	<select id="readMember2" parameterType="Long" resultType="com.moumi.app.member.Member">
+		SELECT userCode, userType, enabled, 
+			NVL(email, 'guest') email, NVL(userName, '손님') userName, pwd, 
+			regDate, lastLogin,
+			TO_CHAR(birth, 'YYYY-MM-DD') birth
+		FROM member m
+		WHERE email = #{email}
+	</select>
+	
+    <!-- 회원정보 수정  --> 
+    
+    
+    <!-- member 테이블 정보 삭제  -->  
+    
+    
+	 <!-- 패스워드 실패 / 회원 상태 -->
+	 <select id="checkFailureCount" parameterType="String" resultType="Integer">
+    	SELECT NVL(failureCnt, 0) failureCnt
+    	FROM member
+    	WHERE email = #{email}
+    </select>
+    
+    <update id="updateFailureCountReset" parameterType="String">
+    	UPDATE member SET failureCnt = 0
+    	WHERE email = #{email}
+    </update>
+    
+    <update id="updateFailureCount" parameterType="String">
+    	UPDATE member SET failureCnt = failureCnt + 1
+    	WHERE email = #{email}
+    </update>
+    
+    <insert id="insertMemberState" parameterType="com.moumi.app.member.Member">
+    	INSERT INTO state (stateNum, registerCode, register_date, userCode, stateCode, memo)
+    		VALUES (state_seq.NEXTVAL, #{registerCode}, SYSDATE, #{userCode}, #{stateCode}, #{memo})
+    </insert>
+	
+	 
+	 
 	
 </mapper>

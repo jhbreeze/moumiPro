@@ -5,8 +5,8 @@ public class SessionInfo {
 	private long userCode;
 	private String email;
 	private String userName;
-	private int userType;
 	private String nickName;
+	private int userType;
 	
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
