@@ -6,7 +6,11 @@ public class SessionInfo {
 	private String email;
 	private String userName;
 	private int userType;
+	private String nickName;
 	
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
 	public long getUserCode() {
 		return userCode;
 	}
@@ -31,6 +35,7 @@ public class SessionInfo {
 	public void setUserType(int userType) {
 		this.userType = userType;
 	}
-	
-	
+	public String getNickName() {
+		return nickName;
+	}
 }
