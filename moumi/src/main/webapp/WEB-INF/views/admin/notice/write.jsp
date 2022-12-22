@@ -3,6 +3,29 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<script type="text/javascript">
+function sendOk() {
+	const f = document.noticeForm;
+	let str;
+	
+	str = f.subject.value.trim();
+	if(!str) {
+		alert("제목을 입력하세요. ");
+		f.subject.focus();
+		return;
+	}
+	
+	str = f.content.value.trim();
+	if(!str){
+		alert("내용을 입력하세요. ");
+		f.content.focus();
+		return;
+	}
+	
+	f.action = "${pageContext.request.contextPath}/admin/notice/${mode}";
+	f.submit();
+}
+</script>
 <style type="text/css">
 .container {
 	min-height: 800px;
@@ -25,10 +48,6 @@ tr {
 	font-size: 15px;
 }
 
-tr:hover {
-	background: #fff;
-	box-shadow: 0px 0px 4px rgb(72, 92, 161, 0.4);
-}
 
 .sort {
 	font-size: 10px;
@@ -80,20 +99,12 @@ tr:hover {
 						<td>
 							<input type="text" name="subject" class="form-control" value="${dto.subject}">
 						</td>
-					</tr>
-					
-					<tr>
-						<td class="table-light col-sm-2" scope="row">공지여부</td>
-						<td class="py-3">
-							<input type="checkbox" name="notice" id="notice" class="form-check-input" value="1" ${dto.notice==1 ? "checked='checked' ":"" } >
-							<label class="form-check-label" for="notice"> 공지</label>
-						</td>
 					</tr>        
         
 					<tr>
 						<td class="table-light col-sm-2" scope="row">작성자명</td>
  						<td>
-							<p class="form-control-plaintext">${sessionScope.member.userName}</p>
+							<p class="form-control-plaintext">관리자</p>
 						</td>
 					</tr>
 
@@ -113,12 +124,12 @@ tr:hover {
 					
 					<c:if test="${mode=='update'}">
 						<c:forEach var="vo" items="${listFile}">
-							<tr id="f${vo.fileNum}">
+							<tr id="f${vo.noticeFileNum}">
 								<td class="table-light col-sm-2" scope="row">첨부된파일</td>
 								<td> 
 									<p class="form-control-plaintext">
-										<a href="javascript:deleteFile('${vo.fileNum}');"><i class="bi bi-trash"></i></a>
-										${vo.originalFilename}
+										<a href="javascript:deleteFile('${vo.noticeFileNum}');"><i class="bi bi-trash"></i></a>
+										${vo.imageFilename}
 									</p>
 								</td>
 							</tr>
@@ -129,11 +140,11 @@ tr:hover {
 				<table class="table table-borderless">
  					<tr>
 						<td class="text-center">
-							<button type="button" class="btn btn-dark" onclick="sendOk();">${mode=='update'?'수정완료':'등록하기'}&nbsp;<i class="bi bi-check2"></i></button>
+							<button type="button" class="btn btn-dark" onclick="submitContents(this.form);">${mode=='update'?'수정완료':'등록하기'}&nbsp;<i class="bi bi-check2"></i></button>
 							<button type="reset" class="btn btn-light">다시입력</button>
-							<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/notice/list';">${mode=='update'?'수정취소':'등록취소'}&nbsp;<i class="bi bi-x"></i></button>
+							<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/admin/notice/list';">${mode=='update'?'수정취소':'등록취소'}&nbsp;<i class="bi bi-x"></i></button>
 							<c:if test="${mode=='update'}">
-								<input type="hidden" name="num" value="${dto.num}">
+								<input type="hidden" name="num" value="${dto.noticeNum}">
 								<input type="hidden" name="page" value="${page}">
 							</c:if>
 						</td>
@@ -144,3 +155,33 @@ tr:hover {
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript">
+var oEditors = [];
+nhn.husky.EZCreator.createInIFrame({
+	oAppRef: oEditors,
+	elPlaceHolder: "content",
+	sSkinURI: "${pageContext.request.contextPath}/resources/vendor/se2/SmartEditor2Skin.html",
+	fCreator: "createSEditor2"
+});
+
+function submitContents(elClickedObj) {
+	 oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
+	 try {
+		if(! sendOk()) {
+			return;
+		}
+		
+		elClickedObj.submit();
+		
+	} catch(e) {
+	}
+}
+
+function setDefaultFont() {
+	var sDefaultFont = '돋움';
+	var nFontSize = 12;
+	oEditors.getById["content"].setDefaultFont(sDefaultFont, nFontSize);
+}
+</script>

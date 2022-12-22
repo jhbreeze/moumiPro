@@ -2,6 +2,20 @@
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/board2.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/vendor/bootstrap5/css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/vendor/bootstrap5/icon/bootstrap-icons.css" type="text/css">
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/jquery/js/jquery.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/bootstrap5/js/bootstrap.bundle.min.js"></script>
+
+<script type="text/javascript">
+function deleteOk() {
+	let query = "noticeNum=${dto.noticeNum}&${query}";
+	let url = "${pageContext.request.contextPath}/admin/notice/delete?" + query;
+	location.href = url;
+}
+</script>
 
 <style type="text/css">
 .container {
@@ -23,11 +37,6 @@ main {
 
 tr {
 	font-size: 15px;
-}
-
-tr:hover {
-	background: #fff;
-	box-shadow: 0px 0px 4px rgb(72, 92, 161, 0.4);
 }
 
 .sort {
@@ -74,9 +83,76 @@ tr:hover {
 		</div>
 
 		<div class="body-main">
-			<form name="listForm" method="post">
-				<div class="row board-list-header"></div>
-			</form>
+			<table class="table">
+				<thead>
+					<tr>
+						<td colspan="3" align="center">${dto.subject}</td>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr>
+						<td width="50%">작성자 : 관리자</td>
+						<td align="right">${dto.regDate}</td>
+						<td align="right">조회수 : ${dto.hitCount}</td>
+					</tr>
+					<tr>
+						<td colspan="2" style="border-bottom: none;">
+							<div class="image">
+								<img src="${pageContext.request.contextPath}/uploads/photo/${dto.imageFilename}"
+											class="img-fluid img-thumbnail w-100 h-auto">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" valign="top" height="200">${dto.content}</td>
+					</tr>
+					<tr>
+						<td colspan="3">이전글 : <c:if test="${not empty preReadDto}">
+							<a href="${pageContext.request.contextPath}/admin/notice/article?${query}&noticeNum=${preReadDto.noticeNum}">${preReadDto.subject}</a>
+						</c:if></td>
+					</tr>
+					<tr>
+						<td colspan="3">다음글 : <c:if test="${not empty nextReadDto}">
+							<a href="${pageContext.request.contextPath}/admin/notice/article?${query}&noticeNum=${nextReadDto.noticeNum}">${nextReadDto.subject}</a>
+						</c:if></td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<table class="table table-borderless">
+				<tr>
+					<td width="50%">
+						<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/admin/notice/update?noticeNum=${dto.noticeNum}&page=${page}';">수정</button>
+						<button type="button" class="btn btn-light"
+											data-bs-toggle="modal" data-bs-target="#exampleModal">
+											삭제</button>
+					</td>
+					<td class="text-end">
+						<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/admin/notice/list?${query}';">리스트</button>
+					</td>
+				</tr>
+			</table>
+			
+			<div class="modal fade" id="exampleModal" tabindex="-1"
+						aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">공지사항</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<div class="modal-body">게시글을 삭제하시겠습니까?</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-bs-dismiss="modal">아니요</button>
+									<button type="button" class="btn btn-primary"
+										onclick="deleteOk();">예</button>
+								</div>
+							</div>
+						</div>
+					</div>
 		</div>
 	</div>
 </div>

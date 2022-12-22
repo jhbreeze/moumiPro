@@ -11,9 +11,11 @@ public class Notice {
 	private String content;
 	private String regDate;
 	private int notice;
+	private int hitCount;
 	
 	private long noticeFileNum;
-	private List<MultipartFile> imageFileName;
+	private String imageFilename;
+	private List<MultipartFile> selectFile;
 	
 	public long getNoticeNum() {
 		return noticeNum;
@@ -57,12 +59,25 @@ public class Notice {
 	public void setNoticeFileNum(long noticeFileNum) {
 		this.noticeFileNum = noticeFileNum;
 	}
-	public List<MultipartFile> getImageFileName() {
-		return imageFileName;
+	public String getImageFilename() {
+		return imageFilename;
 	}
-	public void setImageFileName(List<MultipartFile> imageFileName) {
-		this.imageFileName = imageFileName;
+	public void setImageFilename(String imageFilename) {
+		this.imageFilename = imageFilename;
 	}
+	public List<MultipartFile> getSelectFile() {
+		return selectFile;
+	}
+	public void setSelectFile(List<MultipartFile> selectFile) {
+		this.selectFile = selectFile;
+	}
+	public int getHitCount() {
+		return hitCount;
+	}
+	public void setHitCount(int hitCount) {
+		this.hitCount = hitCount;
+	}
+	
 	
 	
 
