@@ -1,6 +1,9 @@
 package com.moumi.app.admin.event;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 
+
 @Controller("admin.event.eventController")
 @RequestMapping("/admin/event/*")
 public class EventController {
@@ -21,7 +25,11 @@ public class EventController {
 
 
 	@RequestMapping(value = "list")
-	public String list() throws Exception {
+	public String list(Model model) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		List<Event> list = service.listEvent(map);
+		model.addAttribute("list", list);
 
 		return ".admin.event.list";
 	}
@@ -39,10 +47,11 @@ public class EventController {
 		//SessionInfo info = (SessionInfo) session.getAttribute("member");
 		try {
 			
-			System.out.print("write");
-
+			String root = session.getServletContext().getRealPath("/");
+			String path = root + "uploads" + File.separator + "event";
+			
 			dto.setUserCode(0);
-			service.insertEvent(dto, "write");
+			service.insertEvent(dto, path);
 		} catch (Exception e) {
 		}
 

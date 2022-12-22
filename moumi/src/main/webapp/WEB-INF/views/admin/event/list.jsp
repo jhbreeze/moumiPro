@@ -20,22 +20,17 @@
 				<form name="listForm" method="post">
 					<div class="row board-list-header"></div>
 					<div class="row">
-						<c:forEach var="item" begin="0" end="11" step="1"
-							varStatus="status">
+						<c:forEach var="dto" items="${list}" varStatus="status">
 							<div class="col-lg-3 col-sm-3">
 								<div class="card" style="width: 18rem;">
-									<img style="height: 280px; width: 285px;"
-										src="${pageContext.request.contextPath}/resources/images/noimage.png" />
+									<img style="height: 280px; width: 285px;" src="${pageContext.request.contextPath}/uploads/event/${dto.thumbnail}" />
 									<div class="card-body">
-										<p class="card-text">이벤트 제목</p>
+										<p class="card-text">${dto.subject}</p>
 									</div>
 								</div>
 								<br>
-
 							</div>
 						</c:forEach>
-
-
 					</div>
 				</form>
 			</div>

@@ -47,7 +47,7 @@ function check() {
 $(function(){
 	var img = "${dto.thumbnail}";
 	if( img ) {
-		img = "${pageContext.request.contextPath}/uploads/admin/event/"+img;
+		img = "${pageContext.request.contextPath}/uploads/event/"+img;
 		$(".write-form .thumbnail-viewer").empty();
 		$(".write-form .thumbnail-viewer").css("background-image", "url("+img+")");
 	}
@@ -63,7 +63,7 @@ $(function(){
 			$(".write-form .thumbnail-viewer").empty();
 			
 			if( img ) {
-				img = "${pageContext.request.contextPath}/uploads/admin/event/"+img;
+				img = "${pageContext.request.contextPath}/uploads/event/"+img;
 			} else {
 				img = "${pageContext.request.contextPath}/resources/images/add_photo.png";
 			}

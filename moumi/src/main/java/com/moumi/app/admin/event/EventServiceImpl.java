@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.moumi.app.common.FileManager;
 import com.moumi.app.common.dao.CommonDAO;
@@ -53,9 +52,18 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
-	public List<Event> listEvent(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Event> listEvent(Map<String, Object> map) throws Exception {
+		// 썸네일 이미지
+		List<Event> list = null;
+		try {
+
+			list = dao.selectList("event.listEvent");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return list;
 	}
 
 	@Override

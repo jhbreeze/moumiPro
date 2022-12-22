@@ -9,7 +9,7 @@ public interface EventService {
 	public void deleteEvent(long productNum, String pathname) throws Exception;
 	
 	public int dataCount(Map<String, Object> map);
-	public List<Event> listEvent(Map<String, Object> map);
+	public List<Event> listEvent(Map<String, Object> map) throws Exception;
 	
 	public Event readEvent(long productNum);
 	public Event preReadEvent(Map<String, Object> map);
