@@ -10,8 +10,10 @@ public class Recruit {
 	private String startDate;
 	private String endDate;
 	private String email;
+	
 	private long userCode;
 	private String corporation;
+	private int userType;
 	
 	private long categoryNum;
 	private String career;
@@ -131,6 +133,14 @@ public class Recruit {
 
 	public void setCareer(String career) {
 		this.career = career;
+	}
+
+	public int getUserType() {
+		return userType;
+	}
+
+	public void setUserType(int userType) {
+		this.userType = userType;
 	}
 
 	
