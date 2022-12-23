@@ -34,6 +34,8 @@
 						</c:forEach>
 					</div>
 				</form>
+				
+				<button type="button" class="btn btn-success" style ="float:right;" onclick="location.href='${pageContext.request.contextPath}/admin/event/write'">이벤트 등록</button>
 			</div>
 		</div>
 	</div>

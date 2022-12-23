@@ -19,6 +19,15 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <style>
+
+@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
 .mainBox {
 	margin-top: 25px;
 	border: none;
@@ -117,7 +126,40 @@ li {
 	padding: 10px;
 	border:none; 
 }
-</style>
+
+.imageContent{
+	height: 250px; 
+	width: 300px;
+	border-radius: 20px;
+	/* background: #ECF4EB; */
+	margin-left:15px;
+	padding:20px;
+	text-align: left;
+    box-sizing: border-box;
+    border-radius: 12px;
+   	
+}
+
+
+.recFont {
+	font-family: 'GmarketSansMedium';
+	color: #363634;
+	
+}
+
+
+
+.recTitle {
+	font-size:28px;
+	color: #363634;
+}
+
+.recEmTitle {
+	font-size:15px;
+	color: #363634;
+}
+
+</style> 
 
 
 <script>
@@ -185,9 +227,13 @@ li {
 	</div>
 </div>
 
+
+
 <div class="container body-container">
 	<div class="inner-page">
 		<br> <br> <br>
+	
+		
 		<p class="title">분석 리포트</p>
 		<a href="${pageContext.request.contextPath}/report/reportList"
 			class="more">더보기</a> <br> <br>
@@ -211,7 +257,52 @@ li {
 		</div>
 		<br> <br> <br> <br>
 
-		<p class="title">분석 리포트</p>
+		<div class="imageLayout">
+			<div class="banConWrap">
+				<ul>
+					<li class = "imageContent" style="background:#faaaaa">
+						<a href="${pageContext.request.contextPath}/admin/event/list"> 
+						<span class ="recFont"> <strong class="recTitle">어서와!</strong><br>
+								MOUMI는 처음이지?<br> <em class="recEmTitle">초보 MOUMI 유저를 위한 이용방법</em>
+						</span>
+						<img style="height: 130px; width: 160px; float:right"
+								src="${pageContext.request.contextPath}/resources/images/moumi/manual.png" />
+
+					</a></li>
+					<li class ="imageContent" style="background:#ffdd91">
+						<a href="${pageContext.request.contextPath}/admin/event/list"> 
+						<span class ="recFont"> <strong class="recTitle">채용 공고!</strong><br>
+								MOUMI는 처음이지?<br> <em class="recEmTitle">초보 MOUMI 유저를 위한 이용방법</em>
+						</span>
+						<img style="height: 130px; width: 160px; float:right"
+								src="${pageContext.request.contextPath}/resources/images/add_photo.png" />
+					</a></li>
+					
+					<li class ="imageContent" style="background:#7bc7e3">
+						<a href="${pageContext.request.contextPath}/admin/event/list"> 
+						<span class ="recFont"> <strong class="recTitle">일정 관리!</strong><br>
+								MOUMI는 처음이지?<br> <em class ="recEmTitle">초보 MOUMI 유저를 위한 이용방법</em>
+						</span>
+						<img style="height: 130px; width: 150px; float:right"
+								src="${pageContext.request.contextPath}/resources/images/moumi/schedual.png" />
+					</a></li>
+					
+					
+					<li class ="imageContent" style="background:#bbb6e3">
+						<a href="https://www.nongsaro.go.kr/portal/ps/psz/psza/contentSub.ps?menuId=PS65302&amp;bbsId=1&amp;pageIndex=1&amp;pageSize=10&amp;cntntsNo=41"> 
+						<span class ="recFont"> <strong class="recTitle">이벤트!</strong><br>
+								MOUMI는 처음이지?<br> <em class="recEmTitle"> 초보 MOUMI 유저를 위한 이용방법</em>
+						</span>
+						<img style="height: 130px; width: 160px; float:right"
+								src="${pageContext.request.contextPath}/resources/images/moumi/event.png" />
+					</a></li>
+					
+
+				</ul>
+
+			</div>
+		</div>
+
 		<div class="container text-center">
 
 			<div class="container">
