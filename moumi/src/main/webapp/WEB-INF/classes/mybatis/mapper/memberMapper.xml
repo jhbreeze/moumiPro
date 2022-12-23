@@ -19,18 +19,18 @@
 
     <insert id="insertMember" parameterType="com.moumi.app.member.Member">
 		INSERT INTO member(userCode, email, pwd, nickName, userName, enabled, regDate, failureCnt, lastLogin, userType, gender, birth) 
-        VALUES (#{userCode}, #{email}, #{pwd}, #{nickName}, #{userName}, 0, SYSDATE, 0, SYSDATE, 0, #{gender}, #{birth});	
+        VALUES (#{userCode}, #{email}, #{pwd}, #{nickName}, #{userName}, 1, SYSDATE, 0, SYSDATE, 0, #{gender}, #{birth});	
     </insert>
 
 	
     <!-- 권한 테이블 -->
     <insert id="insertAuthority" parameterType="com.moumi.app.member.Member">
-    	INSERT INTO memberAuthority(authority, userCode)
-    		VALUES (#{authority}, #{userCode})
+    	INSERT INTO security(authority, email)
+    		VALUES (#{authority}, #{email})
     </insert>
 	
 	<update id="updateAuthority" parameterType="com.moumi.app.member.Member">
-		UPDATE memberAuthority SET authority = #{authority} WHERE userCode = #{userCode}
+		UPDATE security SET authority = #{authority} WHERE email = #{email}
 	</update>
 	
 	<select id="readMember" parameterType="String" resultType="com.moumi.app.member.Member">

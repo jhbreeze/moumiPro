@@ -3,6 +3,7 @@ package com.moumi.app.member;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.moumi.app.common.dao.CommonDAO;
@@ -12,19 +13,8 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private CommonDAO dao;
 	
-
-	@Override
-	public Member loginMember(String userId) {
-		Member dto = null;
-
-		try {
-			dto = dao.selectOne("member.loginMember", userId);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return dto;
-	}
+	@Autowired
+	private BCryptPasswordEncoder bcrypt;
 	
 	@Override
 	public void insertMember(Member dto) throws Exception {
@@ -33,11 +23,16 @@ public class MemberServiceImpl implements MemberService {
 			dto.setUserCode(memberSeq);
 			
 			// 패스워드 암호화
+			String encPassword = bcrypt.encode(dto.getPwd());
+			dto.setPwd(encPassword);
 
+			dto.setEnabled(1);
 			// 회원정보 저장
 			dao.insertData("member.insertMember", dto);
 			
 			// 권한 저장
+			dto.setAuthority("ROLE_USER");
+			dao.insertData("member.insertAuthority", dto);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -131,22 +126,12 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void updateMemberEnabled(Map<String, Object> map) throws Exception {
-		try {
-			dao.updateData("member.updateMemberEnabled",map);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
-		}
+		
 	}
 
 	@Override
 	public void insertMemberState(Member dto) throws Exception {
-		try {
-			dao.insertData("member.insertMemberState", dto);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
-		}
+
 	}
 
 	@Override

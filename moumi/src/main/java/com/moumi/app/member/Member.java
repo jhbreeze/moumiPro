@@ -11,6 +11,7 @@ public class Member {
 	private String regDate;
 	private String lastLogin;
 	private int userType;
+	private int enabled;
 	
 	private String authority;
 	private long stateNum;
@@ -79,8 +80,12 @@ public class Member {
 	public void setUserType(int userType) {
 		this.userType = userType;
 	}
-	
-
+	public int getEnabled() {
+		return enabled;
+	}
+	public void setEnabled(int enabled) {
+		this.enabled = enabled;
+	}
 	public String getAuthority() {
 		return authority;
 	}
