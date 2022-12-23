@@ -37,7 +37,7 @@
 					</li>
 					
 					<li class="nav-item">
-						<a class="nav-link" style="color:#fff"  href="${pageContext.request.contextPath}/recruit/list">채용</a>
+						<a class="nav-link" style="color:#fff"  href="${pageContext.request.contextPath}/recruit/main">채용</a>
 					</li>
 					
 					<li class="nav-item dropdown">

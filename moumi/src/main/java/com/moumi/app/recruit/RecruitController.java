@@ -33,6 +33,18 @@ public class RecruitController {
 	@Autowired
 	private FileManager fileManager;
 		
+	@RequestMapping(value = "main")
+	public String main(@RequestParam(value = "pageNo", defaultValue = "1") int current_page,
+			Model model) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		model.addAttribute("pageNo", current_page);
+		
+		return ".recruit.main";
+	}
+	
+	
+	
 	@RequestMapping(value = "list")
 	public String list(@RequestParam(value = "page", defaultValue = "1") int current_page,
 			@RequestParam(defaultValue = "all") String condition,
@@ -65,17 +77,23 @@ public class RecruitController {
 		map.put("size", size);
 		
 		List<Recruit> list = service.listRecruit(map);
+		for(Recruit dto : list) {
+			dto.setContent(myUtil.htmlSymbols(dto.getContent()));
+		}
+		
+		String paging = myUtil.pagingMethod(current_page, total_page, "listPage");
 		
 		model.addAttribute("list", list);
 		model.addAttribute("page", current_page);
 		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("size", size);
 		model.addAttribute("total_page", total_page);
+		model.addAttribute("paging", paging);
 		
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
 		
-		return ".recruit.list";
+		return "recruit/list";
 	}
 	
 	@GetMapping("write")
@@ -102,7 +120,7 @@ public class RecruitController {
 		}
 		
 		
-		return "redirect:/recruit/list";
+		return "redirect:/recruit/main";
 	}
 	
 	@GetMapping("article")
