@@ -5,19 +5,13 @@
 
 <link href="http://api.nongsaro.go.kr/css/api.css" rel="stylesheet"
 	type="text/css">
+
 <script type="text/javascript"
 	src="http://api.nongsaro.go.kr/js/framework.js"></script>
 <script type="text/javascript"
 	src="http://api.nongsaro.go.kr/js/openapi_nongsaro.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js"></script>
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css"
-	rel="stylesheet" />
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+
+
 <style>
 
 @font-face {
@@ -96,6 +90,8 @@ li {
 	margin-top: 50px;
 	color: white;
 	text-weight: bold;
+	font-family: 'GmarketSansMedium';
+	font-weight: 900;
 }
 
 .customInput{
@@ -130,8 +126,7 @@ li {
 .imageContent{
 	height: 250px; 
 	width: 300px;
-	border-radius: 20px;
-	/* background: #ECF4EB; */
+	border-radius: 25px;
 	margin-left:15px;
 	padding:20px;
 	text-align: left;
@@ -302,6 +297,8 @@ li {
 
 			</div>
 		</div>
+		
+	
 
 		<div class="container text-center">
 

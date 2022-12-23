@@ -12,7 +12,6 @@
 	<title><tiles:insertAttribute name="title"/></title>
 	<link rel="icon" href="data:;base64,iVBORw0KGgo=">
 	
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/vendor/jquery/css/jquery-ui.min.css" type="text/css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/vendor/icofont/icofont.min.css" type="text/css">
 	
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" type="text/css">
@@ -56,9 +55,6 @@
 	<div class="loader"></div>
 </div>
 
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/jquery/js/jquery-ui.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/jquery/js/jquery.ui.datepicker-ko.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/slider/js/slider.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/bootstrap5/js/bootstrap.bundle.min.js"></script>
 
 </body>

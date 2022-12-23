@@ -25,6 +25,13 @@
 		<!-- spring 4.x때 추가된 옵션으로 ssl을 사용하지 않을 경우 csrf는 disalbed=true로 설정. -->
 		<csrf disabled="true"/>
 		
+		
+		<headers>
+            <frame-options policy="SAMEORIGIN" />
+            <hsts disabled="true"/>
+        </headers>
+ 
+ 
 		<!-- 모든 접속자 접근 허용 -->
 		<intercept-url pattern="/" access="permitAll"/>
 		<intercept-url pattern="/main" access="permitAll"/>
