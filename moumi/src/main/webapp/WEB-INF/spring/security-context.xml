@@ -27,6 +27,8 @@
 		
 		<!-- 모든 접속자 접근 허용 -->
 		<intercept-url pattern="/" access="permitAll"/>
+		<intercept-url pattern="/main" access="permitAll"/>
+		<intercept-url pattern="/call/**" access="permitAll"/>
 		<intercept-url pattern="/index.jsp" access="permitAll"/>
 		<intercept-url pattern="/member/login" access="permitAll"/>
 		<intercept-url pattern="/member/member" access="permitAll"/>
