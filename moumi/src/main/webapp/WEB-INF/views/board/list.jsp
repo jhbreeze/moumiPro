@@ -9,8 +9,8 @@
 }
 </style>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/boot-board.css" type="text/css">
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/paginate-boot.js"></script>
-<c:url var="listUrl" value="/bbs/list">
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/paginate.js"></script>
+<c:url var="listUrl" value="/board/list">
 	<c:if test="${not empty keyword}">
 		<c:param name="condition" value="${condition}"/>
 		<c:param name="keyword" value="${keyword}"/>
@@ -61,10 +61,9 @@ function searchList() {
 					<tr>
 						<th class="bw-60">번호</th>
 						<th>제목</th>
-						<th class="bw-100">작성자</th>
+						<th class="bw-100">닉네임</th>
 						<th class="bw-100">작성일</th>
 						<th class="bw-70">조회수</th>
-						<th class="bw-50">파일</th>
 					</tr>
 				</thead>
 				
@@ -73,8 +72,8 @@ function searchList() {
 						<tr>
 							<td>${dataCount - (page-1) * size - status.index}</td>
 							<td class="left">
-								<c:url var="url" value="/bbs/article">
-									<c:param name="num" value="${dto.num}"/>
+								<c:url var="url" value="/board/article">
+									<c:param name="num" value="${dto.communityNum}"/>
 									<c:param name="page" value="${page}"/>
 									<c:if test="${not empty keyword}">
 										<c:param name="condition" value="${condition}"/>
@@ -84,14 +83,9 @@ function searchList() {
 								<a href="${url}" class="text-reset">${dto.subject}</a>
 								<c:if test="${dto.replyCount!=0}">(${dto.replyCount})</c:if>
 							</td>
-							<td>${dto.userName}</td>
-							<td>${dto.reg_date}</td>
+							<td>${dto.nickName}</td>
+							<td>${dto.regDate}</td>
 							<td>${dto.hitCount}</td>
-							<td>
-								<c:if test="${not empty dto.saveFilename}">
-									<a href="${pageContext.request.contextPath}/bbs/download?num=${dto.num}" class="text-reset"><i class="bi bi-file-arrow-down"></i></a>
-								</c:if>
-							</td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -104,7 +98,7 @@ function searchList() {
 					<button type="button" class="btn btn-success" onclick="location.href='${pageContext.request.contextPath}/board/list';">새로고침</button>
 				</div>
 				<div class="col-6 text-center">
-					<form class="row" name="searchForm" action="${pageContext.request.contextPath}/bbs/list" method="post">
+					<form class="row" name="searchForm" action="${pageContext.request.contextPath}/board/list" method="post">
 						<div class="col-auto p-1">
 							<select name="condition" class="form-select">
 								<option value="all" ${condition=="all"?"selected='selected'":""}>제목+내용</option>

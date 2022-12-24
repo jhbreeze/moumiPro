@@ -10,6 +10,7 @@
 </style>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/boot-board.css" type="text/css">
 
+
 <script type="text/javascript">
 function sendOk() {
     const f = document.boardForm;
@@ -23,14 +24,15 @@ function sendOk() {
     }
 
     str = f.content.value.trim();
-    if(!str) {
+    if(!str || str === "<p><br></p>") {
         alert("내용을 입력하세요. ");
+        alert(str);
         f.content.focus();
-        return;
+        return false;
     }
 
-    f.action = "${pageContext.request.contextPath}/bbs/${mode}";
-    f.submit();
+    f.action = "${pageContext.request.contextPath}/board/${mode}";
+    return true;
 }
 
 <c:if test="${mode=='update'}">
@@ -38,7 +40,7 @@ function sendOk() {
 		if( ! confirm("파일을 삭제하시겠습니까 ?") ) {
 			return;
 		}
-		let url = "${pageContext.request.contextPath}/bbs/deleteFile?num=" + num + "&page=${page}";
+		let url = "${pageContext.request.contextPath}/board/deleteFile?num=" + num + "&page=${page}";
 		location.href = url;
 	}
 </c:if>
@@ -64,62 +66,41 @@ function sendOk() {
 					<tr>
 						<td class="table-light col-sm-2" scope="row">닉네임</td>
  						<td>
-							<p class="form-control-plaintext">${sessionScope.member.userName}</p>
+							<p class="form-control-plaintext">관리자</p>
 						</td>
 					</tr>
 
 					<tr>
 						<td class="table-light col-sm-2" scope="row">내 용</td>
 						<td>
-							<textarea name="content" id="content" class="form-control">${dto.content}</textarea>
-						</td>
-					</tr>
-					
-					<tr>
-						<td class="table-light col-sm-2">첨&nbsp;&nbsp;&nbsp;&nbsp;부</td>
-						<td> 
-							<input type="file" name="selectFile" class="form-control">
+							<textarea name="content" id="ir1" class="form-control" style="width: 95%; height: 270px;">${dto.content}</textarea>
 						</td>
 					</tr>
 					<tr>
 						<td class="table-light col-sm-2" scope="row">카테고리</td>
 						<td>
-							<select name="brand-category" class="form-select">
-								<option value="all" ${condition=="all"?"selected='selected'":""}>나이키</option>
-								<option value="userName" ${condition=="userName"?"selected='selected'":""}>삼성</option>
-								<option value="reg_date" ${condition=="reg_date"?"selected='selected'":""}>애플</option>
-								<option value="subject" ${condition=="subject"?"selected='selected'":""}>디스커버리</option>
-								<option value="content" ${condition=="content"?"selected='selected'":""}>구찌</option>
+							<select name="category" class="form-select">
+								<option value="fashion" ${category=="fashion"?"selected='selected'":""}>패션</option>
+								<option value="food" ${category=="food"?"selected='selected'":""}>음식</option>
+								<option value="electronic" ${category=="electronic"?"selected='selected'":""}>전자제품</option>
+								<option value="car" ${category=="car"?"selected='selected'":""}>자동차</option>
+								<option value="cosmetic" ${category=="cosmetic"?"selected='selected'":""}>화장품</option>
+								<option value="furniture" ${category=="furniture"?"selected='selected'":""}>가구</option>
 							</select>
 						</td>
 					</tr>
 					<tr>
-						<td class="table-light col-sm-2" scope="row">브랜드명(기타)</td>
+						<td class="table-light col-sm-2" scope="row">브랜드명</td>
 						<td>
-							<input type="text" name="brand" class="form-control" value="${dto.subject}">
+							<input type="text" name="brandName" class="form-control" value="${dto.subject}">
 						</td>
 					</tr>
-					
-					<c:if test="${mode=='update'}">
-						<tr>
-							<td class="table-light col-sm-2" scope="row">첨부된파일</td>
-							<td> 
-								<p class="form-control-plaintext">
-									<c:if test="${not empty dto.saveFilename}">
-										<a href="javascript:deleteFile('${dto.num}');"><i class="bi bi-trash"></i></a>
-										${dto.originalFilename}
-									</c:if>
-									&nbsp;
-								</p>
-							</td>
-						</tr>
-					</c:if>
 				</table>
 				
 				<table class="table table-borderless">
  					<tr>
 						<td class="text-center">
-							<button type="button" class="btn btn-success" onclick="sendOk();">${mode=='update'?'수정완료':'등록하기'}&nbsp;<i class="bi bi-check2"></i></button>
+							<button type="button" class="btn btn-success" onclick="submitContents(this.form);">${mode=='update'?'수정완료':'등록하기'}&nbsp;<i class="bi bi-check2"></i></button>
 							<button type="reset" class="btn btn-light">다시입력</button>
 							<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/board/list';">${mode=='update'?'수정취소':'등록취소'}&nbsp;<i class="bi bi-x"></i></button>
 							<c:if test="${mode=='update'}">
@@ -136,3 +117,33 @@ function sendOk() {
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript">
+var oEditors = [];
+nhn.husky.EZCreator.createInIFrame({
+	oAppRef: oEditors,
+	elPlaceHolder: "ir1",
+	sSkinURI: "${pageContext.request.contextPath}/resources/vendor/se2/SmartEditor2Skin.html",
+	fCreator: "createSEditor2"
+});
+
+function submitContents(elClickedObj) {
+	 oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
+	 try {
+		if(! sendOk()) {
+			return;
+		}
+		
+		elClickedObj.submit();
+		
+	} catch(e) {
+	}
+}
+
+function setDefaultFont() {
+	var sDefaultFont = '돋움';
+	var nFontSize = 12;
+	oEditors.getById["ir1"].setDefaultFont(sDefaultFont, nFontSize);
+}
+</script>
