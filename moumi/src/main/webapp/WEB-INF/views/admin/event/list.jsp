@@ -22,7 +22,7 @@
 					<div class="row">
 						<c:forEach var="dto" items="${list}" varStatus="status">
 							<div class="col-lg-3 col-sm-3">
-								<div class="card" style="width: 18rem;" onclick="location.href='${pageContext.request.contextPath}/admin/event/article?&num=${dto.eventNum}'">
+								<div class="card" style="width: 18rem;" onclick="location.href='${pageContext.request.contextPath}/admin/event/article?&eventNum=${dto.eventNum}'">
 									<img style="height: 280px; width: 285px;" src="${pageContext.request.contextPath}/uploads/event/${dto.thumbnail}"/>
 									<div class="card-body">
 										<p class="card-text">${dto.subject}<br>${dto.startDate} ~ ${dto.endDate}</p>

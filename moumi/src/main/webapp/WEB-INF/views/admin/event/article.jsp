@@ -16,6 +16,15 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/admin.css">
 
+<script type="text/javascript">
+	function deleteEvent() {
+	    if(confirm("이벤트를 삭제 하시겠습니까 ? ")) {
+		   	let query = "eventNum=${dto.eventNum}"
+		    let url = "${pageContext.request.contextPath}/admin/event/delete?"+query
+	    	location.href = url;
+	    }
+	}
+</script>
 
 <div class="container">
 	<div class="body-container">
@@ -58,29 +67,10 @@
 				<tr>
 					<td width="50%">
 							<button type="button" class="btn btn-success"
-									onclick="location.href='${pageContext.request.contextPath}/admin/event/update?eventNum=${dto.eventNum}';">수정</button>
+									onclick="location.href='${pageContext.request.contextPath}/admin/event/update?&eventNum=${dto.eventNum}';">수정</button>
 						<button type="button" class="btn btn btn-outline-success"
-									onclick="deleteEvent();">삭제</button>	
-						<%-- <c:choose>
-							<c:when test="${sessionScope.member.userId==dto.userId}">
-								<button type="button" class="btn btn-success"
-									onclick="location.href='${pageContext.request.contextPath}/bbs/update?num=${dto.num}&page=${page}';">수정</button>
-							</c:when>
-							<c:otherwise>
-								<button type="button" class="btn btn-success" disabled="disabled">수정</button>
-							</c:otherwise>
-						</c:choose> 
-						
-						<c:choose>
-							<c:when
-								test="${sessionScope.member.userId==dto.userId || sessionScope.member.membership>50}">
-								<button type="button" class="btn btn btn-outline-success"
-									onclick="deleteBoard();">삭제</button>
-							</c:when>
-							<c:otherwise>
-								<button type="button" class="btn btn btn-outline-success" disabled="disabled">삭제</button>
-							</c:otherwise>
-						</c:choose></td> --%>
+									onclick="deleteEvent()">삭제</button>	
+					
 						</td>
 					<td class="text-end">
 						<button type="button" class="btn btn-success"

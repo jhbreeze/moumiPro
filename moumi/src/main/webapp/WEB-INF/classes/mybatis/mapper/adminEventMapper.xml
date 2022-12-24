@@ -10,23 +10,24 @@
 	</insert>
 	
 	<select id="listEvent" parameterType="map" resultType="com.moumi.app.admin.event.Event">
-		SELECT eventNum, subject, content, thumbnail, TO_DATE(regDate, 'yyyy-mm-dd'), TO_DATE(startDate, 'yyyy-mm-dd'), TO_DATE(endDate, 'yyyy-mm-dd')
+		SELECT eventNum, subject, content, thumbnail, TO_CHAR(regDate,'yyyy.mm.dd') AS regDate, TO_CHAR(startDate, 'yyyy.mm.dd') AS startDate, TO_CHAR(endDate,'yyyy.mm.dd') AS endDate
 		FROM event
 		ORDER BY eventNum DESC
 	</select>
 
 	<select id="readEvent" parameterType="Long" resultType="com.moumi.app.admin.event.Event">
-		SELECT eventNum, userCode, subject, content, thumbnail, startDate, endDate, regDate, price
+		SELECT eventNum, userCode, subject, content, thumbnail, TO_CHAR(regDate, 'yyyy.mm.dd') AS regDate, TO_CHAR(startDate, 'yyyy.mm.dd') AS startDate, TO_CHAR(endDate, 'yyyy.mm.dd') AS endDate, price
 		FROM event 
 		WHERE eventNum = #{eventNum}
 	</select>
 	
-	<update id="updateEvent">
-		UPDATE event SET subject=#{subject}, content=#{content}, startDate=#{startDate}, endDate=#{endDate}
+	<update id="updateEvent"  parameterType="com.moumi.app.admin.event.Event">
+		UPDATE event SET subject=#{subject}, content=#{content}, startDate=#{startDate}, endDate=#{endDate},
+			thumbnail=#{thumbnail}
 		WHERE eventNum = #{eventNum}
 	</update>
 
-	<delete id="deleteEvent" >
+	<delete id="deleteEvent" parameterType="Long">
 		DELETE FROM event 
 		WHERE eventNum = #{eventNum}
 	</delete>

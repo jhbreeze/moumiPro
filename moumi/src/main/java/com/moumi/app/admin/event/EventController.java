@@ -82,7 +82,7 @@ public class EventController {
 
 			String root = session.getServletContext().getRealPath("/");
 			String path = root + "uploads" + File.separator + "event";
-			
+
 			service.updateEvent(dto, path);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -93,18 +93,33 @@ public class EventController {
 	}
 
 	@GetMapping("article")
-	public String article(@RequestParam long num, Model model) throws Exception {
+	public String article(@RequestParam long eventNum, Model model) throws Exception {
 
 		try {
 
 			// 이벤트 게시글 가져오기
-			Event dto = service.readEvent(num);
+			Event dto = service.readEvent(eventNum);
 			model.addAttribute("dto", dto);
 
 		} catch (Exception e) {
 
 		}
 		return ".admin.event.article";
+	}
+
+	@RequestMapping("delete")
+	public String delete(@RequestParam long eventNum, HttpSession session) throws Exception {
+
+		try {
+			String root = session.getServletContext().getRealPath("/");
+			String path = root + "uploads" + File.separator + "event";
+			service.deleteEvent(eventNum, path);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		return "redirect:/admin/event/list";
+
 	}
 
 }
