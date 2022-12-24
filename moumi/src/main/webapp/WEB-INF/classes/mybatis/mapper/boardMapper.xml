@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+	<select id="seq" resultType="Long">
+		SELECT commuity_seq.NEXTVAL FROM dual
+	</select>
+	
+	<insert id="insertBoard" parameterType="com.moumi.app.board.Board">
+		INSERT INTO community(communityNum,userCode,subject,content,regDate,hitCount,enabled,brandName,
+			brandNum,nickName)
+		 VALUES(#{communityNum},#{userCode},#{subject},#{content},SYSDATE,0,1,#{brandName},#{brandNum},#{nickName})
+	</insert>
+	<insert id="insertFile" parameterType="com.moumi.app.board.Board">
+		INSERT INTO communityFile(fileNum,communityNum,fileName)
+			VALUES(commuityFile_seq.NEXTVAL,#{communityNum},#{fileName, jdbcType=VARCHAR})
+	</insert>
+	
+	<sql id="where-list">
+		<if test="condition=='all' ">
+			( INSTR(subject, #{keyword}) &gt; 0
+				OR DBMS_LOB.INSTR(content, #{keyword}) &gt; 0 )
+		</if>
+		<if test="condition=='subject' ">
+			INSTR(subject, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='content' ">
+			DBMS_LOB.INSTR(content, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='userName' ">
+			userName=#{keyword}
+		</if>
+		<if test="condition=='reg_date' ">
+			( TO_CHAR(b.reg_date, 'YYYY-MM-DD') = #{keyword}
+				OR TO_CHAR(b.reg_date, 'YYYYMMDD') = #{keyword} )
+		</if>
+	</sql>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*),0) FROM community
+		<where>
+			<if test = "keyword!=null and keyword!=''">
+				<include refid = "where-list"/>
+			</if>
+		</where>
+	</select>
+	
+	<select id="listBoard" parameterType="map" resultType="com.moumi.app.board.Board">
+		SELECT c.communityNum,c.userCode,nickName,subject,TO_CHAR(regDate,'YYYY-MM-DD') regDate,
+			hitCount,NVL(replyCount,0) replyCount
+		FROM community c
+		JOIN member m ON c.userCode = m.userCode
+		LEFT OUTER JOIN (
+			SELECT communityNum,COUNT(*) replyCount FROM reply
+			WHERE parent = 0
+			GROUP BY communityNum
+		) r ON r.communityNum = c.communityNum 
+		<where>
+			<if test = "keyword!=null and keyword!=''">
+				<include refid = "where-list"/>
+			</if>
+		</where>
+		ORDER BY communityNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
+	</select>
+	
+	<select id="readBoard" parameterType="Long" resultType="com.moumi.app.board.Board">
+		SELECT c.num,nickName,c.userCode,subject,content,hitCount,regDate,NVL(boardLikeCount,0) boardLikeCount
+		FROM community c
+		JOIN member m ON c.userCode = m.userCode
+		LEFT OUTER JOIN (
+			SELECT communityNum,COUNT(*) boardLikeCount FROM pick
+			GROUP BY communityNum
+		) bc ON c.communityNum = bc.communityNum
+		WHERE c.communityNum = #{communityNum}
+	</select>
+	
+	<update id="updateHitCount" parameterType="Long">
+		UPDATE community SET hitCount = hitCount + 1 WHERE communityNum = #{num}
+	</update>
+	
+	
+</mapper>
