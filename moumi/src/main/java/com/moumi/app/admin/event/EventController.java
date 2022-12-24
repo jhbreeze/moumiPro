@@ -47,9 +47,45 @@ public class EventController {
 			String root = session.getServletContext().getRealPath("/");
 			String path = root + "uploads" + File.separator + "event";
 
-			dto.setUserCode(0);
+			dto.setUserCode(1);
 			service.insertEvent(dto, path);
 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/admin/event/list";
+
+	}
+
+	@GetMapping("update")
+	public String updateForm(@RequestParam long eventNum, Model model) throws Exception {
+
+		try {
+
+			Event dto = service.readEvent(eventNum);
+
+			model.addAttribute("dto", dto);
+
+			model.addAttribute("mode", "update");
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+
+		return ".admin.event.write";
+	}
+
+	@PostMapping("update")
+	public String updateSubmit(Event dto, HttpSession session) throws Exception {
+		// SessionInfo info = (SessionInfo) session.getAttribute("member");
+		try {
+
+			String root = session.getServletContext().getRealPath("/");
+			String path = root + "uploads" + File.separator + "event";
+			
+			service.updateEvent(dto, path);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		return "redirect:/admin/event/list";

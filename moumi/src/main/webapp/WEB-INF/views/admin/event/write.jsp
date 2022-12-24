@@ -107,36 +107,34 @@ $(function(){
 					<table class="table mt-5 write-form">
 						<tr>
 							<td class="table-light col-sm-2">이벤트</td>
-							<td><input type="text" name="subject" class="form-control"
+							<td><input type="text" name="subject" value="${dto.subject}" class="form-control"
 								style="width: 93%;">
 						</tr>
 						<tr>
 							<td class="table-light col-sm-2">할인가</td>
-							<td><input type="text" name="price" class="form-control"
+							<td><input type="text" name="price"  value="${dto.price}" class="form-control"
 								style="width: 93%;"></td>
 						</tr>
 						<tr>
 							<td class="table-light col-sm-2">이벤트 시작일</td>
-							<td><input type="date" name="startDate" class="form-control"
+							<td><input type="date" name="startDate" value="${dto.startDate}" class="form-control"
 								style="width: 93%;"></td>
 						</tr>
 						<tr>
 							<td class="table-light col-sm-2">이벤트 종료일</td>
-							<td><input type="date" name="endDate" class="form-control"
+							<td><input type="date" name="endDate" value="${dto.endDate}" class="form-control"
 								style="width: 93%;"></td>
 						</tr>
 
 						<tr>
 							<td class="table-light col-sm-2">이벤트 내용</td>
-							<td><textarea name="content" id="ir1" class="form-control"
-									style="width: 93%;"></textarea></td>
+							<td><textarea name="content"  id="ir1" class="form-control" style="width: 93%;"></textarea></td>
 						</tr>
 						<tr>
 							<td class="table-light col-sm-2">대표이미지</td>
 							<td>
 								<div class="thumbnail-viewer"></div> 
-								<input type="file"name="thumbnailFile" accept="image/*" class="form-control"
-								>
+								<input type="file"name="thumbnailFile"  accept="image/*" class="form-control">
 							</td>
 						</tr>
 					</table>
@@ -147,8 +145,8 @@ $(function(){
 								<button type="button" class="btn btn-success"
 									onclick="submitContents(this.form);">${mode=="update"?"수정완료":"등록완료"}</button>
 								<button type="reset" class="btn btn btn-outline-success">다시입력</button>
-								<button type="button" class="btn btn btn-outline-success"
-									onclick="location.href='${pageContext.request.contextPath}/admin/event/list';">${mode=="update"?"수정취소":"등록취소"}</button>
+								<button type="button" class="btn btn btn-outline-success" 
+								onclick="location.href='${pageContext.request.contextPath}/admin/event/list';">${mode=="update"?"수정취소":"등록취소"}</button>
 							</td>
 						</tr>
 					</table>

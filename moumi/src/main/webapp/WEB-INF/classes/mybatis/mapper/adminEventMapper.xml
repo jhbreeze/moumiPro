@@ -3,9 +3,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="event">
 	<insert id="insertEvent" parameterType="com.moumi.app.admin.event.Event">
-		INSERT INTO event(eventNum, userCode, subject, content, 
+		INSERT INTO event(eventNum, userCode, subject, content, price, 
 				StartDate, endDate, thumbnail, hitCount, regDate)
-		VALUES (event_seq.NEXTVAL, #{userCode}, #{subject}, #{content},
+		VALUES (event_seq.NEXTVAL, #{userCode}, #{subject}, #{content}, #{price}, 
 				#{startDate}, #{endDate}, #{thumbnail}, 0, SYSDATE)
 	</insert>
 	
@@ -16,9 +16,18 @@
 	</select>
 
 	<select id="readEvent" parameterType="Long" resultType="com.moumi.app.admin.event.Event">
-		SELECT eventNum, userCode, subject, content, thumbnail, regDate
+		SELECT eventNum, userCode, subject, content, thumbnail, startDate, endDate, regDate, price
 		FROM event 
 		WHERE eventNum = #{eventNum}
 	</select>
+	
+	<update id="updateEvent">
+		UPDATE event SET subject=#{subject}, content=#{content}, startDate=#{startDate}, endDate=#{endDate}
+		WHERE eventNum = #{eventNum}
+	</update>
 
+	<delete id="deleteEvent" >
+		DELETE FROM event 
+		WHERE eventNum = #{eventNum}
+	</delete>
 </mapper>

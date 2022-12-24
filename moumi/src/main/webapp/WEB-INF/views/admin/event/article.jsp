@@ -38,9 +38,12 @@
 
 				<tbody>
 					<tr>
-						<td width="50%">${dto.subject}</td>
-						<td align="right">${dto.regDate}| 조회 ${dto.hitCount}</td>
+						<td align="right">등록일 | ${dto.regDate}</td>
+						
 					</tr>
+						<tr>
+							<td width="50%"> ${dto.startDate}~${dto.endDate} </td>
+						</tr>
 
 					<tr>
 						<td colspan="2" valign="top" height="200"
@@ -48,7 +51,44 @@
 					</tr>
 				
 				</tbody>
+				
 			</table>
+			
+			<table class="table table-borderless mb-2">
+				<tr>
+					<td width="50%">
+							<button type="button" class="btn btn-success"
+									onclick="location.href='${pageContext.request.contextPath}/admin/event/update?eventNum=${dto.eventNum}';">수정</button>
+						<button type="button" class="btn btn btn-outline-success"
+									onclick="deleteEvent();">삭제</button>	
+						<%-- <c:choose>
+							<c:when test="${sessionScope.member.userId==dto.userId}">
+								<button type="button" class="btn btn-success"
+									onclick="location.href='${pageContext.request.contextPath}/bbs/update?num=${dto.num}&page=${page}';">수정</button>
+							</c:when>
+							<c:otherwise>
+								<button type="button" class="btn btn-success" disabled="disabled">수정</button>
+							</c:otherwise>
+						</c:choose> 
+						
+						<c:choose>
+							<c:when
+								test="${sessionScope.member.userId==dto.userId || sessionScope.member.membership>50}">
+								<button type="button" class="btn btn btn-outline-success"
+									onclick="deleteBoard();">삭제</button>
+							</c:when>
+							<c:otherwise>
+								<button type="button" class="btn btn btn-outline-success" disabled="disabled">삭제</button>
+							</c:otherwise>
+						</c:choose></td> --%>
+						</td>
+					<td class="text-end">
+						<button type="button" class="btn btn-success"
+							onclick="location.href='${pageContext.request.contextPath}/bbs/list?${query}';">리스트</button>
+					</td>
+				</tr>
+			</table>
+			
 
 		
 

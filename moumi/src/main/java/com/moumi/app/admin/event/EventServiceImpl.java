@@ -35,13 +35,34 @@ public class EventServiceImpl implements EventService {
 
 	@Override
 	public void updateEvent(Event dto, String pathname) throws Exception {
-		// TODO Auto-generated method stub
+		try {
+			
+			String filename = fileManager.doFileUpload(dto.getThumbnailFile(), pathname);
+			dto.setThumbnail(filename);
+
+			System.out.print("updateEvent");
+			
+			dao.updateData("event.updateEvent", dto);
+			
+			System.out.print("updateEvent");
+
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 
 	}
 
 	@Override
-	public void deleteEvent(long productNum, String pathname) throws Exception {
-		// TODO Auto-generated method stub
+	public void deleteEvent(long eventNum, String pathname) throws Exception {
+		try {
+			dao.deleteData("event.deleteEvent", eventNum);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 
 	}
 

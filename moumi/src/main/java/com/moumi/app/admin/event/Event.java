@@ -10,6 +10,7 @@ public class Event {
 	private String regDate;
 	private String startDate;
 	private String endDate;
+	private String price;
 	private int hitCount;
 	private MultipartFile thumbnailFile;
 	private String thumbnail;
@@ -68,6 +69,14 @@ public class Event {
 
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
+	}
+
+	public String getPrice() {
+		return price;
+	}
+
+	public void setPrice(String price) {
+		this.price = price;
 	}
 
 	public int getHitCount() {
