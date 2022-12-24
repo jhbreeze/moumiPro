@@ -63,6 +63,7 @@ public class EventController {
 		try {
 
 			Event dto = service.readEvent(eventNum);
+			System.out.println("gg"+dto.getThumbnail());
 
 			model.addAttribute("dto", dto);
 
@@ -80,6 +81,7 @@ public class EventController {
 		// SessionInfo info = (SessionInfo) session.getAttribute("member");
 		try {
 
+			System.out.println("후 ..... ");
 			String root = session.getServletContext().getRealPath("/");
 			String path = root + "uploads" + File.separator + "event";
 

@@ -16,6 +16,8 @@ tr td:first-child {
 function check() {
 	const f = document.eventForm;
 	let str;
+	
+	alert("${mode}");
 
 	if(! f.subject.value) {
 		alert("이벤트명을 입력해주세요.");
@@ -36,7 +38,12 @@ function check() {
 		return false;
 	}
 	
+	
+	
 	f.action = "${pageContext.request.contextPath}/admin/event/${mode}";
+	
+
+	
 	return true;
 }
 </script>
@@ -134,7 +141,7 @@ $(function(){
 							<td class="table-light col-sm-2">대표이미지</td>
 							<td>
 								<div class="thumbnail-viewer"></div> 
-								<input type="file"name="thumbnailFile"  accept="image/*" class="form-control">
+								<input type="file" name="thumbnailFile" value="${dto.thumbnail}" accept="image/*" class="form-control">
 							</td>
 						</tr>
 					</table>
@@ -144,6 +151,11 @@ $(function(){
 							<td class="text-center" style="background: white">
 								<button type="button" class="btn btn-success"
 									onclick="submitContents(this.form);">${mode=="update"?"수정완료":"등록완료"}</button>
+								<c:if test="${mode=='update'}">
+                        			<input type="hidden" name="eventNum" value="${dto.eventNum}">
+                        			<input type="hidden" name="thumbnail" value="${dto.thumbnail}">
+                     			</c:if>	
+									
 								<button type="reset" class="btn btn btn-outline-success">다시입력</button>
 								<button type="button" class="btn btn btn-outline-success" 
 								onclick="location.href='${pageContext.request.contextPath}/admin/event/list';">${mode=="update"?"수정취소":"등록취소"}</button>

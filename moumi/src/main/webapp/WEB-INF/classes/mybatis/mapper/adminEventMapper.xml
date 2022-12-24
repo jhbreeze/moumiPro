@@ -22,8 +22,7 @@
 	</select>
 	
 	<update id="updateEvent"  parameterType="com.moumi.app.admin.event.Event">
-		UPDATE event SET subject=#{subject}, content=#{content}, startDate=#{startDate}, endDate=#{endDate},
-			thumbnail=#{thumbnail}
+		UPDATE event SET subject=#{subject}, price=#{price}, content=#{content}, startDate=#{startDate}, endDate=#{endDate}
 		WHERE eventNum = #{eventNum}
 	</update>
 
