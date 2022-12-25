@@ -8,7 +8,9 @@ public class Recruit {
 	private long recruitNum;
 	private String subject;
 	private String content;
-	private String reg_date;
+	private String regDate;
+	
+
 	private String corporation;
 	private String startDate;
 	private String endDate;
@@ -26,12 +28,12 @@ public class Recruit {
 	
 	private int recruitLikeCount;
 
-	public long getrecruitNum() {
+	public long getRecruitNum() {
 		return recruitNum;
 	}
 
-	public void setrecruitNum(long num) {
-		this.recruitNum = num;
+	public void setRecruitNum(long recruitNum) {
+		this.recruitNum = recruitNum;
 	}
 
 	public String getSubject() {
@@ -50,12 +52,20 @@ public class Recruit {
 		this.content = content;
 	}
 
-	public String getReg_date() {
-		return reg_date;
+	public String getRegDate() {
+		return regDate;
 	}
 
-	public void setReg_date(String reg_date) {
-		this.reg_date = reg_date;
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
+	}
+
+	public String getCorporation() {
+		return corporation;
+	}
+
+	public void setCorporation(String corporation) {
+		this.corporation = corporation;
 	}
 
 	public String getStartDate() {
@@ -90,12 +100,12 @@ public class Recruit {
 		this.userCode = userCode;
 	}
 
-	public String getCorporation() {
-		return corporation;
+	public int getUserType() {
+		return userType;
 	}
 
-	public void setCorporation(String corporation) {
-		this.corporation = corporation;
+	public void setUserType(int userType) {
+		this.userType = userType;
 	}
 
 	public long getCategoryNum() {
@@ -106,36 +116,12 @@ public class Recruit {
 		this.categoryNum = categoryNum;
 	}
 
-	public String getImageFilename() {
-		return imageFilename;
-	}
-
-	public void setImageFilename(String imageFilename) {
-		this.imageFilename = imageFilename;
-	}
-
-	public int getRecruitLikeCount() {
-		return recruitLikeCount;
-	}
-
-	public void setRecruitLikeCount(int recruitLikeCount) {
-		this.recruitLikeCount = recruitLikeCount;
-	}
-
 	public String getCareer() {
 		return career;
 	}
 
 	public void setCareer(String career) {
 		this.career = career;
-	}
-
-	public int getUserType() {
-		return userType;
-	}
-
-	public void setUserType(int userType) {
-		this.userType = userType;
 	}
 
 	public long getFileNum() {
@@ -146,6 +132,14 @@ public class Recruit {
 		this.fileNum = fileNum;
 	}
 
+	public String getImageFilename() {
+		return imageFilename;
+	}
+
+	public void setImageFilename(String imageFilename) {
+		this.imageFilename = imageFilename;
+	}
+
 	public List<MultipartFile> getSelectFile() {
 		return selectFile;
 	}
@@ -153,6 +147,16 @@ public class Recruit {
 	public void setSelectFile(List<MultipartFile> selectFile) {
 		this.selectFile = selectFile;
 	}
+
+	public int getRecruitLikeCount() {
+		return recruitLikeCount;
+	}
+
+	public void setRecruitLikeCount(int recruitLikeCount) {
+		this.recruitLikeCount = recruitLikeCount;
+	}
+	
+	
 
 	
 }

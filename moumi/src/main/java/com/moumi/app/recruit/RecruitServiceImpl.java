@@ -22,16 +22,16 @@ public class RecruitServiceImpl implements RecruitService {
 	public void insertRecruit(Recruit dto, String pathname) throws Exception {
 		try {
 			long seq = dao.selectOne("recruit.seq");
-			dto.setrecruitNum(seq);
+			dto.setRecruitNum(seq);
 
 			dao.insertData("recruit.insertRecruit", dto);
 			
 			if (! dto.getSelectFile().isEmpty()) {
 				for(MultipartFile mf : dto.getSelectFile()) {
-				String imageFileName = mf.getOriginalFilename();
-				
-				dto.setImageFilename(imageFileName);
-				dao.insertData("recruit.insertFile", dto);
+					String imageFilename = mf.getOriginalFilename();
+					
+					dto.setImageFilename(imageFilename);
+					dao.insertData("recruit.insertFile", dto);
 				}
 			}
 
