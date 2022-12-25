@@ -30,6 +30,8 @@
 			#{email}, #{userCode}, #{corporation}, #{categoryNum})
 	</insert>
 	
+
+	
 	<select id="listCareerCategory" resultType="com.moumi.app.recruit.Recruit">
 		SELECT categoryNum, career
 		FROM careerCategory
@@ -61,6 +63,27 @@
 		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
 	</select>
 	
+	<!-- 파일 -->
+	<insert id="insertFile" parameterType="com.moumi.app.recruit.Recruit">
+		INSERT INTO recruitFile(fileNum, imageFileName, recruitNum)
+  		  VALUES(recruitFile_seq.NEXTVAL, #{imageFileName}, #{recruitNum})
+	</insert>
+	
+	<select id="listFile" parameterType="long" resultType="com.moumi.app.recruit.Recruit">
+		SELECT fileNum, imageFileName, recruitNum
+		FROM recruitFile
+		WHERE recruitNum = #{recruitNum}
+	</select>
+	
+	<select id="readFile" parameterType="long" resultType="com.moumi.app.recruit.Recruit">
+		SELECT fileNum, imageFileName, recruitNum
+		FROM recruitFile
+		WHERE fileNum = #{fileNum}
+	</select>
+	
+	<delete id="deleteFile" parameterType="map">
+		DELETE FROM recruitFile WHERE ${field} = #{recruitNum}
+	</delete>
 	
 	
 </mapper>

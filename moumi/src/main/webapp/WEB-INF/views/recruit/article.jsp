@@ -103,26 +103,7 @@
 						<button type="button" class="btn btn-success"
 							onclick="location.href='${pageContext.request.contextPath}/recruit/list?${query}';">돌아가기</button>
 					</td>
-					<td class="text-end">
-						<c:choose>
-							<c:when test="${sessionScope.member.userId==dto.userId}">
-								<button type="button" class="btn btn-success"
-									onclick="location.href='${pageContext.request.contextPath}/recruit/update?num=${dto.num}&page=${page}';">수정</button>
-							</c:when>
-							<c:otherwise>
-								<button type="button" class="btn btn-success" disabled="disabled">수정</button>
-							</c:otherwise>
-						</c:choose> 
-						<c:choose>
-							<c:when test="${sessionScope.member.userId==dto.userId || sessionScope.member.membership>50}">
-								<button type="button" class="btn btn-success"
-									onclick="deleteBoard();">삭제</button>
-							</c:when>
-							<c:otherwise>
-								<button type="button" class="btn btn-success" disabled="disabled">삭제</button>
-							</c:otherwise>
-						</c:choose>
-					</td>
+				
 				</tr>
 			</table>
 		</form>

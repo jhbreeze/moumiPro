@@ -115,13 +115,24 @@ function getToday(day){
 	return today;
 }
 
+<c:if test="${mode=='update'}">
+function deleteFile(num) {
+	if( ! confirm("파일을 삭제하시겠습니까 ?") ) {
+		return;
+	}
+	let url = "${pageContext.request.contextPath}/recruit/deleteFile?num=" + num + "&page=${page}";
+	location.href = url;
+}
+</c:if>
 </script>
 
 
 <div class="container body-container">
     <div class="body-main mx-auto">
 		<ul class="nav nav-tabs">
-			<li class="nav-item"><a class="nav-link active" aria-current="page" href="#">공고 등록 | 수정</a></li>
+			<li class="nav-item"><a class="nav-link active" aria-current="page">
+				${mode=='update'?'공고 등록':'공고 수정'}
+			</a></li>
 		</ul>
 		
 		<form name="recruitForm" method="post" enctype="multipart/form-data">
@@ -185,10 +196,23 @@ function getToday(day){
 					<tr>
 						<td class="col-sm-2 align-middle text-center" scope="row">파일첨부</td>
 						<td class="recruit-file" colspan="4">
-							<input type="file" name="selectFile" class="form-control">
+							<input type="file" name="selectFile"  multiple="multiple" class="form-control">
 						</td>
 					</tr>
-					
+					<c:if test="${mode=='update'}">
+						<tr>
+							<td class="col-sm-2 align-middle text-center" scope="row">첨부된 파일</td>
+							<td>
+								<p class="form-control-plaintext">
+									<c:if test="${not empty dto.imageFilename}">
+										<a href="javascript:deleteFile('${dto.recruitNum}');"><i class="bi bi-trash"></i></a>
+										${dto.imageFilename}
+									</c:if>
+									&nbsp;
+								</p>
+							</td>
+						</tr>
+					</c:if>
 				</table>
 				
 				<table class="table table-borderless">
@@ -198,9 +222,10 @@ function getToday(day){
 							<button type="reset" class="btn btn-success">다시입력</button>
 							<button type="button" class="btn btn-success" onclick="location.href='${pageContext.request.contextPath}/recruit/list';">${mode=='update'?'수정취소':'등록취소'}&nbsp;<i class="bi bi-x"></i></button>
 							<c:if test="${mode=='update'}">
-								<input type="hidden" name="num" value="${dto.num}">
+								<input type="hidden" name="recruitNum" value="${dto.recruitNum}">
+								<input type="hidden" name="saveFilename" value="${dto.saveFilename}">
+								<input type="hidden" name="originalFilename" value="${dto.originalFilename}">
 								<input type="hidden" name="page" value="${page}">
-								<input type="hidden" name="size" value="${size}">
 							</c:if>
 						</td>
 					</tr>

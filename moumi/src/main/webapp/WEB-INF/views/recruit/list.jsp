@@ -2,7 +2,6 @@
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
 <p class="text-end m-3 p-2 fw-bold">전체 
 	<span style="color: green" >${dataCount - (page-1) * size - status.index}</span>건
 </p>
@@ -22,8 +21,8 @@
 		<c:forEach var="dto" items="${list}" varStatus="status">
 			<tr class="recruit-table-tr" data-rNum="${dto.recruitNum}">
 				<td>${dataCount - (page-1) * size - status.index}</td>
-				<td>${dto.career}</td>
-				<td>${dto.corporation}</td>
+				<td colspan="1">${dto.career}</td>
+				<td colspan="1">${dto.corporation}</td>
 				<td colspan="2">
 					<c:url var="url" value="/recruit/article">
 						<c:param name="recruitNum" value="${dto.recruitNum}"/>
@@ -81,7 +80,9 @@
 
 
 	<div class="col text-end">
-		<button type="button" class="btn btn-success"
-			onclick="location.href='${pageContext.request.contextPath}/recruit/write';">글올리기</button>
+		<c:if test="${sessionScope.member.userType==0 || sessionScope.member.userType==3}">
+			<button type="button" class="btn btn-success"
+				onclick="location.href='${pageContext.request.contextPath}/recruit/write';">글올리기</button>
+		</c:if>
 	</div>
 </div>

@@ -22,6 +22,7 @@ tbody tr:hover {
 }
 
 </style>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/paginate.js"></script>
 
 
 <script type="text/javascript">

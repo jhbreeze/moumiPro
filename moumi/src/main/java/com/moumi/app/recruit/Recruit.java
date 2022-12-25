@@ -1,5 +1,7 @@
 package com.moumi.app.recruit;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 public class Recruit {
@@ -7,19 +9,20 @@ public class Recruit {
 	private String subject;
 	private String content;
 	private String reg_date;
+	private String corporation;
 	private String startDate;
 	private String endDate;
 	private String email;
 	
 	private long userCode;
-	private String corporation;
 	private int userType;
 	
 	private long categoryNum;
 	private String career;
 	
-	private String imageFilename;
-	private MultipartFile selectFile;
+	private long fileNum;
+	private String imageFilename; 
+	private List<MultipartFile> selectFile;
 	
 	private int recruitLikeCount;
 
@@ -111,14 +114,6 @@ public class Recruit {
 		this.imageFilename = imageFilename;
 	}
 
-	public MultipartFile getSelectFile() {
-		return selectFile;
-	}
-
-	public void setSelectFile(MultipartFile selectFile) {
-		this.selectFile = selectFile;
-	}
-
 	public int getRecruitLikeCount() {
 		return recruitLikeCount;
 	}
@@ -143,7 +138,21 @@ public class Recruit {
 		this.userType = userType;
 	}
 
-	
-	
+	public long getFileNum() {
+		return fileNum;
+	}
+
+	public void setFileNum(long fileNum) {
+		this.fileNum = fileNum;
+	}
+
+	public List<MultipartFile> getSelectFile() {
+		return selectFile;
+	}
+
+	public void setSelectFile(List<MultipartFile> selectFile) {
+		this.selectFile = selectFile;
+	}
+
 	
 }

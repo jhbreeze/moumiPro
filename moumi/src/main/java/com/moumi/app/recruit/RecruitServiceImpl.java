@@ -5,7 +5,9 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.moumi.app.common.FileManager;
 import com.moumi.app.common.dao.CommonDAO;
 
 @Service("recruit.recruitService")
@@ -13,13 +15,26 @@ public class RecruitServiceImpl implements RecruitService {
 	@Autowired
 	private CommonDAO dao;
 	
+	@Autowired
+	private FileManager fileManager;
+	
 	@Override
 	public void insertRecruit(Recruit dto, String pathname) throws Exception {
 		try {
 			long seq = dao.selectOne("recruit.seq");
 			dto.setrecruitNum(seq);
-			
+
 			dao.insertData("recruit.insertRecruit", dto);
+			
+			if (! dto.getSelectFile().isEmpty()) {
+				for(MultipartFile mf : dto.getSelectFile()) {
+				String imageFileName = mf.getOriginalFilename();
+				
+				dto.setImageFilename(imageFileName);
+				dao.insertData("recruit.insertFile", dto);
+				}
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

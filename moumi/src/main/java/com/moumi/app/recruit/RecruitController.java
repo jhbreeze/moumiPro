@@ -1,5 +1,6 @@
 package com.moumi.app.recruit;
 
+import java.io.File;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -38,12 +39,10 @@ public class RecruitController {
 			Model model) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		model.addAttribute("pageNo", current_page);
+		model.addAttribute("page", current_page);
 		
 		return ".recruit.main";
 	}
-	
-	
 	
 	@RequestMapping(value = "list")
 	public String list(@RequestParam(value = "page", defaultValue = "1") int current_page,
@@ -100,6 +99,7 @@ public class RecruitController {
 	public String writeForm(Model model) throws Exception {
 		List<Recruit> listCategory = service.listCareerCategory(); 
 		
+		model.addAttribute("page", "1"); // ?
 		model.addAttribute("mode", "write");
 		model.addAttribute("listCategory", listCategory);
 		
@@ -108,19 +108,20 @@ public class RecruitController {
 	
 	@PostMapping("write")
 	public String writeSubmit(Recruit dto, HttpSession session) throws Exception {
-		 SessionInfo info = (SessionInfo) session.getAttribute("member");
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		
 		try {
+			String root = session.getServletContext().getRealPath("/");
+			String pathname = root + "uploads" + File.separator + "recruit";
+
 			dto.setUserCode(info.getUserCode()); // user 코드(회원코드 시퀀스) 
 			dto.setUserType(info.getUserType());
 			
-			 // userType (3번 일때만 등록이 가능) && 로그인 안 했을 때 처리 
-			
-			service.insertRecruit(dto, "write");
+			service.insertRecruit(dto, pathname);
 		} catch (Exception e) {
 		}
 		
-		
-		return "redirect:/recruit/main";
+		return "redirect:/recruit/main?page=1";
 	}
 	
 	@GetMapping("article")
