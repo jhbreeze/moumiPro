@@ -284,9 +284,9 @@ li {
 					
 					
 					<li class ="imageContent" style="background:#bbb6e3">
-						<a href="https://www.nongsaro.go.kr/portal/ps/psz/psza/contentSub.ps?menuId=PS65302&amp;bbsId=1&amp;pageIndex=1&amp;pageSize=10&amp;cntntsNo=41"> 
+						<a href="${pageContext.request.contextPath}/event/list"> 
 						<span class ="recFont"> <strong class="recTitle">이벤트!</strong><br>
-								MOUMI는 처음이지?<br> <em class="recEmTitle"> 초보 MOUMI 유저를 위한 이용방법</em>
+								MOUMI 특별 이벤트!<br> <em class="recEmTitle">저렴하게 MOUMI를 이용하자!</em>
 						</span>
 						<img style="height: 130px; width: 160px; float:right"
 								src="${pageContext.request.contextPath}/resources/images/moumi/event.png" />

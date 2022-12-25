@@ -23,9 +23,7 @@ public class EventServiceImpl implements EventService {
 			// 썸네일 이미지
 			String filename = fileManager.doFileUpload(dto.getThumbnailFile(), pathname);
 			dto.setThumbnail(filename);
-
-			System.out.print("inserEvent");
-			dao.insertData("event.insertEvent", dto);
+			dao.insertData("adminEvent.insertEvent", dto);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -39,13 +37,9 @@ public class EventServiceImpl implements EventService {
 			
 			String filename = fileManager.doFileUpload(dto.getThumbnailFile(), pathname);
 			dto.setThumbnail(filename);
-
-			System.out.print("updateEvent");
 			
-			dao.updateData("event.updateEvent", dto);
-			
-			System.out.print("updateEvent");
-
+			dao.updateData("adminEvent.updateEvent", dto);
+		
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -57,7 +51,7 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public void deleteEvent(long eventNum, String pathname) throws Exception {
 		try {
-			dao.deleteData("event.deleteEvent", eventNum);
+			dao.deleteData("adminEvent.deleteEvent", eventNum);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -78,7 +72,7 @@ public class EventServiceImpl implements EventService {
 		List<Event> list = null;
 		try {
 
-			list = dao.selectList("event.listEvent");
+			list = dao.selectList("adminEvent.listEvent");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -92,7 +86,7 @@ public class EventServiceImpl implements EventService {
 		Event dto = null;
 		try {
 			// 이벤트 게시글 가져오기
-			dto = dao.selectOne("event.readEvent", eventNum);
+			dto = dao.selectOne("adminEvent.readEvent", eventNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

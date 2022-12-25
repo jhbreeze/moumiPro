@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="event">
+	
+	<select id="listEvent" parameterType="map" resultType="com.moumi.app.event.Event">
+		SELECT eventNum, subject, content, thumbnail, TO_CHAR(regDate,'yyyy.mm.dd') AS regDate, TO_CHAR(startDate, 'yyyy.mm.dd') AS startDate, TO_CHAR(endDate,'yyyy.mm.dd') AS endDate
+		FROM event
+		ORDER BY eventNum DESC
+	</select>
+
+	<select id="readEvent" parameterType="Long" resultType="com.moumi.app.event.Event">
+		SELECT eventNum, userCode, subject, content, thumbnail, TO_CHAR(regDate, 'yyyy.mm.dd') AS regDate, TO_CHAR(startDate, 'yyyy.mm.dd') AS startDate, TO_CHAR(endDate, 'yyyy.mm.dd') AS endDate, price
+		FROM event 
+		WHERE eventNum = #{eventNum}
+	</select>
+	
+</mapper>
