@@ -3,7 +3,6 @@ package com.moumi.app.admin.notice;
 import java.io.File;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.moumi.app.common.FileManager;
 import com.moumi.app.common.MyUtil;
-import com.moumi.app.member.SessionInfo;
 
 @Controller("admin.notice.noticeController")
 @RequestMapping("/admin/notice/*")

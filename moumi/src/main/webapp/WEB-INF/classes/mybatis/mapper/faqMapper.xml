@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="faq">
+	<insert id="insertFaq" parameterType="com.moumi.app.admin.faq.Faq">
+		INSERT INTO faq(faqNum, userCode, subject, content, categoryNum)
+		VALUES (faq_seq.NEXTVAL, #{userCode}, #{subject}, #{content}, #{categoryNum})
+	</insert>
+	
+	<select id="listFaq" parameterType="com.moumi.app.admin.faq.Faq" resultType="com.moumi.app.admin.faq.Faq">
+		SELECT faqNum, userCode, subject, categoryName
+		FROM faq f
+		JOIN faqcategory c ON f.categoryNum = c.categoryNum
+		WHERE f.categorynum = #{categorynum}
+		ORDER BY faqNum DESC
+	</select>
+	
+	<select id="dataCount1" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM faq f
+		JOIN member m ON f.userCode = m.userCode
+		JOIN faqCategory c ON f.categoryNum = c.categoryNum
+		WHERE c.categoryNum = #{categoryNum}
+	</select>
+	
+	<select id="dataCount2" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM faq f
+		JOIN member m ON f.userCode = m.userCode
+		JOIN faqCategory c ON f.categoryNum = c.categoryNum
+		WHERE c.categoryNum = 2
+	</select>
+	
+	<select id="dataCount3" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM faq f
+		JOIN member m ON f.userCode = m.userCode
+		JOIN faqCategory c ON f.categoryNum = c.categoryNum
+		WHERE c.categoryNum = 3
+	</select>
+	
+	<select id="listFaq1" parameterType="map" resultType="com.moumi.app.admin.faq.Faq">
+		SELECT faqNum, userCode, subject, categoryName, content
+		FROM faq f
+		JOIN faqcategory c ON f.categoryNum = c.categoryNum
+		WHERE f.categorynum = 1
+		ORDER BY faqNum DESC
+		OFFSET #{offset1} ROWS FETCH FIRST #{size} ROWS ONLY
+	</select>
+	
+	<select id="listFaq2" parameterType="map" resultType="com.moumi.app.admin.faq.Faq">
+		SELECT faqNum, userCode, subject, categoryName, content
+		FROM faq f
+		JOIN faqcategory c ON f.categoryNum = c.categoryNum
+		WHERE f.categorynum = 2
+		ORDER BY faqNum DESC
+		OFFSET #{offset2} ROWS FETCH FIRST #{size} ROWS ONLY
+	</select>
+	
+	<select id="listFaq3" parameterType="map" resultType="com.moumi.app.admin.faq.Faq">
+		SELECT faqNum, userCode, subject, categoryName
+		FROM faq f
+		JOIN faqcategory c ON f.categoryNum = c.categoryNum
+		WHERE f.categorynum = 3
+		ORDER BY faqNum DESC
+		OFFSET #{offset3} ROWS FETCH FIRST #{size} ROWS ONLY
+	</select>
+	
+	<select id="readFaq" parameterType="Long" resultType="com.moumi.app.admin.faq.Faq">
+		SELECT content, subject, faqNum, c.categoryNum, userCode
+		FROM faq f
+		JOIN faqcategory c ON f.categoryNum = c.categoryNum
+		WHERE faqNum = #{faqNum}
+	</select>
+	
+	<update id="updateFaq" parameterType="com.moumi.app.admin.faq.Faq">
+		UPDATE faq SET subject = #{subjcet}, content = #{content}, categoryNum = #{categoryNum}
+		WHERE faqNum = #{faqNum}
+	</update>
+	
+	<delete id="deleteFaq" parameterType="Long">
+		DELETE FROM faq WHERE faqNum = #{faqNum}
+	</delete>
+	
+	<delete id="deleteList" parameterType="java.util.List">
+		DELETE FROM faq
+		WHERE faqNum IN
+		<foreach collection="list" item="faqNum" index="index" open="(" separator="," close=")">
+			#{faqNum}
+		</foreach>
+	</delete>
+
+</mapper>

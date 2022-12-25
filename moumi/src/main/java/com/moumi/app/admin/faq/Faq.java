@@ -3,10 +3,10 @@ package com.moumi.app.admin.faq;
 public class Faq {
 	private long faqNum;
 	private long userCode;
-	private long categoryNum;
 	private String subject;
 	private String content;
 	
+	private long categoryNum;
 	private String categoryName;
 
 	public long getFaqNum() {
