@@ -3,8 +3,8 @@ package com.moumi.app.schedule;
 import java.util.List;
 
 public class Schedule {
-	private long num;
-	private String userCode;
+	private long noteNum;
+	private int userCode;
 	private String userName;
 	private String subject;
 	private String memo;
@@ -30,19 +30,19 @@ public class Schedule {
 	private String start;
 	private String end;
 
-	public long getNum() {
-		return num;
+	public long getNoteNum() {
+		return noteNum;
 	}
 
-	public void setNum(long num) {
-		this.num = num;
+	public void setNoteNum(long noteNum) {
+		this.noteNum = noteNum;
 	}
 
-	public String getUserCode() {
+	public int getUserCode() {
 		return userCode;
 	}
 
-	public void setUserCode(String userCode) {
+	public void setUserCode(int userCode) {
 		this.userCode = userCode;
 	}
 

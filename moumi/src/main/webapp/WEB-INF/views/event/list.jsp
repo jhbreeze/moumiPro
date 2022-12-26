@@ -19,7 +19,8 @@
 
 .deadLine {
 	color: #fb4357;
-	f
+	font-size: 13px;
+	font-weight: 600;
 }
 </style>
 
@@ -50,7 +51,7 @@
 											<p class="card-text">
 											<p class="eventName">${dto.subject}
 											<p class="term">${dto.startDate}
-												~ ${dto.endDate}&nbsp;<em class="deadLine">${dto.deadLine}</em>
+												~ ${dto.endDate}&nbsp;<em class="deadLine">D-${dto.deadLine}</em>
 											</p>
 										</div>
 									</div>

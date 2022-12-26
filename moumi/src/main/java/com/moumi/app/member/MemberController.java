@@ -3,11 +3,14 @@ package com.moumi.app.member;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -74,7 +77,76 @@ public class MemberController {
 		return ".member.login";
 	}
 
-	@RequestMapping(value = "userIdCheck", method = RequestMethod.POST)
+	@GetMapping("noAuthorized")
+	public String noAuthorized() {
+		return ".member.noAuthorized";
+	}
+
+	@GetMapping("expired")
+	public String expired() {
+		return ".member.expired";
+	}
+
+	@RequestMapping(value = "pwd", method = RequestMethod.POST)
+	public String pwdSubmit(@RequestParam String pwd,
+			@RequestParam String mode, 
+			final RedirectAttributes reAttr,
+			HttpSession session,
+			Model model) {
+
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+
+		Member dto = service.readMember(info.getEmail());
+		if (dto == null) {
+			session.invalidate();
+			return "redirect:/";
+		}
+
+		boolean bPwd = service.isPasswordCheck(info.getEmail(), pwd);
+		
+		if ( ! bPwd ) {
+			if (mode.equals("update")) {
+				model.addAttribute("mode", "update");
+			} else {
+				model.addAttribute("mode", "dropout");
+			}
+			model.addAttribute("message", "패스워드가 일치하지 않습니다.");
+			return ".member.pwd";
+		}
+
+		if (mode.equals("dropout")) {
+			// 게시판 테이블등 자료 삭제
+
+			// 회원탈퇴 처리
+			/*
+			 * Map<String, Object> map = new HashMap<>();
+			 * map.put("memberIdx", info.getMemberIdx());
+			 * map.put("userId", info.getUserId());
+			 */
+
+			// 세션 정보 삭제
+			session.removeAttribute("member");
+			session.invalidate();
+
+			StringBuilder sb = new StringBuilder();
+			sb.append(dto.getUserName() + "님의 회원 탈퇴 처리가 정상적으로 처리되었습니다.<br>");
+			sb.append("메인화면으로 이동 하시기 바랍니다.<br>");
+
+			reAttr.addFlashAttribute("title", "회원 탈퇴");
+			reAttr.addFlashAttribute("message", sb.toString());
+
+			return "redirect:/member/complete";
+		}
+
+		// 회원정보수정폼
+		model.addAttribute("dto", dto);
+		model.addAttribute("mode", "update");
+		return ".member.member";
+	}
+
+	
+	
+	@RequestMapping(value = "emailCheck", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> idCheck(@RequestParam String email) throws Exception {
 
@@ -89,4 +161,7 @@ public class MemberController {
 		return model;
 	}
 	
+	
+	
+
 }

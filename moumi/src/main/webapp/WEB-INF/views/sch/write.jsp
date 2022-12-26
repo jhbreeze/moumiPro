@@ -21,10 +21,7 @@ function sendOk() {
 		return;
 	}
 	
-	if(! f.categoryNum.value ) {
-		f.categoryNum.focus();
-		return;
-	}
+	
 	
 	if( ! f.sday.value ) {
 		f.sday.focus();
@@ -154,13 +151,13 @@ $(function(){
 						</td>
 					</tr>
 
-					<tr>
+				<%-- 	<tr>
 						<td class="table-light col-2" scope="row">일정분류</td>
 						<td>
 							<div class="row">
 								<div class="col-5">
 									<select name="categoryNum" id="form-categoryNum" class="form-select">
-										<%-- <option value="0">설정하지 않음</option> --%>
+										<option value="0">설정하지 않음</option>
 										<c:forEach var="vo" items="${listCategory}">
 											<option value="${vo.categoryNum}" ${dto.categoryNum == vo.categoryNum ? "selected='selected'":""}>${vo.category}</option>
 										</c:forEach>
@@ -169,7 +166,7 @@ $(function(){
 							</div>
 							<small class="form-control-plaintext">* 카테고리는 일정 메인화면에서 설정합니다.</small>
 						</td>
-					</tr>
+					</tr> --%>
 
 					<tr>
 						<td class="table-light col-2" scope="row">색 상</td>

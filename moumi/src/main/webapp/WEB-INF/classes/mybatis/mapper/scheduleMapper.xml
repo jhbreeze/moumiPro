@@ -3,7 +3,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="sch">
 	<insert id="insertSchedule" parameterType="com.moumi.app.schedule.Schedule">
-		
+			INSERT INTO schedule(noteNum, userCode, subject, color, sday, eday,
+					stime, etime, repeat, repeat_cycle, memo, regDate) 
+				VALUES(schedule_seq.NEXTVAL, #{userCode}, #{subject},
+					#{color}, #{sday},
+					#{eday, jdbcType=VARCHAR},
+					#{stime, jdbcType=VARCHAR},
+					#{etime, jdbcType=VARCHAR},
+					#{repeat}, #{repeat_cycle},
+					#{memo, jdbcType=VARCHAR},
+					SYSDATE
+		)
 	</insert>
 	
 

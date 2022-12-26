@@ -20,10 +20,10 @@
 	font-size: 30px;
 }
 .form-control {
-	border-radius: 15px;
+	border-radius: 13px;
 	margin-bottom: 5px;
-	color: #767676;
-	font-size: 15px;
+	font-size: 14px;
+	width: 270px;
 }
 .inputBox {
 	margin-left: 50px;
@@ -48,18 +48,31 @@ label {
 	margin-bottom: 30px;
 }
 .btn {
-	border-radius: 15px;
-	font-size: 15px;
+	border-radius: 13px;
+	font-size: 14px;
 }
-.btn-outline-success {
+.duplication {
 	padding-left:5px;
 	padding-right:5px;
 	background-color: white;
 }
-.btn-success {
+.signUp {
 	margin-top: 20px;
 	padding-left:140px;
 	padding-right:140px;
+}
+.division1 {
+	width: 450px;
+	text-align: center;
+	padding: 0px;
+	margin-bottom: 10px;
+}
+.userType {
+	font-size: 13px;
+	border-radius: 10px;
+	width: 170px;
+	margin-left: 0px;
+	padding: 7px;
 }
 </style>
 
@@ -79,49 +92,55 @@ function memberOk() {
     str = f.email.value.trim();
     if( !str ) {
         alert("이메일을 입력하세요. ");
-        f.email1.focus();
+        f.email.focus();
         return;
     }
 
 	str = f.email.value;
-	if( !/^[a-z][a-z0-9_]{4,9}$/i.test(str) ) { 
+	if( !/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i.test(str) ) { 
 		alert("이메일을 다시 입력 하세요. ");
-		f.userId.focus();
+		f.email.focus();
 		return;
 	}
 
 	let mode = "${mode}";
-	if(mode === "member" && f.userIdValid.value === "false") {
-		str = "아이디 중복 검사가 실행되지 않았습니다.";
-		$("#userId").parent().find(".help-block").html(str);
-		f.userId.focus();
+	if(mode === "member" && f.emailValid.value === "false") {
+		str = "이메일 중복 검사가 실행되지 않았습니다.";
+		$("#email").parent().find(".help-block").html(str);
+		f.email.focus();
 		return;
 	}
 	
-	str = f.userPwd.value;
-	if( !/^(?=.*[a-z])(?=.*[!@#$%^*+=-]|.*[0-9]).{5,10}$/i.test(str) ) { 
+	str = f.pwd.value;
+	if( !/^(?=.*[a-z])(?=.*[!@#$%^*+=-]|.*[0-9]).{8,16}$/i.test(str) ) { 
 		alert("패스워드를 다시 입력 하세요. ");
-		f.userPwd.focus();
+		f.pwd.focus();
 		return;
 	}
 
-	if( str !== f.userPwd2.value ) {
+	if( str !== f.pwd2.value ) {
         alert("패스워드가 일치하지 않습니다. ");
-        f.userPwd.focus();
+        f.pwd2.focus();
         return;
 	}
 
-	str = f.userNickname.value;
+	str = f.nickName.value;
 	if( !str ) {
 		alert("닉네임을 입력하세요.");
-		f.userNickname.focus();
+		f.nickName.focus();
 		return;
 	}
 	
-	str = f.userGender.value;
-	if( !str ) {
-		alert("성별을 입력하세요.");
-		f.userGender.focus();
+	str = f.nickName.value;
+    if( !/^[가-힣a-zA-z0-9]{3,10}$/.test(str) ) {
+        alert("닉네임을 다시 입력하세요. ");
+        f.nickName.focus();
+        return;
+    }
+    
+	if (!female.checked && !male.checked) {
+	    alert("성별을 체크해 주세요.");
+		f.female.focus();
 		return;
 	}
 	
@@ -138,19 +157,19 @@ function memberOk() {
     f.submit();
 }
 
-function userIdCheck() {
+function emailCheck() {
 	// 아이디 중복 검사
-	let userId = $("#userId").val();
+	let email = $("#email").val();
 
-	if(!/^[a-z][a-z0-9_]{4,9}$/i.test(userId)) { 
-		let str = "아이디는 5~10자 이내이며, 첫글자는 영문자로 시작해야 합니다.";
-		$("#userId").focus();
-		$("#userId").parent().find(".help-block").html(str);
+	if(!/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i.test(email)) { 
+		let str = "이메일 주소가 올바르지 않습니다.";
+		$("#email").focus();
+		$("#email").parent().find(".help-block").html(str);
 		return;
 	}
 	
-	let url = "${pageContext.request.contextPath}/member/userIdCheck";
-	let query = "userId=" + userId;
+	let url = "${pageContext.request.contextPath}/member/emailCheck";
+	let query = "email=" + email;
 	$.ajax({
 		type:"POST"
 		,url:url
@@ -160,19 +179,33 @@ function userIdCheck() {
 			let passed = data.passed;
 
 			if(passed === "true") {
-				let str = "<span style='color:blue; font-weight: bold;'>" + userId + "</span> 사용할 수 있는 이메일입니다..";
-				$(".userId-box").find(".help-block").html(str);
-				$("#userIdValid").val("true");
+				let str = "<span style='color:blue; font-weight: bold;'>" + email + "</span> 사용할 수 있는 이메일입니다.";
+				$(".email-box").find(".help-block").html(str);
+				$("#emailValid").val("true");
 			} else {
-				let str = "<span style='color:red; font-weight: bold;'>" + userId + "</span> 사용할 수 없는 이메일입니다.";
-				$(".userId-box").find(".help-block").html(str);
-				$("#userId").val("");
-				$("#userIdValid").val("false");
-				$("#userId").focus();
+				let str = "<span style='color:red; font-weight: bold;'>" + email + "</span> 사용할 수 없는 이메일입니다.";
+				$(".email-box").find(".help-block").html(str);
+				$("#email").val("");
+				$("#emailValid").val("false");
+				$("#email").focus();
 			}
 		}
 	});
 }
+
+$(function(){
+	let userType = "${dto.userType}";
+	if(userType==="3") {
+		$("#userType3").prop("checked", true);
+	}
+	
+	let gender = "${dto.gender}";
+	if(gender==="여자") {
+		$("#female").prop("checked", true);
+	}
+	
+	
+});
 
 </script>
 
@@ -189,7 +222,16 @@ function userIdCheck() {
 		
 		<div class="body-main">
 			<form name="memberForm" method="post">
-			
+				
+				<div class="division1" role="group" aria-label="Basic radio toggle button group">
+				  <input type="radio" class="btn-check" name="userType" id="userType1" checked="checked" value="1" >
+				  <label class="userType btn btn-outline-success" for="userType1">개인 회원</label>
+				
+				  <input type="radio" class="btn-check" name="userType" id="userType3" value="3">
+				  <label class="userType btn btn-outline-success" for="userType3">기업 회원</label>
+				
+				</div>
+				
 				<div class="inputBox">
 					<label class="form-label" for="userName" >이름</label>
 				  	<input type="text" name="userName" id="userName" class="form-control"  value="${dto.userName}" 
@@ -197,29 +239,30 @@ function userIdCheck() {
 				</div>
 				
 				<div class="inputBox">
-				  	<label class="form-label" for="selectEmail">이메일</label>
-				  	<div style="width: 400px;">
-				  		<input type="text" name="email" id="email" class="form-control" value="${dto.email}" placeholder="이메일 형식" style="width: 280px; display: inline-block;">
+				  	<label class="form-label" for="email">이메일</label>
+				  	<div class="email-box" style="width: 400px;">
+				  		<input type="text" name="email" id="email" class="form-control" value="${dto.email}" placeholder="이메일 형식" style="width: 270px; display: inline-block;">
 						<c:if test="${mode=='member'}">
-							<button type="button" class="btn btn-outline-success" onclick="userIdCheck();" style="width: 75px;">중복검사</button>
+							<button type="button" class="duplication btn btn-outline-success" onclick="emailCheck();" style="width: 75px;">중복검사</button>
+						</c:if>
+						<c:if test="${mode=='member'}">
+							<small class="form-control-plaintext help-block"></small>
 						</c:if>
 					</div>
 				</div>
 				
 				<div class="longinputBox">
-				  <label class="form-label" for="userName" >비밀번호</label>
-				  <input type="text" name="userName" id="userName" class="form-control"  value="${dto.userName}" 
-				  			${mode=="update" ? "readonly='readonly' ":""} placeholder="영문/숫자/특수문자(8~16자 이상)">
-				  <input type="text" name="userName" id="userName" class="form-control"  value="${dto.userName}" 
-				  			${mode=="update" ? "readonly='readonly' ":""} placeholder="비밀번호 확인">
+				  <label class="form-label" for="pwd" >비밀번호</label>
+				  <input type="password" name="pwd" id="pwd" class="form-control"  autocomplete="off" placeholder="영문/숫자/특수문자(8~16자 이상)">
+				  <input type="password" name="pwd2" id="pwd2" class="form-control"  autocomplete="off" placeholder="비밀번호 확인">
 				</div>
 				
 				<div class="inputBox">
-				  	<label class="form-label" for="selectEmail">닉네임</label>
+				  	<label class="form-label" for="nickName">닉네임</label>
 				  	<div style="width: 400px;">
-				  		<input type="text" name="email" id="email" class="form-control" value="${dto.email}" placeholder="한글/영문/숫자(3~10자)" style="width: 280px; display: inline-block;">
+				  		<input type="text" name="nickName" id="nickName" class="form-control" value="${dto.nickName}" placeholder="한글/영문/숫자(3~10자)" style="width: 270px; display: inline-block;">
 						<c:if test="${mode=='member'}">
-							<button type="button" class="btn btn-outline-success" onclick="userIdCheck();" style="width: 75px;">중복검사</button>
+							<button type="button" class="duplication btn btn-outline-success" onclick="nickNameCheck();" style="width: 75px;">중복검사</button>
 						</c:if>
 					</div>
 				</div>
@@ -228,10 +271,10 @@ function userIdCheck() {
 				  	<label class="form-label" for="gender">성별</label>
 				  	<div>
 						<label>
-		                    <input type="radio" name="gender" value="${dto.gender}"/> 남자 
+		                    <input type="radio" name="gender" value="남자" id="male" checked="checked"> 남자 
 		                </label>
 		                <label>
-		                	<input type="radio" name="gender" value="${dto.gender}"/> 여자
+		                	<input type="radio" name="gender" value="여자" id="female"> 여자
 		                </label>
 				  	</div>
 				</div>
@@ -243,8 +286,8 @@ function userIdCheck() {
 			     
 			    <div>
 			        <div class="text-center">
-			            <button type="button" name="sendButton" class="btn btn-success" onclick="memberOk();"> ${mode=="member"?"회원가입":"정보수정"} </button>
-						<input type="hidden" name="userIdValid" id="userIdValid" value="false">
+			            <button type="button" name="sendButton" class="signUp btn btn-success" onclick="memberOk();"> ${mode=="member"?"회 원 가 입":"정 보 수 정"} </button>
+						<input type="hidden" name="emailValid" id="emailValid" value="false">
 			        </div>
 			    </div>
 			

@@ -125,10 +125,137 @@ public class RecruitController {
 	}
 	
 	@GetMapping("article")
-	public String article() throws Exception {
+	public String article(@RequestParam long recruitNum, @RequestParam String page,
+			@RequestParam(defaultValue = "all") String condition,
+			@RequestParam(defaultValue = "") String keyword,
+			HttpSession session, Model model) throws Exception {
+		
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		keyword = URLDecoder.decode(keyword, "utf-8");
+
+		String query = "page=" + page;
+		if (keyword.length() != 0) {
+			query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
+		}
+
+		Recruit dto = service.readRecruit(recruitNum);
+		if (dto == null) {
+			return "redirect:/recruit/main?" + query;
+		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		map.put("recruitNum", recruitNum);
+
+		Recruit preReadDto = service.preReadRecruit(map);
+		Recruit nextReadDto = service.nextReadRecruit(map);
+
+		List<Recruit> listFile = service.listFile(recruitNum);
+		
+		// 게시글 좋아요 여부
+		//map.put("userId", info.getUserId());
+		//boolean userBoardLiked = service.userBoardLiked(map);
+
+		model.addAttribute("dto", dto);
+		model.addAttribute("preReadDto", preReadDto);
+		model.addAttribute("nextReadDto", nextReadDto);
+		model.addAttribute("listFile", listFile);
+
+		//model.addAttribute("userBoardLiked", userBoardLiked);
+		
+		model.addAttribute("page", page);
+		model.addAttribute("query", query);
 		
 		return ".recruit.article";
 	}
 	
+	@GetMapping("update")
+	public String updateForm(@RequestParam long recruitNum, @RequestParam String page,
+			HttpSession session, Model model) throws Exception {
+		
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		
+		Recruit dto = service.readRecruit(recruitNum);
+		if(dto == null || (info.getUserType()!= 0 && (info.getUserCode() != dto.getUserCode()))) { // 관리자가 아니거나 로그인 상태의 회사가 자기가 쓴 글 아니라면 
+			return "redirect:/recruit/list?page="+page;
+		}
+		
+		List<Recruit> listCategory = service.listCareerCategory(); 
+		List<Recruit> listFile = service.listFile(recruitNum);
+		
+		model.addAttribute("listCategory", listCategory);
+		model.addAttribute("listFile", listFile);
+		model.addAttribute("dto", dto);
+		model.addAttribute("mode", "update");
+		model.addAttribute("page", page);
+		
+		return ".recruit.write";
+	}
 	
+	@PostMapping("update")
+	public String updateSubmit(Recruit dto, @RequestParam String page, HttpSession session) throws Exception{
+		
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "recruit";
+		
+		try {
+			service.updateRecruit(dto, pathname);
+		} catch (Exception e) {
+		}
+		
+		return "redirect:/recruit/main?page=" + page;
+	}
+	
+	@RequestMapping(value = "deleteFile")
+	public String deleteFile(@RequestParam long recruitNum,
+			@RequestParam String page,
+			HttpSession session) throws Exception {
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "recruit";
+
+		Recruit dto = service.readRecruit(recruitNum);
+		if (dto == null) {
+			return "redirect:/recruit/main?page=" + page;
+		}
+		
+		// 코드, 타입 처리
+		
+		try {
+			if (dto.getImageFilename()!= null) {
+				fileManager.doFileDelete(dto.getImageFilename(), pathname); // 실제파일삭제
+				dto.setImageFilename("");
+				
+				service.updateRecruit(dto, pathname);
+			}
+		} catch (Exception e) {
+		}
+
+		return "redirect:/recruit/update?num=" + recruitNum + "&page=" + page;
+	}
+	
+	@RequestMapping(value = "delete")
+	public String delete(@RequestParam long recruitNum,
+			@RequestParam String page, 
+			@RequestParam(defaultValue = "all") String condition,
+			@RequestParam(defaultValue = "") String keyword,
+			HttpSession session) throws Exception{
+		
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+
+		keyword = URLDecoder.decode(keyword, "utf-8");
+		String query = "page=" + page;
+		if (keyword.length() != 0) {
+			query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
+		}
+
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "bbs";
+
+		//service.deleteRecruit(num, pathname, userId, userCode);
+		return "redirect:/recruit/main?" + query;
+		
+	}
 }

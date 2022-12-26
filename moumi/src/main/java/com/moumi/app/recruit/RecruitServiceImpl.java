@@ -68,31 +68,67 @@ public class RecruitServiceImpl implements RecruitService {
 	}
 
 	@Override
-	public Recruit readRecruit(long num) {
-		// TODO Auto-generated method stub
-		return null;
+	public Recruit readRecruit(long recruitNum) {
+		Recruit dto = null;
+		
+		try {
+			dto = dao.selectOne("recruit.readRecruit", recruitNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
 	}
 
 	@Override
 	public Recruit preReadRecruit(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		Recruit dto = null;
+		
+		try {
+			dto = dao.selectOne("recruit.preReadRecruit", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
 	}
 
 	@Override
 	public Recruit nextReadRecruit(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		Recruit dto = null;
+		
+		try {
+			dto = dao.selectOne("recruit.nextReadRecruit", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
+
 	}
 
 	@Override
 	public void updateRecruit(Recruit dto, String pathname) throws Exception {
-		// TODO Auto-generated method stub
-		
+		try {
+			if (! dto.getSelectFile().isEmpty()) {
+				for(MultipartFile mf : dto.getSelectFile()) {
+					String imageFilename = mf.getOriginalFilename();
+					
+					dto.setImageFilename(imageFilename);
+					dao.updateData("recruit.updateFile", dto);
+				}
+			}
+
+			dao.updateData("recruit.updateRecruit", dto);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	@Override
-	public void deleteRecruit(long num, String pathname, String userId, long userCode) throws Exception {
+	public void deleteRecruit(long recruitNum, String pathname, String userId, long userCode) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
@@ -110,7 +146,7 @@ public class RecruitServiceImpl implements RecruitService {
 	}
 
 	@Override
-	public int recruitLikeCount(long num) {
+	public int recruitLikeCount(long recruitNum) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -132,6 +168,43 @@ public class RecruitServiceImpl implements RecruitService {
 		}
 		
 		return list;
+	}
+
+	@Override
+	public List<Recruit> listFile(long recruitNum) {
+		List<Recruit> listFile = null;
+		
+		try {
+			listFile = dao.selectList("recruit.listFile", recruitNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return listFile;
+	}
+
+	@Override
+	public Recruit readFile(long fileNum) {
+		Recruit dto = null;
+		
+		try {
+			dto = dao.selectOne("recruit.readFile", fileNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
+	}
+
+	@Override
+	public void deleteFile(Map<String, Object> map) throws Exception {
+		try {
+			dao.deleteData("recruit.deleteFile", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
 	}
 
 }

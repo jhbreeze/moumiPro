@@ -207,7 +207,7 @@ li {
 		<input class="form-control mx-5 inputSearch" type="search"
 			placeholder="궁금한 분석 단어를 입력하세요." aria-label="Search">
 		<button class="btn btnSearch " type="submit">
-			<i class="fa-solid fa-magnifying-glass"></i>검색
+			<i class="fa-solid fa-magnifying-glass"></i>
 		</button>
 		</div>
 
