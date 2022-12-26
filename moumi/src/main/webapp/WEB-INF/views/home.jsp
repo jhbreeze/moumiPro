@@ -274,7 +274,7 @@ li {
 					</a></li>
 					
 					<li class ="imageContent" style="background:#7bc7e3">
-						<a href="${pageContext.request.contextPath}/admin/event/list"> 
+						<a href="${pageContext.request.contextPath}/schedule/main"> 
 						<span class ="recFont"> <strong class="recTitle">일정 관리!</strong><br>
 								MOUMI는 처음이지?<br> <em class ="recEmTitle">초보 MOUMI 유저를 위한 이용방법</em>
 						</span>

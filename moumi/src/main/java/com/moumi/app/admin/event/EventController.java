@@ -63,11 +63,10 @@ public class EventController {
 		try {
 
 			Event dto = service.readEvent(eventNum);
-			System.out.println("gg"+dto.getThumbnail());
 
 			model.addAttribute("dto", dto);
-
 			model.addAttribute("mode", "update");
+		
 		} catch (Exception e) {
 			e.printStackTrace();
 

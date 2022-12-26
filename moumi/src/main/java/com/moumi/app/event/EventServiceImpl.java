@@ -14,7 +14,6 @@ public class EventServiceImpl implements EventService {
 	@Autowired
 	private CommonDAO dao;
 
-
 	@Override
 	public List<Event> listEvent(Map<String, Object> map) throws Exception {
 		// 썸네일 이미지
@@ -40,6 +39,37 @@ public class EventServiceImpl implements EventService {
 			e.printStackTrace();
 		}
 		return dto;
+	}
+
+	@Override
+	public void insertReply(Reply dto) throws Exception {
+		
+		try {
+			// 이벤트 리뷰 댓글
+			dao.insertData("event.insertReview");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+
+	}
+
+	@Override
+	public void deleteReply(Map<String, Object> paramMap) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int replyCount(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<Reply> listReply(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

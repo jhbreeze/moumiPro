@@ -39,5 +39,27 @@
 		ORDER BY sday ASC, userCode DESC 
 	</select>
 	
+	<select id="readSchedule" parameterType="Long" resultType="com.moumi.app.schedule.Schedule">
+		SELECT noteNum, subject, sday, eday, stime, etime, 
+			color, repeat, repeat_cycle, memo, regDate 
+		FROM schedule 		
+		WHERE noteNum = #{noteNum}
+	</select>
+	
+	<update id="updateSchedule" parameterType="com.moumi.app.schedule.Schedule">
+		UPDATE schedule SET
+			subject=#{subject},
+			color=#{color}, sday=#{sday}, 
+			eday=#{eday, jdbcType=VARCHAR},
+			stime=#{stime, jdbcType=VARCHAR},
+			etime=#{etime, jdbcType=VARCHAR},
+			repeat=#{repeat},
+			repeat_cycle=#{repeat_cycle},
+			memo=#{memo, jdbcType=VARCHAR}
+		WHERE noteNum=#{noteNum} AND userCode=#{userCode}
+	</update>
+	
+	
+	
 	
 </mapper>

@@ -17,11 +17,7 @@
 		
 		<div class="body-main">
 			<div class="row">
-				<div class="col-sm-1 px-0 text-center">
-					<a class="btn" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-						<i class="bi bi-layout-text-sidebar-reverse" style="font-size : 25px;"></i>
-					</a>
-				</div>
+				
 				<div class="col px-2">
 					<div id="calendar"></div>
 				</div>
@@ -32,60 +28,6 @@
 	</div>
 </div>
 
-<!-- 좌측 카테고리 관리 오프캔버스 -->
-<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-	<div class="offcanvas-header">
-		<h5 class="offcanvas-title" id="offcanvasExampleLabel"><i class="bi bi-gear-wide-connected"></i> 내 컬린더 설정</h5>
-		<button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-	</div>
-	<div class="offcanvas-body">
-		<div class="row">
-			<div class="col">
-				<button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-					카테고리 추가 <i class="bi bi-plus-lg"></i>
-				</button>
-			</div>
-			<div class="col-auto text-end">
-				<button class="btn btnDeleteIcon" type="button" title="편집">
-					<i class="bi bi-three-dots-vertical"></i>
-				</button>
-			</div>
-		</div>
-		<div class="collapse" id="collapseExample">
-		  <div class="card card-body">
-		  	<div class="input-group">
-				<input type="text" id="category-input" class="form-control">
-				<button type="button" class="btn btn-outline-success btnCategoryAddOk"><i class="bi bi-save"></i></button>
-			</div>
-		  </div>
-		</div>
-		
-		<div class="d-flex flex-column bd-highlight mt-3 px-2 category-list">
-			<c:forEach var="vo" items="${listCategory}">
-				<div class='row p-2 border category-row'>
-					<div class='col-auto'>
-						<input class='form-check-input me-1 category-item' type='checkbox' value='${vo.categoryNum}' checked='checked'>
-					</div>
-					<div class='col ps-0'>
-						${vo.category}
-					</div>
-					<div class='col-auto text-end invisible category-item-minus'>
-						<a href='#'><i class='bi bi-dash-square category-item-delete' data-categoryNum='${vo.categoryNum}'></i></a>
-					</div>
-				</div>
-			</c:forEach>
-		</div>
-		
-		<c:if test="${listCategory.size() > 0}">
-			<div class="row">
-				<div class="col pt-1 text-end">
-					<button type="button" class="btn btnCategorySearch" title="검색"><i class="bi bi-search"></i></button>
-				</div>
-			</div>
-		</c:if>
-		
-	</div>
-</div>
 
 <!-- 일정 상세 보기 Modal -->
 <div class="modal fade" id="myDialogModal" tabindex="-1" aria-labelledby="myDialogModalLabel" aria-hidden="true">
@@ -103,7 +45,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td class="table-light col-2 align-middle">일정분류</td>
+						<td class="table-light col-2 align-middle">일정 분류</td>
 						<td>
 							<p class="form-control-plaintext view-category"></p>
 						</td>
@@ -117,7 +59,7 @@
 					</tr>
 
 					<tr>
-						<td class="table-light col-2 align-middle">일정반복</td>
+						<td class="table-light col-2 align-middle">일정 반복</td>
 						<td>
 							<p class="form-control-plaintext view-repeat"></p>
 						</td>
@@ -257,19 +199,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	calendar.render();
 });
 
-$(function() {
-	$('body').on('click', ".btnCategorySearch", function () {
-		if($(".category-list input:checkbox.category-item:checked").length == 0) {
-			return false;
-		}
-		
-		// 카테고리 검색
-		calendar.refetchEvents();
-		
-		$('#offcanvasExample').offcanvas('hide')
-	});
 
-});
 
 // 일정 등록 폼
 function insertSchedule(startStr, endStr, allDay) {
@@ -297,9 +227,10 @@ function insertSchedule(startStr, endStr, allDay) {
 function viewSchedule(calEvent) {
 	$("#myDialogModal").modal("show");
 	
-	// console.log(calEvent);
-	
+	console.log(calEvent);
+
 	var num = calEvent.id;
+
 	var title = calEvent.title;
 	var color = calEvent.backgroundColor;
 	// var start = calEvent.start;
@@ -320,7 +251,7 @@ function viewSchedule(calEvent) {
 	
 	var memo = calEvent.extendedProps.memo;
 	if(! memo) memo = "";
-	var reg_date = calEvent.extendedProps.reg_date;
+	var regDate = calEvent.extendedProps.regDate;
 	var repeat = calEvent.extendedProps.repeat;
 	var repeat_cycle = calEvent.extendedProps.repeat_cycle;
 	
@@ -330,7 +261,7 @@ function viewSchedule(calEvent) {
 	var s;
 	$(".view-subject").html(title);
 	
-	s = allDay ? "종일일정" : "시간일정";
+	s = allDay ? "종일 일정" : "시간 일정";
 	$(".view-category").html(category + ", " + s);
 	
 	s = sday;
@@ -348,7 +279,7 @@ function viewSchedule(calEvent) {
 	if( etime ) s += " " + etime;
 	$(".view-period").html(s);
 	
-	$(".view-reg_date").html(reg_date);
+	$(".view-reg_date").html(regDate);
 	
 	s = repeat != 0 && repeat_cycle != 0 ? "반복일정, 반복주기 " + repeat_cycle + "년" : "반복안함";
 	$(".view-repeat").html(s);
@@ -359,8 +290,9 @@ function viewSchedule(calEvent) {
 $(function(){
 	// 일정 수정 화면
 	$(".btnScheduleUpdate").click(function(){
-		var num = $(this).attr("data-num");
-		location.href="${pageContext.request.contextPath}/schedule/update?num="+num;
+		var num = $(this).attr("data-noteNum");
+		alert(num);
+		location.href="${pageContext.request.contextPath}/schedule/update?noteNum="+num;
 	});
 
 	// 일정 삭제
@@ -430,64 +362,4 @@ function updateDrag(calEvent) {
 	ajaxFun(url, "post", query, "json", fn);
 }
 
-$(function(){
-	// 카테고리 추가
-	$(".btnCategoryAddOk").click(function(){
-		var category = $("#category-input").val().trim();
-		if(! category) {
-			return false;
-		}
-		
-		category = encodeURIComponent(category);
-		var query = "category="+category;
-		var url="${pageContext.request.contextPath}/schedule/categoryAdd";
-		
-		var fn = function(data) {
-			if(data.state === "true") {
-				$("#category-input").val("");
-			
-				$(".category-list").empty();
-				
-				var out = "";
-				for(var idx = 0; idx < data.listCategory.length; idx++) {
-					var item = data.listCategory[idx];
-					out += "<div class='row p-2 border category-row'>";
-					out += "  <div class='col-auto'>";
-					out += "    <input class='form-check-input me-1 category-item' type='checkbox' value='"+item.categoryNum+"' checked='checked'>";
-					out += "  </div>";
-					out += "  <div class='col ps-0'>"+item.category+"</div>";
-					out += "  <div class='col-auto text-end invisible category-item-minus'>";
-					out += "    <a href='#'><i class='bi bi-dash-square category-item-delete' data-categoryNum='"+item.categoryNum+"'></i></a>";
-					out += "  </div>";
-					out += "</div>";
-				}
-
-				$(".category-list").html(out);
-			};
-		};
-		ajaxFun(url, "post", query, "json", fn);
-	});
-	
-	$(".btnDeleteIcon").click(function(){
-		$(".category-item-minus").toggleClass("invisible");
-	});
-	
-	$("body").on("click", ".category-item-delete", function(){
-		if(! confirm("카테고리를 삭제 하시겠습니까 ? ")) {
-			return false;
-		}
-		
-		var $i = $(this);
-		var query = "categoryNum="+$(this).attr("data-categoryNum");
-		var url="${pageContext.request.contextPath}/schedule/categorydelete";
-		var fn = function(data) {
-			if(data.state === "true") {
-				$i.closest(".category-row").remove();
-				
-				calendar.refetchEvents();
-			}
-		};
-		ajaxFun(url, "post", query, "json", fn);
-	});
-});
 </script>

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+
 @Controller("sch.scheduleController")
 @RequestMapping("/schedule/*")
 public class ScheduleController {
@@ -66,7 +67,7 @@ public class ScheduleController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/schedule/main";
+		return "redirect:/sch/main";
 	}
 
 	
@@ -119,4 +120,66 @@ public class ScheduleController {
 		model.put("list", list);
 		return model;
 	}
+	
+	@GetMapping(value = "update")
+	public String updateForm(@RequestParam int noteNum,
+			HttpSession session,
+			Model model) throws Exception {
+		//SessionInfo info = (SessionInfo)session.getAttribute("member");
+		
+		System.out.println(noteNum);
+		Schedule dto = service.readSchedule(noteNum);
+		if(dto == null) {
+			return "redirect:/schedule/main";
+		}
+		
+		if(dto.getStime() == null) {
+			dto.setAll_day("1");
+			try {
+				String s = dto.getEday().replaceAll("\\-|\\.|/", "");
+
+				int y = Integer.parseInt(s.substring(0, 4));
+				int m = Integer.parseInt(s.substring(4, 6));
+				int d = Integer.parseInt(s.substring(6));
+
+				Calendar cal = Calendar.getInstance();
+				cal.set(y, m - 1, d);
+
+				cal.add(Calendar.DATE, -1);
+
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				dto.setEday( sdf.format(cal.getTime()) );
+			} catch (Exception e) {
+			}
+		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userCode", 1);
+		//map.put("userCode", info.getUserId());
+		
+		model.addAttribute("mode", "update");
+		model.addAttribute("dto", dto);
+		
+		return ".sch.write";
+	}
+	
+	@RequestMapping(value = "update", method = RequestMethod.POST)
+	public String updateSubmit(Schedule dto,
+			HttpSession session) throws Exception {
+		//SessionInfo info=(SessionInfo)session.getAttribute("member");
+		
+		try {
+			if(dto.getCategoryNum() == 0) {
+				dto.setCategoryNum(null);
+			}
+			
+			dto.setUserCode(1);
+			service.updateSchedule(dto);
+		} catch (Exception e) {
+		}
+		
+		return "redirect:/sch/main";
+	}
+
+	
 }
