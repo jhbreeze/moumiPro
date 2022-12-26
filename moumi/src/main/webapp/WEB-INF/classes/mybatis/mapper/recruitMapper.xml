@@ -63,6 +63,48 @@
 		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
 	</select>
 	
+	
+	<select id="readRecruit" parameterType="Long" resultType="com.moumi.app.recruit.Recruit">
+		SELECT recruitNum, subject, content, TO_CHAR(startDate, 'YYYY-MM-DD') startDate, TO_CHAR(endDate, 'YYYY-MM-DD') endDate,
+			r.email, r.userCode, corporation, cc.career
+		FROM recruit r
+		JOIN member m ON r.userCode = m.userCode
+		LEFT OUTER JOIN (
+		     SELECT categoryNum, career FROM careerCategory
+		) cc ON r.categoryNum = cc.categoryNum
+		WHERE recruitNum = #{recruitNum}
+	</select>
+	
+	<select id="preReadRecruit" parameterType="map" resultType="com.moumi.app.recruit.Recruit">
+		SELECT recruitNum, subject
+		FROM recruit r
+		JOIN member m ON r.userCode = m.userCode
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+			AND (recruitNum &gt; #{recruitNum})
+		</where>
+		ORDER BY recruitNum ASC
+		FETCH FIRST 1 ROWS ONLY
+	</select>
+	
+	
+	<select id="nextReadRecruit" parameterType="map" resultType="com.moumi.app.recruit.Recruit">
+		SELECT recruitNum, subject
+		FROM recruit r
+		JOIN member m ON r.userCode = m.userCode
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+			AND (recruitNum &lt; #{recruitNum})
+		</where>
+		ORDER BY recruitNum DESC
+		FETCH FIRST 1 ROWS ONLY
+	</select>
+	
+	
 	<!-- 파일 -->
 	<insert id="insertFile" parameterType="com.moumi.app.recruit.Recruit">
 		INSERT INTO recruitFile(fileNum, imageFileName, recruitNum)

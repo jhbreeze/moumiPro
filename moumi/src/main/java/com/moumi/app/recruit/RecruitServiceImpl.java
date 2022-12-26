@@ -68,21 +68,43 @@ public class RecruitServiceImpl implements RecruitService {
 	}
 
 	@Override
-	public Recruit readRecruit(long num) {
-		// TODO Auto-generated method stub
-		return null;
+	public Recruit readRecruit(long recruitNum) {
+		Recruit dto = null;
+		
+		try {
+			dto = dao.selectOne("recruit.readRecruit", recruitNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
 	}
 
 	@Override
 	public Recruit preReadRecruit(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		Recruit dto = null;
+		
+		try {
+			dto = dao.selectOne("recruit.preReadRecruit", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
 	}
 
 	@Override
 	public Recruit nextReadRecruit(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		Recruit dto = null;
+		
+		try {
+			dto = dao.selectOne("recruit.nextReadRecruit", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
+
 	}
 
 	@Override
