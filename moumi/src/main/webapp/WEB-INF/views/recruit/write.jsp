@@ -223,8 +223,7 @@ function deleteFile(num) {
 							<button type="button" class="btn btn-success" onclick="location.href='${pageContext.request.contextPath}/recruit/main';">${mode=='update'?'수정취소':'등록취소'}&nbsp;<i class="bi bi-x"></i></button>
 							<c:if test="${mode=='update'}">
 								<input type="hidden" name="recruitNum" value="${dto.recruitNum}">
-								<input type="hidden" name="saveFilename" value="${dto.saveFilename}">
-								<input type="hidden" name="originalFilename" value="${dto.originalFilename}">
+								<input type="hidden" name="imageFilename" value="${dto.imageFilename}">
 								<input type="hidden" name="page" value="${page}">
 							</c:if>
 						</td>

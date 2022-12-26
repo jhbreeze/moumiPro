@@ -135,8 +135,7 @@ public class RecruitController {
 
 		String query = "page=" + page;
 		if (keyword.length() != 0) {
-			query += "&condition=" + condition + 
-					"&keyword=" + URLEncoder.encode(keyword, "UTF-8");
+			query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
 		}
 
 		Recruit dto = service.readRecruit(recruitNum);
@@ -144,8 +143,6 @@ public class RecruitController {
 			return "redirect:/recruit/main?" + query;
 		}
 		
-		dto.setContent(myUtil.htmlSymbols(dto.getContent()));
-
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("condition", condition);
 		map.put("keyword", keyword);
@@ -154,6 +151,8 @@ public class RecruitController {
 		Recruit preReadDto = service.preReadRecruit(map);
 		Recruit nextReadDto = service.nextReadRecruit(map);
 
+		List<Recruit> listFile = service.listFile(recruitNum);
+		
 		// 게시글 좋아요 여부
 		//map.put("userId", info.getUserId());
 		//boolean userBoardLiked = service.userBoardLiked(map);
@@ -161,6 +160,7 @@ public class RecruitController {
 		model.addAttribute("dto", dto);
 		model.addAttribute("preReadDto", preReadDto);
 		model.addAttribute("nextReadDto", nextReadDto);
+		model.addAttribute("listFile", listFile);
 
 		//model.addAttribute("userBoardLiked", userBoardLiked);
 		
@@ -171,27 +171,30 @@ public class RecruitController {
 	}
 	
 	@GetMapping("update")
-	public String updateForm(@RequestParam long recruitNum,
-			@RequestParam String page,
-			HttpSession session,
-			Model model) throws Exception {
+	public String updateForm(@RequestParam long recruitNum, @RequestParam String page,
+			HttpSession session, Model model) throws Exception {
+		
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		
 		Recruit dto = service.readRecruit(recruitNum);
-		// 회원코드 타입 처리
+		if(dto == null || (info.getUserType()!= 0 && (info.getUserCode() != dto.getUserCode()))) { // 관리자가 아니거나 로그인 상태의 회사가 자기가 쓴 글 아니라면 
+			return "redirect:/recruit/list?page="+page;
+		}
 		
+		List<Recruit> listCategory = service.listCareerCategory(); 
+		List<Recruit> listFile = service.listFile(recruitNum);
+		
+		model.addAttribute("listCategory", listCategory);
+		model.addAttribute("listFile", listFile);
 		model.addAttribute("dto", dto);
 		model.addAttribute("mode", "update");
 		model.addAttribute("page", page);
 		
-		
 		return ".recruit.write";
-		
 	}
 	
 	@PostMapping("update")
-	public String updateSubmit(Recruit dto, @RequestParam String page,
-			HttpSession session) throws Exception{
+	public String updateSubmit(Recruit dto, @RequestParam String page, HttpSession session) throws Exception{
 		
 		String root = session.getServletContext().getRealPath("/");
 		String pathname = root + "uploads" + File.separator + "recruit";

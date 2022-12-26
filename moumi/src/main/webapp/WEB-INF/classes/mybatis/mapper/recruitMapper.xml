@@ -23,14 +23,12 @@
 		</choose>
 	</sql>
 	
-	<insert id="insertRecruit">
+	<insert id="insertRecruit" parameterType="com.moumi.app.recruit.Recruit">
 		INSERT INTO recruit(recruitNum, subject, content, regDate, startDate, endDate, 
 			email, userCode, corporation, categoryNum)
 		VALUES(#{recruitNum}, #{subject}, #{content}, SYSDATE, #{startDate}, #{endDate}, 
 			#{email}, #{userCode}, #{corporation}, #{categoryNum})
 	</insert>
-	
-
 	
 	<select id="listCareerCategory" resultType="com.moumi.app.recruit.Recruit">
 		SELECT categoryNum, career
@@ -89,7 +87,6 @@
 		FETCH FIRST 1 ROWS ONLY
 	</select>
 	
-	
 	<select id="nextReadRecruit" parameterType="map" resultType="com.moumi.app.recruit.Recruit">
 		SELECT recruitNum, subject
 		FROM recruit r
@@ -103,6 +100,20 @@
 		ORDER BY recruitNum DESC
 		FETCH FIRST 1 ROWS ONLY
 	</select>
+	
+	<update id="updateRecruit" parameterType="com.moumi.app.recruit.Recruit">
+		UPDATE recruit SET subject=#{subject}, content=#{content}, regDate=SYSDATE, 
+			startDate=#{startDate}, endDate=#{endDate}, email=#{email}, corporation=#{corporation}, categoryNum=#{categoryNum}
+		WHERE recruitNum = #{recruitNum} 
+	</update>
+	
+	<delete id="deleteRecruit">
+		DELETE FROM recruit WHERE recruitNum = #{recruitNum}
+	</delete>
+	
+	<!-- 게시글 좋아요 -->
+	
+	
 	
 	
 	<!-- 파일 -->

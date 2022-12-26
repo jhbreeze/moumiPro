@@ -16,7 +16,7 @@
 
 .table tr {height: 40px; }
 </style>
-
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 
 <div class="container body-container">
 	<div class="body-main mx-auto">
@@ -55,7 +55,7 @@
 				<tr>
 					<td class="col-sm-2 align-middle text-center" scope="row" valign="top">내용</td>
 					<td class="ps-3" colspan="3">
-						<div style="min-height:400px;">
+						<div style="min-height:400px;" class="editor">
 							${dto.content}
 						</div>
 					</td>
@@ -98,7 +98,26 @@
 						<button type="button" class="btn btn-success"
 							onclick="location.href='${pageContext.request.contextPath}/recruit/main?${query}';">돌아가기</button>
 					</td>
-				
+					<td class="text-end">
+					<c:choose>
+						<c:when test="${sessionScope.member.userType==0 || sessionScope.member.userType==3}">
+							<button type="button" class="btn btn-success"
+								onclick="location.href='${pageContext.request.contextPath}/recruit/update?recruitNum=${dto.recruitNum}&page=${page}';">수정</button>
+						</c:when>
+						<c:otherwise>
+							<button type="button" class="btn btn-success" disabled="disabled">수정</button>
+						</c:otherwise>
+					</c:choose> 
+					<c:choose>
+						<c:when test="${sessionScope.member.userType==0 || sessionScope.member.userType==3}">
+							<button type="button" class="btn btn-success"
+								onclick="deleteBoard();">삭제</button>
+						</c:when>
+						<c:otherwise>
+							<button type="button" class="btn btn-success" disabled="disabled">삭제</button>
+						</c:otherwise>
+					</c:choose>
+				</td>
 				</tr>
 			</table>
 		</form>
