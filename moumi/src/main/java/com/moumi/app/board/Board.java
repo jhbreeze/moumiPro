@@ -17,7 +17,7 @@ public class Board {
 	private String nickName;
 	
 	private String fileName;
-	private List<MultipartFile> selectFile;
+	private MultipartFile selectFile;
 	
 	private int replyCount;
 	private int boardLikeCount;
@@ -95,12 +95,13 @@ public class Board {
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
 	}
-	public List<MultipartFile> getSelectFile() {
+	public MultipartFile getSelectFile() {
 		return selectFile;
 	}
-	public void setSelectFile(List<MultipartFile> selectFile) {
+	public void setSelectFile(MultipartFile selectFile) {
 		this.selectFile = selectFile;
 	}
+	
 	
 	
 }

@@ -7,9 +7,9 @@
 	</select>
 	
 	<insert id="insertBoard" parameterType="com.moumi.app.board.Board">
-		INSERT INTO community(communityNum,userCode,subject,content,regDate,hitCount,enabled,brandName,
+		INSERT INTO community(communityNum,userCode,subject,content,regDate,hitCount,brandName,
 			brandNum,nickName)
-		 VALUES(#{communityNum},#{userCode},#{subject},#{content},SYSDATE,0,1,#{brandName},#{brandNum},#{nickName})
+		 VALUES(#{communityNum},#{userCode},#{subject},#{content},SYSDATE,0,#{brandName},#{brandNum},#{nickName})
 	</insert>
 	<insert id="insertFile" parameterType="com.moumi.app.board.Board">
 		INSERT INTO communityFile(fileNum,communityNum,fileName)
@@ -37,7 +37,8 @@
 	</sql>
 	
 	<select id="dataCount" parameterType="map" resultType="Integer">
-		SELECT NVL(COUNT(*),0) FROM community
+		SELECT NVL(COUNT(*),0) FROM community c
+		JOIN member m ON c.userCode = m.userCode
 		<where>
 			<if test = "keyword!=null and keyword!=''">
 				<include refid = "where-list"/>
@@ -46,7 +47,7 @@
 	</select>
 	
 	<select id="listBoard" parameterType="map" resultType="com.moumi.app.board.Board">
-		SELECT c.communityNum,c.userCode,nickName,subject,TO_CHAR(regDate,'YYYY-MM-DD') regDate,
+		SELECT c.communityNum,c.userCode,c.nickName,subject,TO_CHAR(c.regDate,'YYYY-MM-DD') regDate,
 			hitCount,NVL(replyCount,0) replyCount
 		FROM community c
 		JOIN member m ON c.userCode = m.userCode
@@ -54,7 +55,7 @@
 			SELECT communityNum,COUNT(*) replyCount FROM reply
 			WHERE parent = 0
 			GROUP BY communityNum
-		) r ON r.communityNum = c.communityNum 
+		) r ON c.communityNum = r.communityNum 
 		<where>
 			<if test = "keyword!=null and keyword!=''">
 				<include refid = "where-list"/>
@@ -65,7 +66,8 @@
 	</select>
 	
 	<select id="readBoard" parameterType="Long" resultType="com.moumi.app.board.Board">
-		SELECT c.num,nickName,c.userCode,subject,content,hitCount,regDate,NVL(boardLikeCount,0) boardLikeCount
+		SELECT c.communityNum,c.nickName,c.userCode,subject,content,hitCount,c.regDate,NVL(boardLikeCount,0)
+		 boardLikeCount,brandName
 		FROM community c
 		JOIN member m ON c.userCode = m.userCode
 		LEFT OUTER JOIN (
@@ -78,6 +80,112 @@
 	<update id="updateHitCount" parameterType="Long">
 		UPDATE community SET hitCount = hitCount + 1 WHERE communityNum = #{num}
 	</update>
+	
+	<select id="preReadBoard" parameterType="map" resultType="com.moumi.app.board.Board">
+		SELECT communityNum,subject
+		FROM community c
+		JOIN member m ON c.userCode = m.userCode
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+			AND (communityNum &gt; #{communityNum})
+		</where>
+		ORDER BY communityNum ASC
+		FETCH FIRST 1 ROWS ONLY
+	</select>
+	
+	<select id="nextReadBoard" parameterType="map" resultType="com.moumi.app.board.Board">
+		SELECT communityNum,subject
+		FROM community c
+		JOIN member m ON c.userCode = m.userCode
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+			AND (communityNum &lt; #{communityNum})
+		</where>
+		ORDER BY communityNum DESC
+		FETCH FIRST 1 ROWS ONLY
+	</select>
+	
+	<update id="updateBoard" parameterType="com.moumi.app.board.Board">
+		UPDATE community SET subject=#{subject}, content=#{content}, brandName=#{brandName},brandNum=#{brandNum}
+		WHERE communityNum = #{communityNum}
+	</update>
+	
+	<delete id="deleteBoard" parameterType="Long">
+		DELETE FROM community WHERE communityNum = #{communityNum}
+	</delete>
+	
+	
+	<insert id="insertBoardLike" parameterType="map">
+		INSERT INTO pick(communityNum, userCode) VALUES (#{communityNum}, #{userCode})
+	</insert>
+
+	
+	<delete id="deleteBoardLike" parameterType="map">
+		DELETE FROM pick WHERE communityNum = #{communityNum} AND userCode = #{userCode}
+	</delete>
+      
+	
+	<select id="boardLikeCount" parameterType="Long" resultType="Integer">
+		SELECT COUNT(*) FROM pick WHERE communityNum=#{communityNum}
+	</select>
+
+	
+	<select id="userBoardLiked" parameterType="map" resultType="com.moumi.app.board.Board">
+		SELECT communityNum, userCode FROM pick WHERE communityNum = #{communityNum} AND userCode = #{userCode}
+	</select>
+	<select id="rseq" resultType="Long">
+		SELECT replyNum_seq.NEXTVAL FROM dual
+	</select>
+	
+	<insert id="insertReply" parameterType="com.moumi.app.board.Reply">
+		INSERT INTO reply(replyNum,content,regDate,userCode,parent,communityNum) 
+		 VALUES(#{replyNum}, #{content},SYSDATE,#{userCode},#{parent},#{communityNum})
+	</insert>
+	
+	<insert id="replyFile" parameterType="com.moumi.app.board.Board">
+		INSERT INTO replyFile(fileNum,replyNum,fileName)
+			VALUES(replyFile_seq.NEXTVAL,#{replyNum},#{fileName, jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="replyCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM reply
+		WHERE communityNum=#{communityNum} AND answer=0
+	</select>
+	
+	<select id="listReply" parameterType="map" resultType="com.moumi.app.board.Reply">
+		SELECT r.replyNum, r.userCode,m.nickName,r.communityNum, content, r.regDate, 
+			    NVL(answerCount, 0) answerCount,
+			    NVL(likeCount, 0) likeCount,
+			    NVL(disLikeCount, 0) disLikeCount
+		FROM reply r
+		JOIN member m ON r.userCode = m.userCode
+		LEFT OUTER JOIN (
+			SELECT parent, COUNT(*) answerCount
+			FROM reply
+			WHERE parent!=0
+			GROUP BY parent
+		) a ON r.replyNum = a.parent
+		LEFT OUTER JOIN (
+			SELECT replyNum, COUNT(DECODE(replLike, 1, 1)) likeCount,
+				   COUNT(DECODE(replLike, 0, 1)) disLikeCount
+			FROM replyLike GROUP BY replyNum
+		) c ON r.replyNum = c.replyNum
+		WHERE communityNum=#{communityNum} AND r.parent=0
+		ORDER BY r.replyNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
+	</select>
+	<delete id="deleteReply" parameterType="map">
+		DELETE FROM reply
+		WHERE replyNum=#{replyNum}
+		<if test="mode=='reply'">
+			OR parent=#{replyNum}
+		</if>
+	</delete>
 	
 	
 </mapper>

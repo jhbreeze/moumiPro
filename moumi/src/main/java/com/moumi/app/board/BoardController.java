@@ -2,6 +2,7 @@ package com.moumi.app.board;
 
 import java.io.File;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,16 +11,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.moumi.app.common.FileManager;
 import com.moumi.app.common.MyUtil;
 import com.moumi.app.member.SessionInfo;
+
+
 
 @Controller("board.boardController")
 @RequestMapping("/board/*")
@@ -111,10 +116,8 @@ public class BoardController {
 	      }
 		
 		try {
-			//dto.setNickName(info.getUserNickName());
-			// dto.setUserCode(info.getUserCode());
-			dto.setUserCode(1);
-			dto.setNickName("관리자");
+			dto.setNickName(info.getNickName());
+			dto.setUserCode(info.getUserCode());
 
 			 
 			service.insertBoard(dto, pathname);
@@ -124,10 +127,226 @@ public class BoardController {
 	}
 	
 	@GetMapping("article")
-	public String article(HttpSession session, Model model) {
+	public String article(@RequestParam long communityNum,
+			@RequestParam String page,
+			@RequestParam(defaultValue = "all") String condition,
+			@RequestParam(defaultValue = "") String keyword,
+			HttpSession session, Model model) throws Exception {
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		keyword = URLDecoder.decode(keyword, "utf-8");
+		
+		String query = "page=" + page;
+		if(keyword.length() != 0) {
+			query += "&condition=" + condition+
+					"&keyword=" + URLEncoder.encode(keyword,"UTF-8");
+		}
+		service.updateHitCount(communityNum);
+		
+		Board dto = service.readBoard(communityNum);
+		if(dto == null) {
+			return "redirect:/board/list?"+ query;
+		}
+		
+		// dto.setContent(myUtil.htmlSymbols(dto.getContent()));
+		
+		Map<String,Object> map = new HashMap<String, Object>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		map.put("communityNum", communityNum);
+		
+		Board preReadDto = service.preReadBoard(map);
+		Board nextReadDto = service.nextReadBoard(map);
+		
+		map.put("userCode", info.getUserCode());
+		boolean userBoardLiked = service.userBoardLiked(map);
+		
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("preReadDto", preReadDto);
+		model.addAttribute("nextReadDto", nextReadDto);
+
+		model.addAttribute("userBoardLiked", userBoardLiked);
+		
+		model.addAttribute("page", page);
+		model.addAttribute("query", query);
+		
 		return ".board.article";
 	}
 	
+	@GetMapping("update")
+	public String updateForm(@RequestParam long communityNum,
+				@RequestParam String page,
+				HttpSession session,
+				Model model) throws Exception {
+			SessionInfo info = (SessionInfo)session.getAttribute("member");
+			
+			Board dto = service.readBoard(communityNum);
+			if( dto == null || !(info.getUserCode() == dto.getUserCode())) {
+				return "redirect:/board/list?page="+page;
+			}
+			
+			model.addAttribute("dto",dto);
+			model.addAttribute("mode","update");
+			model.addAttribute("page",page);
+			
+			return ".board.write";
+		
+	}
+	
+	@PostMapping("update")
+	public String updateSubmit(Board dto, @RequestParam String page,
+			HttpSession session,HttpServletRequest req) throws Exception{
+		
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator+"board";
+		
+		try {
+			if(req.getParameter("category").equals("fashion")) {
+				  dto.setBrandNum(1); 
+			  }
+			  else if(req.getParameter("category").equals("food")) {
+				  dto.setBrandNum(2); 
+			  }
+			  else if(req.getParameter("category").equals("electronic")) {
+				  dto.setBrandNum(3); 
+			  } else if(req.getParameter("category").equals("car")) {
+				  dto.setBrandNum(4); 
+			  } else if(req.getParameter("category").equals("cosmetic")) {
+				  dto.setBrandNum(5); 
+		      } else if(req.getParameter("category").equals("furniture")) {
+		    	  dto.setBrandNum(6); 
+		      }
+			service.updateBoard(dto, pathname);
+		} catch (Exception e) {
+		}
+		
+		return "redirect:/board/list?page=" + page;
+	}
+	
+	@RequestMapping(value = "delete")
+	public String delete(@RequestParam long communityNum,
+			@RequestParam String page,
+			@RequestParam(defaultValue = "all") String condition,
+			@RequestParam(defaultValue = "") String keyword,
+			HttpSession session) throws Exception {
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		keyword = URLDecoder.decode(keyword,"utf-8");
+		String query = "page=" + page;
+		
+		if(keyword.length() != 0) {
+			query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword,"UTF-8");
+		}
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator+"board";
+		
+		service.deleteBoard(communityNum, pathname, (int) info.getUserCode(), info.getUserType());
+		
+		return "redirect:/board/list?" + query;
+	}
+	
+	@RequestMapping("insertBoardLike")
+	@ResponseBody
+	public Map<String,Object> insertBoardLike(@RequestParam long communityNum,
+				@RequestParam boolean userLiked, HttpSession session) {
+		String  state = "true";
+		int boardLikeCount = 0;
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		
+		Map<String,Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("communityNum",communityNum);
+		paramMap.put("userCode", info.getUserCode());
+		
+		try {
+			if(userLiked) {
+				service.deleteBoardLike(paramMap);
+			} else {
+				service.insertBoardLike(paramMap);
+			}
+		} catch (DuplicateKeyException e) {
+			state = "liked";
+		} catch (Exception e) {
+			state = "false";
+		}
+		
+		boardLikeCount = service.boardLikeCount(communityNum);
+		Map<String,Object> model = new HashMap<String, Object>();
+		model.put("state",state);
+		model.put("boardLikeCount", boardLikeCount);
+		
+		return model;
+	}
+	
+	@GetMapping("listReply")
+	public String listReply(@RequestParam long communityNum, 
+			@RequestParam(value = "pageNo", defaultValue = "1") int current_page,
+			HttpSession session,
+			Model model) throws Exception {
+
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		
+		int size = 5;
+		int total_page = 0;
+		int dataCount = 0;
+
+		Map<String, Object> map = new HashMap<>();
+		map.put("communityNum", communityNum);
+		
+		map.put("userType", info.getUserType());
+		map.put("userCode", info.getUserCode());
+		
+
+		dataCount = service.replyCount(map);
+		total_page = myUtil.pageCount(dataCount, size);
+		if (current_page > total_page) {
+			current_page = total_page;
+		}
+
+		int offset = (current_page - 1) * size;
+		if(offset < 0) offset = 0;
+
+		map.put("offset", offset);
+		map.put("size", size);
+		
+		List<Reply> listReply = service.listReply(map);
+
+		for (Reply dto : listReply) {
+			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
+		}
+
+		// AJAX 용 페이징
+		String paging = myUtil.pagingMethod(current_page, total_page, "listPage");
+
+		// 포워딩할 jsp로 넘길 데이터
+		model.addAttribute("listReply", listReply);
+		model.addAttribute("pageNo", current_page);
+		model.addAttribute("replyCount", dataCount);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("paging", paging);
+
+		return "board/listReply";
+	}
+
+	// 댓글 및 댓글의 답글 등록 : AJAX-JSON
+	@PostMapping("insertReply")
+	@ResponseBody
+	public Map<String, Object> insertReply(Reply dto, HttpSession session) {
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		String state = "true";
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator+"reply";
+
+		try {
+			dto.setUserCode(info.getUserCode());
+			service.insertReply(dto,pathname);
+		} catch (Exception e) {
+			state = "false";
+		}
+
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", state);
+		return model;
+	}
 
 	
 	
