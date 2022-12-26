@@ -87,7 +87,7 @@ public class MemberServiceImpl implements MemberService {
 	
 //	generatePwd
 
-/*
+
 	@Override
 	public boolean isPasswordCheck(String email, String pwd) {
 		Member dto = readMember(email);
@@ -98,7 +98,7 @@ public class MemberServiceImpl implements MemberService {
 		
 		return bcrypt.matches(email, dto.getPwd());
 	}
-*/
+
 //	updatePwd
 	
 	@Override

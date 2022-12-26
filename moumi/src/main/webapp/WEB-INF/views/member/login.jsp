@@ -5,8 +5,41 @@
 
 <style type="text/css">
 .body-container {
-	max-width: 800px;
+	margin-top: 30px;
+	max-width: 450px;
+	box-shadow: 1px 1px 2px 2px #d8d8d8;
+	border-radius: 40px;
+	padding-bottom: 20px;
+	text-align: center;
 }
+.title {
+    text-align: center;
+}
+.loginTitle {
+	font-weight: bold;
+	font-size: 30px;
+}
+.form-control {
+	border-radius: 13px;
+	margin-bottom: 10px;
+	font-size: 14px;
+	width: 300px;
+}
+.inputBox {
+	margin-top: 30px;
+	margin-left: 75px;
+}
+.btn {
+	border-radius: 13px;
+	font-size: 14px;
+}
+.login {
+	margin-top: 20px;
+	padding-left:125px;
+	padding-right:125px;
+	font-weight: bold;
+}
+
 </style>
 
 <script type="text/javascript">
@@ -33,47 +66,34 @@ function sendLogin() {
 
 <div class="container">
 	<div class="body-container">	
-
-        <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <div class="border mt-5 p-4">
-                    <form name="loginForm" action="" method="post" class="row g-3">
-                        <h3 class="text-center"><i class="bi bi-lock"></i> 회원 로그인</h3>
-                        <div class="col-12">
-                            <label class="mb-1">이메일</label>
-                            <input type="text" name="email" class="form-control" placeholder="이메일">
-                        </div>
-                        <div class="col-12">
-                            <label class="mb-1">패스워드</label>
-                            <input type="password" name="pwd" class="form-control" autocomplete="off" 
-                            	placeholder="패스워드">
-                        </div>
-                        <div class="col-12">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="rememberMe">
-                                <label class="form-check-label" for="rememberMe"> 이메일 저장</label>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <button type="button" class="btn btn-primary float-end" onclick="sendLogin();">&nbsp;로그인&nbsp;<i class="bi bi-check2"></i></button>
-                        </div>
-                    </form>
-                    <hr class="mt-4">
-                    <div class="col-12">
-                        <p class="text-center mb-0">
-                        	<a href="#" class="text-decoration-none me-2">아이디 찾기</a>
-                        	<a href="${pageContext.request.contextPath}/member/pwdFind" class="text-decoration-none me-2">패스워드 찾기</a>
-                        	<a href="${pageContext.request.contextPath}/member/member" class="text-decoration-none">회원가입</a>
-                        </p>
-                    </div>
-                </div>
-
-                <div class="d-grid">
-						<p class="form-control-plaintext text-center text-primary">${message}</p>
-                </div>
-
+		
+		<div class="title" >
+			<h4 class="loginTitle"> LOGIN </h4>
+			<div>
+				<img src="${pageContext.request.contextPath}/resources/images/signup.png" style="width: 250px; margin-top: 20px;" class="card-img-top">
+			</div>	
+		</div>
+        <form name="loginForm" action="" method="post" class="loginf">
+            <div class="inputBox">
+                <input type="text" name="email" class="form-control" placeholder="&nbsp;이메일">
+                <input type="password" name="pwd" class="form-control" autocomplete="off" 
+                	placeholder="&nbsp;비밀번호">
             </div>
-        </div>
+            <div>
+                <button type="button" class="login btn btn-success m-1" onclick="sendLogin();">로 그 인</button>
+            </div>
+        </form>
+        <hr class="mt-4" >
+            <p class="text-center mb-0">
+            	<a href="#" class="text-decoration-none me-2">아이디 찾기</a>
+            	<a href="${pageContext.request.contextPath}/member/pwdFind" class="text-decoration-none me-2">패스워드 찾기</a>
+            	<a href="${pageContext.request.contextPath}/member/member" class="text-decoration-none">회원가입</a>
+            </p>
+
+        <div class="d-grid">
+			<p class="form-control-plaintext text-center text-primary">${message}</p>
+     	</div>
+
 
 	</div>
 </div>
