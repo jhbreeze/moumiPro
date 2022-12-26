@@ -39,7 +39,7 @@
 		<intercept-url pattern="/index.jsp" access="permitAll"/>
 		<intercept-url pattern="/member/login" access="permitAll"/>
 		<intercept-url pattern="/member/member" access="permitAll"/>
-		<intercept-url pattern="/member/userIdCheck" access="permitAll"/>
+		<intercept-url pattern="/member/emailCheck" access="permitAll"/>
 		<intercept-url pattern="/member/complete" access="permitAll"/>
 		<intercept-url pattern="/member/pwdFind" access="permitAll"/>
 		<intercept-url pattern="/member/expired" access="permitAll"/>

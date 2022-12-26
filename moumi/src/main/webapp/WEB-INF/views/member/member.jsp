@@ -193,6 +193,20 @@ function emailCheck() {
 	});
 }
 
+$(function(){
+	let userType = "${dto.userType}";
+	if(userType==="3") {
+		$("#userType3").prop("checked", true);
+	}
+	
+	let gender = "${dto.gender}";
+	if(gender==="여자") {
+		$("#female").prop("checked", true);
+	}
+	
+	
+});
+
 </script>
 
 
@@ -210,10 +224,10 @@ function emailCheck() {
 			<form name="memberForm" method="post">
 				
 				<div class="division1" role="group" aria-label="Basic radio toggle button group">
-				  <input type="radio" class="btn-check" name="userType" id="userType1" checked>
+				  <input type="radio" class="btn-check" name="userType" id="userType1" checked="checked" value="1" >
 				  <label class="userType btn btn-outline-success" for="userType1">개인 회원</label>
 				
-				  <input type="radio" class="btn-check" name="userType" id="userType3">
+				  <input type="radio" class="btn-check" name="userType" id="userType3" value="3">
 				  <label class="userType btn btn-outline-success" for="userType3">기업 회원</label>
 				
 				</div>
@@ -257,10 +271,10 @@ function emailCheck() {
 				  	<label class="form-label" for="gender">성별</label>
 				  	<div>
 						<label>
-		                    <input type="radio" name="gender" value="${dto.gender}" id="male"/> 남자 
+		                    <input type="radio" name="gender" value="남자" id="male" checked="checked"> 남자 
 		                </label>
 		                <label>
-		                	<input type="radio" name="gender" value="${dto.gender}" id="female"/> 여자
+		                	<input type="radio" name="gender" value="여자" id="female"> 여자
 		                </label>
 				  	</div>
 				</div>
