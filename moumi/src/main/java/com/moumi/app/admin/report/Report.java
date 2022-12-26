@@ -10,11 +10,13 @@ public class Report {
 	private String content;
 	private String regDate;
 	private int hitCount;
-	private MultipartFile thumbnail;
+	private String thumbnail;
 	private long userCode;
+	private MultipartFile thumbnailFile;
 	
 	private long fileNum;
-	private List<MultipartFile> imageFilename;
+	private String imageFilename;
+	private List<MultipartFile> addFiles;
 	
 	public long getReportNum() {
 		return reportNum;
@@ -46,12 +48,7 @@ public class Report {
 	public void setHitCount(int hitCount) {
 		this.hitCount = hitCount;
 	}
-	public MultipartFile getThumbnail() {
-		return thumbnail;
-	}
-	public void setThumbnail(MultipartFile thumbnail) {
-		this.thumbnail = thumbnail;
-	}
+	
 	public long getUserCode() {
 		return userCode;
 	}
@@ -64,12 +61,32 @@ public class Report {
 	public void setFileNum(long fileNum) {
 		this.fileNum = fileNum;
 	}
-	public List<MultipartFile> getImageFilename() {
+	public String getThumbnail() {
+		return thumbnail;
+	}
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
+	public String getImageFilename() {
 		return imageFilename;
 	}
-	public void setImageFilename(List<MultipartFile> imageFilename) {
+	public void setImageFilename(String imageFilename) {
 		this.imageFilename = imageFilename;
 	}
+	public MultipartFile getThumbnailFile() {
+		return thumbnailFile;
+	}
+	public void setThumbnailFile(MultipartFile thumbnailFile) {
+		this.thumbnailFile = thumbnailFile;
+	}
+	public List<MultipartFile> getAddFiles() {
+		return addFiles;
+	}
+	public void setAddFiles(List<MultipartFile> addFiles) {
+		this.addFiles = addFiles;
+	}
+	
+	
 	
 	
 	

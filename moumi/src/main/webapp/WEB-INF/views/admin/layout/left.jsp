@@ -9,20 +9,23 @@ $(function(){
     var url = window.location.pathname;
     var urlRegExp = new RegExp(url.replace(/\/$/, '') + "$");
     
-	$('nav ul>li>a').each(function() {
-		if (urlRegExp.test(this.href.replace(/\/$/, ''))) {
-			$(this).addClass('active_menu');
-			return false;
-		}
-	});
-	if($('nav ul>li>a').hasClass("active_menu")) return false;
-	
-	$('nav ul>.menu--item__has_sub_menu').each(function() {
-		if (urlRegExp.test(this.href.replace(/\/$/, ''))) {
-			$(this).addClass('active_menu');
-			return false;
-		}
-	});
+    try {
+    	$('nav ul>li>a').each(function() {
+    		if (urlRegExp.test(this.href.replace(/\/$/, ''))) {
+    			$(this).addClass('active_menu');
+    			return false;
+    		}
+    	});
+    	if($('nav ul>li>a').hasClass("active_menu")) return false;
+    	
+    	$('nav ul>.menu--item__has_sub_menu').each(function() {
+    		if (urlRegExp.test(this.href.replace(/\/$/, ''))) {
+    			$(this).addClass('active_menu');
+    			return false;
+    		}
+    	});
+    }catch(e) {
+    }
 });
 
 $(function(){
@@ -34,15 +37,47 @@ $(function(){
 	});
 });
 </script>
+<style type="text/css">
+.menu--label{
+color : white
+}
+
+.active_menu > .menu--icon, .active_menu > .menu--label {
+ background-color: white;
+ color: #198754;
+}
+
+.navbar-green {
+background-color: #198754
+}
+
+.menu--icon{
+color: white;
+}
+
+.menu--subitens__opened > .menu--link, .menu--subitens__opened > .menu--label{
+color: #198754;
+}
+.menu-side{
+ `	position: -webkit-sticky;
+    position: sticky;
+    align-self: flex-end;
+    bottom: 0;
+    padding : 17px 0;
+    }
+}
+</style>
 
 <header class="header clearfix">
 	<button type="button" id="toggleMenu" class="toggle_menu">
 		<i class="fa-solid fa-bars"></i>
 	</button>
 	
-	<div class="header-container">
+	<!-- 헤더 -->
+	<div class="header-container" style="background-color: white;">
 		<div class="header-left">
-			<h1>관리자 페이지</h1>
+			<a class="navbar-brand" href="${pageContext.request.contextPath}/">
+				<img style ="height:35px; width:160px;"src="${pageContext.request.contextPath}/resources/moumi/logo/green.png"/></a>
 		</div>
 		<div class="header-right">
 			<span class="img" style="background-image: url('${pageContext.request.contextPath}/resources/images/person.png');"></span>
@@ -58,8 +93,8 @@ $(function(){
 
 </header>
 
-<nav class="vertical_nav">
-	<ul id="js-menu" class="menu">
+<nav class="vertical_nav navbar-green" style="min-height: 1100px;">
+	<ul id="js-menu" class="menu menu-side">
 	
 		<li class="menu--item">
 			<a href="${pageContext.request.contextPath}/admin" class="menu--link" title="Home">
@@ -74,76 +109,63 @@ $(function(){
 				<span class="menu--label">회원 관리</span>
 			</a>
 		</li>
-	
-		<li class="menu--item menu--item__has_sub_menu">
-			<label class="menu--link" title="고객센터관리">
-				<i class="menu--icon  fa-fw fa-solid fa-person-circle-question"></i>
-				<span class="menu--label">고객센터관리</span>
-			</label>
-
-			<ul class="sub_menu">
-				<li class="sub_menu--item">
-					<a href="#" class="sub_menu--link">자주하는 질문</a>
-				</li>
-				<li class="sub_menu--item">
-					<a href="#" class="sub_menu--link">공지사항</a>
-				</li>
-				<li class="sub_menu--item">
-					<a href="#" class="sub_menu--link">1:1문의</a>
-				</li>
-				<li class="sub_menu--item">
-					<a href="#" class="sub_menu--link">쪽지</a>
-				</li>
-				<li class="sub_menu--item">
-					<a href="#" class="sub_menu--link">신고</a>
-				</li>
-			</ul>
-		</li>
-
-		<li class="menu--item menu--item__has_sub_menu">
-			<label class="menu--link" title="스터디관리">
-				<i class="menu--icon  fa-fw fa-solid fa-graduation-cap"></i>
-				<span class="menu--label">스터디관리</span>
-			</label>
-
-			<ul class="sub_menu">
-				<li class="sub_menu--item">
-					<a href="#" class="sub_menu--link">카테고리 관리</a>
-				</li>
-				<li class="sub_menu--item">
-					<a href="#" class="sub_menu--link">강좌 관리</a>
-				</li>
-				<li class="sub_menu--item">
-					<a href="#" class="sub_menu--link">질문과 답변</a>
-				</li>
-			</ul>
-		</li>
-
+		
 		<li class="menu--item">
-			<a href="#" class="menu--link" title="일정관리">
-				<i class="menu--icon  fa-fw fa-regular fa-calendar"></i>
-				<span class="menu--label">일정관리</span>
+	        <a href="${pageContext.request.contextPath}/admin/sales/list" class="menu--link" title="매출 관리">
+				<i class="menu--icon  fa-fw fa-solid bi-receipt"></i>
+				<span class="menu--label">매출 관리</span>
 			</a>
 		</li>
 		
 		<li class="menu--item">
-			<a href="#" class="menu--link" title="지역명소관리">
-				<i class="menu--icon  fa-fw fa-solid fa-location-dot"></i>
-				<span class="menu--label">지역명소관리</span>
+	        <a href="${pageContext.request.contextPath}/admin/report/list" class="menu--link" title="분석 리포트 관리">
+				<i class="menu--icon  fa-fw fa-solid bi-pen-fill"></i>
+				<span class="menu--label">분석 리포트 관리</span>
+			</a>
+		</li>
+	
+		<li class="menu--item menu--item__has_sub_menu">
+		
+			<label class="menu--link" title="공지 사항 관리">
+				<i class="menu--icon  fa-fw fa-solid fa-person-circle-question"></i>
+				<span class="menu--label">공지사항 관리</span>
+			</label>
+
+			<ul class="sub_menu">
+				<li class="sub_menu--item">
+					<a href="${pageContext.request.contextPath}/admin/notice/list" class="sub_menu--link">공지사항</a>
+				</li>
+				<li class="sub_menu--item">
+					<a href="${pageContext.request.contextPath}/admin/faq/main" class="sub_menu--link">자주하는 질문</a>
+				</li>
+			</ul>
+		</li>
+
+		<li class="menu--item">
+			<a href="${pageContext.request.contextPath}/admin/community/list" class="menu--link" title="질문게시판 관리">
+				<i class="menu--icon  fa-fw fa-regular bi-patch-question-fill"></i>
+				<span class="menu--label">브랜드 커뮤니티 관리</span>
+			</a>
+		</li>
+		
+		<li class="menu--item">
+			<a href="${pageContext.request.contextPath}/admin/chatting/list" class="menu--link" title="채팅 관리">
+				<i class="menu--icon  fa-fw fa-solid bi-chat-dots-fill"></i>
+				<span class="menu--label">채팅 관리</span>
 			</a>
 		</li>
 
 		<li class="menu--item">
-			<a href="#" class="menu--link" title="메인화면 설정">
-				<i class="menu--icon  fa-fw fa-solid fa-gear"></i>
-				<span class="menu--label">메인화면 설정</span>
+			<a href="${pageContext.request.contextPath}/admin/comment/list" class="menu--link" title="신고댓글 관리">
+				<i class="menu--icon  fa-fw bi-filter-left"></i>
+				<span class="menu--label">신고댓글 관리</span>
 			</a>
 		</li>
 
 		<li class="menu--item">
-			<a href="#" class="menu--link" title="GroupWare">
-				<i class="menu--icon  fa-fw fa-solid fa-id-card"></i>
-				<span class="menu--label">GroupWare</span>
+			<a href="${pageContext.request.contextPath}/admin/event/list" class="menu--link" title="이벤트 관리">
+				<i class="menu--icon  fa-fw fa-solid bi-calendar2-event-fill"></i>
+				<span class="menu--label">이벤트 관리</span>
 			</a>
 		</li>
 
@@ -157,7 +179,6 @@ $(function(){
 
 	<button id="collapse_menu" class="collapse_menu">
 		<i class="collapse_menu--icon fa fa-fw"></i>
-		<span class="collapse_menu--label">Recolher menu</span>
 	</button>
 
 </nav>

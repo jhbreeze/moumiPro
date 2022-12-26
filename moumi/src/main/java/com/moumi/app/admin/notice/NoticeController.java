@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.moumi.app.common.FileManager;
 import com.moumi.app.common.MyUtil;
+import com.moumi.app.member.SessionInfo;
 
 @Controller("admin.notice.noticeController")
 @RequestMapping("/admin/notice/*")
@@ -31,11 +32,6 @@ public class NoticeController {
 	private MyUtil myUtil;
 	@Autowired
 	private FileManager fileManager;
-	
-	//@RequestMapping("list")
-	//public String noticeManage() {
-	//	return ".admin.notice.list";
-	//}
 	
 	@RequestMapping("list")
 	public String list(@RequestParam(value = "page", defaultValue = "1") int current_page,
@@ -105,18 +101,27 @@ public class NoticeController {
 	@GetMapping("write")
 	public String writeForm(Model model, HttpSession session) throws Exception {
 		
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		if(info.getUserCode() != 1) {
+			return "redirect:/notice/list";
+		}
+		
 		model.addAttribute("mode", "write");
 		return ".admin.notice.write";
 	}
 	
 	@PostMapping("write")
 	public String writeSubmit(Notice dto, HttpSession session) throws Exception {
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		
+		if(info.getUserCode() != 1) {
+			return "redirect:/notice/list";
+		}
 		try {
 			String root = session.getServletContext().getRealPath("/");
 			String pathname = root + "uploads"+File.separator+"notice";
 			
-			dto.setUserCode(0);
+			dto.setUserCode(info.getUserCode());
 			service.insertNotice(dto, pathname);
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -190,14 +195,17 @@ public class NoticeController {
 	public String updateSubmit(Notice dto,
 			@RequestParam String page,
 			HttpSession session) throws Exception {
+		
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		try {
 			String root = session.getServletContext().getRealPath("/");
 			String pathname = root + File.separator + "uploads" + File.separator + "notice";
 			
-			dto.setUserCode(0);
+			dto.setUserCode(info.getUserCode());
 			service.updateNotice(dto, pathname);
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
+			throw e;
 		}
 		return "redirect:/admin/notice/list?page="+page;
 	}
