@@ -15,7 +15,7 @@ public interface MemberService {
 
 //	public void generatePwd(Member dto) throws Exception;
 	
-//	public boolean isPasswordCheck(String email, String userPwd);
+	public boolean isPasswordCheck(String email, String userPwd);
 //	public void updatePwd(Member dto) throws Exception;
 	public int checkFailureCount(String email);
 	public void updateFailureCount(String email) throws Exception;

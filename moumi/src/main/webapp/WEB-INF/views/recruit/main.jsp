@@ -22,7 +22,6 @@ tbody tr:hover {
 }
 
 </style>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/paginate.js"></script>
 
 
 <script type="text/javascript">
@@ -110,14 +109,20 @@ function reloadRecruit() {
 					type="button" role="tab" aria-controls="tabpanel" aria-selected="true" >진행중인 공고</button>
 			</li>
 			<li class="nav-item" role="presentation">
-				<button class="nav-link" id="tab-2" data-bs-toggle="tab" data-bs-target="#nav-content"
-					type="button" role="tab" aria-selected="false">마감된 공고</button>
+				<button class="nav-link" id="tab-2" data-bs-toggle="tab" data-bs-target="#nav-2"
+					type="button" role="tab" aria-controls="tabpanel" aria-selected="true">마감된 공고</button>
 			</li>
 		</ul>
 		
 		<div class="tab-content pt-2" id="nav-tabContent">
 			<div class="tab-pane fade show active" id="nav-content" role="tabpanel" aria-labelledby="nav-tab-content">
 			
+			</div>
+		</div>
+		
+		<div class="tab-content pt-2" id="nav-tabContent2">
+			<div class="tab-pane fade show active" id="nav-2" role="tabpanel" aria-labelledby="nav-tab-2">
+			sss
 			</div>
 		</div>
 		

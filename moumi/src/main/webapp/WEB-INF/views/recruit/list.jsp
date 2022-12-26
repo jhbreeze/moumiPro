@@ -2,7 +2,7 @@
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<p class="text-end m-3 p-2 fw-bold">전체 
+<p class="text-end p-1 pb-0 fw-bold">전체 
 	<span style="color: green" >${dataCount - (page-1) * size - status.index}</span>건
 </p>
     

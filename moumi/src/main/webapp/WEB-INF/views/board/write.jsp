@@ -66,7 +66,7 @@ function sendOk() {
 					<tr>
 						<td class="table-light col-sm-2" scope="row">닉네임</td>
  						<td>
-							<p class="form-control-plaintext">관리자</p>
+							<p class="form-control-plaintext">${sessionScope.member.nickName}</p>
 						</td>
 					</tr>
 
@@ -92,7 +92,7 @@ function sendOk() {
 					<tr>
 						<td class="table-light col-sm-2" scope="row">브랜드명</td>
 						<td>
-							<input type="text" name="brandName" class="form-control" value="${dto.subject}">
+							<input type="text" name="brandName" class="form-control" value="${dto.brandName}">
 						</td>
 					</tr>
 				</table>
@@ -104,9 +104,7 @@ function sendOk() {
 							<button type="reset" class="btn btn-light">다시입력</button>
 							<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/board/list';">${mode=='update'?'수정취소':'등록취소'}&nbsp;<i class="bi bi-x"></i></button>
 							<c:if test="${mode=='update'}">
-								<input type="hidden" name="num" value="${dto.num}">
-								<input type="hidden" name="saveFilename" value="${dto.saveFilename}">
-								<input type="hidden" name="originalFilename" value="${dto.originalFilename}">
+								<input type="hidden" name="communityNum" value="${dto.communityNum}">
 								<input type="hidden" name="page" value="${page}">
 							</c:if>
 						</td>

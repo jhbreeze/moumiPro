@@ -89,7 +89,7 @@ function compareDate(){
 	let endDate = $("input[name=endDate]").val(); // yyyy-mm-dd 형식으로 반환 
 	
 	// 조건 1) 마감일은 모집 시작일 이후
-	if(startDate > endDate) { // 마감일이 시작일보다 이전의 경우
+	if(startDate >= endDate) { // 마감일이 시작일보다 이전의 경우
 		alert("마감일은 모집 시작일 이후로 설정해야 합니다.");
 		document.getElementById("endDate").value = ""; // 값 초기화
 	}
@@ -220,11 +220,10 @@ function deleteFile(num) {
 						<td class="text-center">
 							<button type="button" class="btn btn-success" onclick="submitContents(this.form);">${mode=='update'?'수정완료':'등록하기'}&nbsp;<i class="bi bi-check2"></i></button>
 							<button type="reset" class="btn btn-success">다시입력</button>
-							<button type="button" class="btn btn-success" onclick="location.href='${pageContext.request.contextPath}/recruit/list';">${mode=='update'?'수정취소':'등록취소'}&nbsp;<i class="bi bi-x"></i></button>
+							<button type="button" class="btn btn-success" onclick="location.href='${pageContext.request.contextPath}/recruit/main';">${mode=='update'?'수정취소':'등록취소'}&nbsp;<i class="bi bi-x"></i></button>
 							<c:if test="${mode=='update'}">
 								<input type="hidden" name="recruitNum" value="${dto.recruitNum}">
-								<input type="hidden" name="saveFilename" value="${dto.saveFilename}">
-								<input type="hidden" name="originalFilename" value="${dto.originalFilename}">
+								<input type="hidden" name="imageFilename" value="${dto.imageFilename}">
 								<input type="hidden" name="page" value="${page}">
 							</c:if>
 						</td>

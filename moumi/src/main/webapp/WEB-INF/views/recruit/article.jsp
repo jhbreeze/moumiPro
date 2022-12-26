@@ -14,62 +14,57 @@
 	font: #545454;
 }
 
+.table tr {height: 40px; }
 </style>
-
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 
 <div class="container body-container">
 	<div class="body-main mx-auto">
-		<ul class="nav nav-tabs">
-			<li class="nav-item"><a class="nav-link active"
-				aria-current="page" href="#">채용 진행중</a></li>
-			<li class="nav-item"><a class="nav-link" href="list2.do?page=1">채용마감</a></li>
+		<ul class="nav nav-tabs" id="myTab" role="tablist">
+			<li class="nav-item" role="presentation"><a class="nav-link active" aria-current="page"
+				 href="${pageContext.request.contextPath}/recruit/main">진행중인 공고</a></li>
+			<li class="nav-item" role="presentation"><a class="nav-link" 
+				href="${pageContext.request.contextPath}/recruit/main">마감된 공고</a></li>
 		</ul>
-
+		
 		<form name="recruitForm" method="post">
 			<table class="table mt-5 recruit-table border-top">
 				<tr>
 					<td class="col-sm-2 align-middle text-center" scope="row">공고명</td>
-					<td class="ps-3" colspan="3">현대자동차 브랜드 디자인 담당자 채용</td>
+					<td class="ps-3" colspan="3">${dto.subject}</td>
 				</tr>
 
 				<tr>
 					<td class="col-sm-2 align-middle text-center" scope="row">구분</td>
-					<td class="ps-3" colspan="3">신입</td>
+					<td class="ps-3" colspan="3">${dto.career}</td>
 				</tr>
 
 				<tr>
 					<td class="col-sm-2 align-middle text-center" scope="row">회사명</td>
-					<td class="ps-3" colspan="3">현대자동차</td>
+					<td class="ps-3" colspan="3">${dto.corporation}</td>
 				</tr>
 				<tr>
 					<td class="col-sm-2 align-middle text-center" scope="row">접수 이메일</td>
-					<td class="ps-3" colspan="3">hyundai@hyundai.com</td>
+					<td class="ps-3" colspan="3">${dto.email}</td>
 				</tr>
 				<tr>
 					<td class="col-sm-2 align-middle text-center" scope="row">모집 기간</td>
-					<td class="ps-3">2022.02.18&nbsp;~&nbsp;2022.03.18</td>
+					<td class="ps-3">${dto.startDate}&nbsp;~&nbsp;${dto.endDate}</td>
 				</tr>
 
 				<tr>
-					<td class="col-sm-2 align-middle text-center" scope="row">내용</td>
+					<td class="col-sm-2 align-middle text-center" scope="row" valign="top">내용</td>
 					<td class="ps-3" colspan="3">
-						<pre>
-							content
-							
-							
-							
-							
-							
-							
-							
-						</pre>
+						<div style="min-height:400px;" class="editor">
+							${dto.content}
+						</div>
 					</td>
 				</tr>
 				<tr>
 					<td class="col-sm-2 align-middle text-center" scope="row">파일 다운로드</td>
 					<td class="ps-3" colspan="4">
-						<c:if test="${not empty dto.imagefileName}">
-							<a href="${pageContext.request.contextPath}/recruit/download?num=${dto.num}">${dto.imagefileName}</a>
+						<c:if test="${not empty dto.imageFilename}">
+							<a href="${pageContext.request.contextPath}/recruit/download?recruitNum=${dto.recruitNum}">${dto.imageFilename}</a>
 						</c:if>
 					</td>
 				</tr>
@@ -85,13 +80,13 @@
 			<table class="table mt-5 border-top">
 				<tr>
 					<td colspan="2">이전글 : <c:if test="${not empty preReadDto}">
-							<a href="${pageContext.request.contextPath}/recruit/article?${query}&num=${preReadDto.num}">${preReadDto.subject}</a>
+							<a href="${pageContext.request.contextPath}/recruit/article?${query}&recruitNum=${preReadDto.recruitNum}">${preReadDto.subject}</a>
 						</c:if>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="2">다음글 : <c:if test="${not empty nextReadDto}">
-							<a href="${pageContext.request.contextPath}/recruit/article?${query}&num=${nextReadDto.num}">${nextReadDto.subject}</a>
+							<a href="${pageContext.request.contextPath}/recruit/article?${query}&recruitNum=${nextReadDto.recruitNum}">${nextReadDto.subject}</a>
 						</c:if>
 					</td>
 				</tr>
@@ -101,9 +96,28 @@
 				<tr>
 					<td class="text-start">
 						<button type="button" class="btn btn-success"
-							onclick="location.href='${pageContext.request.contextPath}/recruit/list?${query}';">돌아가기</button>
+							onclick="location.href='${pageContext.request.contextPath}/recruit/main?${query}';">돌아가기</button>
 					</td>
-				
+					<td class="text-end">
+					<c:choose>
+						<c:when test="${sessionScope.member.userType==0 || sessionScope.member.userType==3}">
+							<button type="button" class="btn btn-success"
+								onclick="location.href='${pageContext.request.contextPath}/recruit/update?recruitNum=${dto.recruitNum}&page=${page}';">수정</button>
+						</c:when>
+						<c:otherwise>
+							<button type="button" class="btn btn-success" disabled="disabled">수정</button>
+						</c:otherwise>
+					</c:choose> 
+					<c:choose>
+						<c:when test="${sessionScope.member.userType==0 || sessionScope.member.userType==3}">
+							<button type="button" class="btn btn-success"
+								onclick="deleteBoard();">삭제</button>
+						</c:when>
+						<c:otherwise>
+							<button type="button" class="btn btn-success" disabled="disabled">삭제</button>
+						</c:otherwise>
+					</c:choose>
+				</td>
 				</tr>
 			</table>
 		</form>
