@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.moumi.app.common.FileManager;
 import com.moumi.app.common.dao.CommonDAO;
@@ -28,14 +27,12 @@ public class BoardServiceImpl implements BoardService{
 			dao.insertData("board.insertBoard",dto);
 			
 			if(! dto.getSelectFile().isEmpty()) {
-				for(MultipartFile mf : dto.getSelectFile()) {
-					String saveFilename = fileManager.doFileUpload(mf, pathname);
-					if(saveFilename == null) {
-						continue;
-					}
+				String saveFilename = fileManager.doFileUpload(dto.getSelectFile(), pathname);
+				if(saveFilename != null) {
 					dto.setFileName(saveFilename);
-					dao.insertData("board.insertFile",dto);
 				}
+				dao.insertData("board.insertFile",dto);
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -69,85 +66,188 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public Board readBoard(long num) {
-		// TODO Auto-generated method stub
-		return null;
+		Board dto = null;
+		try {
+			dto = dao.selectOne("board.readBoard", num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
 	}
 
 	@Override
 	public void updateHitCount(long num) throws Exception {
-		// TODO Auto-generated method stub
+		try {
+			dao.updateData("board.updateHitCount", num);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 		
 	}
 
 	@Override
 	public Board preReadBoard(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		Board dto = null;
+		try {
+			dto = dao.selectOne("board.preReadBoard", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
 	}
 
 	@Override
 	public Board nextReadBoard(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		Board dto = null;
+		try {
+			dto = dao.selectOne("board.nextReadBoard", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
 	}
 
 	@Override
 	public void updateBoard(Board dto, String pathname) throws Exception {
-		// TODO Auto-generated method stub
+		try {
+			String saveFilename = fileManager.doFileUpload(dto.getSelectFile(), pathname);
+			if (saveFilename != null) {
+				if (dto.getFileName() != null && dto.getFileName().length() != 0) {
+					fileManager.doFileDelete(dto.getFileName(), pathname);
+				}
+
+				dto.setFileName(saveFilename);
+			
+			}
+
+			dao.updateData("board.updateBoard", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 		
 	}
 
 	@Override
-	public void deleteBoard(long num, String pathname, int userCode) {
-		// TODO Auto-generated method stub
+	public void deleteBoard(long num, String pathname, long userCode,int userType) throws Exception {
+		try {
+			Board dto = readBoard(num);
+			
+			if( dto == null || (dto.getUserCode() != userCode && userType != 0)) {
+				return;
+			}
+			fileManager.doFileDelete(dto.getFileName(), pathname);
+
+			dao.deleteData("board.deleteBoard", num);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 		
 	}
 
 	@Override
 	public void insertBoardLike(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
+		try {
+			dao.insertData("board.insertBoardLike",map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 		
 	}
 
 	@Override
 	public void deleteBoardLike(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
+		try {
+			dao.deleteData("board.deleteBoardLike",map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 		
 	}
 
 	@Override
 	public int boardLikeCount(long num) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		try {
+			result = dao.selectOne("board.boardLikeCount",num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override
 	public boolean userBoardLiked(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean result = false;
+		try {
+			Board dto = dao.selectOne("board.userBoardLiked", map);
+			if(dto != null) {
+				result = true; 
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override
-	public void insertReply(Reply dto) throws Exception {
-		// TODO Auto-generated method stub
+	public void insertReply(Reply dto,String pathname) throws Exception {
+		try {
+			long seq = dao.selectOne("board.rseq");
+			dto.setReplyNum(seq);
+			dao.insertData("board.insertReply",dto);
+			
+			if(! dto.getSelectFile().isEmpty()) {
+				String saveFilename = fileManager.doFileUpload(dto.getSelectFile(), pathname);
+				if(saveFilename != null) {
+					dto.setFileName(saveFilename);
+				}
+				dao.insertData("board.replyFile",dto);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 		
 	}
 
 	@Override
 	public List<Reply> listReply(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Reply> list = null;
+		
+		try {
+			list = dao.selectList("board.listReply",map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 	@Override
 	public int replyCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("board.replyCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
 	public void deleteReply(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
+		try {
+			dao.deleteData("board.deleteReply", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 		
 	}
 

@@ -73,7 +73,7 @@ function searchList() {
 							<td>${dataCount - (page-1) * size - status.index}</td>
 							<td class="left">
 								<c:url var="url" value="/board/article">
-									<c:param name="num" value="${dto.communityNum}"/>
+									<c:param name="communityNum" value="${dto.communityNum}"/>
 									<c:param name="page" value="${page}"/>
 									<c:if test="${not empty keyword}">
 										<c:param name="condition" value="${condition}"/>

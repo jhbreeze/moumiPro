@@ -7,15 +7,27 @@
 .body-container {
 	max-width: 800px;
 }
+.img-viewer {
+	cursor: pointer;
+	border: 1px solid #ccc;
+	width: 45px;
+	height: 45px;
+	border-radius: 45px;
+	background-image: url("${pageContext.request.contextPath}/resources/images/add_photo.png");
+	position: relative;
+	z-index: 9999;
+	background-repeat : no-repeat;
+	background-size : cover;
+}
 </style>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/boot-board.css" type="text/css">
 
 <script type="text/javascript">
-<c:if test="${sessionScope.member.userId==dto.userId||sessionScope.member.membership>50}">
+<c:if test="${sessionScope.member.userCode==dto.userCode||sessionScope.member.userType==0}">
 	function deleteBoard() {
 	    if(confirm("게시글을 삭제 하시 겠습니까 ? ")) {
-		    let query = "num=${dto.num}&${query}";
-		    let url = "${pageContext.request.contextPath}/bbs/delete?" + query;
+		    let query = "communityNum=${dto.communityNum}&${query}";
+		    let url = "${pageContext.request.contextPath}/board/delete?" + query;
 	    	location.href = url;
 	    }
 	}
@@ -62,8 +74,8 @@ $(function(){
 			return false;
 		}
 		
-		let url = "${pageContext.request.contextPath}/bbs/insertBoardLike";
-		let query = "num=${dto.num}&userLiked="+userLiked;
+		let url = "${pageContext.request.contextPath}/board/insertBoardLike";
+		let query = "communityNum=${dto.communityNum}&userLiked="+userLiked;
 		
 		const fn = function(data) {
 			let state = data.state;
@@ -84,14 +96,15 @@ $(function(){
 	});
 });
 
+
 // 댓글 리스트
 $(function(){
 	listPage(1);
 });
 
 function listPage(page){
-	let url = "${pageContext.request.contextPath}/bbs/listReply";
-	let query = "num=${dto.num}&pageNo="+page;
+	let url = "${pageContext.request.contextPath}/board/listReply";
+	let query = "communityNum=${dto.communityNum}&pageNo="+page;
 	let selector = "#listReply";
 	
 	const fn = function(data){
@@ -103,7 +116,7 @@ function listPage(page){
 // 댓글 등록
 $(function(){
 	$(".btnSendReply").click(function(){
-		let num = "${dto.num}";
+		let num = "${dto.communityNum}";
 		const $tb = $(this).closest("table");
 		
 		let content = $tb.find("textarea").val().trim();
@@ -113,8 +126,8 @@ $(function(){
 		}
 		
 		content = encodeURIComponent(content);
-		let url = "${pageContext.request.contextPath}/bbs/insertReply";
-		let query = "num="+num+"&content="+content+"&answer=0";
+		let url = "${pageContext.request.contextPath}/board/insertReply";
+		let query = "communityNum="+num+"&content="+content+"&parent=0";
 		
 		const fn = function(data){
 			$tb.find("textarea").val("");
@@ -152,7 +165,7 @@ $(function(){
 		$(".reply-menu").hide();
 	});
 });
-
+/*
 // 댓글별 답글 리스트
 function listReplyAnswer(answer){
 	let url = "${pageContext.request.contextPath}/bbs/listReplyAnswer";
@@ -215,7 +228,7 @@ $(function(){
 		
 		content = encodeURIComponent(content);
 		let url = "${pageContext.request.contextPath}/bbs/insertReply";
-		let query = "num=${dto.num}&content="+content+"&answer="+replyNum;
+		let query = "num=${dto.communityNum}&content="+content+"&answer="+replyNum;
 		
 		const fn = function(data){
 			$td.find("textarea").val("");
@@ -382,7 +395,7 @@ $(function(){
 		};
 		ajaxFun(url,"post",query,"json",fn);
 	});
-});
+}); */
 </script>
 
 <div class="container">
@@ -405,10 +418,16 @@ $(function(){
 				<tbody>
 					<tr>
 						<td width="50%">
-							이름 : ${dto.userName}
+							닉네임 : ${dto.nickName}
 						</td>
 						<td align="right">
-							${dto.reg_date} | 조회 ${dto.hitCount}
+							${dto.regDate} | 조회 ${dto.hitCount}
+						</td>
+					</tr>
+					
+					<tr>
+						<td colspan="2" valign="top">
+							브랜드명 : ${dto.brandName}
 						</td>
 					</tr>
 					
@@ -424,20 +443,12 @@ $(function(){
 						</td>
 					</tr>
 					
-					<tr>
-						<td colspan="2">
-							파&nbsp;&nbsp;일 :
-							<c:if test="${not empty dto.saveFilename}">
-								<a href="${pageContext.request.contextPath}/bbs/download?num=${dto.num}">${dto.originalFilename}</a>
-							</c:if>
-						</td>
-					</tr>
 					
 					<tr>
 						<td colspan="2">
 							이전글 :
 							<c:if test="${not empty preReadDto}">
-								<a href="${pageContext.request.contextPath}/bbs/article?${query}&num=${preReadDto.num}">${preReadDto.subject}</a>
+								<a href="${pageContext.request.contextPath}/board/article?${query}&communityNum=${preReadDto.communityNum}">${preReadDto.subject}</a>
 							</c:if>
 						</td>
 					</tr>
@@ -445,7 +456,7 @@ $(function(){
 						<td colspan="2">
 							다음글 :
 							<c:if test="${not empty nextReadDto}">
-								<a href="${pageContext.request.contextPath}/bbs/article?${query}&num=${nextReadDto.num}">${nextReadDto.subject}</a>
+								<a href="${pageContext.request.contextPath}/board/article?${query}&communityNum=${nextReadDto.communityNum}">${nextReadDto.subject}</a>
 							</c:if>
 						</td>
 					</tr>
@@ -456,8 +467,8 @@ $(function(){
 				<tr>
 					<td width="50%">
 						<c:choose>
-							<c:when test="${sessionScope.member.userId==dto.userId}">
-								<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/bbs/update?num=${dto.num}&page=${page}';">수정</button>
+							<c:when test="${sessionScope.member.userCode==dto.userCode}">
+								<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/board/update?communityNum=${dto.communityNum}&page=${page}';">수정</button>
 							</c:when>
 							<c:otherwise>
 								<button type="button" class="btn btn-light" disabled="disabled">수정</button>
@@ -465,7 +476,7 @@ $(function(){
 						</c:choose>
 				    	
 						<c:choose>
-				    		<c:when test="${sessionScope.member.userId==dto.userId || sessionScope.member.membership>50}">
+				    		<c:when test="${sessionScope.member.userCode==dto.userCode || sessionScope.member.userType==0}">
 				    			<button type="button" class="btn btn-light" onclick="deleteBoard();">삭제</button>
 				    		</c:when>
 				    		<c:otherwise>
@@ -474,7 +485,7 @@ $(function(){
 				    	</c:choose>
 					</td>
 					<td class="text-end">
-						<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/bbs/list?${query}';">리스트</button>
+						<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/board/list?${query}';">리스트</button>
 					</td>
 				</tr>
 			</table>
@@ -487,11 +498,15 @@ $(function(){
 					
 					<table class="table table-borderless reply-form">
 						<tr>
-							<td>
+							<td colspan="2">
 								<textarea class='form-control' name="content"></textarea>
 							</td>
 						</tr>
 						<tr>
+							<td align='left' style="">
+								<div class="img-viewer"></div>
+								<input type="file" name="selectFile" accept="image/*" class="form-control" style="display: none;">
+							</td>
 						   <td align='right'>
 						        <button type='button' class='btn btn-light btnSendReply'>댓글 등록</button>
 						    </td>
