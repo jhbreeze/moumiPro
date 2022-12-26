@@ -17,10 +17,6 @@ public interface ScheduleService {
 
 	public void deleteSchedule(Map<String, Object> map) throws Exception;
 
-	public void insertCategory(Map<String, Object> map) throws Exception;
 
-	public List<Schedule> listCategory(Map<String, Object> map) throws Exception;
-
-	public void deleteCategory(Map<String, Object> map) throws Exception;
 
 }
