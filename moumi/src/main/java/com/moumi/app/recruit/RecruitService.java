@@ -11,7 +11,7 @@ public interface RecruitService {
 	public Recruit preReadRecruit(Map<String, Object> map);
 	public Recruit nextReadRecruit(Map<String, Object> map);
 	public void updateRecruit(Recruit dto, String pathname) throws Exception;
-	public void deleteRecruit(long recruitNum, String pathname, String userId, long userCode) throws Exception;
+	public void deleteRecruit(long recruitNum, String pathname) throws Exception;
 	
 	public void insertRecruitLike(Map<String, Object> map) throws Exception;
 	public void deleteRecruitLike(Map<String, Object> map) throws Exception;

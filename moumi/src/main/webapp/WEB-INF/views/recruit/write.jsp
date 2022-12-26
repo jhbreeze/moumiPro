@@ -116,12 +116,12 @@ function getToday(day){
 }
 
 <c:if test="${mode=='update'}">
-function deleteFile(num) {
-	if( ! confirm("파일을 삭제하시겠습니까 ?") ) {
-		return;
-	}
-	let url = "${pageContext.request.contextPath}/recruit/deleteFile?num=" + num + "&page=${page}";
-	location.href = url;
+function deleteFile(fileNum) {
+	let url = "${pageContext.request.contextPath}/recruit/deleteFile";
+	
+	$.post(url, {fileNum:fileNum}, function(data){
+		$("#f"+fileNum).remove();
+	}, "json");
 }
 </c:if>
 </script>
@@ -199,19 +199,22 @@ function deleteFile(num) {
 							<input type="file" name="selectFile"  multiple="multiple" class="form-control">
 						</td>
 					</tr>
+					
 					<c:if test="${mode=='update'}">
-						<tr>
-							<td class="col-sm-2 align-middle text-center" scope="row">첨부된 파일</td>
-							<td>
-								<p class="form-control-plaintext">
-									<c:if test="${not empty dto.imageFilename}">
-										<a href="javascript:deleteFile('${dto.recruitNum}');"><i class="bi bi-trash"></i></a>
-										${dto.imageFilename}
-									</c:if>
-									&nbsp;
-								</p>
-							</td>
-						</tr>
+						<c:forEach var="vo" items="${listFile}">
+							<tr id="f${vo.fileNum}">
+								<td class="col-sm-2 align-middle text-center" scope="row">첨부된 파일</td>
+								<td colspan="3">
+									<p class="form-control-plaintext">
+										<c:if test="${not empty vo.imageFilename}">
+											<a href="javascript:deleteFile('${vo.fileNum}');"><i class="bi bi-trash"></i></a>
+											${vo.imageFilename}
+										</c:if>
+										&nbsp;
+									</p>
+								</td>
+							</tr>
+						</c:forEach>
 					</c:if>
 				</table>
 				

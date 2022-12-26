@@ -1,6 +1,7 @@
 package com.moumi.app.recruit;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.moumi.app.common.FileManager;
 import com.moumi.app.common.MyUtil;
@@ -46,7 +49,7 @@ public class RecruitController {
 	
 	@RequestMapping(value = "list")
 	public String list(@RequestParam(value = "page", defaultValue = "1") int current_page,
-			@RequestParam(defaultValue = "all") String condition,
+			@RequestParam(defaultValue = "subject") String condition,
 			@RequestParam(defaultValue = "") String keyword, 
 			HttpServletRequest req, Model model) throws Exception {
 		
@@ -195,11 +198,16 @@ public class RecruitController {
 	
 	@PostMapping("update")
 	public String updateSubmit(Recruit dto, @RequestParam String page, HttpSession session) throws Exception{
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		
-		String root = session.getServletContext().getRealPath("/");
-		String pathname = root + "uploads" + File.separator + "recruit";
+		if(dto == null || (info.getUserType()!= 0 && (info.getUserCode() != dto.getUserCode()))) { // 관리자가 아니거나 로그인 상태의 회사가 자기가 쓴 글 아니라면 
+			return "redirect:/recruit/list?page="+page;
+		}
 		
 		try {
+			String root = session.getServletContext().getRealPath("/");
+			String pathname = root + File.separator + "uploads" + File.separator + "recruit";
+			
 			service.updateRecruit(dto, pathname);
 		} catch (Exception e) {
 		}
@@ -237,25 +245,56 @@ public class RecruitController {
 	}
 	
 	@RequestMapping(value = "delete")
-	public String delete(@RequestParam long recruitNum,
-			@RequestParam String page, 
+	public String delete(@RequestParam long recruitNum, @RequestParam String page, 
 			@RequestParam(defaultValue = "all") String condition,
 			@RequestParam(defaultValue = "") String keyword,
 			HttpSession session) throws Exception{
 		
-		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		//SessionInfo info = (SessionInfo) session.getAttribute("member");
 
 		keyword = URLDecoder.decode(keyword, "utf-8");
 		String query = "page=" + page;
 		if (keyword.length() != 0) {
 			query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
 		}
-
-		String root = session.getServletContext().getRealPath("/");
-		String pathname = root + "uploads" + File.separator + "bbs";
-
-		//service.deleteRecruit(num, pathname, userId, userCode);
-		return "redirect:/recruit/main?" + query;
 		
+		try {
+			String root = session.getServletContext().getRealPath("/");
+			String pathname = root + "uploads" + File.separator + "recruit";
+			service.deleteRecruit(recruitNum, pathname);
+		} catch (Exception e) {
+		}
+		
+		return "redirect:/recruit/main?" + query;
 	}
+	
+	@PostMapping(value = "deleteFile")
+	@ResponseBody
+	public Map<String, Object> deleteFile(@RequestParam long fileNum, HttpSession session) throws Exception {
+		
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "recruit";
+		
+		Recruit dto = service.readFile(fileNum);
+		if(dto != null) {
+			fileManager.doFileDelete(dto.getImageFilename(), pathname);
+		}
+		
+		String state = "false";
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("field", "fileNum");
+			map.put("fileNum", fileNum);
+			service.deleteFile(map);
+			state = "true";
+		} catch (Exception e) {
+		}
+		
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("state", state);
+		
+		return model;
+
+	}
+	
 }
