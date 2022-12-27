@@ -40,7 +40,9 @@ main {
 .body-container {
 	max-width: 1200px;
 	margin: auto;
-	padding: 20px;
+	padding: 90px;
+	padding-left: inherit;
+	padding-right: inherit;
 	
 }
 
@@ -87,7 +89,9 @@ tr {
 <div class="container">
 	<div class="body-container">	
 		<div class="body-title">
-			<h3><i class="bi bi-clipboard"></i> 공지사항 </h3>
+			<h2>
+				<i class="fa-brands fa-perbyte"></i> 자주하는 질문
+			</h2>
 		</div>
 		
 		<div class="body-main">
@@ -129,11 +133,10 @@ tr {
 						<td class="text-center">
 							<button type="button" class="btn btn-dark" onclick="submitContents(this.form);">${mode=='update'?'수정완료':'등록하기'}&nbsp;<i class="bi bi-check2"></i></button>
 							<button type="reset" class="btn btn-light">다시입력</button>
-							<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/admin/notice/list';">${mode=='update'?'수정취소':'등록취소'}&nbsp;<i class="bi bi-x"></i></button>
+							<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/admin/faq/main';">${mode=='update'?'수정취소':'등록취소'}&nbsp;<i class="bi bi-x"></i></button>
 							<c:if test="${mode=='update'}">
 								<input type="hidden" name="faqNum" value="${dto.faqNum}">
-								<input type="hidden" name="page1" value="${page1}">
-								<input type="hidden" name="userCode" value="${userCode}"> 
+								<input type="hidden" name="categoryNum" value="${dto.categoryNum}">
 							</c:if>
 						</td>
 					</tr>

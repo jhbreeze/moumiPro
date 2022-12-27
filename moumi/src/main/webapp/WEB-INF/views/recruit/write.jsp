@@ -206,11 +206,8 @@ function deleteFile(fileNum) {
 								<td class="col-sm-2 align-middle text-center" scope="row">첨부된 파일</td>
 								<td colspan="3">
 									<p class="form-control-plaintext">
-										<c:if test="${not empty vo.imageFilename}">
-											<a href="javascript:deleteFile('${vo.fileNum}');"><i class="bi bi-trash"></i></a>
-											${vo.imageFilename}
-										</c:if>
-										&nbsp;
+										<a href="javascript:deleteFile('${vo.fileNum}');"><i class="bi bi-trash"></i></a>
+										${vo.originalFilename}
 									</p>
 								</td>
 							</tr>
@@ -226,7 +223,10 @@ function deleteFile(fileNum) {
 							<button type="button" class="btn btn-success" onclick="location.href='${pageContext.request.contextPath}/recruit/main';">${mode=='update'?'수정취소':'등록취소'}&nbsp;<i class="bi bi-x"></i></button>
 							<c:if test="${mode=='update'}">
 								<input type="hidden" name="recruitNum" value="${dto.recruitNum}">
-								<input type="hidden" name="imageFilename" value="${dto.imageFilename}">
+								<input type="hidden" name="userCode" value="${dto.userCode}">
+								<input type="hidden" name="userType" value="${dto.userType}">
+								<input type="hidden" name="saveFilename" value="${dto.saveFilename}">
+								<input type="hidden" name="originalFilename" value="${dto.originalFilename}">
 								<input type="hidden" name="page" value="${page}">
 							</c:if>
 						</td>

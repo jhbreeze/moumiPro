@@ -70,7 +70,7 @@ public class FaqController {
 		
 		List<Faq>list = service.listFaq(map);
 		for (Faq dto : list) {
-			dto.setContent(myUtil.htmlSymbols(dto.getContent()));
+			// dto.setContent(myUtil.htmlSymbols(dto.getContent()));
 		}
 		
 		String paging = myUtil.pagingMethod(current_page, total_page, "listPage");
@@ -121,41 +121,37 @@ public class FaqController {
 	}
 	
 	@GetMapping("update")
-	public String updateForm(@RequestParam long faqNum, 
-			@RequestParam String pageNo, 
+	public String updateForm(@RequestParam long faqNum,
 			HttpSession session,
 			Model model) throws Exception {
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		
 		Faq dto = service.readFaq(faqNum);
 		if (dto == null) {
-			return "redirect:/admin/faq/list?pageNo="+pageNo;
+			return "redirect:/admin/faq/list";
 		}
 		Map<String, Object> map = new HashMap<String, Object>();
+		
 		List<Faq> listCategory = service.listCategory(map);
 		model.addAttribute("mode", "update");
-		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("dto", dto);
 		model.addAttribute("listCategory", listCategory);
+		
 		return ".admin.faq.write";
 	}
 	
 	@PostMapping("update")
 	public String updateSubmit(Faq dto, 
-			@RequestParam String pageNo, 
 			HttpSession session) throws Exception {
 		
-		SessionInfo info = (SessionInfo) session.getAttribute("member");
-		
 		try {
-			dto.setUserCode(info.getUserCode());
 			service.updateFaq(dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
 		
-		return "redirect:/admin/faq/main?pageNo="+pageNo;
+		return "redirect:/admin/faq/main";
 	}
 	
 	@PostMapping("deleteList")

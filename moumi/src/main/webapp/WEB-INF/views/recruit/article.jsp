@@ -21,7 +21,7 @@
 
 <c:if test="${sessionScope.member.userCode==dto.userCode||sessionScope.member.userType==0}">
 	function deleteRecruit() {
-	    if(confirm("게시글을 삭제 하시 겠습니까 ? ")) {
+	    if(confirm("게시글을 삭제 하시겠습니까 ? ")) {
 		    let query = "recruitNum=${dto.recruitNum}&${query}";
 		    let url = "${pageContext.request.contextPath}/recruit/delete?" + query;
 	    	location.href = url;
@@ -76,14 +76,25 @@
 					</td>
 				</tr>
 				
+				<c:if test="${dto.fileCount != 0}">
+					<tr>
+						<td class="col-sm-2 align-middle text-center" scope="row" valign="top"> 전체 파일<br> 다운로드 </td>
+						<td>
+								<a href="${pageContext.request.contextPath}/recruit/zipdownload?fileNum=${dto.fileNum}" class="text-reset"><i class="bi bi-file-arrow-down"></i></a>
+						</td>
+					</tr>	
+				</c:if>
+				
 				<c:forEach var="vo" items="${listFile}">
 					<tr>
-						<td class="col-sm-2 align-middle text-center" scope="row">파일 다운로드
-							<a href="${pageContext.request.contextPath}/recruit/download?fileNum=${vo.fileNum}">${vo.imageFilename}</a>
+						<td class="col-sm-2 align-middle text-center" scope="row">파일 다운로드</td>
+						<td>
+							<a href="${pageContext.request.contextPath}/recruit/download?fileNum=${vo.fileNum}">${vo.originalFilename}</a>
+							(<fmt:formatNumber value="${vo.fileSize/1024}" pattern="0.00" />kb)
 						</td>
 					</tr>
 				</c:forEach>
-				
+
 			</table>
 
 			<div class="text-center">

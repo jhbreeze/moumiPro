@@ -15,6 +15,9 @@ public class Notice {
 	
 	private long noticeFileNum;
 	private String imageFilename;
+	private String saveFilename;
+	private long fileSize;
+	private int fileCount;
 	private List<MultipartFile> selectFile;
 	
 	public long getNoticeNum() {
@@ -77,8 +80,23 @@ public class Notice {
 	public void setHitCount(int hitCount) {
 		this.hitCount = hitCount;
 	}
-	
-	
-	
+	public String getSaveFilename() {
+		return saveFilename;
+	}
+	public void setSaveFilename(String saveFilename) {
+		this.saveFilename = saveFilename;
+	}
+	public long getFileSize() {
+		return fileSize;
+	}
+	public void setFileSize(long fileSize) {
+		this.fileSize = fileSize;
+	}
+	public int getFileCount() {
+		return fileCount;
+	}
+	public void setFileCount(int fileCount) {
+		this.fileCount = fileCount;
+	}
 
 }

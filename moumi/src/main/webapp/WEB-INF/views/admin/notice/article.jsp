@@ -31,7 +31,9 @@ main {
 .body-container {
 	max-width: 1200px;
 	margin: auto;
-	padding: 20px;
+	padding-top: 90px;
+	padding-left: inherit;
+	padding-right: inherit;
 	
 }
 
@@ -73,6 +75,12 @@ tr {
 .btn:active, .btn:focus, .btn:hover {
 	color: #eee;
 }
+
+.text-line{
+	text-decoration : none;
+	color : green;
+}
+
 </style>
 <div class="container">
 	<div class="body-container">
@@ -99,14 +107,23 @@ tr {
 					<tr>
 						<td colspan="3" valign="top" height="200">${dto.content}</td>
 					</tr>
+					<c:forEach var="vo" items="${listFile}">
+						<tr>
+							<td  colspan="3">
+								파&nbsp;&nbsp;일 :
+								<a href="${pageContext.request.contextPath}/admin/notice/download?noticeFileNum=${vo.noticeFileNum}" class="text-line">${vo.imageFilename}</a>
+								(<fmt:formatNumber value="${vo.fileSize/1024}" pattern="0.00"/> kb)
+							</td>
+						</tr>
+					</c:forEach>
 					<tr>
 						<td colspan="3">이전글 : <c:if test="${not empty preReadDto}">
-							<a href="${pageContext.request.contextPath}/admin/notice/article?${query}&noticeNum=${preReadDto.noticeNum}">${preReadDto.subject}</a>
+							<a href="${pageContext.request.contextPath}/admin/notice/article?${query}&noticeNum=${preReadDto.noticeNum}" class="text-line">${preReadDto.subject}</a>
 						</c:if></td>
 					</tr>
 					<tr>
 						<td colspan="3">다음글 : <c:if test="${not empty nextReadDto}">
-							<a href="${pageContext.request.contextPath}/admin/notice/article?${query}&noticeNum=${nextReadDto.noticeNum}">${nextReadDto.subject}</a>
+							<a href="${pageContext.request.contextPath}/admin/notice/article?${query}&noticeNum=${nextReadDto.noticeNum}" class="text-line">${nextReadDto.subject}</a>
 						</c:if></td>
 					</tr>
 				</tbody>

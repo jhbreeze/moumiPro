@@ -9,7 +9,6 @@ public class Recruit {
 	private String subject;
 	private String content;
 	private String regDate;
-	
 
 	private String corporation;
 	private String startDate;
@@ -23,8 +22,11 @@ public class Recruit {
 	private String career;
 	
 	private long fileNum;
-	private String imageFilename; 
+	private String saveFilename;
+	private String originalFilename;
 	private List<MultipartFile> selectFile;
+	private long fileSize;
+	private int fileCount; // checkhere
 	
 	private int recruitLikeCount;
 
@@ -132,12 +134,20 @@ public class Recruit {
 		this.fileNum = fileNum;
 	}
 
-	public String getImageFilename() {
-		return imageFilename;
+	public String getSaveFilename() {
+		return saveFilename;
 	}
 
-	public void setImageFilename(String imageFilename) {
-		this.imageFilename = imageFilename;
+	public void setSaveFilename(String saveFilename) {
+		this.saveFilename = saveFilename;
+	}
+
+	public String getOriginalFilename() {
+		return originalFilename;
+	}
+
+	public void setOriginalFilename(String originalFilename) {
+		this.originalFilename = originalFilename;
 	}
 
 	public List<MultipartFile> getSelectFile() {
@@ -146,6 +156,22 @@ public class Recruit {
 
 	public void setSelectFile(List<MultipartFile> selectFile) {
 		this.selectFile = selectFile;
+	}
+
+	public long getFileSize() {
+		return fileSize;
+	}
+
+	public void setFileSize(long fileSize) {
+		this.fileSize = fileSize;
+	}
+
+	public int getFileCount() {
+		return fileCount;
+	}
+
+	public void setFileCount(int fileCount) {
+		this.fileCount = fileCount;
 	}
 
 	public int getRecruitLikeCount() {
@@ -157,6 +183,5 @@ public class Recruit {
 	}
 	
 	
-
 	
 }

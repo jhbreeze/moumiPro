@@ -64,7 +64,7 @@ tr:hover {
 }
 
 .btn:active, .btn:focus, .btn:hover {
-	color: #eee;
+	color: #ECF4EB;
 }
 
 #accordion {
@@ -73,6 +73,11 @@ tr:hover {
 
 .backColor{
 	background: #fff;
+}
+
+.text-line{
+	text-decoration : none;
+	color : green;
 }
 </style>
 <script type="text/javascript">

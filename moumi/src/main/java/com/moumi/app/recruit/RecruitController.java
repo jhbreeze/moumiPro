@@ -102,7 +102,7 @@ public class RecruitController {
 	public String writeForm(Model model) throws Exception {
 		List<Recruit> listCategory = service.listCareerCategory(); 
 		
-		model.addAttribute("page", "1"); // ?
+		model.addAttribute("page", "1"); // checkhere
 		model.addAttribute("mode", "write");
 		model.addAttribute("listCategory", listCategory);
 		
@@ -129,7 +129,7 @@ public class RecruitController {
 	
 	@GetMapping("article")
 	public String article(@RequestParam long recruitNum, @RequestParam String page,
-			@RequestParam(defaultValue = "all") String condition,
+			@RequestParam(defaultValue = "subject") String condition,
 			@RequestParam(defaultValue = "") String keyword,
 			HttpSession session, Model model) throws Exception {
 		
@@ -155,7 +155,11 @@ public class RecruitController {
 		Recruit nextReadDto = service.nextReadRecruit(map);
 
 		List<Recruit> listFile = service.listFile(recruitNum);
-		
+		if(! listFile.isEmpty()) {
+			int fileCount = service.countFile(recruitNum);
+			dto.setFileCount(fileCount);
+		}
+				
 		// 게시글 좋아요 여부
 		//map.put("userId", info.getUserId());
 		//boolean userBoardLiked = service.userBoardLiked(map);
@@ -181,7 +185,7 @@ public class RecruitController {
 		
 		Recruit dto = service.readRecruit(recruitNum);
 		if(dto == null || (info.getUserType()!= 0 && (info.getUserCode() != dto.getUserCode()))) { // 관리자가 아니거나 로그인 상태의 회사가 자기가 쓴 글 아니라면 
-			return "redirect:/recruit/list?page="+page;
+			return "redirect:/recruit/main?page="+page;
 		}
 		
 		List<Recruit> listCategory = service.listCareerCategory(); 
@@ -197,89 +201,37 @@ public class RecruitController {
 	}
 	
 	@PostMapping("update")
-	public String updateSubmit(Recruit dto, @RequestParam String page, HttpSession session) throws Exception{
+	public String updateSubmit(Recruit dto, @RequestParam String page, HttpSession session) throws Exception {
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
-		
-		if(dto == null || (info.getUserType()!= 0 && (info.getUserCode() != dto.getUserCode()))) { // 관리자가 아니거나 로그인 상태의 회사가 자기가 쓴 글 아니라면 
-			return "redirect:/recruit/list?page="+page;
+
+		if (dto == null || (info.getUserType() != 0 && (info.getUserCode() != dto.getUserCode()))) { // 관리자가 아니거나 로그인 상태의 회사가 자기가 쓴 글 아니라면
+			return "redirect:/recruit/main?page=" + page;
 		}
-		
+
 		try {
 			String root = session.getServletContext().getRealPath("/");
 			String pathname = root + File.separator + "uploads" + File.separator + "recruit";
-			
+
+			dto.setUserCode(info.getUserCode());
 			service.updateRecruit(dto, pathname);
 		} catch (Exception e) {
 		}
-		
+
 		return "redirect:/recruit/main?page=" + page;
-	}
-	
-	@RequestMapping(value = "deleteFile")
-	public String deleteFile(@RequestParam long recruitNum,
-			@RequestParam String page,
-			HttpSession session) throws Exception {
-		SessionInfo info = (SessionInfo) session.getAttribute("member");
-
-		String root = session.getServletContext().getRealPath("/");
-		String pathname = root + "uploads" + File.separator + "recruit";
-
-		Recruit dto = service.readRecruit(recruitNum);
-		if (dto == null) {
-			return "redirect:/recruit/main?page=" + page;
-		}
-		
-		// 코드, 타입 처리
-		
-		try {
-			if (dto.getImageFilename()!= null) {
-				fileManager.doFileDelete(dto.getImageFilename(), pathname); // 실제파일삭제
-				dto.setImageFilename("");
-				
-				service.updateRecruit(dto, pathname);
-			}
-		} catch (Exception e) {
-		}
-
-		return "redirect:/recruit/update?num=" + recruitNum + "&page=" + page;
-	}
-	
-	@RequestMapping(value = "delete")
-	public String delete(@RequestParam long recruitNum, @RequestParam String page, 
-			@RequestParam(defaultValue = "all") String condition,
-			@RequestParam(defaultValue = "") String keyword,
-			HttpSession session) throws Exception{
-		
-		//SessionInfo info = (SessionInfo) session.getAttribute("member");
-
-		keyword = URLDecoder.decode(keyword, "utf-8");
-		String query = "page=" + page;
-		if (keyword.length() != 0) {
-			query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
-		}
-		
-		try {
-			String root = session.getServletContext().getRealPath("/");
-			String pathname = root + "uploads" + File.separator + "recruit";
-			service.deleteRecruit(recruitNum, pathname);
-		} catch (Exception e) {
-		}
-		
-		return "redirect:/recruit/main?" + query;
 	}
 	
 	@PostMapping(value = "deleteFile")
 	@ResponseBody
 	public Map<String, Object> deleteFile(@RequestParam long fileNum, HttpSession session) throws Exception {
-		
+
 		String root = session.getServletContext().getRealPath("/");
 		String pathname = root + "uploads" + File.separator + "recruit";
-		
+
 		Recruit dto = service.readFile(fileNum);
-		if(dto != null) {
-			fileManager.doFileDelete(dto.getImageFilename(), pathname);
+		if (dto != null) {
+			fileManager.doFileDelete(dto.getSaveFilename(), pathname);
 		}
-		
+
 		String state = "false";
 		try {
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -289,12 +241,92 @@ public class RecruitController {
 			state = "true";
 		} catch (Exception e) {
 		}
-		
+
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("state", state);
-		
-		return model;
 
+		return model;
 	}
+	
+	@RequestMapping(value = "delete")
+	public String delete(@RequestParam long recruitNum, @RequestParam String page,
+			@RequestParam(defaultValue = "subject") String condition, @RequestParam(defaultValue = "") String keyword,
+			HttpSession session) throws Exception {
+
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+
+		keyword = URLDecoder.decode(keyword, "utf-8");
+		String query = "page=" + page;
+		if (keyword.length() != 0) {
+			query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
+		}
+
+		try {
+			String root = session.getServletContext().getRealPath("/");
+			String pathname = root + "uploads" + File.separator + "recruit";
+
+			service.deleteRecruit(recruitNum, pathname);
+		} catch (Exception e) {
+		}
+
+		return "redirect:/recruit/main?" + query;
+	}
+	
+	@RequestMapping(value = "download")
+	public void download(@RequestParam long fileNum, HttpServletResponse resp, HttpSession session) throws Exception {
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "recruit";
+		
+		boolean b = false;
+		
+		Recruit dto = service.readFile(fileNum);
+		if(dto != null) {
+			String saveFilename = dto.getSaveFilename();
+			String originalFilename = dto.getOriginalFilename();
+			
+			b = fileManager.doFileDownload(saveFilename, originalFilename, pathname, resp);
+		}
+		
+		if (! b) {
+			try {
+				resp.setContentType("text/html; charset=utf-8");
+				PrintWriter out = resp.getWriter();
+				out.println("<script>alert('파일 다운로드가 불가능합니다.');history.back();</script>");
+			} catch (Exception e) {
+			}
+		}
+	}
+	
+	@RequestMapping(value = "zipdownload")
+	public void zipdownload(@RequestParam long fileNum, HttpServletResponse resp, HttpSession session) throws Exception {
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "notice";
+
+		boolean b = false;
+
+		List<Recruit> listFile = service.listFile(fileNum);
+		if (listFile.size() > 0) {
+			String[] sources = new String[listFile.size()];
+			String[] originals = new String[listFile.size()];
+			String zipFilename = fileNum + ".zip";
+
+			for (int idx = 0; idx < listFile.size(); idx++) {
+				sources[idx] = pathname + File.separator + listFile.get(idx).getSaveFilename();
+				originals[idx] = File.separator + listFile.get(idx).getOriginalFilename();
+			}
+
+			b = fileManager.doZipFileDownload(sources, originals, zipFilename, resp);
+		}
+
+		if (! b) {
+			try {
+				resp.setContentType("text/html; charset=utf-8");
+				PrintWriter out = resp.getWriter();
+				out.println("<script>alert('파일 다운로드가 불가능 합니다 !!!');history.back();</script>");
+			} catch (Exception e) {
+			}
+		}
+	}
+
 	
 }

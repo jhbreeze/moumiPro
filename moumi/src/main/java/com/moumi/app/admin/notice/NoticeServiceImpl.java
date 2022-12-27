@@ -29,13 +29,16 @@ public class NoticeServiceImpl implements NoticeService {
 			
 			if(!dto.getSelectFile().isEmpty()) {
 				for(MultipartFile mf : dto.getSelectFile()) {
-					String imageFilename = fileManager.doFileUpload(mf, pathname);
-					if(imageFilename == null) {
+					String saveFilename = fileManager.doFileUpload(mf, pathname);
+					if(saveFilename == null) {
 						continue;
 					}
-					imageFilename = mf.getOriginalFilename();
+					String imageFilename = mf.getOriginalFilename();
+					long fileSize = mf.getSize();
 					
 					dto.setImageFilename(imageFilename);
+					dto.setSaveFilename(saveFilename);
+					dto.setFileSize(fileSize);
 					
 					dao.insertData("notice.insertFile", dto);
 				}
@@ -132,13 +135,16 @@ public class NoticeServiceImpl implements NoticeService {
 			
 			if(!dto.getSelectFile().isEmpty()) {
 				for(MultipartFile mf : dto.getSelectFile()) {
-					String imageFilename = fileManager.doFileUpload(mf, pathname);
-					if(imageFilename == null) {
+					String saveFilename = fileManager.doFileUpload(mf, pathname);
+					if(saveFilename == null) {
 						continue;
 					}
-					imageFilename = mf.getOriginalFilename();
+					String imageFilename = mf.getOriginalFilename();
+					long fileSize = mf.getSize();
 					
 					dto.setImageFilename(imageFilename);
+					dto.setSaveFilename(saveFilename);
+					dto.setFileSize(fileSize);
 					
 					dao.insertData("notice.insertFile", dto);
 				}
@@ -157,7 +163,7 @@ public class NoticeServiceImpl implements NoticeService {
 			List<Notice> listFile = listFile(noticeNum);
 			if(listFile != null) {
 				for (Notice dto : listFile) {
-					fileManager.doFileDelete(dto.getImageFilename(), pathname);
+					fileManager.doFileDelete(dto.getSaveFilename(), pathname);
 				}
 			}
 			

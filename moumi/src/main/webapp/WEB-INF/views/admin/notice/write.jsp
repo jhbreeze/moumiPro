@@ -40,7 +40,9 @@ main {
 .body-container {
 	max-width: 1200px;
 	margin: auto;
-	padding: 20px;
+	padding-top: 90px;
+	padding-left: inherit;
+	padding-right: inherit;
 	
 }
 
@@ -128,7 +130,7 @@ tr {
 								<td class="table-light col-sm-2" scope="row">첨부된파일</td>
 								<td> 
 									<p class="form-control-plaintext">
-										<a href="javascript:deleteFile('${vo.noticeFileNum}');"><i class="bi bi-trash"></i></a>
+										<a href="javascript:deleteFile('${vo.noticeFileNum}');" ><i class="bi bi-trash"></i></a>
 										${vo.imageFilename}
 									</p>
 								</td>
