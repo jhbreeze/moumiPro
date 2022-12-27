@@ -34,7 +34,7 @@ $(function() {
 	<input type="checkbox" class="form-check-input" name="chkAll" id="chkAll">
 </div>
 <div style="float: right; width: 5%; text-align: right;">
-	<button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal" title="삭제">
+	<button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal" title="삭제">
 		<i class="bi bi-trash"></i>
 	</button>
 </div>
@@ -43,7 +43,7 @@ $(function() {
 		<form name="faqForm" method="post">
 		<c:forEach var="dto" items="${list}" varStatus="status">
 			<div class="accordion-item" style="border: none; overflow: hidden;">
-				<h2 class="accordion-header mb-1 border" id="flush-heading-${status.index}" style="float: left; width: 95%;">
+				<h2 class="accordion-header mb-1" id="flush-heading-${status.index}" style="float: left; width: 95%;">
 					<button class="accordion-button collapsed  backColor" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-${status.index}" aria-expanded="false" aria-controls="flush-collapse-${status.index}">
 						${dto.subject}
 					</button>
@@ -54,7 +54,7 @@ $(function() {
 				<div id="flush-collapse-${status.index}" class="accordion-collapse collapse" aria-labelledby="flush-heading-${status.index}" data-bs-parent="#accordionFlush" style="clear: left;">
 					<div class="accordion-body" style="clear: left; width: 95%;">
 						<div class="row border-bottom pb-1"> <div  style="width: 90%;"> 분류 : ${dto.categoryName}</div><div class="col text-end" style="float: right; width: 10%">
-							<a href="#" onclick="javascript:location.href='${pageContext.request.contextPath}/admin/faq/update?faqNum=${dto.faqNum}&pageNo=${pageNo}';">수정</a>
+							<a href="#" onclick="javascript:location.href='${pageContext.request.contextPath}/admin/faq/update?faqNum=${dto.faqNum}';" class="text-line">수정</a>
 						</div></div>
 						
 						<div class="row p-2">

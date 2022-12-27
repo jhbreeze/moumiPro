@@ -133,18 +133,18 @@
 	
 	<!-- 파일 -->
 	<insert id="insertFile" parameterType="com.moumi.app.admin.notice.Notice">
-		INSERT INTO noticeFile(noticeFileNum, noticeNum, imageFilename)
-		VALUES (NOTICEFILENUM_SEQ.NEXTVAL, #{noticeNum}, #{imageFilename})
+		INSERT INTO noticeFile(noticeFileNum, noticeNum, imageFilename, saveFilename, fileSize)
+		VALUES (NOTICEFILENUM_SEQ.NEXTVAL, #{noticeNum}, #{imageFilename}, #{saveFilename}, #{fileSize})
 	</insert>
 	
 	<select id="listFile" parameterType="Long" resultType="com.moumi.app.admin.notice.Notice">
-		SELECT noticeFileNum, noticeNum, imageFilename
+		SELECT noticeFileNum, noticeNum, imageFilename, saveFilename, fileSize
 		FROM noticeFile
 		WHERE noticeNum=#{noticeNum}    
 	</select>
 	
 	<select id="readFile" parameterType="Long" resultType="com.moumi.app.admin.notice.Notice">
-		SELECT noticeFileNum, noticeNum, imageFilename
+		SELECT noticeFileNum, noticeNum, imageFilename, saveFilename, fileSize
 		FROM noticeFile
 	    WHERE noticeFileNum=#{noticeFileNum}      
 	</select>

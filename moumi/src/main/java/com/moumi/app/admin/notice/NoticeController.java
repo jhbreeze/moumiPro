@@ -1,6 +1,7 @@
 package com.moumi.app.admin.notice;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -144,8 +146,6 @@ public class NoticeController {
 			query += "&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "UTF-8");
 		}
 		
-		service.updateHitCount(noticeNum);
-		
 		Notice dto = service.readNotice(noticeNum);
 		if(dto == null) {
 			return "redirect:/admin/notice/list?"+query;
@@ -249,7 +249,7 @@ public class NoticeController {
 		try {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("field", "noticeFileNum");
-			map.put("noticeFileNum", noticeFileNum);
+			map.put("noticeNum", noticeFileNum);
 			service.deleteFile(map);
 			state = "true";
 		} catch (Exception e) {
@@ -260,5 +260,31 @@ public class NoticeController {
 		return model;
 	}
 	
+	@RequestMapping(value = "download")
+	public void download(@RequestParam long noticeFileNum, HttpServletResponse resp,
+			HttpSession session) throws Exception {
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "notice";
+		
+		boolean b = false;
+		
+		Notice dto = service.readFile(noticeFileNum);
+		if(dto != null) {
+			String saveFilename = dto.getSaveFilename();
+			String imageFilename = dto.getImageFilename();
+			
+			b = fileManager.doFileDownload(saveFilename, imageFilename, pathname, resp);
+		}
+		
+		if(!b) {
+			try {
+				resp.setContentType("text/html; charset=utf-8");
+				PrintWriter out = resp.getWriter();
+				out.println("<script>alert('파일 다운로드가 불가능 합니다 !!!');history.back();</script>");
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+	}
 
 }
