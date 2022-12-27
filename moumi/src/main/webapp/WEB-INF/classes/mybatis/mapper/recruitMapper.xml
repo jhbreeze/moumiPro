@@ -128,10 +128,10 @@
 		WHERE recruitNum = #{recruitNum}
 	</select>
 	
-	<select id="countFile" parameterType="long" resultType="com.moumi.app.recruit.Recruit">
+	<select id="countFile" parameterType="Long" resultType="Integer">
 		SELECT NVL(Count(*), 0) fileCount
 		FROM recruitFile
-		WHERE recruitNum = #{recruitNum}
+		WHERE recruitNum = #{recruitNum, jdbcType=BIGINT}
 	</select>
 	
 	<select id="readFile" parameterType="long" resultType="com.moumi.app.recruit.Recruit">

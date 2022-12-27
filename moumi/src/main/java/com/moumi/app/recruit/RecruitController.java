@@ -155,11 +155,9 @@ public class RecruitController {
 		Recruit nextReadDto = service.nextReadRecruit(map);
 
 		List<Recruit> listFile = service.listFile(recruitNum);
-		if(! listFile.isEmpty()) {
-			int fileCount = service.countFile(recruitNum);
-			dto.setFileCount(fileCount);
-		}
-				
+		int fileCount = service.countFile(recruitNum);
+		dto.setFileCount(fileCount);
+			
 		// 게시글 좋아요 여부
 		//map.put("userId", info.getUserId());
 		//boolean userBoardLiked = service.userBoardLiked(map);
@@ -168,6 +166,7 @@ public class RecruitController {
 		model.addAttribute("preReadDto", preReadDto);
 		model.addAttribute("nextReadDto", nextReadDto);
 		model.addAttribute("listFile", listFile);
+		model.addAttribute("fileCount", fileCount);
 
 		//model.addAttribute("userBoardLiked", userBoardLiked);
 		
@@ -298,17 +297,18 @@ public class RecruitController {
 	}
 	
 	@RequestMapping(value = "zipdownload")
-	public void zipdownload(@RequestParam long fileNum, HttpServletResponse resp, HttpSession session) throws Exception {
+	public void zipdownload(@RequestParam long recruitNum, @RequestParam long fileNum,
+			HttpServletResponse resp, HttpSession session) throws Exception {
 		String root = session.getServletContext().getRealPath("/");
-		String pathname = root + "uploads" + File.separator + "notice";
+		String pathname = root + "uploads" + File.separator + "recruit";
 
 		boolean b = false;
 
-		List<Recruit> listFile = service.listFile(fileNum);
+		List<Recruit> listFile = service.listFile(recruitNum);
 		if (listFile.size() > 0) {
 			String[] sources = new String[listFile.size()];
 			String[] originals = new String[listFile.size()];
-			String zipFilename = fileNum + ".zip";
+			String zipFilename = recruitNum + ".zip";
 
 			for (int idx = 0; idx < listFile.size(); idx++) {
 				sources[idx] = pathname + File.separator + listFile.get(idx).getSaveFilename();
