@@ -15,11 +15,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
 
 @Controller("sch.scheduleController")
 @RequestMapping("/schedule/*")
@@ -73,12 +71,10 @@ public class ScheduleController {
 	// 월별 일정 - AJAX : JSON
 	@RequestMapping(value = "month")
 	@ResponseBody
-	public Map<String, Object> month(@RequestParam String start, @RequestParam String end,
-			@RequestParam(required = false) List<Integer> categorys, HttpSession session) throws Exception {
+	public Map<String, Object> month(@RequestParam String start, @RequestParam String end, HttpSession session) throws Exception {
 		// SessionInfo info=(SessionInfo)session.getAttribute("member");
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("categoryList", categorys);
 		map.put("start", start);
 		map.put("end", end);
 		// map.put("userCode", info.getUserId());
@@ -165,42 +161,63 @@ public class ScheduleController {
 
 			dto.setUserCode(1);
 			service.updateSchedule(dto);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		return "redirect:/schedule/main";
 	}
-	
-	
 
 	// 일정 삭제 - AJAX : JSON
-	@RequestMapping(value = "delete", method = RequestMethod.POST)
+	@PostMapping(value = "delete")
 	@ResponseBody
-	public Map<String, Object> delete(
-			@RequestParam int num,
-			HttpSession session
-			) {
-		//SessionInfo info=(SessionInfo)session.getAttribute("member");
+	public Map<String, Object> delete(@RequestParam int num, HttpSession session) {
+		// SessionInfo info=(SessionInfo)session.getAttribute("member");
 
 		String state = "true";
 		try {
-			Map<String, Object> map=new HashMap<>();
+			Map<String, Object> map = new HashMap<>();
 			// map.put("userCode", info.getUserId());
 
 			map.put("userCode", 1);
 			map.put("num", num);
 			service.deleteSchedule(map);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			state = "false";
 		}
-		
+
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("state", state);
-		
+
 		return model;
 	}
-	
+
+	// 일정을 드래그 한 경우 수정 완료 - AJAX : JSON
+	@PostMapping(value = "updateDrag")
+	@ResponseBody
+	public Map<String, Object> updateDragSubmit(Schedule dto, HttpSession session) {
+		// SessionInfo info = (SessionInfo) session.getAttribute("member");
+
+		String state = "true";
+		try {
+			dto.setUserCode(1);
+
+			// 반복일정은 종료날짜등이 수정되지 않도록 설정
+			if (dto.getRepeat() == 1 && dto.getRepeat_cycle() != 0) {
+				dto.setEday("");
+				dto.setStime("");
+				dto.setEtime("");
+			}
+
+			service.updateSchedule(dto);
+		} catch (Exception e) {
+			state = "false";
+		}
+
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", state);
+		return model;
+	}
 
 }

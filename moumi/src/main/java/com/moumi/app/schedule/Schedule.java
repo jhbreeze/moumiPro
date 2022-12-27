@@ -15,9 +15,6 @@ public class Schedule {
 	private int repeat_cycle;
 	private String regDate;
 
-	private Long categoryNum;
-	private String category;
-
 	private String sharedId;
 
 	private long id;
@@ -41,7 +38,6 @@ public class Schedule {
 	public void setUserCode(int userCode) {
 		this.userCode = userCode;
 	}
-
 
 	public String getSubject() {
 		return subject;
@@ -131,22 +127,6 @@ public class Schedule {
 		this.regDate = regDate;
 	}
 
-	public Long getCategoryNum() {
-		return categoryNum;
-	}
-
-	public void setCategoryNum(Long categoryNum) {
-		this.categoryNum = categoryNum;
-	}
-
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
 	public String getSharedId() {
 		return sharedId;
 	}
@@ -154,8 +134,6 @@ public class Schedule {
 	public void setSharedId(String sharedId) {
 		this.sharedId = sharedId;
 	}
-
-	
 
 	public long getId() {
 		return id;
