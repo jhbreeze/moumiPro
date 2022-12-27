@@ -193,6 +193,42 @@ function emailCheck() {
 	});
 }
 
+function nickNameCheck() {
+	// 아이디 중복 검사
+	let nickName = $("#nickName").val();
+
+	if(!/^[가-힣a-zA-z0-9]{3,10}$/i.test(nickName)) { 
+		let str = "특수문자와 공백은 사용할 수 없습니다.";
+		$("#nickName").focus();
+		$("#nickName").parent().find(".help-block").html(str);
+		return;
+	}
+	
+	let url = "${pageContext.request.contextPath}/member/nickNameCheck";
+	let query = "nickName=" + nickName;
+	$.ajax({
+		type:"POST"
+		,url:url
+		,data:query
+		,dataType:"json"
+		,success:function(data) {
+			let passed = data.passed;
+
+			if(passed === "true") {
+				let str = "<span style='color:blue; font-weight: bold;'>" + nickName + "</span> 사용 가능한 닉네임입니다.";
+				$(".nickName-box").find(".help-block").html(str);
+				$("#nickNameValid").val("true");
+			} else {
+				let str = "<span style='color:red; font-weight: bold;'>" + nickName + "</span> 사용할 수 없는 닉네입입니다.";
+				$(".nickName-box").find(".help-block").html(str);
+				$("#nickName").val("");
+				$("#nickNameValid").val("false");
+				$("#nickName").focus();
+			}
+		}
+	});
+}
+
 $(function(){
 	let userType = "${dto.userType}";
 	if(userType==="3") {
@@ -259,10 +295,13 @@ $(function(){
 				
 				<div class="inputBox">
 				  	<label class="form-label" for="nickName">닉네임</label>
-				  	<div style="width: 400px;">
+				  	<div class="nickName-box" style="width: 400px;">
 				  		<input type="text" name="nickName" id="nickName" class="form-control" value="${dto.nickName}" placeholder="한글/영문/숫자(3~10자)" style="width: 270px; display: inline-block;">
 						<c:if test="${mode=='member'}">
 							<button type="button" class="duplication btn btn-outline-success" onclick="nickNameCheck();" style="width: 75px;">중복검사</button>
+						</c:if>
+						<c:if test="${mode=='member'}">
+							<small class="form-control-plaintext help-block"></small>
 						</c:if>
 					</div>
 				</div>

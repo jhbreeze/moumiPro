@@ -56,6 +56,21 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
+	public Member readMember1(String nickName) {
+		Member dto = null;
+		
+		try {
+			dto = dao.selectOne("member.readMember1", nickName);
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
+	}
+	
+	@Override
 	public Member readMember(long userCode) {
 		Member dto = null;
 
