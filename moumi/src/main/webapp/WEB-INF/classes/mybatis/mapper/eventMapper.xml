@@ -16,4 +16,8 @@
 		WHERE eventNum = #{eventNum}
 	</select>
 	
+	<insert id ="insertReply"  parameterType="com.moumi.app.event.Reply" >
+		INSERT INTO eventReply(replyNum, eventNum, userCode, content, regDate)
+		VALUES (eventReplyNum_seq.NEXTVAL, #{eventNum}, #{userCode}, #{content}, SYSDATE)
+	</insert>
 </mapper>

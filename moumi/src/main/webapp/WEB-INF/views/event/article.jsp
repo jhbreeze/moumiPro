@@ -8,6 +8,79 @@
 	max-width: 800px;
 }
 </style>
+
+
+<script type="text/javascript">
+function login() {
+	location.href="${pageContext.request.contextPath}/member/login";
+}
+
+
+function ajaxFun(url, method, query, dataType, fn) {
+	$.ajax({
+		type:method,
+		url:url,
+		data:query,
+		dataType:dataType,
+		success:function(data) {
+			fn(data);
+		},
+		beforeSend:function(jqXHR) {
+			jqXHR.setRequestHeader("AJAX", true);
+		},
+		error:function(jqXHR) {
+			if(jqXHR.status === 403) {
+				login();
+				return false;
+			} else if(jqXHR.status === 400) {
+				alert("요청 처리가 실패 했습니다.");
+				return false;
+			}
+	    	
+			console.log(jqXHR.responseText);
+		}
+	});
+}
+
+
+// 리플 등록
+$(function(){
+	$(".btnSendReply").click(function(){
+
+		let eventNum = "${dto.eventNum}";
+		
+		console.log(eventNum);
+
+		
+		const $tb = $(this).closest("table");
+
+		let content = $tb.find("textarea").val().trim();
+		if(! content) {
+			$tb.find("textarea").focus();
+			return false;
+		}
+		content = encodeURIComponent(content);
+		
+		let url = "${pageContext.request.contextPath}/event/insertReply";
+		let query = "eventNum=" + eventNum + "&content=" + content;
+		
+		console.log(content)
+		
+		const fn = function(data){
+			$tb.find("textarea").val("");
+			
+			let state = data.state;
+			if(state === "true") {
+			} else if(state === "false") {
+				alert("댓글을 추가 하지 못했습니다.");
+			}
+		};
+		
+		ajaxFun(url, "post", query, "json", fn);
+	});
+});
+
+</script>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/boot-board.css"
 	type="text/css">

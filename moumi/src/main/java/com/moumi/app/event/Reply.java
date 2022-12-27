@@ -2,7 +2,7 @@ package com.moumi.app.event;
 
 public class Reply {
 	private long replyNum;
-	private long num;
+	private long eventNum;
 	private int userCode;
 	private String userName;
 	private String content;
@@ -16,12 +16,12 @@ public class Reply {
 		this.replyNum = replyNum;
 	}
 
-	public long getNum() {
-		return num;
+	public long getEventNum() {
+		return eventNum;
 	}
 
-	public void setNum(long num) {
-		this.num = num;
+	public void setEventNum(long eventNum) {
+		this.eventNum = eventNum;
 	}
 
 	public int getUserCode() {

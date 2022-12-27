@@ -16,7 +16,7 @@
 					<div class='col-1'><i class='bi bi-person-circle text-muted icon'></i></div>
 					<div class='col-auto align-self-center'>
 						<div class='name'>${vo.userName}</div>
-						<div class='date'>${vo.reg_date}</div>
+						<div class='date'>${vo.regDate}</div>
 					</div>
 				</div>
 			</td>
