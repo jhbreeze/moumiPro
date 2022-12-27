@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.moumi.app.common.FileManager;
 import com.moumi.app.common.MyUtil;
 import com.moumi.app.member.SessionInfo;
+import com.moumi.app.board.Reply;
 
 
 
@@ -285,7 +286,7 @@ public class BoardController {
 
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		
-		int size = 5;
+		int size = 3;
 		int total_page = 0;
 		int dataCount = 0;
 
@@ -347,7 +348,56 @@ public class BoardController {
 		model.put("state", state);
 		return model;
 	}
+	
+	// 댓글 및 댓글의 답글 삭제 : AJAX-JSON
+		@PostMapping("deleteReply")
+		@ResponseBody
+		public Map<String, Object> deleteReply(@RequestParam Map<String, Object> paramMap) {
+			String state = "true";
+			
+			try {
+				service.deleteReply(paramMap);
+			} catch (Exception e) {
+				state = "false";
+			}
 
+			Map<String, Object> map = new HashMap<>();
+			map.put("state", state);
+			return map;
+		}
+		// 댓글의 답글 리스트 : AJAX-TEXT
+		@GetMapping("listReplyAnswer")
+		public String listReplyAnswer(@RequestParam Map<String, Object> paramMap, 
+				HttpSession session, Model model) throws Exception {
+			SessionInfo info = (SessionInfo)session.getAttribute("member");
+			
+			paramMap.put("userCode", info.getUserCode());
+			
+			List<Reply> listReplyAnswer = service.listReplyAnswer(paramMap);
+			
+			for (Reply dto : listReplyAnswer) {
+				dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
+			}
+
+			model.addAttribute("listReplyAnswer", listReplyAnswer);
+			return "board/listReplyAnswer";
+		}
+		
+		// 댓글의 답글 개수 : AJAX-JSON
+		@PostMapping(value = "countReplyAnswer")
+		@ResponseBody
+		public Map<String, Object> countReplyAnswer(@RequestParam Map<String, Object> paramMap,
+				HttpSession session) {
+			SessionInfo info = (SessionInfo)session.getAttribute("member");
+			
+			paramMap.put("userCode", info.getUserCode());
+			
+			int count = service.replyAnswerCount(paramMap);
+
+			Map<String, Object> model = new HashMap<>();
+			model.put("count", count);
+			return model;
+		}
 	
 	
 }

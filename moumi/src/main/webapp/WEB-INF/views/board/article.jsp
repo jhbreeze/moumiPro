@@ -7,17 +7,16 @@
 .body-container {
 	max-width: 800px;
 }
-.img-viewer {
+.reply-form .img-grid {
+	display: grid;
+	grid-template-columns:repeat(auto-fill, 54px);
+	grid-gap: 2px;
+}
+
+.reply-form .img-grid .item {
+	object-fit:cover;
+	width: 50px; height: 50px; border-radius: 10px;
 	cursor: pointer;
-	border: 1px solid #ccc;
-	width: 45px;
-	height: 45px;
-	border-radius: 45px;
-	background-image: url("${pageContext.request.contextPath}/resources/images/add_photo.png");
-	position: relative;
-	z-index: 9999;
-	background-repeat : no-repeat;
-	background-size : cover;
 }
 </style>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/boot-board.css" type="text/css">
@@ -43,6 +42,34 @@ function ajaxFun(url, method, query, dataType, fn) {
 	$.ajax({
 		type:method,
 		url:url,
+		data:query,
+		dataType:dataType,
+		success:function(data) {
+			fn(data);
+		},
+		beforeSend:function(jqXHR) {
+			jqXHR.setRequestHeader("AJAX", true);
+		},
+		error:function(jqXHR) {
+			if(jqXHR.status === 403) {
+				login();
+				return false;
+			} else if(jqXHR.status === 400) {
+				alert("요청 처리가 실패 했습니다.");
+				return false;
+			}
+	    	
+			console.log(jqXHR.responseText);
+		}
+	});
+}
+
+function ajaxFileFun(url, method, query, dataType, fn) {
+	$.ajax({
+		type:method,
+		url:url,
+		processData: false, // file 전송시 필수, 서버로전송하는 데이터를 쿼리문자열로변환여부
+		contentType: false, // file 전송시 필수, 서버에전송할 데이터의 Content-Type. 기본은 application/x-www-urlencoded
 		data:query,
 		dataType:dataType,
 		success:function(data) {
@@ -118,6 +145,7 @@ $(function(){
 	$(".btnSendReply").click(function(){
 		let num = "${dto.communityNum}";
 		const $tb = $(this).closest("table");
+		const f = this.closest("form");
 		
 		let content = $tb.find("textarea").val().trim();
 		if(! content) {
@@ -127,7 +155,9 @@ $(function(){
 		
 		content = encodeURIComponent(content);
 		let url = "${pageContext.request.contextPath}/board/insertReply";
-		let query = "communityNum="+num+"&content="+content+"&parent=0";
+		//let query = "communityNum="+num+"&content="+content+"&parent=0";
+		
+		let query = new FormData(f); 
 		
 		const fn = function(data){
 			$tb.find("textarea").val("");
@@ -138,39 +168,179 @@ $(function(){
 				alert("댓글 등록이 실패했습니다.");
 			}
 		};
-		ajaxFun(url,"post",query,"json",fn);
+		ajaxFileFun(url,"post",query,"json",fn);
 	});
 });
 
 //삭제 신고메뉴
 $(function(){
-	$("body").on("click",".reply-dropdown",function(){
-		const $m = $(this).next(".reply-menu");
-		if($m.is(":visible")){
-			$m.fadeOut(100);
+	$("body").on("click", ".reply-dropdown", function(){
+		const $menu = $(this).next(".reply-menu");
+		if($menu.is(':visible')) {
+			$menu.fadeOut(100);
 		} else {
 			$(".reply-menu").hide();
-			$m.fadeIn(100);
-			
+			$menu.fadeIn(100);
+
 			let pos = $(this).offset();
-			$m.offset({left:pos.left-70, top:pos.top+20});
+			$menu.offset( {left:pos.left-70, top:pos.top+20} );
 		}
 	});
-	
-	$("body").click(function(){
-		if($(event.target.parentNode).hasClass("reply-dropdown")){
+	$("body").on("click", function() {
+		if($(event.target.parentNode).hasClass("reply-dropdown")) {
 			return false;
 		}
-		
 		$(".reply-menu").hide();
 	});
 });
-/*
+
+$(function(){
+	var sel_files = [];
+	
+	$("body").on("click", ".reply-form .img-add", function(){
+		$(this).closest(".reply-form").find("input[name=selectFile]").trigger("click");
+	});
+	
+	$("form[name=replyForm] input[name=selectFile]").change(function(e){
+		if(! this.files) {
+			let dt = new DataTransfer();
+			for(let f of sel_files) {
+				dt.items.add(f);
+			}
+			
+			this.files = dt.files;
+			
+			return false;
+		}
+		
+		let $form = $(this).closest("form");
+		
+		// 유사 배열을  배열로 변환
+		const fileArr = Array.from(this.files);
+		
+		fileArr.forEach((file, index) => {
+			sel_files.push(file);
+			
+			const reader = new FileReader();
+			const $img = $("<img>", {"class":"item img-item"});
+			$img.attr("data-filename", file.name);
+			reader.onload = e => {
+				$img.attr("src", e.target.result);		
+			};
+			reader.readAsDataURL(file);
+			$form.find(".img-grid").append($img);
+		});
+		
+		let dt = new DataTransfer();
+		for(let f of sel_files) {
+			dt.items.add(f);
+		}
+		
+		this.files = dt.files;
+	});
+	
+	$("body").on("click", ".review-form .img-item", function(){
+		if(! confirm("선택한 파일을 삭제 하시겠습니까 ? ")) {
+			return false;
+		}
+		
+		let filename = $(this).attr("data-filename");
+		
+		for(let i=0; i<sel_files.length; i++) {
+			if(filename === sel_files[i].name) {
+				sel_files.splice(i, 1);
+				break;
+			}
+		}
+		
+		let dt = new DataTransfer();
+		for(let f of sel_files) {
+			dt.items.add(f);
+		}
+		
+		const f = this.closest("form");
+		f.selectFile.files = dt.files;
+		
+		$(this).remove();
+	});
+});
+$(function(){
+	var sel_files = [];
+	
+	$("body").on("click", ".reply-answer .img-replyadd", function(){
+		$(this).closest(".reply-answer").find("input[name=selectFile]").trigger("click");
+	});
+	
+	$("form[name=replyAnswerForm] input[name=selectFile]").change(function(e){
+		if(! this.files) {
+			let dt = new DataTransfer();
+			for(let f of sel_files) {
+				dt.items.add(f);
+			}
+			
+			this.files = dt.files;
+			
+			return false;
+		}
+		
+		let $form = $(this).closest("form");
+		
+		// 유사 배열을  배열로 변환
+		const fileArr = Array.from(this.files);
+		
+		fileArr.forEach((file, index) => {
+			sel_files.push(file);
+			
+			const reader = new FileReader();
+			const $img = $("<img>", {"class":"item img-item"});
+			$img.attr("data-filename", file.name);
+			reader.onload = e => {
+				$img.attr("src", e.target.result);		
+			};
+			reader.readAsDataURL(file);
+			$form.find(".img-grid").append($img);
+		});
+		
+		let dt = new DataTransfer();
+		for(let f of sel_files) {
+			dt.items.add(f);
+		}
+		
+		this.files = dt.files;
+	});
+	
+	$("body").on("click", ".replyAnswer-form.img-item", function(){
+		if(! confirm("선택한 파일을 삭제 하시겠습니까 ? ")) {
+			return false;
+		}
+		
+		let filename = $(this).attr("data-filename");
+		
+		for(let i=0; i<sel_files.length; i++) {
+			if(filename === sel_files[i].name) {
+				sel_files.splice(i, 1);
+				break;
+			}
+		}
+		
+		let dt = new DataTransfer();
+		for(let f of sel_files) {
+			dt.items.add(f);
+		}
+		
+		const f = this.closest("form");
+		f.selectFile.files = dt.files;
+		
+		$(this).remove();
+	});
+});
+
+
 // 댓글별 답글 리스트
-function listReplyAnswer(answer){
-	let url = "${pageContext.request.contextPath}/bbs/listReplyAnswer";
-	let query = "answer=" + answer;
-	let selector = "#listReplyAnswer" + answer;
+function listReplyAnswer(parent){
+	let url = "${pageContext.request.contextPath}/board/listReplyAnswer";
+	let query = "parent=" + parent;
+	let selector = "#listReplyAnswer" + parent;
 	
 	const fn = function(data){
 		$(selector).html(data);
@@ -179,13 +349,13 @@ function listReplyAnswer(answer){
 }
 
 // 댓글별 답글 개수
-function countReplyAnswer(answer){
-	let url = "${pageContext.request.contextPath}/bbs/countReplyAnswer";
-	let query = "answer="+answer;
+function countReplyAnswer(parent){
+	let url = "${pageContext.request.contextPath}/board/countReplyAnswer";
+	let query = "parent="+parent;
 	
 	const fn = function(data){
 		let count = data.count;
-		let selector = "#answerCount"+answer;
+		let selector = "#answerCount"+parent;
 		$(selector).html(count);
 	};
 	ajaxFun(url,"post",query,"json",fn);
@@ -198,7 +368,6 @@ $(function(){
 		
 		let isVisible = $tr.is(":visible");
 		let replyNum = $(this).attr("data-replyNum");
-		
 		if(isVisible) {
 			$tr.hide();
 		} else {
@@ -218,6 +387,7 @@ $(function(){
 	$("body").on("click",".btnSendReplyAnswer",function(){
 		let replyNum = $(this).attr("data-replyNum");
 		const $td = $(this).closest("td");
+		const f = this.closest("form");
 		
 		let content = $td.find("textarea").val().trim();
 		
@@ -225,10 +395,11 @@ $(function(){
 			$td.find("textarea").focus();
 			return false;
 		}
-		
+		alert(replyNum);
 		content = encodeURIComponent(content);
-		let url = "${pageContext.request.contextPath}/bbs/insertReply";
-		let query = "num=${dto.communityNum}&content="+content+"&answer="+replyNum;
+		let url = "${pageContext.request.contextPath}/board/insertReply";
+		// let query = "communityNum=${dto.communityNum}&content="+content+"&parent="+replyNum;
+		let query = new FormData(f); 
 		
 		const fn = function(data){
 			$td.find("textarea").val("");
@@ -239,7 +410,7 @@ $(function(){
 				countReplyAnswer(replyNum);
 			}
 		};
-		ajaxFun(url,"post",query,"json",fn);
+		ajaxFileFun(url,"post",query,"json",fn);
 		
 	});
 });
@@ -254,7 +425,7 @@ $(function(){
 		let replyNum = $(this).attr("data-replyNum");
 		let page = $(this).attr("data-pageNo");
 		
-		let url = "${pageContext.request.contextPath}/bbs/deleteReply";
+		let url = "${pageContext.request.contextPath}/board/deleteReply";
 		let query = "replyNum="+replyNum+"&mode=reply";
 		
 		const fn = function(data){
@@ -273,8 +444,8 @@ $(function(){
 		let replyNum = $(this).attr("data-replyNum");
 		let answer = $(this).attr("data-answer");
 		
-		let url = "${pageContext.request.contextPath}/bbs/deleteReply";
-		let query = "replyNum="+replyNum+"&mode=answer";
+		let url = "${pageContext.request.contextPath}/board/deleteReply";
+		let query = "replyNum="+replyNum+"&mode=parent";
 		
 		const fn = function(data){
 			listReplyAnswer(answer);
@@ -284,7 +455,7 @@ $(function(){
 		
 	});
 });
-
+/*
 // 댓글 공감/비공감
 $(function(){
 	$("body").on("click",".btnSendReplyLike",function(){
@@ -318,84 +489,7 @@ $(function(){
 		ajaxFun(url,"post",query,"json",fn);
 	});
 });
-
-
-// 댓글의 답글 숨김
-$(function(){
-	$("body").on("click",".hideReplyAnswer",function(){
-		let $menu = $(this);
-		
-		let replyNum = $(this).attr("data-replyNum");
-		let showReply = $(this).attr("data-showReply");
-		let msg = "댓글을 숨기시겠습니까?";
-		if(showReply === "0"){
-			msg = "댓글 숨김을 해제 하시겠습니까?";
-		}
-		if(! confirm(msg)) {
-			return false;
-		}
-	
-		showReply = showReply === "1" ? "0" : "1";
-		
-		let url = "${pageContext.request.contextPath}/bbs/replyShowHide";
-		let query = "replyNum="+replyNum+"&showReply="+showReply;
-		
-		const fn = function(data){
-			if(data.state === "true") {
-				let $item = $($menu).closest(".row").next("div");
-				if(showReply === "1") {
-					$item.removeClass("text-primary").removeClass("text-opacity-50");
-					$menu.attr("data-showReply","1");
-					$menu.html("숨김");
-				} else {
-					$item.addClass("text-primary").addClass("text-opacity-50");
-					$menu.attr("data-showReply","0");
-					$menu.html("표시");
-				}
-			}
-		};
-		ajaxFun(url,"post",query,"json",fn);
-	});
-});
-
-
-//댓글 숨김
-$(function(){
-	$("body").on("click",".hideReply",function(){
-		let $menu = $(this);
-		
-		let replyNum = $(this).attr("data-replyNum");
-		let showReply = $(this).attr("data-showReply");
-		let msg = "댓글을 숨기시겠습니까?";
-		if(showReply === "0"){
-			msg = "댓글 숨김을 해제 하시겠습니까?";
-		}
-		if(! confirm(msg)) {
-			return false;
-		}
-	
-		showReply = showReply === "1" ? "0" : "1";
-		
-		let url = "${pageContext.request.contextPath}/bbs/replyShowHide";
-		let query = "replyNum="+replyNum+"&showReply="+showReply;
-		
-		const fn = function(data){
-			if(data.state === "true") {
-				let $item = $($menu).closest("tr").next("tr").find("td");
-				if(showReply === "1") {
-					$item.removeClass("text-primary").removeClass("text-opacity-50");
-					$menu.attr("data-showReply","1");
-					$menu.html("숨김");
-				} else {
-					$item.addClass("text-primary").addClass("text-opacity-50");
-					$menu.attr("data-showReply","0");
-					$menu.html("표시");
-				}
-			}
-		};
-		ajaxFun(url,"post",query,"json",fn);
-	});
-}); */
+*/
 </script>
 
 <div class="container">
@@ -491,7 +585,7 @@ $(function(){
 			</table>
 			
 			<div class="reply">
-				<form name="replyForm" method="post">
+				<form name="replyForm">
 					<div class='form-header'>
 						<span class="bold">댓글</span><span> - 타인을 비방하거나 개인정보를 유출하는 글의 게시를 삼가해 주세요.</span>
 					</div>
@@ -503,15 +597,18 @@ $(function(){
 							</td>
 						</tr>
 						<tr>
-							<td align='left' style="">
-								<div class="img-viewer"></div>
+							<td align='left'>
+								<div class="img-grid">
+									<img class="item img-add" src="${pageContext.request.contextPath}/resources/images/add_photo.png">
+								</div>
 								<input type="file" name="selectFile" accept="image/*" class="form-control" style="display: none;">
 							</td>
 						   <td align='right'>
-						        <button type='button' class='btn btn-light btnSendReply'>댓글 등록</button>
+						        <button type='button' class='btn btn-light btnSendReply' onclick="sendOk();">댓글 등록</button>
 						    </td>
 						 </tr>
 					</table>
+						 <input type="hidden" name="communityNum" value="${dto.communityNum}">
 				</form>
 				
 				<div id="listReply"></div>
