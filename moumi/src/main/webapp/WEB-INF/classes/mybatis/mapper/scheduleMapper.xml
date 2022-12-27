@@ -3,9 +3,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="sch">
 	<insert id="insertSchedule" parameterType="com.moumi.app.schedule.Schedule">
-		INSERT INTO schedule(noteNum, userCode, subject, color, sday, eday,
+		INSERT INTO schedule(num, userCode, title, color, sday, eday,
 				stime, etime, repeat, repeat_cycle, memo, regDate) 
-			VALUES(schedule_seq.NEXTVAL, #{userCode}, #{subject},
+			VALUES(schedule_seq.NEXTVAL, #{userCode}, #{title},
 				#{color}, #{sday},
 				#{eday, jdbcType=VARCHAR},
 				#{stime, jdbcType=VARCHAR},
@@ -17,7 +17,7 @@
 	</insert>
 	
 	<select id="listMonth" parameterType="map" resultType= "com.moumi.app.schedule.Schedule">
-		SELECT  userCode, subject, sday, eday, stime, etime, color, repeat, repeat_cycle, memo, regDate
+		SELECT  num id, userCode, title, sday, eday, stime, etime, color, repeat, repeat_cycle, memo, regDate
 		FROM schedule 
 		<where>
 			userCode = #{userCode}
@@ -40,15 +40,15 @@
 	</select>
 	
 	<select id="readSchedule" parameterType="Long" resultType="com.moumi.app.schedule.Schedule">
-		SELECT noteNum, subject, sday, eday, stime, etime, 
-			color, repeat, repeat_cycle, memo, regDate 
+		SELECT num id, title, sday, eday, stime, etime, 
+			color, repeat, repeat_cycle, memo, TO_CHAR(regDate, 'YYYY-MM-dd') 
 		FROM schedule 		
-		WHERE noteNum = #{noteNum}
+		WHERE num = #{num}
 	</select>
 	
 	<update id="updateSchedule" parameterType="com.moumi.app.schedule.Schedule">
 		UPDATE schedule SET
-			subject=#{subject},
+			title=#{title},
 			color=#{color}, sday=#{sday}, 
 			eday=#{eday, jdbcType=VARCHAR},
 			stime=#{stime, jdbcType=VARCHAR},
@@ -56,7 +56,7 @@
 			repeat=#{repeat},
 			repeat_cycle=#{repeat_cycle},
 			memo=#{memo, jdbcType=VARCHAR}
-		WHERE noteNum=#{noteNum} AND userCode=#{userCode}
+		WHERE num=#{num} AND userCode=#{userCode}
 	</update>
 	
 	

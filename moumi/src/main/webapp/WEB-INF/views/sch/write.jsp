@@ -144,29 +144,12 @@ $(function(){
 						<td>
 							<div class="row">
 								<div class="col">
-									<input type="text" name="subject" id="form-subject" class="form-control" value="${dto.subject}">
+									<input type="text" name="subject" id="form-subject" class="form-control" value="${dto.title}">
 								</div>
 							</div>
 							<small class="form-control-plaintext">* 제목은 필수 입니다.</small>
 						</td>
 					</tr>
-
-				<%-- 	<tr>
-						<td class="table-light col-2" scope="row">일정분류</td>
-						<td>
-							<div class="row">
-								<div class="col-5">
-									<select name="categoryNum" id="form-categoryNum" class="form-select">
-										<option value="0">설정하지 않음</option>
-										<c:forEach var="vo" items="${listCategory}">
-											<option value="${vo.categoryNum}" ${dto.categoryNum == vo.categoryNum ? "selected='selected'":""}>${vo.category}</option>
-										</c:forEach>
-									</select>
-								</div>
-							</div>
-							<small class="form-control-plaintext">* 카테고리는 일정 메인화면에서 설정합니다.</small>
-						</td>
-					</tr> --%>
 
 					<tr>
 						<td class="table-light col-2" scope="row">색 상</td>

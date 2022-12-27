@@ -122,13 +122,13 @@ public class ScheduleController {
 	}
 	
 	@GetMapping(value = "update")
-	public String updateForm(@RequestParam int noteNum,
+	public String updateForm(@RequestParam int num,
 			HttpSession session,
 			Model model) throws Exception {
 		//SessionInfo info = (SessionInfo)session.getAttribute("member");
 		
-		System.out.println(noteNum);
-		Schedule dto = service.readSchedule(noteNum);
+		System.out.println(num);
+		Schedule dto = service.readSchedule(num);
 		if(dto == null) {
 			return "redirect:/schedule/main";
 		}

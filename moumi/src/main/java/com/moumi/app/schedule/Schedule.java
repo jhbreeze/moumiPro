@@ -3,7 +3,7 @@ package com.moumi.app.schedule;
 import java.util.List;
 
 public class Schedule {
-	private long noteNum;
+	private long num;
 	private int userCode;
 	private String userName;
 	private String subject;
@@ -16,7 +16,7 @@ public class Schedule {
 	private String etime;
 	private int repeat;
 	private int repeat_cycle;
-	private String reg_date;
+	private String regDate;
 
 	private Long categoryNum;
 	private String category;
@@ -30,12 +30,12 @@ public class Schedule {
 	private String start;
 	private String end;
 
-	public long getNoteNum() {
-		return noteNum;
+	public long getNum() {
+		return num;
 	}
 
-	public void setNoteNum(long noteNum) {
-		this.noteNum = noteNum;
+	public void setNum(long num) {
+		this.num = num;
 	}
 
 	public int getUserCode() {
@@ -134,12 +134,12 @@ public class Schedule {
 		this.repeat_cycle = repeat_cycle;
 	}
 
-	public String getReg_date() {
-		return reg_date;
+	public String getRegDate() {
+		return regDate;
 	}
 
-	public void setReg_date(String reg_date) {
-		this.reg_date = reg_date;
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
 	}
 
 	public Long getCategoryNum() {

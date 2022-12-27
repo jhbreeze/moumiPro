@@ -226,32 +226,31 @@ function insertSchedule(startStr, endStr, allDay) {
 // 일정 상세 보기
 function viewSchedule(calEvent) {
 	$("#myDialogModal").modal("show");
-	
-	console.log(calEvent);
-
+	 
 	var num = calEvent.id;
+	alert(num);
 
 	var title = calEvent.title;
 	var color = calEvent.backgroundColor;
-	// var start = calEvent.start;
-	// var end = calEvent.end;
+
 	var start = calEvent.startStr;
 	var end = calEvent.endStr;
 	var allDay = calEvent.allDay;
+	
+	var sday = calEvent.extendedProps.sday;
+	var eday = calEvent.extendedProps.eday;
+	var stime = calEvent.extendedProps.stime;
+	var etime = calEvent.extendedProps.etime;
 
 	var categoryNum = calEvent.extendedProps.categoryNum;
 	if(! categoryNum) categoryNum = 0;
 	var category = calEvent.extendedProps.category;
 	if(! category) category = "설정하지 않음";
 	
-	var sday = calEvent.extendedProps.sday;
-	var eday = calEvent.extendedProps.eday;
-	var stime = calEvent.extendedProps.stime;
-	var etime = calEvent.extendedProps.etime;
-	
 	var memo = calEvent.extendedProps.memo;
 	if(! memo) memo = "";
 	var regDate = calEvent.extendedProps.regDate;
+	console.log(regDate);
 	var repeat = calEvent.extendedProps.repeat;
 	var repeat_cycle = calEvent.extendedProps.repeat_cycle;
 	
@@ -290,9 +289,9 @@ function viewSchedule(calEvent) {
 $(function(){
 	// 일정 수정 화면
 	$(".btnScheduleUpdate").click(function(){
-		var num = $(this).attr("data-noteNum");
+		var num = $(this).attr("data-num");
 		alert(num);
-		location.href="${pageContext.request.contextPath}/schedule/update?noteNum="+num;
+		location.href="${pageContext.request.contextPath}/schedule/update?num="+num;
 	});
 
 	// 일정 삭제
@@ -345,8 +344,8 @@ function updateDrag(calEvent) {
 		endTime = end.substr(11, 5);
 	}
 	
-	var query = "num="+num+"&subject="+title
-			+ "&categoryNum="+categoryNum+"&color="+color
+	var query ="num="+num+"&title="+title
+			+ "&color="+color
 			+ "&all_day="+all_day
 			+ "&sday="+startDate+"&eday="+endDate
 			+ "&stime="+startTime+"&etime="+endTime
