@@ -59,6 +59,10 @@
 		WHERE num=#{num} AND userCode=#{userCode}
 	</update>
 	
+		<delete id="deleteSchedule" parameterType="map">
+		DELETE FROM schedule WHERE num=#{num} AND userCode=#{userCode}
+	</delete>
+	
 	
 	
 	

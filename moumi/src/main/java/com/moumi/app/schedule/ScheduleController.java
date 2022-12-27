@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 
 @Controller("sch.scheduleController")
 @RequestMapping("/schedule/*")
@@ -162,16 +164,43 @@ public class ScheduleController {
 		try {
 
 			dto.setUserCode(1);
-			System.out.println("update 전 ");
-
 			service.updateSchedule(dto);
-			System.out.println("update 후");
-
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		return "redirect:/schedule/main";
 	}
+	
+	
+
+	// 일정 삭제 - AJAX : JSON
+	@RequestMapping(value = "delete", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> delete(
+			@RequestParam int num,
+			HttpSession session
+			) {
+		//SessionInfo info=(SessionInfo)session.getAttribute("member");
+
+		String state = "true";
+		try {
+			Map<String, Object> map=new HashMap<>();
+			// map.put("userCode", info.getUserId());
+
+			map.put("userCode", 1);
+			map.put("num", num);
+			service.deleteSchedule(map);
+		}catch (Exception e) {
+			state = "false";
+		}
+		
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("state", state);
+		
+		return model;
+	}
+	
 
 }
