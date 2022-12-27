@@ -324,9 +324,6 @@ function updateDrag(calEvent) {
 	var end = calEvent.endStr;
 	var allDay = calEvent.allDay;
 	
-	var categoryNum = calEvent.extendedProps.categoryNum;
-	if(! categoryNum) categoryNum = 0;
-	
 	var memo = calEvent.extendedProps.memo;
 	if(! memo) memo = "";
 	var repeat = calEvent.extendedProps.repeat;
