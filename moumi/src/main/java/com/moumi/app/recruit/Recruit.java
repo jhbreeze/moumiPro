@@ -26,7 +26,7 @@ public class Recruit {
 	private String originalFilename;
 	private List<MultipartFile> selectFile;
 	private long fileSize;
-	private int fileCount; // checkhere
+	private int fileCount; 
 	
 	private int recruitLikeCount;
 
