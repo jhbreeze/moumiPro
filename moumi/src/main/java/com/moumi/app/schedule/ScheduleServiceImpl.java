@@ -30,9 +30,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 				dto.setStime("");
 				dto.setEtime("");
 			}
-			System.out.println("insert 전");
 			dao.insertData("sch.insertSchedule", dto);
-			System.out.println("insert 후");
 		} catch (Exception e) {
 			throw e;
 		}

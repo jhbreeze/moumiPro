@@ -16,12 +16,10 @@ function sendOk() {
     const f = document.scheduleForm;
 	let str;
 	
-	if( ! f.subject.value.trim() ) {
-		f.subject.focus();
+	if( ! f.title.value.trim() ) {
+		f.title.focus();
 		return;
 	}
-	
-	
 	
 	if( ! f.sday.value ) {
 		f.sday.focus();
@@ -144,7 +142,7 @@ $(function(){
 						<td>
 							<div class="row">
 								<div class="col">
-									<input type="text" name="subject" id="form-subject" class="form-control" value="${dto.title}">
+									<input type="text" name="title" id="form-title" class="form-control" value="${dto.title}">
 								</div>
 							</div>
 							<small class="form-control-plaintext">* 제목은 필수 입니다.</small>

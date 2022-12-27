@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -61,13 +60,16 @@ public class ScheduleController {
 
 		try {
 			dto.setUserCode(1);
+			System.out.println("insert 전");
 			service.insertSchedule(dto);
+			System.out.println("insert 후");
+
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return "redirect:/sch/main";
+		return "redirect:/schedule/main";
 	}
 
 	
@@ -127,7 +129,7 @@ public class ScheduleController {
 			Model model) throws Exception {
 		//SessionInfo info = (SessionInfo)session.getAttribute("member");
 		
-		System.out.println(num);
+		System.out.println("update Num"+num);
 		Schedule dto = service.readSchedule(num);
 		if(dto == null) {
 			return "redirect:/schedule/main";
@@ -163,22 +165,19 @@ public class ScheduleController {
 		return ".sch.write";
 	}
 	
-	@RequestMapping(value = "update", method = RequestMethod.POST)
+	@PostMapping(value = "update")
 	public String updateSubmit(Schedule dto,
 			HttpSession session) throws Exception {
 		//SessionInfo info=(SessionInfo)session.getAttribute("member");
 		
 		try {
-			if(dto.getCategoryNum() == 0) {
-				dto.setCategoryNum(null);
-			}
 			
 			dto.setUserCode(1);
 			service.updateSchedule(dto);
 		} catch (Exception e) {
 		}
 		
-		return "redirect:/sch/main";
+		return "redirect:/schedule/main";
 	}
 
 	
