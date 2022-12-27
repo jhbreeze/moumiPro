@@ -19,7 +19,7 @@
 
     <insert id="insertMember" parameterType="com.moumi.app.member.Member">
 		INSERT INTO member(userCode, email, pwd, nickName, userName, enabled, regDate, failureCnt, lastLogin, userType, gender, birth) 
-        VALUES (#{userCode}, #{email}, #{pwd}, #{nickName}, #{userName}, 1, SYSDATE, 0, SYSDATE, 0, #{gender}, #{birth});	
+        VALUES (#{userCode}, #{email}, #{pwd}, #{nickName}, #{userName}, 1, SYSDATE, 0, SYSDATE, 0, #{gender}, #{birth})	
     </insert>
 
 	
@@ -39,6 +39,14 @@
 			TO_CHAR(birth, 'YYYY-MM-DD') birth
 		FROM member  
 		WHERE email = #{email}
+	</select>
+	
+	<select id="readMember1" parameterType="String" resultType="com.moumi.app.member.Member">
+		SELECT userCode, userType, email, userName, nickName, pwd, enabled,
+			regDate, lastLogin,
+			TO_CHAR(birth, 'YYYY-MM-DD') birth
+		FROM member  
+		WHERE nickName = #{nickName}
 	</select>
 
 	<select id="readMember2" parameterType="Long" resultType="com.moumi.app.member.Member">

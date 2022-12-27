@@ -161,6 +161,21 @@ public class MemberController {
 		return model;
 	}
 	
+	@RequestMapping(value = "nickNameCheck", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> nickCheck(@RequestParam String nickName) throws Exception {
+		
+		String p = "true";
+		Member dto = service.readMember1(nickName);
+		if (dto != null) {
+			p = "false";
+		}
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("passed", p);
+		return model;
+	}
+	
 	
 	
 

@@ -11,6 +11,7 @@ public interface MemberService {
 //	public void updateMember(Member dto) throws Exception;
 	
 	public Member readMember(String email);
+	public Member readMember1(String nickName);
 	public Member readMember(long userCode);
 
 //	public void generatePwd(Member dto) throws Exception;
