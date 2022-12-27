@@ -1,15 +1,26 @@
 package com.moumi.app.admin.report;
 
+import java.io.File;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.moumi.app.common.MyUtil;
+import com.moumi.app.member.SessionInfo;
 
 @Controller("admin.report.reportController")
 
@@ -25,14 +36,132 @@ public class ReportController {
 	@RequestMapping("list")
 	public String reportManage(@RequestParam(defaultValue = "0") long reportNum,
 			@RequestParam(value = "page", defaultValue = "1") int current_page,
+			@RequestParam(defaultValue = "all") String condition,
+			@RequestParam(defaultValue = "") String keyword,
 			HttpServletRequest req,
-			Model model) {
+			Model model) throws Exception{
+		
+		int size = 6;
+		int total_page;
+		int dataCount;
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		
+		dataCount = service.dataCount(map);
+		total_page = myUtil.pageCount(dataCount, size);
+		if(current_page > total_page) {
+			current_page = total_page;
+		}
+		
+		int offset = (current_page - 1) * size;
+		if(offset < 0) offset = 0;
+		
+		map.put("offset", offset);
+		map.put("size", size);
+		
+		List<Report> list = service.listReport(map);
 		
 		String cp = req.getContextPath();
+		String query = "";
+		String listUrl = cp + "/admin/report/list";
+		String articleUrl = cp + "/admin/report/article?page=" + current_page;
+		if (keyword.length() != 0) {
+			query = "condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "utf-8");
+		}
+
+		if (query.length() != 0) {
+			listUrl = cp + "/admin/report/list?" + query;
+			articleUrl = cp + "/admin/report/article?page=" + current_page + "&" + query;
+		}
 		
-		int size = 0; 
+		String paging = myUtil.pagingUrl(current_page, total_page, listUrl);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("reportNum", reportNum);
+		model.addAttribute("page", current_page);
+		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("size", size);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("paging", paging);
+		model.addAttribute("articleUrl", articleUrl);
+
+		model.addAttribute("condition", condition);
+		model.addAttribute("keyword", keyword);
 		
 		return ".admin.report.list";
+	}
+	
+	@GetMapping("write")
+	public String writeForm(Model model) {
+		model.addAttribute("mode", "write");
+		
+		return ".admin.report.write";
+	}
+	
+	@PostMapping("write")
+	public String writeSubmit(Report dto, 
+			HttpSession session, 
+			Model model) {
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		
+		try {
+			String root = session.getServletContext().getRealPath("/");
+			String path = root + "uploads"+File.separator+"report";
+			
+			dto.setUserCode(info.getUserCode());
+			service.insertReport(dto, path);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return "redirect:/admin/report/list";
+	}
+	
+	@RequestMapping("article")
+	public String article(@RequestParam long reportNum, 
+			@RequestParam String page, 
+			@RequestParam(defaultValue = "all")String condition, 
+			@RequestParam(defaultValue = "")String keyword,
+			Model model) throws Exception {
+		
+		try {
+			keyword = URLDecoder.decode(keyword, "utf-8");
+
+			String query = "page=" + page;
+			if (keyword.length() != 0) {
+				query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
+			}
+			
+			Report dto = service.readReport(reportNum);
+			if(dto == null) {
+				return "redirect:/admin/report/list";
+			}
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("condition", condition);
+			map.put("keyword", keyword);
+			map.put("reportNum", reportNum);
+			
+			Report preReadDto = service.preReadReport(map);
+			Report nextReadDto = service.nextReadReport(map);
+			
+			List<Report> listFile = service.listReportFile(reportNum);
+			dto.setThumbnail(dto.getThumbnail());
+			listFile.add(0, dto);
+			
+			model.addAttribute("dto", dto);
+			model.addAttribute("listFile", listFile);
+			model.addAttribute("preReadDto", preReadDto);
+			model.addAttribute("nextReadDto", nextReadDto);
+			model.addAttribute("page", page);
+			model.addAttribute("query", query);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return "admin.report.article";
 	}
 
 }
