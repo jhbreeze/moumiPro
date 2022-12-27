@@ -252,7 +252,7 @@ $(function(){
 							<button type="reset" class="btn btn-light">다시입력</button>
 							<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/schedule/main';">${mode=='update'?'수정취소':'등록취소'}&nbsp;<i class="bi bi-x"></i></button>
 							<c:if test="${mode=='update'}">
-								<input type="hidden" name="num" value="${dto.num}">
+								<input type="hidden" name="num" value="${dto.id}">
 							</c:if>
 						</td>
 					</tr>
