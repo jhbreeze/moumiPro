@@ -4,8 +4,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <div class="div-footer">
-   	<hr>
-    <ul class="nav justify-content-center footer-list mb-3">
+   	<br>
+    <ul class="nav justify-content-center footer-list mb-3" style="list-style: none;">
     	<li class="nav-item"><span>&nbsp;&nbsp;회사소개&nbsp;</span></li>
     	<li class="nav-item"><span>&nbsp;&nbsp;이용약관&nbsp;</span></li>
     	<li class="nav-item"><span>&nbsp;&nbsp;개인정보취급방침&nbsp;</span></li>

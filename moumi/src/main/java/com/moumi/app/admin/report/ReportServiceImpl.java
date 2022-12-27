@@ -76,7 +76,18 @@ public class ReportServiceImpl implements ReportService {
 
 	@Override
 	public void deleteReport(long reportNum, String pathname) throws Exception {
-		// TODO Auto-generated method stub
+		try {
+			List<Report> listFile = listReportFile(reportNum);
+			if(listFile != null) {
+				for (Report dto : listFile) {
+					fileManager.doFileDelete(dto.getThumbnail(), pathname);
+				}
+			}
+			
+			dao.deleteData("report.deleteReport", reportNum);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		
 	}
 
@@ -140,6 +151,12 @@ public class ReportServiceImpl implements ReportService {
 	@Override
 	public List<Report> listReportFile(long reportNum) {
 		List<Report> listFile = null;
+		
+		try {
+			listFile = dao.selectList("report.reportFile", reportNum);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return listFile;
 	}
 

@@ -17,7 +17,9 @@ main {
 .body-container {
 	max-width: 1200px;
 	margin: auto;
-	padding: 20px;
+	padding: 90px;
+	padding-left: inherit;
+	padding-right: inherit;
 	
 }
 
@@ -74,9 +76,13 @@ tr:hover {
 		</div>
 
 		<div class="body-main">
-			<form name="listForm" method="post">
-				<div class="row board-list-header"></div>
-			</form>
+			<div class="row board-list-header">
+				<div class="col-auto me-auto">
+					<div>
+						<p class="form-control-plaintext">${dataCount}개(${page}/${total_page}페이지)</p>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

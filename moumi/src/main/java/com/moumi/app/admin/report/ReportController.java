@@ -1,5 +1,9 @@
 package com.moumi.app.admin.report;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +34,37 @@ public class ReportController {
 		
 		String cp = req.getContextPath();
 		
-		int size = 0; 
+		int size = 6;
+		int total_page;
+		int dataCount;
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		dataCount = service.dataCount(map);
+		total_page = myUtil.pageCount(dataCount, size);
+		if(current_page > total_page) {
+			current_page = total_page;
+		}
+		
+		int offset = (current_page - 1) * size;
+		if(offset < 0) offset = 0;
+		
+		map.put("offset", offset);
+		map.put("size", size);
+		
+		List<Report> list = service.listReport(map);
+		
+		String listUrl = cp + "/admin/report/list?reportNum="+reportNum;
+		
+		String paging = myUtil.pagingUrl(current_page, total_page, listUrl);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("reportNum", reportNum);
+		model.addAttribute("page", current_page);
+		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("size", size);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("paging", paging);
 		
 		return ".admin.report.list";
 	}

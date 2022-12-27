@@ -51,10 +51,6 @@ color : white
 background-color: #198754
 }
 
-.vertical_nav__minify {
-background-color: #ECF4EB
-}
-
 .menu--icon{
 color: white;
 }
@@ -62,14 +58,13 @@ color: white;
 .menu--subitens__opened > .menu--link, .menu--subitens__opened > .menu--label{
 color: #198754;
 }
-
 .menu-side{
  `	position: -webkit-sticky;
     position: sticky;
     align-self: flex-end;
     bottom: 0;
     padding : 17px 0;
-    margin : 200px 0 0;
+    }
 }
 </style>
 
@@ -99,7 +94,7 @@ color: #198754;
 </header>
 
 <nav class="vertical_nav navbar-green" style="min-height: 1100px;">
-	<ul id="js-menu" class="menu menu-side navbar-green">
+	<ul id="js-menu" class="menu menu-side ">
 	
 		<li class="menu--item">
 			<a href="${pageContext.request.contextPath}/admin" class="menu--link" title="Home">
@@ -180,16 +175,10 @@ color: #198754;
 				<span class="menu--label">Logout</span>
 			</a>
 		</li>
-		<li>
-		
-		</li>
-		<li class="menu--item">
-			<button id="collapse_menu" class="collapse_menu navbar-green">
-				<i class="collapse_menu--icon fa fa-fw"></i>
-			</button>
-		</li>
 	</ul>
 
-	
+	<button id="collapse_menu" class="collapse_menu">
+		<i class="collapse_menu--icon fa fa-fw"></i>
+	</button>
 
 </nav>
