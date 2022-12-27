@@ -118,24 +118,30 @@
 	
 	<!-- 파일 -->
 	<insert id="insertFile" parameterType="com.moumi.app.recruit.Recruit">
-		INSERT INTO recruitFile(fileNum, imageFileName, recruitNum)
-  		  VALUES(recruitFile_seq.NEXTVAL, #{imageFilename}, #{recruitNum})
+		INSERT INTO recruitFile(fileNum, recruitNum, saveFilename, originalFilename, fileSize)
+  		  VALUES(recruitFile_seq.NEXTVAL, #{recruitNum}, #{saveFilename}, #{originalFilename}, #{fileSize})
 	</insert>
 	
 	<select id="listFile" parameterType="long" resultType="com.moumi.app.recruit.Recruit">
-		SELECT fileNum, imageFileName, recruitNum
+		SELECT fileNum, recruitNum, saveFilename, originalFilename, fileSize
+		FROM recruitFile
+		WHERE recruitNum = #{recruitNum}
+	</select>
+	
+	<select id="countFile" parameterType="long" resultType="com.moumi.app.recruit.Recruit">
+		SELECT NVL(Count(*), 0) fileCount
 		FROM recruitFile
 		WHERE recruitNum = #{recruitNum}
 	</select>
 	
 	<select id="readFile" parameterType="long" resultType="com.moumi.app.recruit.Recruit">
-		SELECT fileNum, imageFileName, recruitNum
+		SELECT fileNum, recruitNum, saveFilename, originalFilename, fileSize
 		FROM recruitFile
 		WHERE fileNum = #{fileNum}
 	</select>
 	
 	<delete id="deleteFile" parameterType="map">
-		DELETE FROM recruitFile WHERE ${field} = #{recruitNum, jdbcType=INTEGER}
+		DELETE FROM recruitFile WHERE ${field} = #{fileNum, jdbcType=INTEGER}
 	</delete>
 	
 	
