@@ -24,7 +24,7 @@ public class ReportServiceImpl implements ReportService {
 			String filename = fileManager.doFileUpload(dto.getThumbnailFile(), pathname);
 			dto.setThumbnail(filename);
 			
-			long reportNum = dao.selectOne("report.reportSeq");
+			long reportNum = dao.selectOne("report.seq");
 			dto.setReportNum(reportNum);
 			dao.insertData("report.insertReport", dto);
 			

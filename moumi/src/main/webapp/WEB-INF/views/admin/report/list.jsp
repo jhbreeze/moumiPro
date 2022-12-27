@@ -67,6 +67,16 @@ tr:hover {
 	color: #eee;
 }
 </style>
+
+<script type="text/javascript">
+$(function(){
+	$(".report-item").click(function(){
+		let reportNum = $(this).attr("data-reportNum");
+		let url = "${pageContext.request.contextPath}/admin/report/article/"+reportNum;
+		location.href = url;
+	});
+});
+</script>
 <div class="container">
 	<div class="body-container">
 		<div class="body-title">
@@ -83,6 +93,52 @@ tr:hover {
 					</div>
 				</div>
 			</div>
+		</div>
+		
+		<div class="row mt-1">
+			<c:forEach var="dto" items="${list}" varStatus="status">
+				<div class="col-md-4 col-lg-3 mt-4">
+					<div class="border rounded report-item" data-reportNum="${dto.reportNum}">
+						<img class="thumbnail-img" src="${pageContext.request.contextPath}/uploads/report/${dto.thumbnail}">
+						<div class="p-2">
+							<div class="text-truncate fw-semibold pb-1">
+								<a href="${articleUrl}&num=${dto.reportNum}" class="text-reset">${dto.subject}</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</c:forEach>
+		</div>
+		
+		<div class="page-navigation mt-5">
+			${dataCount == 0 ? "등록된 상품이 없습니다." : paging}
+		</div>
+		<div class="row board-list-footer">
+		<div class="col">
+					<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/notice/list';">새로고침</button>
+				</div>
+				<div class="col-6 text-center">
+					<form class="row" name="searchForm" action="${pageContext.request.contextPath}/notice/list" method="post">
+						<div class="col-auto p-1">
+							<select name="condition" class="form-select">
+								<option value="all" ${condition=="all"?"selected='selected'":""}>제목+내용</option>
+								<option value="userName" ${condition=="userName"?"selected='selected'":""}>작성자</option>
+								<option value="reg_date" ${condition=="regDate"?"selected='selected'":""}>등록일</option>
+								<option value="subject" ${condition=="subject"?"selected='selected'":""}>제목</option>
+								<option value="content" ${condition=="content"?"selected='selected'":""}>내용</option>
+							</select>
+						</div>
+						<div class="col-auto p-1">
+							<input type="text" name="keyword" value="${keyword}" class="form-control">
+						</div>
+						<div class="col-auto p-1">
+							<button type="button" class="btn btn-light" onclick="searchList()"> <i class="bi bi-search"></i> </button>
+						</div>
+					</form>
+				</div>
+		<div class="col text-end">
+			<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/admin/report/write';">글올리기</button>
+		</div>
 		</div>
 	</div>
 </div>

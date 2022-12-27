@@ -13,7 +13,7 @@
 	
 	<insert id="insertReportFile" parameterType="com.moumi.app.admin.report.Report">
 		INSERT INTO reportFIle(fileNum, imageFilename, reportNum)
-		VALUES(REPORTFILE_SEQ.NEXTVAL, #{imageFilename}, #{reportNum})
+		VALUES(reportFile_seq.NEXTVAL, #{imageFilename}, #{reportNum})
 	</insert>
 	
 	<sql id="where-list">
