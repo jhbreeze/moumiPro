@@ -29,9 +29,18 @@ public class RecruitServiceImpl implements RecruitService {
 			
 			if (! dto.getSelectFile().isEmpty()) {
 				for(MultipartFile mf : dto.getSelectFile()) {
-					String imageFilename = mf.getOriginalFilename();
+					String saveFilename = fileManager.doFileUpload(mf, pathname);
+					if(saveFilename == null) {
+						continue;
+					}
 					
-					dto.setImageFilename(imageFilename);
+					String originalFilename = mf.getOriginalFilename();
+					long fileSize = mf.getSize();
+					
+					dto.setOriginalFilename(originalFilename);
+					dto.setSaveFilename(saveFilename);
+					dto.setFileSize(fileSize);
+					
 					dao.insertData("recruit.insertFile", dto);
 				}
 			}
@@ -115,17 +124,21 @@ public class RecruitServiceImpl implements RecruitService {
 			
 			if (! dto.getSelectFile().isEmpty()) {
 				for(MultipartFile mf : dto.getSelectFile()) {
-					String imageFilename = mf.getOriginalFilename();
-					if (imageFilename == null) {
+					String saveFilename = fileManager.doFileUpload(mf, pathname);
+					if (saveFilename == null) {
 						continue;
 					}
 					
-					dto.setImageFilename(imageFilename);
+					String originalFilename = mf.getOriginalFilename();
+					long fileSize = mf.getSize();
+					
+					dto.setSaveFilename(saveFilename);
+					dto.setOriginalFilename(originalFilename);
+					dto.setFileSize(fileSize);
+					
 					dao.insertData("recruit.insertFile", dto);
 				}
 			}
-
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -135,13 +148,15 @@ public class RecruitServiceImpl implements RecruitService {
 	@Override
 	public void deleteRecruit(long recruitNum, String pathname) throws Exception {
 		try {
+			// 실제 파일 삭제
 			List<Recruit> listFile = listFile(recruitNum);
 			if(listFile != null) {
 				for(Recruit dto : listFile) {
-					fileManager.doFileDelete(dto.getImageFilename(), pathname);
+					fileManager.doFileDelete(dto.getSaveFilename(), pathname);
 				}
 			}
 			
+			// 파일 테이블 레코드 삭제
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("field", "recruitNum");
 			map.put("recruitNum", recruitNum);
@@ -152,7 +167,6 @@ public class RecruitServiceImpl implements RecruitService {
 			e.printStackTrace();
 			throw e;
 		}
-		
 	}
 
 	@Override
@@ -204,7 +218,20 @@ public class RecruitServiceImpl implements RecruitService {
 		
 		return listFile;
 	}
-
+	
+	@Override
+	public int countFile(long recruitNum) {
+		int countFile = 0;
+		
+		try {
+			countFile = dao.selectOne("recruit.countFile", recruitNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return countFile;
+	}
+	
 	@Override
 	public Recruit readFile(long fileNum) {
 		Recruit dto = null;
@@ -228,5 +255,7 @@ public class RecruitServiceImpl implements RecruitService {
 		}
 		
 	}
+
+
 
 }

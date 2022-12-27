@@ -1,11 +1,8 @@
 package com.moumi.app.schedule;
 
-import java.util.List;
-
 public class Schedule {
 	private long num;
 	private int userCode;
-	private String userName;
 	private String subject;
 	private String memo;
 	private String color;
@@ -22,7 +19,6 @@ public class Schedule {
 	private String category;
 
 	private String sharedId;
-	private List<String> sharedUsers;
 
 	private long id;
 	private String title;
@@ -46,13 +42,6 @@ public class Schedule {
 		this.userCode = userCode;
 	}
 
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
 
 	public String getSubject() {
 		return subject;
@@ -166,13 +155,7 @@ public class Schedule {
 		this.sharedId = sharedId;
 	}
 
-	public List<String> getSharedUsers() {
-		return sharedUsers;
-	}
-
-	public void setSharedUsers(List<String> sharedUsers) {
-		this.sharedUsers = sharedUsers;
-	}
+	
 
 	public long getId() {
 		return id;

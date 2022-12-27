@@ -67,73 +67,67 @@ public class ScheduleController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/sch/main";
+		return "redirect:/schedule/main";
 	}
 
-	
-	// 월별 일정 - AJAX : JSON 
-	@RequestMapping(value="month")
+	// 월별 일정 - AJAX : JSON
+	@RequestMapping(value = "month")
 	@ResponseBody
-	public Map<String, Object> month (
-			@RequestParam String start,
-			@RequestParam String end,
-			@RequestParam(required = false) List<Integer> categorys,
-			HttpSession session) throws Exception {
-		//SessionInfo info=(SessionInfo)session.getAttribute("member");
-		
-		Map<String, Object> map=new HashMap<String, Object>();
+	public Map<String, Object> month(@RequestParam String start, @RequestParam String end,
+			@RequestParam(required = false) List<Integer> categorys, HttpSession session) throws Exception {
+		// SessionInfo info=(SessionInfo)session.getAttribute("member");
+
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("categoryList", categorys);
 		map.put("start", start);
 		map.put("end", end);
-		//map.put("userCode", info.getUserId());
+		// map.put("userCode", info.getUserId());
 		map.put("userCode", 1);
-		
-		List<Schedule> list=service.listMonth(map);
-		for(Schedule dto:list) {
-	    	if(dto.getStime()==null) {
-	    		dto.setAllDay(true);
-	    	} else {
-	    		dto.setAllDay(false);
-	    	}
-	    	
-	    	if(dto.getStime()!=null && dto.getStime().length()!=0) {
-	    		// 2021-10-10T10:10
-	    		dto.setStart(dto.getSday()+"T" + dto.getStime());
-	    	} else {
-	    		dto.setStart(dto.getSday());
-	    	}
-	    	
-	    	if(dto.getEtime()!=null && dto.getEtime().length()!=0) {
-	    		dto.setEnd(dto.getEday()+"T" + dto.getEtime());
-	    	} else {
-	    		dto.setEnd(dto.getEday());
-	    	}
-	    	
-	    	if(dto.getRepeat()!=0) { // 반복 일정인 경우
-	    		if( dto.getStart().substring(0,4).compareTo(start.substring(0,4)) != 0 ) {
-	    			dto.setStart(start.substring(0,4)+dto.getStart().substring(5));
-	    		}
-	    	}	    	
+
+		List<Schedule> list = service.listMonth(map);
+		for (Schedule dto : list) {
+			if (dto.getStime() == null) {
+				dto.setAllDay(true);
+			} else {
+				dto.setAllDay(false);
+			}
+
+			if (dto.getStime() != null && dto.getStime().length() != 0) {
+				// 2021-10-10T10:10
+				dto.setStart(dto.getSday() + "T" + dto.getStime());
+			} else {
+				dto.setStart(dto.getSday());
+			}
+
+			if (dto.getEtime() != null && dto.getEtime().length() != 0) {
+				dto.setEnd(dto.getEday() + "T" + dto.getEtime());
+			} else {
+				dto.setEnd(dto.getEday());
+			}
+
+			if (dto.getRepeat() != 0) { // 반복 일정인 경우
+				if (dto.getStart().substring(0, 4).compareTo(start.substring(0, 4)) != 0) {
+					dto.setStart(start.substring(0, 4) + dto.getStart().substring(5));
+				}
+			}
 		}
-		
-		Map<String, Object> model=new HashMap<>();
+
+		Map<String, Object> model = new HashMap<>();
 		model.put("list", list);
 		return model;
 	}
-	
+
 	@GetMapping(value = "update")
-	public String updateForm(@RequestParam int num,
-			HttpSession session,
-			Model model) throws Exception {
-		//SessionInfo info = (SessionInfo)session.getAttribute("member");
-		
-		System.out.println(num);
+	public String updateForm(@RequestParam int num, HttpSession session, Model model) throws Exception {
+		// SessionInfo info = (SessionInfo)session.getAttribute("member");
+
+		System.out.println("update Num" + num);
 		Schedule dto = service.readSchedule(num);
-		if(dto == null) {
+		if (dto == null) {
 			return "redirect:/schedule/main";
 		}
-		
-		if(dto.getStime() == null) {
+
+		if (dto.getStime() == null) {
 			dto.setAll_day("1");
 			try {
 				String s = dto.getEday().replaceAll("\\-|\\.|/", "");
@@ -148,38 +142,65 @@ public class ScheduleController {
 				cal.add(Calendar.DATE, -1);
 
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-				dto.setEday( sdf.format(cal.getTime()) );
+				dto.setEday(sdf.format(cal.getTime()));
 			} catch (Exception e) {
 			}
 		}
-		
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("userCode", 1);
-		//map.put("userCode", info.getUserId());
-		
+		// map.put("userCode", info.getUserId());
+
 		model.addAttribute("mode", "update");
 		model.addAttribute("dto", dto);
-		
+
 		return ".sch.write";
 	}
-	
-	@RequestMapping(value = "update", method = RequestMethod.POST)
-	public String updateSubmit(Schedule dto,
-			HttpSession session) throws Exception {
-		//SessionInfo info=(SessionInfo)session.getAttribute("member");
-		
+
+	@PostMapping(value = "update")
+	public String updateSubmit(Schedule dto, HttpSession session) throws Exception {
+		// SessionInfo info=(SessionInfo)session.getAttribute("member");
+
 		try {
-			if(dto.getCategoryNum() == 0) {
-				dto.setCategoryNum(null);
-			}
-			
+
 			dto.setUserCode(1);
 			service.updateSchedule(dto);
+			
 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/schedule/main";
+	}
+	
+	
+
+	// 일정 삭제 - AJAX : JSON
+	@RequestMapping(value = "delete", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> delete(
+			@RequestParam int num,
+			HttpSession session
+			) {
+		//SessionInfo info=(SessionInfo)session.getAttribute("member");
+
+		String state = "true";
+		try {
+			Map<String, Object> map=new HashMap<>();
+			// map.put("userCode", info.getUserId());
+
+			map.put("userCode", 1);
+			map.put("num", num);
+			service.deleteSchedule(map);
+		}catch (Exception e) {
+			state = "false";
 		}
 		
-		return "redirect:/sch/main";
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("state", state);
+		
+		return model;
 	}
-
 	
+
 }

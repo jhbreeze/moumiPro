@@ -14,6 +14,13 @@
 	font: #545454;
 }
 
+.recruit_file {
+	padding: 3px 20px;
+	text-align: left;
+	border-top: 1px solid #c1bebe;
+	
+}
+
 .table tr {height: 40px; }
 </style>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
@@ -21,7 +28,7 @@
 
 <c:if test="${sessionScope.member.userCode==dto.userCode||sessionScope.member.userType==0}">
 	function deleteRecruit() {
-	    if(confirm("게시글을 삭제 하시 겠습니까 ? ")) {
+	    if(confirm("게시글을 삭제 하시겠습니까 ? ")) {
 		    let query = "recruitNum=${dto.recruitNum}&${query}";
 		    let url = "${pageContext.request.contextPath}/recruit/delete?" + query;
 	    	location.href = url;
@@ -73,17 +80,25 @@
 						<div style="height:400px;" class="editor">
 							${dto.content}
 						</div>
+						
+						<c:forEach var="vo" items="${listFile}">
+						<div class="recruit_file">
+							<a href="${pageContext.request.contextPath}/recruit/download?fileNum=${vo.fileNum}">${vo.originalFilename}</a>
+							(<fmt:formatNumber value="${vo.fileSize/1024}" pattern="0.00" />kb)
+						</div>
+						</c:forEach>
 					</td>
 				</tr>
 				
-				<c:forEach var="vo" items="${listFile}">
+				<c:if test="${dto.fileCount != 0}">
 					<tr>
-						<td class="col-sm-2 align-middle text-center" scope="row">파일 다운로드
-							<a href="${pageContext.request.contextPath}/recruit/download?fileNum=${vo.fileNum}">${vo.imageFilename}</a>
+						<td class="col-sm-2 align-middle text-center" scope="row" valign="top"> 전체  다운로드 </td>
+						<td class="ps-3" colspan="3">
+							<a href="${pageContext.request.contextPath}/recruit/zipdownload?recruitNum=${dto.recruitNum}&fileNum=${dto.fileNum}" class="text-reset"><i class="bi bi-file-arrow-down"></i></a>
 						</td>
-					</tr>
-				</c:forEach>
-				
+					</tr>	
+				</c:if>
+
 			</table>
 
 			<div class="text-center">

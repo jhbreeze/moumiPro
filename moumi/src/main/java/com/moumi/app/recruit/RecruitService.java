@@ -20,6 +20,7 @@ public interface RecruitService {
 	
 	public List<Recruit> listCareerCategory();
 	
+	public int countFile(long recruitNum);
 	public List<Recruit> listFile(long recruitNum);
 	public Recruit readFile(long fileNum);
 	public void deleteFile(Map<String, Object> map) throws Exception;

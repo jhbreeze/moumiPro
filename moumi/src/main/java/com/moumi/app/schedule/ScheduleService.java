@@ -3,8 +3,6 @@ package com.moumi.app.schedule;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.stereotype.Service;
-
 public interface ScheduleService {
 
 	public void insertSchedule(Schedule dto) throws Exception;
