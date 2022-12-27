@@ -265,7 +265,7 @@ $(function(){
 	});
 });
 $(function(){
-	var sel_files = [];
+	var sel_files = []; 
 	
 	$("body").on("click", ".reply-answer .img-replyadd", function(){
 		$(this).closest(".reply-answer").find("input[name=selectFile]").trigger("click");
