@@ -46,7 +46,7 @@ public class EventServiceImpl implements EventService {
 		
 		try {
 			// 이벤트 리뷰 댓글
-			dao.insertData("event.insertReply");
+			dao.insertData("event.insertReply",dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
