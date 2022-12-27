@@ -29,7 +29,11 @@ public class NoticeServiceImpl implements NoticeService {
 			
 			if(!dto.getSelectFile().isEmpty()) {
 				for(MultipartFile mf : dto.getSelectFile()) {
-					String imageFilename = mf.getOriginalFilename();
+					String imageFilename = fileManager.doFileUpload(mf, pathname);
+					if(imageFilename == null) {
+						continue;
+					}
+					imageFilename = mf.getOriginalFilename();
 					
 					dto.setImageFilename(imageFilename);
 					
@@ -128,7 +132,11 @@ public class NoticeServiceImpl implements NoticeService {
 			
 			if(!dto.getSelectFile().isEmpty()) {
 				for(MultipartFile mf : dto.getSelectFile()) {
-					String imageFilename = mf.getOriginalFilename();
+					String imageFilename = fileManager.doFileUpload(mf, pathname);
+					if(imageFilename == null) {
+						continue;
+					}
+					imageFilename = mf.getOriginalFilename();
 					
 					dto.setImageFilename(imageFilename);
 					
@@ -146,6 +154,13 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public void deleteNotice(long noticeNum, String pathname) throws Exception {
 		try {
+			List<Notice> listFile = listFile(noticeNum);
+			if(listFile != null) {
+				for (Notice dto : listFile) {
+					fileManager.doFileDelete(dto.getImageFilename(), pathname);
+				}
+			}
+			
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("field", "noticeNum");
 			map.put("noticeNum", noticeNum);

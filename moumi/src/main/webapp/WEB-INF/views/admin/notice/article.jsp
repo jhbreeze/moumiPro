@@ -97,14 +97,6 @@ tr {
 						<td align="right">조회수 : ${dto.hitCount}</td>
 					</tr>
 					<tr>
-						<td colspan="2" style="border-bottom: none;">
-							<div class="image">
-								<img src="${pageContext.request.contextPath}/uploads/photo/${dto.imageFilename}"
-											class="img-fluid img-thumbnail w-100 h-auto">
-							</div>
-						</td>
-					</tr>
-					<tr>
 						<td colspan="3" valign="top" height="200">${dto.content}</td>
 					</tr>
 					<tr>

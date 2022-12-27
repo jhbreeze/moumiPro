@@ -58,7 +58,14 @@ color: white;
 .menu--subitens__opened > .menu--link, .menu--subitens__opened > .menu--label{
 color: #198754;
 }
-
+.menu-side{
+ `	position: -webkit-sticky;
+    position: sticky;
+    align-self: flex-end;
+    bottom: 0;
+    padding : 17px 0;
+    }
+}
 </style>
 
 <header class="header clearfix">
@@ -86,8 +93,8 @@ color: #198754;
 
 </header>
 
-<nav class="vertical_nav navbar-green">
-	<ul id="js-menu" class="menu">
+<nav class="vertical_nav navbar-green" style="min-height: 1100px;">
+	<ul id="js-menu" class="menu menu-side">
 	
 		<li class="menu--item">
 			<a href="${pageContext.request.contextPath}/admin" class="menu--link" title="Home">
@@ -129,7 +136,7 @@ color: #198754;
 					<a href="${pageContext.request.contextPath}/admin/notice/list" class="sub_menu--link">공지사항</a>
 				</li>
 				<li class="sub_menu--item">
-					<a href="${pageContext.request.contextPath}/admin/faq/list" class="sub_menu--link">자주하는 질문</a>
+					<a href="${pageContext.request.contextPath}/admin/faq/main" class="sub_menu--link">자주하는 질문</a>
 				</li>
 			</ul>
 		</li>

@@ -107,7 +107,7 @@
 		WHERE recruitNum = #{recruitNum} 
 	</update>
 	
-	<delete id="deleteRecruit">
+	<delete id="deleteRecruit" parameterType="Long">
 		DELETE FROM recruit WHERE recruitNum = #{recruitNum}
 	</delete>
 	
@@ -135,7 +135,7 @@
 	</select>
 	
 	<delete id="deleteFile" parameterType="map">
-		DELETE FROM recruitFile WHERE ${field} = #{recruitNum}
+		DELETE FROM recruitFile WHERE ${field} = #{recruitNum, jdbcType=INTEGER}
 	</delete>
 	
 	

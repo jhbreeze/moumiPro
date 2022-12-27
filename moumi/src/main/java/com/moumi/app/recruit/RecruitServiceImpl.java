@@ -1,5 +1,6 @@
 package com.moumi.app.recruit;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -110,16 +111,20 @@ public class RecruitServiceImpl implements RecruitService {
 	@Override
 	public void updateRecruit(Recruit dto, String pathname) throws Exception {
 		try {
+			dao.updateData("recruit.updateRecruit", dto);
+			
 			if (! dto.getSelectFile().isEmpty()) {
 				for(MultipartFile mf : dto.getSelectFile()) {
 					String imageFilename = mf.getOriginalFilename();
+					if (imageFilename == null) {
+						continue;
+					}
 					
 					dto.setImageFilename(imageFilename);
-					dao.updateData("recruit.updateFile", dto);
+					dao.insertData("recruit.insertFile", dto);
 				}
 			}
 
-			dao.updateData("recruit.updateRecruit", dto);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -128,8 +133,25 @@ public class RecruitServiceImpl implements RecruitService {
 	}
 
 	@Override
-	public void deleteRecruit(long recruitNum, String pathname, String userId, long userCode) throws Exception {
-		// TODO Auto-generated method stub
+	public void deleteRecruit(long recruitNum, String pathname) throws Exception {
+		try {
+			List<Recruit> listFile = listFile(recruitNum);
+			if(listFile != null) {
+				for(Recruit dto : listFile) {
+					fileManager.doFileDelete(dto.getImageFilename(), pathname);
+				}
+			}
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("field", "recruitNum");
+			map.put("recruitNum", recruitNum);
+			deleteFile(map);
+			
+			dao.deleteData("recruit.deleteRecruit", recruitNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 		
 	}
 

@@ -36,54 +36,6 @@ public class FaqServiceImpl implements FaqSevice {
 	}
 
 	@Override
-	public void deleteFaq(long faqNum, String pathname) throws Exception {
-		try {
-			dao.deleteData("faq.deleteFaq", faqNum);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
-		}
-		
-	}
-
-	@Override
-	public int dataCount1(Map<String, Object> map) {
-		int result = 0;
-		
-		try {
-			result = dao.selectOne("faq.dataCount1", map);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return result;
-	}
-
-	@Override
-	public List<Faq> listFaq1(Map<String, Object> map) {
-		List<Faq> list = null;
-		
-		try {
-			list = dao.selectList("faq.listFaq1", map);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
-	
-	@Override
-	public List<Faq> listFaq2(Map<String, Object> map) {
-		List<Faq> list = null;
-		
-		try {
-			list = dao.selectList("faq.listFaq2", map);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
-
-	@Override
 	public Faq readFaq(long faqNum) {
 		Faq dto = null;
 		
@@ -106,11 +58,17 @@ public class FaqServiceImpl implements FaqSevice {
 	}
 
 	@Override
-	public int dataCount2(Map<String, Object> map) {
+	public void deleteFaq(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int dataCount(Map<String, Object> map) {
 		int result = 0;
 		
 		try {
-			result = dao.selectOne("faq.dataCount2", map);
+			result = dao.selectOne("faq.dataCount", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -118,27 +76,27 @@ public class FaqServiceImpl implements FaqSevice {
 	}
 
 	@Override
-	public int dataCount3(Map<String, Object> map) {
-		int result = 0;
-		try {
-			result = dao.selectOne("faq.dataCount3", map);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-
-	@Override
-	public List<Faq> listFaq3(Map<String, Object> map){
+	public List<Faq> listFaq(Map<String, Object> map) {
 		List<Faq> list = null;
 		
 		try {
-			list = dao.selectList("faq.listFaq3", map);
+			list = dao.selectList("faq.listFaq", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		return list;
+	}
+
+	@Override
+	public List<Faq> listCategory(Map<String, Object> map) {
+		List<Faq> listCategory = null;
+		
+		try {
+			listCategory = dao.selectList("faq.listCategory", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listCategory;
 	}
 	
 

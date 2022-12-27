@@ -17,6 +17,21 @@
 .table tr {height: 40px; }
 </style>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript">
+
+<c:if test="${sessionScope.member.userCode==dto.userCode||sessionScope.member.userType==0}">
+	function deleteRecruit() {
+	    if(confirm("게시글을 삭제 하시 겠습니까 ? ")) {
+		    let query = "recruitNum=${dto.recruitNum}&${query}";
+		    let url = "${pageContext.request.contextPath}/recruit/delete?" + query;
+	    	location.href = url;
+	    }
+	}
+</c:if>
+
+</script>
+
+
 
 <div class="container body-container">
 	<div class="body-main mx-auto">
@@ -55,19 +70,20 @@
 				<tr>
 					<td class="col-sm-2 align-middle text-center" scope="row" valign="top">내용</td>
 					<td class="ps-3" colspan="3">
-						<div style="min-height:400px;" class="editor">
+						<div style="height:400px;" class="editor">
 							${dto.content}
 						</div>
 					</td>
 				</tr>
-				<tr>
-					<td class="col-sm-2 align-middle text-center" scope="row">파일 다운로드</td>
-					<td class="ps-3" colspan="4">
-						<c:if test="${not empty dto.imageFilename}">
-							<a href="${pageContext.request.contextPath}/recruit/download?recruitNum=${dto.recruitNum}">${dto.imageFilename}</a>
-						</c:if>
-					</td>
-				</tr>
+				
+				<c:forEach var="vo" items="${listFile}">
+					<tr>
+						<td class="col-sm-2 align-middle text-center" scope="row">파일 다운로드
+							<a href="${pageContext.request.contextPath}/recruit/download?fileNum=${vo.fileNum}">${vo.imageFilename}</a>
+						</td>
+					</tr>
+				</c:forEach>
+				
 			</table>
 
 			<div class="text-center">
@@ -111,7 +127,7 @@
 					<c:choose>
 						<c:when test="${sessionScope.member.userType==0 || sessionScope.member.userType==3}">
 							<button type="button" class="btn btn-success"
-								onclick="deleteBoard();">삭제</button>
+								onclick="deleteRecruit();">삭제</button>
 						</c:when>
 						<c:otherwise>
 							<button type="button" class="btn btn-success" disabled="disabled">삭제</button>
