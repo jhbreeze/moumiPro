@@ -171,26 +171,54 @@ public class RecruitServiceImpl implements RecruitService {
 
 	@Override
 	public void insertRecruitLike(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
+		try {
+			dao.insertData("recruit.insertRecruitLike", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 		
 	}
 
 	@Override
 	public void deleteRecruitLike(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
+		try {
+			dao.deleteData("recruit.deleteRecruitLike", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 		
 	}
 
 	@Override
 	public int recruitLikeCount(long recruitNum) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("recruit.recruitLikeCount", recruitNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
 	public boolean userRecruitLiked(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean result = false;
+		
+		try {
+			Recruit dto = dao.selectOne("recruit.userRecruitLiked", map);
+			if(dto != null) {
+				result = true;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override

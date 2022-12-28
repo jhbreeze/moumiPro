@@ -112,8 +112,24 @@
 	</delete>
 	
 	<!-- 게시글 좋아요 -->
+	<insert id="insertRecruitLike" parameterType="map">
+		INSERT INTO recruitPick(userCode, recruitNum) VALUES (#{userCode}, #{recruitNum})
+	</insert>
 	
 	
+	<delete id="deleteRecruitLike" parameterType="map">
+		DELETE FROM recruitPick WHERE recruitNum = #{recruitNum} and userCode = #{userCode}
+	</delete>
+	
+	
+	<select id="recruitLikeCount" parameterType="Long" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) FROM recruitPick WHERE recruitNum = #{recruitNum, jdbcType=BIGINT}
+	</select>
+	
+	
+	<select id="userRecruitLiked" parameterType="map" resultType="com.moumi.app.recruit.Recruit">
+		SELECT recruitNum, userCode FROM recruitPick WHERE recruitNum = #{recruitNum} and userCode = #{userCode}
+	</select>
 	
 	
 	<!-- 파일 -->

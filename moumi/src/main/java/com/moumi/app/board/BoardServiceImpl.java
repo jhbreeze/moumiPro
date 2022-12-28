@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.moumi.app.common.FileManager;
 import com.moumi.app.common.dao.CommonDAO;
+import com.moumi.app.board.Reply;
 
 @Service("board.boardService")
 public class BoardServiceImpl implements BoardService{
@@ -201,12 +202,14 @@ public class BoardServiceImpl implements BoardService{
 			dto.setReplyNum(seq);
 			dao.insertData("board.insertReply",dto);
 			
-			if(! dto.getSelectFile().isEmpty()) {
-				String saveFilename = fileManager.doFileUpload(dto.getSelectFile(), pathname);
-				if(saveFilename != null) {
-					dto.setFileName(saveFilename);
+			if( ! dto.getSelectFile().isEmpty() ) {
+				String filename = fileManager.doFileUpload(dto.getSelectFile(), pathname);
+				if(filename != null) {
+					dto.setFileName(filename);
+					
+					dao.insertData("board.replyFile", dto);
 				}
-				dao.insertData("board.replyFile",dto);
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -253,32 +256,53 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public List<Reply> listReplyAnswer(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+			List<Reply> list = null;
+		try {
+			list = dao.selectList("board.listReplyAnswer", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 
 	@Override
 	public int replyAnswerCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("board.replyAnswerCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
 	public void insertReplyLike(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
+		try {
+			dao.insertData("board.insertReplyLike", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 		
 	}
 
 	@Override
 	public Map<String, Object> replyLikeCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, Object> countMap = null;
+		
+		try {
+			countMap = dao.selectOne("board.replyLikeCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return countMap;
 	}
 
-	@Override
-	public void updateReplyShowHide(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 }

@@ -28,7 +28,7 @@
 
 <c:if test="${sessionScope.member.userCode==dto.userCode||sessionScope.member.userType==0}">
 	function deleteRecruit() {
-	    if(confirm("게시글을 삭제 하시겠습니까 ? ")) {
+	    if(confirm("게시글을 삭제하kllllllllllllll겠습니까 ? ")) {
 		    let query = "recruitNum=${dto.recruitNum}&${query}";
 		    let url = "${pageContext.request.contextPath}/recruit/delete?" + query;
 	    	location.href = url;
@@ -37,7 +37,75 @@
 </c:if>
 
 </script>
+<script type="text/javascript">
+function login() {
+	location.href="${pageContext.request.contextPath}/member/login";
+}
 
+function ajaxFun(url, method, query, dataType, fn) {
+	$.ajax({
+		type:method,
+		url:url,
+		data:query,
+		dataType:dataType,
+		success:function(data) {
+			fn(data);
+		},
+		beforeSend:function(jqXHR) {
+			jqXHR.setRequestHeader("AJAX", true);
+		},
+		error:function(jqXHR) {
+			if(jqXHR.status === 403) {
+				login();
+				return false;
+			} else if(jqXHR.status === 400) {
+				alert("요청 처리가 실패 했습니다.");
+				return false;
+			}
+	    	
+			console.log(jqXHR.responseText);
+		}
+	});
+}
+
+$(function(){
+	$(".btnSendRecruitLike").click(function(){
+		const $i = $(this).find("i");
+		let userLiked = $i.hasClass("bi-heart-fill");
+		let msg = userLiked ? "게시글 공감을 취소하시겠습니까 ? " : "게시글에 공감하십니까 ? ";
+		
+		if(! confirm( msg )) {
+			return false;
+		}
+		
+		let url = "${pageContext.request.contextPath}/recruit/insertRecruitLike";
+		let recruitNum = "${dto.recruitNum}";
+		let query = "recruitNum="+recruitNum+"&userLiked="+userLiked;
+		
+		const fn = function(data){
+			let state = data.state;
+			if(state === "true") {
+				if( userLiked ) {
+					$i.removeClass("bi-heart-fill").addClass("bi-heart");
+				} else {
+					$i.removeClass("bi-heart").addClass("bi-heart-fill");
+				}
+				
+				var count = data.recruitLikeCount;
+				$("#recruitLikeCount").text(count);
+			} else if(state === "liked") {
+				alert("게시글 공감은 한번만 가능합니다. !!!");
+			} else if(state === "false") {
+				alert("게시물 공감 여부 처리가 실패했습니다. !!!");
+			}
+		};
+		
+		ajaxFun(url, "post", query, "json", fn);
+	});
+});
+
+
+</script>
 
 
 <div class="container body-container">
@@ -102,9 +170,9 @@
 			</table>
 
 			<div class="text-center">
-				<button type="button" class="btn btn-outline-secondary btnSendBoardLike" title="좋아요">
-					<i class="bi ${userBoardLiked ? 'bi-hand-thumbs-up-fill':'bi-hand-thumbs-up' }"></i>
-						&nbsp;&nbsp;<span id="recruitLikeCount">${dto.recruitLikeCount}</span>
+				<button type="button" class="btn btn-outline-secondary btnSendRecruitLike" title="좋아요">
+					<i class="bi ${userRecruitLiked ? ' bi-heart-fill':' bi-heart' }"></i>
+						&nbsp;<span id="recruitLikeCount">${dto.recruitLikeCount}</span>
 				</button>
 			</div>
 

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -158,9 +159,14 @@ public class RecruitController {
 		int fileCount = service.countFile(recruitNum);
 		dto.setFileCount(fileCount);
 			
-		// 게시글 좋아요 여부
-		//map.put("userId", info.getUserId());
-		//boolean userBoardLiked = service.userBoardLiked(map);
+		// 게시글 공감 여부
+		map.put("userCode", info.getUserCode());
+		boolean userRecruitLiked = service.userRecruitLiked(map);
+		
+		// 게시글 공감 개수
+		int recruitLikeCount = 0;
+		recruitLikeCount = service.recruitLikeCount(recruitNum);
+		dto.setRecruitLikeCount(recruitLikeCount);
 
 		model.addAttribute("dto", dto);
 		model.addAttribute("preReadDto", preReadDto);
@@ -168,7 +174,7 @@ public class RecruitController {
 		model.addAttribute("listFile", listFile);
 		model.addAttribute("fileCount", fileCount);
 
-		//model.addAttribute("userBoardLiked", userBoardLiked);
+		model.addAttribute("userRecruitLiked", userRecruitLiked);
 		
 		model.addAttribute("page", page);
 		model.addAttribute("query", query);
@@ -326,6 +332,40 @@ public class RecruitController {
 			} catch (Exception e) {
 			}
 		}
+	}
+	
+	@PostMapping("insertRecruitLike")
+	@ResponseBody
+	public Map<String, Object> insertRecruitLike(@RequestParam long recruitNum, @RequestParam boolean userLiked,
+			HttpSession session) {
+		
+		String state = "true";
+		int recruitLikeCount = 0;
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("recruitNum", recruitNum);
+		paramMap.put("userCode", info.getUserCode());
+		
+		try {
+			if(userLiked) {
+				service.deleteRecruitLike(paramMap);
+			} else {
+				service.insertRecruitLike(paramMap);
+			}
+		} catch (DuplicateKeyException e) {
+			state = "liked";
+		} catch (Exception e) {
+			state = "false";
+		}
+		
+		recruitLikeCount = service.recruitLikeCount(recruitNum);
+		
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("state", state);
+		model.put("recruitLikeCount", recruitLikeCount);
+		
+		return model;
 	}
 
 	

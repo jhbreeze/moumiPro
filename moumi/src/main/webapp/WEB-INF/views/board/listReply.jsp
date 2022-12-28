@@ -2,12 +2,25 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<style type="text/css">
 
+.img-grid {
+	display: grid;
+	grid-template-columns:repeat(auto-fill, 54px);
+	grid-gap: 2px;
+}
+
+.img-grid .item {
+	object-fit:cover;
+	width: 50px; height: 50px; border-radius: 10px;
+	cursor: pointer;
+}
+</style>
 <div class='reply-info'>
 	<span class='reply-count'>댓글 ${replyCount}개</span>
 	<span>[목록, ${pageNo}/${total_page} 페이지]</span>
 </div>
-
+<form name="replyAnswerForm">
 <table class='table table-borderless'>
 	<c:forEach var="vo" items="${listReply}">
 		<tr class='border bg-light'>
@@ -23,26 +36,27 @@
 			<td width='50%' align='right' class='align-middle'>
 				<span class='reply-dropdown'><i class='bi bi-three-dots-vertical'></i></span>
 				<div class="reply-menu">
-					<%--<c:choose>
+					<c:choose>
 					 	<c:when test="${sessionScope.member.userCode == vo.userCode}">
 							<div class='deleteReply reply-menu-item' data-replyNum='${vo.replyNum}' data-pageNo='${pageNo}'>삭제</div>
-							<div class='hideReply reply-menu-item' data-replyNum="${vo.replyNum}" data-showReply="${vo.showReply}">${vo.showReply==1?"숨김":"표시"}</div>
 						</c:when>
-						<c:when test="${sessionScope.member.membership > 50}">
+						<c:when test="${sessionScope.member.userType == 0}">
 							<div class='deleteReply reply-menu-item' data-replyNum='${vo.replyNum}' data-pageNo='${pageNo}'>삭제</div>
-							<div class="blockReply reply-menu-item">차단</div>
 						</c:when>
 						<c:otherwise>
 							<div class="notifyReply reply-menu-item">신고</div>
-							<div class="blockReply reply-menu-item">차단</div>
 						</c:otherwise>
-					</c:choose> --%>
-					<div class="notifyReply reply-menu-item">신고</div>
+					</c:choose>
 				</div>
 			</td>
 		</tr>
 		<tr>
-			<td colspan='2' valign='top' <%-- class="${vo.showReply==0?'text-primary text-opacity-50':'' }" --%>>${vo.content}</td>
+			<td colspan='2' valign='top' <%-- class="${vo.showReply==0?'text-primary text-opacity-50':'' }" --%>>
+				${vo.content}
+				<c:if test="${not empty vo.fileName}">
+					<img src="${pageContext.request.contextPath}/uploads/reply/${vo.fileName}" style="width: 10rem; height: 10rem;">
+				</c:if>
+			</td>
 		</tr>
 
 		<tr>
@@ -55,22 +69,29 @@
 			</td>
 		</tr>
 	
-	    <tr class='reply-answer'>
-	        <td colspan='2'>
-	        	<div class='border rounded'>
-		            <div id='listReplyAnswer${vo.replyNum}' class='answer-list'></div>
-		            <div>
-		                <textarea class="form-control m-2"></textarea>
+	    	<tr class='reply-answer'>
+		        <td colspan='2'>
+		        	<div class='border rounded replyAnswer-form'>
+			            <div id='listReplyAnswer${vo.replyNum}' class='answer-list'></div>
+			            <div>
+			                <textarea class="form-control m-2" name="content"></textarea>
+			            </div>
+			            <div class="img-grid">
+							<img class="item img-replyadd" src="${pageContext.request.contextPath}/resources/images/add_photo.png">
+						</div>
+						<input type="file" name="selectFile" accept="image/*" class="form-control" style="display: none;">
+						<div class='text-end pe-2 pb-1'>
+							<button type='button' class='btn btn-light btnSendReplyAnswer' data-replyNum='${vo.replyNum}'>답글 등록</button>
+			            </div>
 		            </div>
-					<div class='text-end pe-2 pb-1'>
-						<button type='button' class='btn btn-light btnSendReplyAnswer' data-replyNum='${vo.replyNum}'>답글 등록</button>
-		            </div>
-	            </div>
-			</td>
-	    </tr>
+				</td>
+	    	</tr>
+	    	<input type="hidden" name="communityNum" value="${vo.communityNum}">
+			<input type="hidden" name="parent" value="${vo.replyNum}">
 	</c:forEach>
 </table>
-
+	
+</form>
 <div class="page-navigation">
 	${paging}
 </div>			
