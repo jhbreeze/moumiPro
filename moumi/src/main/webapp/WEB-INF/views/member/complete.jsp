@@ -6,28 +6,50 @@
 <style type="text/css">
 .body-container {
 	max-width: 800px;
+	text-align: center;
+	margin-bottom: 150px;
 }
+
+.welcome {
+	font-size: 20px;
+	font-weight: bold;
+	letter-spacing: -1px;
+	margin-top: 10px;
+}
+.ment {
+	margin-top: 15px;
+	font-size: 13px;
+	font-weight: 500;
+	letter-spacing: -1px;
+
+}
+.btn {
+	border-radius: 0px;
+	padding: 10px 50px;
+	font-size: 13px;
+	font-weight: 600;
+}
+.main:hover {
+	background-color: white;
+	color: green;
+}
+
 </style>
 
 <div class="container">
 	<div class="body-container">	
-
-        <div class="row justify-content-md-center mt-5">
-            <div class="col-md-8">
-                <div class="border border-primary mt-5 p-4">
-                       <h4 class="text-center fw-bold">${title}</h4>
-                       <hr class="mt-4">
-                       
-	                <div class="d-grid p-3">
-						<p class="text-center">${message}</p>
-	                </div>
-                       
-                       <div class="d-grid">
-                           <button type="button" class="btn btn-lg btn-primary" onclick="location.href='${pageContext.request.contextPath}/';">메인화면 <i class="bi bi-check2"></i> </button>
-                       </div>
-                </div>
-
-            </div>
+		<div>
+			<img src="${pageContext.request.contextPath}/resources/images/complete.png" style="width: 300px; margin-top: 20px;" class="card-img-top">
+		</div>	
+        <div class="cong">
+        	<h4 class="welcome">${title}</h4>
+            
+			<p class="ment">${message}</p>
+                   
+	        <div class="button">
+	            <button type="button" class="main btn btn-outline-success" onclick="location.href='${pageContext.request.contextPath}/';">메인화면</button>
+	            <button type="button" class="btn btn-success" onclick="location.href='${pageContext.request.contextPath}/member/login';">&nbsp;&nbsp;로그인&nbsp;&nbsp;</button>
+	        </div>
         </div>
 	        
 	</div>

@@ -137,7 +137,8 @@ function memberOk() {
         f.nickName.focus();
         return;
     }
-    
+
+	
 	if (!female.checked && !male.checked) {
 	    alert("성별을 체크해 주세요.");
 		f.female.focus();
