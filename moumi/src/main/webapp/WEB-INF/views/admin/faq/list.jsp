@@ -95,17 +95,6 @@ $(function() {
 	<div class="col">
 		<button type="button" class="btn btn-light" onclick="reloadFaq();">새로고침</button>
 	</div>
-	<div class="col-6 text-center">
-		<form class="row" name="searchForm" method="post">
-			<div class="col-auto p-1">
-			</div>
-			<div class="col-auto p-1">
-			</div>
-			<div class="col-auto p-1">
-				<button type="button" class="btn btn-light" onclick="searchList()"> <i class="bi bi-search"></i> </button>
-			</div>
-		</form>
-	</div>
 	<div class="col text-end">
 			<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/admin/faq/write';">글올리기</button>
 	</div>

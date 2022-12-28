@@ -19,7 +19,9 @@ main {
 .body-container {
 	max-width: 1200px;
 	margin: auto;
-	padding: 20px;
+	padding: 90px;
+	padding-left: inherit;
+	padding-right: inherit;
 	
 }
 
@@ -69,51 +71,59 @@ tr:hover {
 
 </style>
 <script type="text/javascript">
-$(function(){
-	var chartDom = document.querySelector(".charts-day");
-	var myChart = echarts.init(chartDom);
-	var option;
-	
-	option = {
-	  xAxis: {
-	    type: 'category',
-	    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-	  },
-	  yAxis: {
-	    type: 'value'
-	  },
-	  series: [
-	    {
-	      data: [150, 230, 224, 218, 135, 147, 260],
-	      type: 'line'
-	    }
-	  ]
-	};
-	
-	option && myChart.setOption(option);
-});
+
+
+function ajaxFun(url, method, query, dataType, fn) {
+	$.ajax({
+		type:method,
+		url:url,
+		data:query,
+		dataType:dataType,
+		success:function(data) {
+			fn(data);
+		},
+		beforeSend:function(jqXHR) {
+			jqXHR.setRequestHeader("AJAX", true);
+		},
+		error:function(jqXHR) {
+			if(jqXHR.status === 403) {
+				login();
+				return false;
+			} else if(jqXHR.status === 400) {
+				alert("요청 처리가 실패했습니다.");
+				return false;
+			}
+	    	
+			console.log(jqXHR.responseText);
+		}
+	});
+}
 
 $(function() {
+	listPage(1);
 
-    $("#sel").change(function() {
+    $("#sel").change(function(e) {
 
-    	var v = $("#sel").val();
-        let url ="";
-        if (v == 1){
-        	url = "${pageContext.request.contextPath}/admin/sales/list";
-        } else if (v == 2){
-        	url = "${pageContext.request.contextPath}/admin/sales/list2";
-        } else if (v == 3){
-        	url = "${pageContext.request.contextPath}/admin/sales/list3";
-        }
-    	
-        location.href = url;
-        
+    	listPage(1);
 
     });
 
 });
 
+function listPage(page) {
+	const $tab = $("#sel.active");
+	let categoryNum = $tab.attr("data-categoryNum");
+	
+	let url = "${pageContext.request.contextPath}/admin/sales/list";
+	let query = "pageNo="+page+"&categoryNum="+categoryNum;
+	
+	let selector = "#nav-content";
+	
+	const fn = function(data){
+		$(selector).html(data);
+	};
+	ajaxFun(url, "get", query, "html", fn);
+}
 </script>
 <div class="container">
 	<div class="body-container">
@@ -124,9 +134,9 @@ $(function() {
 		</div>
 		
 		<select class="form-select" aria-label="Default select example" id="sel">
-		  <option value="1">One</option>
-		  <option value="2" selected>Two</option>
-		  <option value="3">Three</option>
+		  <option value="1">기간별</option>
+		  <option value="2" selected>연령대별</option>
+		  <option value="3">성별</option>
 		</select>
 
 		<div class="body-main">
