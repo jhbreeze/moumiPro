@@ -1,7 +1,5 @@
 package com.moumi.app.board;
 
-import java.util.List;
-
 import org.springframework.web.multipart.MultipartFile;
 
 public class Board {
@@ -21,6 +19,10 @@ public class Board {
 	
 	private int replyCount;
 	private int boardLikeCount;
+	
+	private String userName;
+	private String notifyContent;
+	private long replyNum;
 	
 	
 	public long getCommunityNum() {
@@ -100,6 +102,24 @@ public class Board {
 	}
 	public void setSelectFile(MultipartFile selectFile) {
 		this.selectFile = selectFile;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public String getNotifyContent() {
+		return notifyContent;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public void setNotifyContent(String notifyContent) {
+		this.notifyContent = notifyContent;
+	}
+	public long getReplyNum() {
+		return replyNum;
+	}
+	public void setReplyNum(long replyNum) {
+		this.replyNum = replyNum;
 	}
 	
 	

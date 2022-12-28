@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.moumi.app.common.FileManager;
 import com.moumi.app.common.dao.CommonDAO;
-import com.moumi.app.board.Reply;
 
 @Service("board.boardService")
 public class BoardServiceImpl implements BoardService{
@@ -303,6 +302,15 @@ public class BoardServiceImpl implements BoardService{
 		return countMap;
 	}
 
-	
+	@Override
+	public void insertNotify(Board dto) throws Exception {
+		try {
+			dao.insertData("board.insertNotify",dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
 
 }

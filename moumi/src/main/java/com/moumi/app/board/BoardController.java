@@ -1,6 +1,7 @@
 package com.moumi.app.board;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -20,10 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.moumi.app.common.FileManager;
 import com.moumi.app.common.MyUtil;
 import com.moumi.app.member.SessionInfo;
-import com.moumi.app.board.Reply;
+
 
 
 
@@ -37,8 +37,7 @@ public class BoardController {
 	@Autowired
 	private MyUtil myUtil;
 	
-	@Autowired
-	private FileManager fileManager;
+
 	
 	@RequestMapping(value = "list")
 	public String list(@RequestParam(value="page",defaultValue = "1") int current_page,
@@ -46,7 +45,7 @@ public class BoardController {
 				@RequestParam(defaultValue = "") String keyword,HttpServletRequest req,Model model
 				, HttpSession session,Board dto) throws Exception {
 		
-		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		
 		dto.setNickName("관리자");
 		int size = 10;
 		int total_page = 0;
@@ -324,6 +323,7 @@ public class BoardController {
 		model.addAttribute("replyCount", dataCount);
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("paging", paging);
+		model.addAttribute("communityNum",communityNum);
 
 		return "board/listReply";
 	}
@@ -398,6 +398,51 @@ public class BoardController {
 			model.put("count", count);
 			return model;
 		}
+		
+		// 댓글의 좋아요/싫어요 추가 : AJAX-JSON
+		@PostMapping("insertReplyLike")
+		@ResponseBody
+		public Map<String, Object> insertReplyLike(@RequestParam Map<String, Object> paramMap,
+				HttpSession session) {
+			String state = "true";
+
+			SessionInfo info = (SessionInfo) session.getAttribute("member");
+			Map<String, Object> model = new HashMap<>();
+
+			try {
+				paramMap.put("userCode", info.getUserCode());
+				service.insertReplyLike(paramMap);
+			} catch (DuplicateKeyException e) {
+				state = "liked";
+			} catch (Exception e) {
+				state = "false";
+			}
+
+			Map<String, Object> countMap = service.replyLikeCount(paramMap);
+
+			// 마이바티스의 resultType이 map인 경우 int는 BigDecimal로 넘어옴
+			int likeCount = ((BigDecimal) countMap.get("LIKECOUNT")).intValue();
+			int disLikeCount = ((BigDecimal)countMap.get("DISLIKECOUNT")).intValue();
+			
+			model.put("likeCount", likeCount);
+			model.put("disLikeCount", disLikeCount);
+			model.put("state", state);
+			return model;
+		}
 	
-	
+		@PostMapping("notify")
+		public String notifyWrite(@RequestParam long parent,
+				@RequestParam(value = "pageNo", defaultValue = "1") int current_page,
+				@RequestParam long communityNum,Board dto) {
+			
+			String query = "communityNum="+communityNum+"&page="+current_page;
+			try {
+				dto.setReplyNum(parent);
+				System.out.println("여기까지 오니");
+				service.insertNotify(dto);
+				System.out.println("왔다.");
+			} catch (Exception e) {
+			}
+			return "redirect:/board/article?"+query;
+		}
 }

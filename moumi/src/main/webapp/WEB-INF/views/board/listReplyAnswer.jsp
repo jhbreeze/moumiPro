@@ -20,9 +20,11 @@
 					<c:choose>
 						<c:when test="${sessionScope.member.userCode == vo.userCode }">
 							<div class='deleteReplyAnswer reply-menu-item' data-replyNum='${vo.replyNum}' data-answer='${vo.parent}'>삭제</div>
+							<div class='notifyReplyAnswer reply-menu-item' data-replyNum='${vo.replyNum}'>신고</div>
 						</c:when>
 						<c:when test="${sessionScope.member.userType == 0 }">
 							<div class='deleteReplyAnswer reply-menu-item' data-replyNum='${vo.replyNum}' data-answer='${vo.parent}'>삭제</div>
+							<div class='notifyReplyAnswer reply-menu-item' data-replyNum='${vo.replyNum}'>신고</div>
 						</c:when>
 						<c:otherwise>
 							<div class='notifyReplyAnswer reply-menu-item'>신고</div>
@@ -35,6 +37,9 @@
 
 		<div class='p-2'>
 			${vo.content}
+			<c:if test="${not empty vo.fileName}">
+				<img src="${pageContext.request.contextPath}/uploads/reply/${vo.fileName}" style="width: 10rem; height: 10rem;">
+			</c:if>
 		</div>
 	</div>
 </c:forEach>

@@ -194,6 +194,7 @@ $(function(){
 	});
 });
 
+// 댓글 사진
 $(function(){
 	var sel_files = [];
 	
@@ -264,6 +265,8 @@ $(function(){
 		$(this).remove();
 	});
 });
+
+//대댓글 사진
 $(function(){
 	var sel_files = []; 
 	
@@ -271,7 +274,7 @@ $(function(){
 		$(this).closest(".reply-answer").find("input[name=selectFile]").trigger("click");
 	});
 	
-	$("form[name=replyAnswerForm] input[name=selectFile]").change(function(e){
+	$("body").on("change","form[name=replyAnswerForm] input[name=selectFile]",function(e){
 		if(! this.files) {
 			let dt = new DataTransfer();
 			for(let f of sel_files) {
@@ -284,7 +287,7 @@ $(function(){
 		}
 		
 		let $form = $(this).closest("form");
-		
+	
 		// 유사 배열을  배열로 변환
 		const fileArr = Array.from(this.files);
 		
@@ -307,6 +310,7 @@ $(function(){
 		}
 		
 		this.files = dt.files;
+
 	});
 	
 	$("body").on("click", ".replyAnswer-form.img-item", function(){
@@ -395,7 +399,6 @@ $(function(){
 			$td.find("textarea").focus();
 			return false;
 		}
-		alert(replyNum);
 		content = encodeURIComponent(content);
 		let url = "${pageContext.request.contextPath}/board/insertReply";
 		// let query = "communityNum=${dto.communityNum}&content="+content+"&parent="+replyNum;
@@ -455,24 +458,24 @@ $(function(){
 		
 	});
 });
-/*
+
 // 댓글 공감/비공감
 $(function(){
 	$("body").on("click",".btnSendReplyLike",function(){
 		let replyNum = $(this).attr("data-replyNum");
-		let replyLike = $(this).attr("data-replyLike");
+		let answerLike = $(this).attr("data-replyLike");
 		const $btn = $(this);
 		
 		let msg = "게시글이 마음에 들지 않으십니까?";
-		if(replyLike === "1") {
+		if(answerLike === "1") {
 			msg = "게시글에 공감하십니까?";
 		}
 		if(! confirm(msg)) {
 			return false;
 		}
 		
-		let url = "${pageContext.request.contextPath}/bbs/insertReplyLike";
-		let query = "replyNum="+replyNum+"&replyLike="+replyLike;
+		let url = "${pageContext.request.contextPath}/board/insertReplyLike";
+		let query = "replyNum="+replyNum+"&answerLike="+answerLike;
 		
 		const fn = function(data){
 			let state = data.state;
@@ -489,7 +492,6 @@ $(function(){
 		ajaxFun(url,"post",query,"json",fn);
 	});
 });
-*/
 </script>
 
 <div class="container">

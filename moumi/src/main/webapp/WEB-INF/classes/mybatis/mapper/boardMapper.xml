@@ -190,9 +190,10 @@
 	</delete>
 	
 	<select id="listReplyAnswer" parameterType="map" resultType="com.moumi.app.board.Reply">
-		SELECT replyNum, r.communityNum, r.userCode, m.nickName, content, r.regDate, parent
+		SELECT r.replyNum, r.communityNum, r.userCode, m.nickName, content, r.regDate, parent,fileName
 		FROM reply r
 		JOIN member m ON r.userCode = m.userCode
+		LEFT OUTER JOIN replyFile rf ON r.replyNum = rf.replyNum
 		WHERE parent = #{parent}
 		ORDER BY replyNum DESC
 	</select>
@@ -204,15 +205,19 @@
 	
 	<!-- 좋아요/싫어요 추가 -->
 	<insert id="insertReplyLike" parameterType="map">
-		INSERT INTO replyLike(replyNum, userId, answerLike)
-		VALUES (#{replyNum}, #{userId}, #{answerLike})
+		INSERT INTO replyLike(replyNum, userCode, answerLike)
+		VALUES (#{replyNum}, #{userCode}, #{answerLike})
 	</insert>
 	
 	<!-- 좋아요/싫어요 개수 -->
 	<select id="replyLikeCount" parameterType="map" resultType="map">
-		SELECT COUNT(DECODE(replyLike, 1, 1)) likeCount,
-			   COUNT(DECODE(replyLike, 0, 1)) disLikeCount
+		SELECT COUNT(DECODE(answerLike, 1, 1)) likeCount,
+			   COUNT(DECODE(answerLike, 0, 1)) disLikeCount
 		FROM replyLike WHERE replyNum = #{replyNum}
 	</select>
+	<insert id="insertNotify" parameterType="com.moumi.app.board.Board">
+		INSERT INTO replyStop(stopNum,replyNum,content,userName)
+			VALUES(commentStop_seq.NEXTVAL,#{replyNum},#{content},#{userName})
+	</insert>
 	
 </mapper>
