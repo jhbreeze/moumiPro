@@ -135,14 +135,11 @@ li {
    	
 }
 
-
 .recFont {
 	font-family: 'GmarketSansMedium';
 	color: #363634;
 	
 }
-
-
 
 .recTitle {
 	font-size:28px;
@@ -154,11 +151,28 @@ li {
 	color: #363634;
 }
 
+.map {
+	width: 800px;
+	height: 600px;
+}
+
 </style> 
-
-
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fa6aaed44dd9e24c37efe3f15fd439e7&libraries=services"></script>
 <script>
 	$(document).ready(function() {
+		
+		var mapContainer = document.getElementById('map');
+		var mapOption = {
+			center: new kakao.maps.LatLng(37.557714093880406, 126.92450981105797),  // 지도의 중심좌표 : 위도(latitude), 경도(longitude)
+			level: 3  // 지도의 레벨(확대, 축소 정도)
+		};
+
+		// 지도를 생성
+		var map = new kakao.maps.Map(mapContainer, mapOption);
+
+		// 주소-좌표 변환 객체를 생성
+		var geocoder = new kakao.maps.services.Geocoder();
+		
 		$.ajax({
 		//ajax 옵션 설정 
 		// 공공데이터 포털 인증키
@@ -167,23 +181,67 @@ li {
 			dataType : "json",
 			// 요청이 성공시 할 일 처리 
 			success : function(data) {
-			console.log(data, typeof data)
-			data = JSON.stringify(data)
-			console.log(typeof data)
-			data = JSON.parse(data) // String 
-			console.log(typeof data) // Object
-			// 할 일 처리 
-			let apiData = "";
-			$.each(data.data, function(key, value) {
-			apiData += "<tr>";
-			apiData += "<td>" + value.브랜드명+ "</td>";
-			apiData += "<td>" + value.소재지주소+ "</td>";
-			apiData += "</tr>";
-			});
-			// 페이지 단에 붙이기 
-			$('#brand').append(apiData);
+				data = JSON.stringify(data)
+				data = JSON.parse(data) // String 
+
+				createMarker(data);
 			}
 		});
+		
+		
+		function createMarker(data) {
+			$(data.data).each(function(index, item){
+				var num = 1;
+				var subject = item.브랜드명;
+				var addr = item.소재지주소;
+				
+				if(subject!=null && subject!="null" && addr!=null && addr!="null"){
+
+					// 주소로 마커 찍기
+					geocoder.addressSearch(addr, function(result, status) {
+	
+					    // 정상적으로 검색이 완료됐으면 
+					     if (status === kakao.maps.services.Status.OK) {
+	
+					        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+	
+					        // 결과값으로 받은 위치를 마커로 표시
+					        var marker = new kakao.maps.Marker({
+					            map: map,
+					            position: coords
+					        });
+	
+					        // 인포윈도우로 장소에 대한 설명을 표시
+					        var infowindow = new kakao.maps.InfoWindow({
+					        	content:"<div class='marker-info'>"+subject+"</div>"
+					        });
+	
+					        // 지도의 중심을 결과값으로 받은 위치로 이동
+					        // map.setCenter(coords);
+					        
+						    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+						    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));			        
+					    } 
+					});
+					
+				}
+			
+			// 인포윈도우를 표시하는 클로저를 만드는 함수
+			function makeOverListener(map, marker, infowindow) {
+			    return function() {
+			        infowindow.open(map, marker);
+			    };
+			}
+
+			// 인포윈도우를 닫는 클로저를 만드는 함수
+			function makeOutListener(infowindow) {
+			    return function() {
+			        infowindow.close();
+			    };
+			}			
+			
+		});
+	}
 });
 </script>
 
@@ -312,18 +370,12 @@ li {
 				<br> <br>
 
 				<p class="title">우리 지역 살리기</p>
-				<table class="table table-striped table-success text-center"
-					id="brand">
-					<thead class="thead-light">
-						<tr>
-							<th>지역명</th>
-							<th>브랜드명</th>
-						</tr>
-					</thead>
-
-				</table>
-
+			
+				
+				<div id="map" class="map"></div>
+			
 			</div>
 		</div>
 	</div>
 </div>
+
