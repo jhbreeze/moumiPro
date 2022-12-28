@@ -176,7 +176,7 @@ li {
 		$.ajax({
 		//ajax 옵션 설정 
 		// 공공데이터 포털 인증키
-			url : "https://api.odcloud.kr/api/3060388/v1/uddi:dacd930e-e26e-4f7c-bde7-ce2cfd272e16?page=1&perPage=10&serviceKey=KAizYtDdo2AYzDzXklWBjNAnwBJq0%2BIahDUm%2FTZKLFK2Fh%2BrMgCMblxsG7mudwtZIqwWXC2XrpMZ9Ea77QWmOA%3D%3D",
+			url : "https://api.odcloud.kr/api/3060388/v1/uddi:dacd930e-e26e-4f7c-bde7-ce2cfd272e16?page=1&perPage=1000&serviceKey=KAizYtDdo2AYzDzXklWBjNAnwBJq0%2BIahDUm%2FTZKLFK2Fh%2BrMgCMblxsG7mudwtZIqwWXC2XrpMZ9Ea77QWmOA%3D%3D",
 			type : "GET",
 			dataType : "json",
 			// 요청이 성공시 할 일 처리 
@@ -187,7 +187,6 @@ li {
 				createMarker(data);
 			}
 		});
-		
 		
 		function createMarker(data) {
 			$(data.data).each(function(index, item){
@@ -254,9 +253,6 @@ li {
 	nongsaroOpenApiRequest.htmlArea = "nongsaroApiLoadingArea";
 	nongsaroOpenApiRequest.callback = "http://localhost:9090/app/call/ajax_local_callback.jsp";
 </script>
-
-
-
 
 <div class="mainBox">
 	<h3 class="mainText">MOUMI 분석 서비스</h3>
