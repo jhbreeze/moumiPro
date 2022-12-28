@@ -40,18 +40,18 @@ public class RecruitController {
 		
 	@RequestMapping(value = "main")
 	public String main(@RequestParam(value = "pageNo", defaultValue = "1") int current_page,
-			Model model) throws Exception {
+			HttpServletRequest req, Model model) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		model.addAttribute("page", current_page);
+		model.addAttribute("pageNo", current_page);
 		
 		return ".recruit.main";
 	}
 	
 	@RequestMapping(value = "list")
-	public String list(@RequestParam(value = "page", defaultValue = "1") int current_page,
+	public String list(@RequestParam(value = "pageNo", defaultValue = "1") int current_page,
 			@RequestParam(defaultValue = "subject") String condition,
-			@RequestParam(defaultValue = "") String keyword, 
+			@RequestParam(defaultValue = "") String keyword, @RequestParam(defaultValue = "1") int div,
 			HttpServletRequest req, Model model) throws Exception {
 		
 		int size = 10;
@@ -65,9 +65,12 @@ public class RecruitController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("condition", condition);
 		map.put("keyword", keyword);
+		map.put("div", div);
 		
 		dataCount = service.dataCount(map);
-		total_page = myUtil.pageCount(dataCount, size);
+		if (dataCount != 0) {
+			total_page = myUtil.pageCount(dataCount, size);
+		}
 		
 		if(total_page < current_page) {
 			current_page = total_page;
@@ -87,7 +90,7 @@ public class RecruitController {
 		String paging = myUtil.pagingMethod(current_page, total_page, "listPage");
 		
 		model.addAttribute("list", list);
-		model.addAttribute("page", current_page);
+		model.addAttribute("pageNo", current_page);
 		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("size", size);
 		model.addAttribute("total_page", total_page);
@@ -129,7 +132,7 @@ public class RecruitController {
 	}
 	
 	@GetMapping("article")
-	public String article(@RequestParam long recruitNum, @RequestParam String page,
+	public String article(@RequestParam long recruitNum, @RequestParam String pageNo,
 			@RequestParam(defaultValue = "subject") String condition,
 			@RequestParam(defaultValue = "") String keyword,
 			HttpSession session, Model model) throws Exception {
@@ -137,7 +140,7 @@ public class RecruitController {
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		keyword = URLDecoder.decode(keyword, "utf-8");
 
-		String query = "page=" + page;
+		String query = "page=" + pageNo;
 		if (keyword.length() != 0) {
 			query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
 		}
@@ -176,7 +179,7 @@ public class RecruitController {
 
 		model.addAttribute("userRecruitLiked", userRecruitLiked);
 		
-		model.addAttribute("page", page);
+		model.addAttribute("page", pageNo);
 		model.addAttribute("query", query);
 		
 		return ".recruit.article";

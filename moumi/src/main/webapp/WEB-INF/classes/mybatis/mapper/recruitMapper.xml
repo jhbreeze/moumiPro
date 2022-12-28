@@ -41,8 +41,16 @@
 		FROM recruit r
 		JOIN careerCategory c ON r.categoryNum = c.categoryNum
 		<where>
+			<choose>
+				<when test="div==1">
+					TO_CHAR(endDate, 'YYYY.MM.DD') &gt;= TO_CHAR(SYSDATE, 'YYYY.MM.DD')
+				</when>
+				<otherwise>
+					TO_CHAR(endDate, 'YYYY.MM.DD') &lt; TO_CHAR(SYSDATE, 'YYYY.MM.DD')
+				</otherwise>
+			</choose>
 			<if test="keyword!=null and keyword!='' ">
-				<include refid="where-list"/>
+				AND <include refid="where-list"/>
 			</if>
 		</where>
 	</select>
@@ -53,8 +61,16 @@
 		FROM recruit r
 		JOIN careerCategory c ON r.categoryNum = c.categoryNum
 		<where>
+			<choose>
+				<when test="div==1">
+					TO_CHAR(endDate, 'YYYY.MM.DD') &gt;= TO_CHAR(SYSDATE, 'YYYY.MM.DD')
+				</when>
+				<otherwise>
+					TO_CHAR(endDate, 'YYYY.MM.DD') &lt; TO_CHAR(SYSDATE, 'YYYY.MM.DD')
+				</otherwise>
+			</choose>
 			<if test="keyword!=null and keyword!='' ">
-				<include refid="where-list"/>
+				AND <include refid="where-list"/>
 			</if>
 		</where>
 		ORDER BY recruitNum DESC
