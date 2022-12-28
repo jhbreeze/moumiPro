@@ -16,5 +16,6 @@ public interface ReportService {
 	public Report nextReadReport(Map<String, Object> map);
 	
 	public List<Report> listReportFile(long reportNum);
+	public void deleteFile(Map<String, Object>map) throws Exception;
 
 }

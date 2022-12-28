@@ -115,8 +115,12 @@
 	</select>
 	
 	<update id="updateReportFile" parameterType="com.moumi.app.admin.report.Report">
-		UPDATE reportFile SET imageFileName = #{imageFileName}
+		UPDATE reportFile SET imageFilename = #{imageFilename}
 		WHERE reportNum = #{reportNum}
 	</update>
+	
+	<delete id="deleteFile" parameterType="map">
+		DELETE FROM reportFile WHERE ${field} = #{reportNum}
+	</delete>
 
 </mapper>

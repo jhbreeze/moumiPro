@@ -32,6 +32,15 @@ function sendOk() {
 	f.action = "${pageContext.request.contextPath}/admin/report/${mode}";
 	f.submit();
 }
+
+<c:if test="${mode=='update'}">
+function deleteFile(fileNum) {
+	let url = "${pageContext.request.contextPath}/admin/report/deleteFile";
+	$.post(url, {fileNum:fileNum}, function(data){
+		$("#f"+fileNum).remove();
+	}, "json");
+}
+</c:if>
 </script>
 <style type="text/css">
 .container {
@@ -143,6 +152,20 @@ tr {
 							<input type="file" name="addFiles" accept="image/*" multiple="multiple" class="form-control" style="display: none;">
 						</td>
 					</tr>
+					
+					<c:if test="${mode=='update'}">
+						<c:forEach var="vo" items="${listFile}">
+							<tr id="f${vo.fileNum}">
+								<td class="table-light col-sm-2" scope="row">첨부된파일</td>
+								<td> 
+									<p class="form-control-plaintext">
+										<a href="javascript:deleteFile('${vo.fileNum}');"><i class="bi bi-trash"></i></a>
+										${vo.imageFilename}
+									</p>
+								</td>
+							</tr>
+						</c:forEach> 
+					</c:if>
 				</table>
 				
 				<table class="table table-borderless">
@@ -152,6 +175,11 @@ tr {
 							<button type="reset" class="btn btn-light">다시입력</button>
 							<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/admin/report/list';">${mode=='update'?'수정취소':'등록취소'}&nbsp;<i class="bi bi-x"></i></button>
 						</td>
+						<c:if test="${mode=='update'}">
+							<input type="hidden" name="reportNum" value="${dto.reportNum}">
+							<input type="hidden" name="page" value="${page}">
+							<input type="hidden" name="thumbnail" value="${dto.thumbnail}">
+						</c:if>
 					</tr>
 				</table>
 			</form>

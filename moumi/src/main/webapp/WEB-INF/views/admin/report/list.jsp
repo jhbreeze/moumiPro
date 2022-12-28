@@ -72,10 +72,14 @@ tr:hover {
 $(function(){
 	$(".report-item").click(function(){
 		let reportNum = $(this).attr("data-reportNum");
-		let url = "${pageContext.request.contextPath}/admin/report/article/"+reportNum;
+		let url = "${articleUrl}&reportNum="+reportNum;
 		location.href = url;
 	});
 });
+function searchList() {
+	const f = document.searchForm;
+	f.submit();
+}
 </script>
 <div class="container">
 	<div class="body-container">
@@ -97,12 +101,12 @@ $(function(){
 		
 		<div class="row mt-1">
 			<c:forEach var="dto" items="${list}" varStatus="status">
-				<div class="col-md-4 col-lg-3 mt-4">
+				<div class="col-md-4 col-lg-3 mt-4" style="width: 350px; margin:25px;" >
 					<div class="border rounded report-item" data-reportNum="${dto.reportNum}">
-						<img class="thumbnail-img" src="${pageContext.request.contextPath}/uploads/report/${dto.thumbnail}">
+						<img class="thumbnail-img" src="${pageContext.request.contextPath}/uploads/report/${dto.thumbnail}" style="width: -webkit-fill-available;">
 						<div class="p-2">
 							<div class="text-truncate fw-semibold pb-1">
-								<a href="${articleUrl}&num=${dto.reportNum}" class="text-reset">${dto.subject}</a>
+								<a href="${articleUrl}&reportNum=${dto.reportNum}" class="text-reset" style="text-decoration-line: none;">${dto.subject}</a>
 							</div>
 						</div>
 					</div>
@@ -113,12 +117,13 @@ $(function(){
 		<div class="page-navigation mt-5">
 			${dataCount == 0 ? "등록된 상품이 없습니다." : paging}
 		</div>
+		
 		<div class="row board-list-footer">
-		<div class="col">
-					<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/notice/list';">새로고침</button>
+			<div class="col">
+					<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/admin/report/list';">새로고침</button>
 				</div>
 				<div class="col-6 text-center">
-					<form class="row" name="searchForm" action="${pageContext.request.contextPath}/notice/list" method="post">
+					<form class="row" name="searchForm" action="${pageContext.request.contextPath}/admin/report/list" method="post">
 						<div class="col-auto p-1">
 							<select name="condition" class="form-select">
 								<option value="all" ${condition=="all"?"selected='selected'":""}>제목+내용</option>

@@ -52,8 +52,6 @@ public class ReportServiceImpl implements ReportService {
 			String filename = fileManager.doFileUpload(dto.getThumbnailFile(), pathname);
 			dto.setThumbnail(filename);
 			
-			long reportNum = dao.selectOne("report.reportSeq");
-			dto.setReportNum(reportNum);
 			dao.insertData("report.updateReport", dto);
 			
 			if(!dto.getAddFiles().isEmpty()) {
@@ -153,11 +151,22 @@ public class ReportServiceImpl implements ReportService {
 		List<Report> listFile = null;
 		
 		try {
-			listFile = dao.selectList("report.reportFile", reportNum);
+			listFile = dao.selectList("report.listReportFile", reportNum);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 		return listFile;
+	}
+
+	@Override
+	public void deleteFile(Map<String, Object> map) throws Exception {
+		try {
+			dao.deleteData("report.deleteFile", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
 	}
 
 }

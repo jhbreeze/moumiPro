@@ -55,6 +55,11 @@ background-color: #198754
 background-color: #ECF4EB
 }
 
+.vertical_nav__minify >  #js-menu{
+margin : 200px 0 0;
+}
+
+
 .menu--icon{
 color: white;
 }
@@ -69,7 +74,7 @@ color: #198754;
     align-self: flex-end;
     bottom: 0;
     padding : 17px 0;
-    margin : 200px 0 0;
+    margin : 0;
 }
 </style>
 
@@ -98,7 +103,7 @@ color: #198754;
 
 </header>
 
-<nav class="vertical_nav navbar-green" style="min-height: 1100px;">
+<nav class="vertical_nav navbar-green">
 	<ul id="js-menu" class="menu menu-side navbar-green">
 	
 		<li class="menu--item">

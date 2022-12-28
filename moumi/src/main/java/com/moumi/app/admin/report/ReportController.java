@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.moumi.app.common.FileManager;
 import com.moumi.app.common.MyUtil;
 import com.moumi.app.member.SessionInfo;
 
@@ -32,6 +35,8 @@ public class ReportController {
 	@Autowired
 	@Qualifier("myUtil")
 	private MyUtil myUtil;
+	@Autowired
+	private FileManager fileManager;
 	
 	@RequestMapping("list")
 	public String reportManage(@RequestParam(defaultValue = "0") long reportNum,
@@ -148,8 +153,6 @@ public class ReportController {
 			Report nextReadDto = service.nextReadReport(map);
 			
 			List<Report> listFile = service.listReportFile(reportNum);
-			dto.setThumbnail(dto.getThumbnail());
-			listFile.add(0, dto);
 			
 			model.addAttribute("dto", dto);
 			model.addAttribute("listFile", listFile);
@@ -158,10 +161,97 @@ public class ReportController {
 			model.addAttribute("page", page);
 			model.addAttribute("query", query);
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
+			throw e;
 		}
 		
-		return "admin.report.article";
+		return ".admin.report.article";
+	}
+	
+	@GetMapping("update")
+	public String updateForm(@RequestParam long reportNum, 
+			@RequestParam String page, 
+			HttpSession session, 
+			Model model) throws Exception {
+		Report dto = service.readReport(reportNum);
+		List<Report> listFile = service.listReportFile(reportNum);
+		
+		model.addAttribute("mode", "update");
+		model.addAttribute("page", page);
+		model.addAttribute("dto", dto);
+		model.addAttribute("listFile", listFile);
+		
+		
+		return ".admin.report.write";
+	}
+	
+	@PostMapping("update")
+	public String updateSubmit(Report dto, 
+			@RequestParam String page, 
+			HttpSession session) throws Exception {
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+
+		try {
+			String root = session.getServletContext().getRealPath("/");
+			String pathname = root + File.separator + "uploads" + File.separator + "report";
+			
+			dto.setUserCode(info.getUserCode());
+			service.updateReport(dto, pathname);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+		return "redirect:/admin/report/list?page="+page;
+	}
+	
+	@RequestMapping("delete")
+	public String delete(@RequestParam long reportNum, 
+			@RequestParam String page, 
+			@RequestParam(defaultValue = "all") String condition, 
+			@RequestParam(defaultValue = "") String keyword, 
+			HttpSession session) throws Exception {
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		
+		keyword = URLDecoder.decode(keyword, "utf-8");
+		String query = "page="+page;
+		if (keyword.length() != 0) {
+			query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
+		}
+		try {
+			String root = session.getServletContext().getRealPath("/");
+			String pathname = root + "uploads" + File.separator + "report";
+			service.deleteReport(reportNum, pathname);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return "redirect:/admin/report/list?"+query;
+	}
+	
+	@RequestMapping("deleteFile")
+	@ResponseBody
+	public Map<String, Object> deleteFile(@RequestParam long fileNum, HttpSession session) throws Exception {
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "report";
+		
+		Report dto = service.readReport(fileNum);
+		if(dto != null) {
+			fileManager.doFileDelete(dto.getImageFilename(), pathname);
+		}
+		
+		String state = "false";
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("field", "fileNum");
+			map.put("num", fileNum);
+			service.deleteFile(map);
+			state = "true";
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("state", state);
+		return model;
 	}
 
 }
