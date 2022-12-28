@@ -73,6 +73,13 @@ tr:hover {
 	color: #eee;
 }
 </style>
+
+<script type="text/javascript">
+function searchList() {
+	const f = document.searchForm;
+	f.submit();
+}
+</script>
 <div class="container">
 	<div class="body-container">
 		<div class="body-title">
@@ -114,13 +121,14 @@ tr:hover {
 						<div class="col"></div>
 						<div class="col"></div>
 						<div class="col-6 text-center">
-							<form class="row" name="searchForm">
+							<form class="row" name="searchForm" action="${pageContext.request.contextPath}/admin/notice/list" method="post">
 								<div class="col-auto p-1">
 									<select name="condition" class="form-select form-select-sm">
-										<option value="all">제목+내용</option>
-										<option value="boDate">등록일</option>
-										<option value="boSubject">제목</option>
-										<option value="boCont">내용</option>
+										<option value="all" ${condition=="all"?"selected='selected'":""}>제목+내용</option>
+										<option value="userName" ${condition=="userName"?"selected='selected'":""}>작성자</option>
+										<option value="reg_date" ${condition=="regDate"?"selected='selected'":""}>등록일</option>
+										<option value="subject" ${condition=="subject"?"selected='selected'":""}>제목</option>
+										<option value="content" ${condition=="content"?"selected='selected'":""}>내용</option>
 									</select>
 								</div>
 								<div class="col-auto p-1">
