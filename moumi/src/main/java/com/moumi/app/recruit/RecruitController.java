@@ -106,7 +106,7 @@ public class RecruitController {
 	public String writeForm(Model model) throws Exception {
 		List<Recruit> listCategory = service.listCareerCategory(); 
 		
-		model.addAttribute("page", "1"); // checkhere
+		model.addAttribute("pageNo", "1"); // checkhere
 		model.addAttribute("mode", "write");
 		model.addAttribute("listCategory", listCategory);
 		
@@ -128,7 +128,7 @@ public class RecruitController {
 		} catch (Exception e) {
 		}
 		
-		return "redirect:/recruit/main?page=1";
+		return "redirect:/recruit/main?pageNo=1";
 	}
 	
 	@GetMapping("article")
@@ -140,7 +140,7 @@ public class RecruitController {
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		keyword = URLDecoder.decode(keyword, "utf-8");
 
-		String query = "page=" + pageNo;
+		String query = "pageNo=" + pageNo;
 		if (keyword.length() != 0) {
 			query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
 		}
@@ -179,21 +179,21 @@ public class RecruitController {
 
 		model.addAttribute("userRecruitLiked", userRecruitLiked);
 		
-		model.addAttribute("page", pageNo);
+		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("query", query);
 		
 		return ".recruit.article";
 	}
 	
 	@GetMapping("update")
-	public String updateForm(@RequestParam long recruitNum, @RequestParam String page,
+	public String updateForm(@RequestParam long recruitNum, @RequestParam String pageNo,
 			HttpSession session, Model model) throws Exception {
 		
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		
 		Recruit dto = service.readRecruit(recruitNum);
 		if(dto == null || (info.getUserType()!= 0 && (info.getUserCode() != dto.getUserCode()))) { // 관리자가 아니거나 로그인 상태의 회사가 자기가 쓴 글 아니라면 
-			return "redirect:/recruit/main?page="+page;
+			return "redirect:/recruit/main?pageNo="+pageNo;
 		}
 		
 		List<Recruit> listCategory = service.listCareerCategory(); 
@@ -203,17 +203,17 @@ public class RecruitController {
 		model.addAttribute("listFile", listFile);
 		model.addAttribute("dto", dto);
 		model.addAttribute("mode", "update");
-		model.addAttribute("page", page);
+		model.addAttribute("pageNo", pageNo);
 		
 		return ".recruit.write";
 	}
 	
 	@PostMapping("update")
-	public String updateSubmit(Recruit dto, @RequestParam String page, HttpSession session) throws Exception {
+	public String updateSubmit(Recruit dto, @RequestParam String pageNo, HttpSession session) throws Exception {
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 
 		if (dto == null || (info.getUserType() != 0 && (info.getUserCode() != dto.getUserCode()))) { // 관리자가 아니거나 로그인 상태의 회사가 자기가 쓴 글 아니라면
-			return "redirect:/recruit/main?page=" + page;
+			return "redirect:/recruit/main?pageNo=" + pageNo;
 		}
 
 		try {
@@ -225,7 +225,7 @@ public class RecruitController {
 		} catch (Exception e) {
 		}
 
-		return "redirect:/recruit/main?page=" + page;
+		return "redirect:/recruit/main?pageNo=" + pageNo;
 	}
 	
 	@PostMapping(value = "deleteFile")
@@ -257,14 +257,14 @@ public class RecruitController {
 	}
 	
 	@RequestMapping(value = "delete")
-	public String delete(@RequestParam long recruitNum, @RequestParam String page,
+	public String delete(@RequestParam long recruitNum, @RequestParam String pageNo,
 			@RequestParam(defaultValue = "subject") String condition, @RequestParam(defaultValue = "") String keyword,
 			HttpSession session) throws Exception {
 
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 
 		keyword = URLDecoder.decode(keyword, "utf-8");
-		String query = "page=" + page;
+		String query = "pageNo=" + pageNo;
 		if (keyword.length() != 0) {
 			query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
 		}

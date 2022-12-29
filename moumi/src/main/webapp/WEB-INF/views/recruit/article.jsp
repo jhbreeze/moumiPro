@@ -201,7 +201,7 @@ $(function(){
 					<c:choose>
 						<c:when test="${sessionScope.member.userType==0 || sessionScope.member.userType==3}">
 							<button type="button" class="btn btn-success"
-								onclick="location.href='${pageContext.request.contextPath}/recruit/update?recruitNum=${dto.recruitNum}&page=${page}';">수정</button>
+								onclick="location.href='${pageContext.request.contextPath}/recruit/update?recruitNum=${dto.recruitNum}&pageNo=${pageNo}';">수정</button>
 						</c:when>
 						<c:otherwise>
 							<button type="button" class="btn btn-success" disabled="disabled">수정</button>
