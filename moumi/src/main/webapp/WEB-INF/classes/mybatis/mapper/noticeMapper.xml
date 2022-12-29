@@ -59,7 +59,7 @@
 	
 	<!-- 리스트 -->
 	<select id="listNotice" parameterType="map" resultType="com.moumi.app.admin.notice.Notice">
-		SELECT n.noticeNum, n.userCode, userName, subject, hitCount, 
+		SELECT n.noticeNum, n.userCode, userName, subject, hitCount,content,
 			   TO_CHAR(n.regDate, 'YYYY-MM-DD') regDate, NVL(fileCount, 0) fileCount
 		FROM notice n
 		JOIN member m ON n.userCode=m.userCode

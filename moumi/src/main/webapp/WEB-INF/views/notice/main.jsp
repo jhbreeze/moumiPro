@@ -82,21 +82,13 @@ function ajaxFun(url, method, query, dataType, fn) {
 
 $(function(){
 	listPage(1);
-	
-    $("button[role='tab']").on("click", function(e){
-		// const tab = $(this).attr("aria-controls");
-    	listPage(1);
-    	
-    });
 });
 
 //글리스트 및 페이징 처리
 function listPage(page) {
-	const $tab = $("button[role='tab'].active");
-	let categoryNum = $tab.attr("data-categoryNum");
 	
-	let url = "${pageContext.request.contextPath}/faqu/list";
-	let query = "pageNo="+page+"&categoryNum="+categoryNum;
+	let url = "${pageContext.request.contextPath}/notice/list";
+	let query = "pageNo="+page;
 	let search = $('form[name=faqSearchForm]').serialize();
 	query = query+"&"+search;
 	
@@ -126,21 +118,6 @@ function reloadFaq() {
 	listPage(1);
 }
 
-// 글 삭제
-function deleteFaq(num, page) {
-	let url = "${pageContext.request.contextPath}/faq/delete";
-	let query = "num="+num;
-	
-	if(! confirm("위 게시물을 삭제 하시 겠습니까 ? ")) {
-		  return;
-	}
-	
-	const fn = function(data){
-		listPage(page);
-	};
-	
-	ajaxFun(url, "post", query, "json", fn);
-}
 </script>
 
 <nav>

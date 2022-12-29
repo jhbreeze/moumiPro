@@ -2,86 +2,55 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
-<%-- <c:if test="${list.size() > 0}">
+<c:if test="${list.size() > 0}">
 	<div class="accordion accordion-flush mt-2" id="accordionFlush">
 		<c:forEach var="dto" items="${list}" varStatus="status">
 			<div class="accordion-item" style="border: none;">
 				<h2 class="accordion-header mb-1 border" id="flush-heading-${status.index}">
 					<button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-${status.index}" aria-expanded="false" aria-controls="flush-collapse-${status.index}">
-						${dto.subject}
+						${dto.subject} <br>
+						${dto.regDate}
 					</button>
 				</h2>
 				<div id="flush-collapse-${status.index}" class="accordion-collapse collapse" aria-labelledby="flush-heading-${status.index}" data-bs-parent="#accordionFlush">
-					<div class="accordion-body">
-
-						<div class="row border-bottom pb-1">분류 : ${dto.category}</div>
+					<div class="accordion-body" style="background: #ECF4EB; border-radius: 15px;">
 						<div class="row p-2">
 							${dto.content}
 						</div>
-						<c:if test="${sessionScope.member.membership>50}">
-							<div class="row py-1">
-								<div class="col text-end">
-									<a href="#" onclick="javascript:location.href='${pageContext.request.contextPath}/faq/update?num=${dto.num}&pageNo=${pageNo}';">수정</a>&nbsp;|
-									<a href="#" onclick="deleteFaq('${dto.num}', '${pageNo}');">삭제</a>
-								</div>
-							</div>
-						</c:if>
-
 					</div>
 				</div>
 			</div>		
 		</c:forEach>
 	</div>
-</c:if> --%>
-<style type="text/css">
-/* nav{
-float: left;
-} */
-.side {
-list-style: none;
-font-family:"Malgun Gothic", "맑은 고딕", NanumGothic, 나눔고딕, 돋움, sans-serif;
-font-size: 20px;
+</c:if>
+<div class="page-navigation">
+	${dataCount == 0 ? "등록된 게시물이 없습니다." : paging}
+</div>
 
-}
-.side-menu1{
-position:absolute;
-top: 10rem;
-left: 15rem;
-background: #198754;
-width: 9rem;
-height: 3rem;
-text-align: center;
-color: white;
-padding-top: 0.5rem;
-}
-.side-menu2{
-position:absolute;
-top: 14rem;
-left: 15rem;
+<div class="row py-3">
+	<div class="col">
+		<button type="button" class="btn btn-light" onclick="reloadFaq();">새로고침</button>
+	</div>
+	<div class="col-6 text-center">
+		<form class="row" name="searchForm" method="post">
+			<div class="col-auto p-1">
+				<select name="condition" id="condition" class="form-select">
+					<option value="all" ${condition=="all"?"selected='selected'":""}>제목+내용</option>
+					<option value="subject" ${condition=="subject"?"selected='selected'":""}>제목</option>
+					<option value="content" ${condition=="content"?"selected='selected'":""}>내용</option>
+				</select>
+			</div>
+			<div class="col-auto p-1">
+				<input type="text" name="keyword" id="keyword" value="${keyword}" class="form-control">
+			</div>
+			<div class="col-auto p-1">
+				<button type="button" class="btn btn-light" onclick="searchList()"> <i class="bi bi-search"></i> </button>
+			</div>
+		</form>
+	</div>
+</div>
 
-}
-.side-menu2 a{
-color: #198754;
-font-weight: bold;
-text-decoration: none;
-
-}
-.side-menu3{
-position:absolute;
-top: 17rem;
-left: 15rem;
-
-}
-.side-menu3 a{
-text-decoration: none;
-color: gray;
-
-}
-</style>
-
-
-	<div class="accordion accordion-flush" id="accordionFlushExample">
+	<%-- <div class="accordion accordion-flush" id="accordionFlushExample">
 	  <div class="accordion-item">
 	    <h2 class="accordion-header" id="flush-headingOne">
 	      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
@@ -118,5 +87,5 @@ color: gray;
 	      <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
 	    </div>
 	  </div>
-	</div>
- 
+	</div> 
+  --%>

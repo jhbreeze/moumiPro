@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.moumi.app.admin.notice.Notice;
 import com.moumi.app.common.dao.CommonDAO;
 
 
