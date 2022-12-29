@@ -15,7 +15,7 @@
 				<div id="flush-collapse-${status.index}" class="accordion-collapse collapse" aria-labelledby="flush-heading-${status.index}" data-bs-parent="#accordionFlush">
 					<div class="accordion-body" style="background: #ECF4EB; border-radius: 15px;">
 						<div class="row p-2">
-							${dto.content}
+							${dto.content} 
 						</div>
 					</div>
 				</div>
