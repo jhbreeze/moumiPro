@@ -54,8 +54,13 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
-	public void deleteReply(Map<String, Object> paramMap) {
-		// TODO Auto-generated method stub
+	public void deleteReply(Map<String, Object> map) {
+		try {
+			// 이벤트 리뷰 댓글 삭제
+			dao.insertData("event.deleteReply", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -63,7 +68,7 @@ public class EventServiceImpl implements EventService {
 	public int replyCount(Map<String, Object> map) {
 		int result = 0;
 		try {
-			result = dao.selectOne("event.dataCount",map);
+			result = dao.selectOne("event.dataCount", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -81,4 +86,15 @@ public class EventServiceImpl implements EventService {
 		return list;
 	}
 
+	@Override
+	public void deleteReply(long eventNum) throws Exception {
+		try {
+			dao.deleteData("event.deleteReply", eventNum);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+
+	}
 }

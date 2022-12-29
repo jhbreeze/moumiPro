@@ -3,7 +3,7 @@ package com.moumi.app.event;
 public class Reply {
 	private long replyNum;
 	private long eventNum;
-	private int userCode;
+	private long userCode;
 	private String userName;
 	private String content;
 	private String regDate;
@@ -24,11 +24,11 @@ public class Reply {
 		this.eventNum = eventNum;
 	}
 
-	public int getUserCode() {
+	public long getUserCode() {
 		return userCode;
 	}
 
-	public void setUserCode(int userCode) {
+	public void setUserCode(long userCode) {
 		this.userCode = userCode;
 	}
 

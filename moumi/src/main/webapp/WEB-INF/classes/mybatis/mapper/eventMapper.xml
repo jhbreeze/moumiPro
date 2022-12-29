@@ -22,15 +22,27 @@
 	</insert>
 	
 	<select id="dataCount" parameterType="map" resultType="Integer">
-		SELECT NVL(COUNT(*),0) FROM event e
-		JOIN member m ON e.userCode = m.userCode
+		SELECT NVL(COUNT(*),0) FROM eventReply
+		WHERE eventNum = #{eventNum}
+		
 	</select>
 	
 	
 	<select id = "listReply" parameterType ="map" resultType ="com.moumi.app.event.Reply">
-		SELECT content, regDate, userCode
-		FROM eventReply
-		WHERE eventNum = #{eventNum}
+		SELECT replyNum, content, e.regDate, e.userCode, userName 
+		FROM eventReply e 
+        LEFT OUTER JOIN member m 
+        ON e.userCode = m.userCode
+        WHERE eventNum = #{eventNum}
+        
+        
 	</select>
+	
+	<delete id="deleteReply" parameterType="map">
+		DELETE FROM eventReply 
+		WHERE replyNum = #{replyNum}
+	</delete>
+	
+	
 	
 </mapper>

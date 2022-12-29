@@ -48,7 +48,6 @@ $(function(){
 });
 
 function listPage(page) {
-
 	let url = "${pageContext.request.contextPath}/event/listReply";
 	let query = "eventNum=${dto.eventNum}&pageNo="+page;
 	let selector = "#listReply";
@@ -88,6 +87,51 @@ $(function(){
 		};
 		
 		ajaxFun(url, "post", query, "json", fn);
+	});
+});
+
+
+//삭제 신고메뉴
+$(function(){
+	$("body").on("click", ".reply-dropdown", function(){
+		const $menu = $(this).next(".reply-menu");
+		if($menu.is(':visible')) {
+			$menu.fadeOut(100);
+		} else {
+			$(".reply-menu").hide();
+			$menu.fadeIn(100);
+
+			let pos = $(this).offset();
+			$menu.offset( {left:pos.left-70, top:pos.top+20} );
+		}
+	});
+	$("body").on("click", function() {
+		if($(event.target.parentNode).hasClass("reply-dropdown")) {
+			return false;
+		}
+		$(".reply-menu").hide();
+	});
+});
+
+
+//댓글 삭제
+$(function(){
+	$("body").on("click",".deleteReply",function(){
+		if(! confirm("게시글을 삭제하시겠습니까?")) {
+			return false;
+		}
+		
+		let replyNum = $(this).attr("data-replyNum");
+		console.log(replyNum);
+		let page = $(this).attr("data-pageNo");
+		
+		let url = "${pageContext.request.contextPath}/event/deleteReply";
+		let query = "replyNum="+replyNum+"&mode=reply";
+		
+		const fn = function(data){
+			listPage(page);
+		};
+		ajaxFun(url,"post",query,"json",fn);
 	});
 });
 

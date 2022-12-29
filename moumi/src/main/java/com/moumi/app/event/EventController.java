@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.moumi.app.common.MyUtil;
+import com.moumi.app.member.SessionInfo;
 
 @Controller("event.eventController")
 @RequestMapping("/event/*")
@@ -57,7 +58,7 @@ public class EventController {
 			@RequestParam(value = "pageNo", defaultValue = "1") int current_page, HttpSession session, Model model)
 			throws Exception {
 
-		// SessionInfo info = (SessionInfo)session.getAttribute("member");
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
 
 		int size = 5;
 		int total_page = 0;
@@ -67,10 +68,11 @@ public class EventController {
 		map.put("eventNum", eventNum);
 
 		map.put("userCode", 1);
-		// map.put("userId", info.getUserId())
 
 		dataCount = service.replyCount(map);
+
 		total_page = myUtil.pageCount(dataCount, size);
+
 		if (current_page > total_page) {
 			current_page = total_page;
 		}
@@ -97,7 +99,7 @@ public class EventController {
 		model.addAttribute("replyCount", dataCount);
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("paging", paging);
-		model.addAttribute("eventNum",eventNum);
+		model.addAttribute("eventNum", eventNum);
 
 		return "event/listReply";
 	}
@@ -106,12 +108,13 @@ public class EventController {
 	@PostMapping("insertReply")
 	@ResponseBody
 	public Map<String, Object> insertReply(Reply dto, HttpSession session) {
-		// SessionInfo info = (SessionInfo) session.getAttribute("member");
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		String state = "true";
 
 		try {
-			// dto.setUserId(info.getUserId());
-			dto.setUserCode(1);
+			dto.setUserCode(info.getUserCode());
+			
+			
 			service.insertReply(dto);
 		} catch (Exception e) {
 			state = "false";

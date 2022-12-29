@@ -17,6 +17,9 @@ public interface EventService {
 	public int replyCount(Map<String, Object> map);
 
 	public List<Reply> listReply(Map<String, Object> map);
+	
+	public void deleteReply(long eventNum) throws Exception;
+
 
 
 }
