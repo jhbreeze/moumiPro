@@ -8,7 +8,7 @@ public interface MemberService {
 	
 //	public void updateMembership(Map<String, Object> map) throws Exception;
 	public void updateLastLogin(String email) throws Exception;
-//	public void updateMember(Member dto) throws Exception;
+	public void updateMember(Member dto) throws Exception;
 	
 	public Member readMember(String email);
 	public Member readMember1(String nickName);
@@ -17,7 +17,7 @@ public interface MemberService {
 //	public void generatePwd(Member dto) throws Exception;
 	
 	public boolean isPasswordCheck(String email, String userPwd);
-//	public void updatePwd(Member dto) throws Exception;
+	public void updatePwd(Member dto) throws Exception;
 	public int checkFailureCount(String email);
 	public void updateFailureCount(String email) throws Exception;
 	public void updateFailureCountReset(String email) throws Exception;

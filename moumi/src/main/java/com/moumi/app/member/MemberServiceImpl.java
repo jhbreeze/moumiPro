@@ -96,7 +96,25 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}
 
-//	updateMember
+	@Override
+	public void updateMember(Member dto) throws Exception {
+		try {
+			boolean bPwdUpdate = ! isPasswordCheck(dto.getEmail(), dto.getPwd());
+			if( bPwdUpdate ) {
+				// 패스워드가 변경된 경우에만 member1 수정
+				String encPassword = bcrypt.encode(dto.getPwd());
+				dto.setPwd(encPassword);
+				
+				dao.updateData("member.updateMember1", dto);
+			}
+
+			dao.updateData("member.updateMember2", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
 
 //	deleteMember
 	
@@ -115,6 +133,27 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 //	updatePwd
+	@Override
+	public void updatePwd(Member dto) throws Exception {
+		try {
+			
+			if(isPasswordCheck(dto.getEmail(), dto.getPwd())) {
+				throw new RuntimeException("패스워드가 기존 패스워드와 일치 합니다."); 
+			}
+			
+			String encPassword = bcrypt.encode(dto.getPwd());
+			dto.setPwd(encPassword);
+			
+			dao.updateData("member.updateMember1", dto);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			throw e;
+		}
+		
+	}
+	
 	
 	@Override
 	public int checkFailureCount(String email) {
@@ -158,5 +197,9 @@ public class MemberServiceImpl implements MemberService {
 			throw e;
 		}		
 	}
+
+
+
+
 
 }

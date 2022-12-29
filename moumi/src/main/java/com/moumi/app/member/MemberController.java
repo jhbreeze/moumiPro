@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -87,6 +88,18 @@ public class MemberController {
 		return ".member.expired";
 	}
 
+	@RequestMapping(value = "pwd", method = RequestMethod.GET)
+	public String pwdForm(String dropout, Model model) {
+
+		if (dropout == null) {
+			model.addAttribute("mode", "update");
+		} else {
+			model.addAttribute("mode", "dropout");
+		}
+
+		return ".member.pwd";
+	}
+	
 	@RequestMapping(value = "pwd", method = RequestMethod.POST)
 	public String pwdSubmit(@RequestParam String pwd,
 			@RequestParam String mode, 
@@ -144,7 +157,20 @@ public class MemberController {
 		return ".member.member";
 	}
 
-	
+	@RequestMapping(value = "update", method = RequestMethod.POST)
+	public String updateSubmit(Member dto,
+			final RedirectAttributes reAttr,
+			Model model) {
+
+		try {
+			service.updateMember(dto);
+		} catch (Exception e) {
+		}
+
+		 
+
+		return "redirect:/member/myPage";
+	}
 	
 	@RequestMapping(value = "emailCheck", method = RequestMethod.POST)
 	@ResponseBody
@@ -176,7 +202,35 @@ public class MemberController {
 		return model;
 	}
 	
+	@GetMapping("updatePwd")
+	public String updatePwdForm() throws Exception {
+		return ".member.updatePwd";
+	}
 	
+	@PostMapping("updatePwd")
+	public String updatePwdSubmit(@RequestParam String pwd,
+			HttpSession session, Model model) throws Exception {
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		Member dto = new Member();
+		dto.setEmail(info.getEmail());
+		dto.setPwd(pwd);
+		
+		try {
+			service.updatePwd(dto);
+		} catch (RuntimeException e) {
+			model.addAttribute("message", "변경할 패스워드가 기존 패스워드와 일치 합니다.");
+			return ".member.updatePwd";
+		} catch (Exception e) {
+		}
+		
+		return "redirect:/";
+	}
+	
+	@RequestMapping(value = "myPage")
+	public String myPageForm() {
+		return ".member.myPage";
+	}
 	
  
 }
