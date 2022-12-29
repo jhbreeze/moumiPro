@@ -227,7 +227,7 @@ function deleteFile(fileNum) {
 								<input type="hidden" name="userType" value="${dto.userType}">
 								<input type="hidden" name="saveFilename" value="${dto.saveFilename}">
 								<input type="hidden" name="originalFilename" value="${dto.originalFilename}">
-								<input type="hidden" name="page" value="${page}">
+								<input type="hidden" name="pageNo" value="${pageNo}">
 							</c:if>
 						</td>
 					</tr>
