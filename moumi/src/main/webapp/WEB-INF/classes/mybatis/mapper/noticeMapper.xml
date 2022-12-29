@@ -59,7 +59,8 @@
 	
 	<!-- 리스트 -->
 	<select id="listNotice" parameterType="map" resultType="com.moumi.app.admin.notice.Notice">
-		SELECT n.noticeNum, n.userCode, userName, subject, hitCount,content,
+		SELECT n.noticeNum, n.userCode, userName, subject, hitCount,content,imageFilename,saveFilename,fileSize,
+				f.noticeFilenum
 			   TO_CHAR(n.regDate, 'YYYY-MM-DD') regDate, NVL(fileCount, 0) fileCount
 		FROM notice n
 		JOIN member m ON n.userCode=m.userCode

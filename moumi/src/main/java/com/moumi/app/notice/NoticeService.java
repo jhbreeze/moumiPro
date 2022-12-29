@@ -9,4 +9,5 @@ public interface NoticeService {
 
 	public List<Notice> listNotice(Map<String,Object> map);
 	public int dataCount(Map<String, Object> map);
+	public Notice readFile(long filenum);
 }
