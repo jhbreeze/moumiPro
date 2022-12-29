@@ -2,14 +2,5 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="sales">
-	<select id="listToday" resultMap="map">
-		SELECT COUNT(*) count, NVL(SUM(paymentPrice), 0) total
-		FROM payment
-		WHERE TO_CHAR(payDate, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
-	</select>
-	<select id="listMonth" resultMap="map">
-		SELECT COUNT(*) count, NVL(SUM(paymentPrice), 0) total
-		FROM payment
-		WHERE TO_CHAR(payDate, 'YYYYMM') = TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'YYYYMM')
-	</select>
+	
 </mapper>
