@@ -41,7 +41,6 @@ public class RecruitController {
 	@RequestMapping(value = "main")
 	public String main(@RequestParam(value = "pageNo", defaultValue = "1") int current_page,
 			HttpServletRequest req, Model model) throws Exception {
-		Map<String, Object> map = new HashMap<String, Object>();
 		
 		model.addAttribute("pageNo", current_page);
 		
