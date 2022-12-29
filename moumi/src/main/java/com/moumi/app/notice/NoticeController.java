@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.moumi.app.admin.notice.Notice;
 import com.moumi.app.common.FileManager;
 import com.moumi.app.common.MyUtil;
-import com.moumi.app.recruit.Recruit;
 
 
 @Controller(".notice.Controller")
@@ -95,7 +94,7 @@ public class NoticeController {
 		@RequestMapping(value = "download")
 		public void download(@RequestParam long fileNum, HttpServletResponse resp, HttpSession session) throws Exception {
 			String root = session.getServletContext().getRealPath("/");
-			String pathname = root + "uploads" + File.separator + "recruit";
+			String pathname = root + "uploads" + File.separator + "notice";
 			
 			boolean b = false;
 			

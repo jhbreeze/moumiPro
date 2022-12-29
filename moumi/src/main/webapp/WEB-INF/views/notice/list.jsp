@@ -14,8 +14,8 @@
 				</h2>
 				<div id="flush-collapse-${status.index}" class="accordion-collapse collapse" aria-labelledby="flush-heading-${status.index}" data-bs-parent="#accordionFlush">
 					<div class="accordion-body" style="background: #ECF4EB; border-radius: 15px;">
-						<div class="notice_file">
-							파일 : <a href="${pageContext.request.contextPath}/notice/download?fileNum=${dto.noticeFilenum}">${dto.originalFilename}</a>
+						<div class="notice_file" style="text-align: right;">
+							파일 : <a href="${pageContext.request.contextPath}/notice/download?fileNum=${dto.noticeFileNum}">${dto.imageFilename}</a>
 							(<fmt:formatNumber value="${dto.fileSize/1024}" pattern="0.00" />kb)
 						</div>
 						

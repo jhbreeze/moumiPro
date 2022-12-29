@@ -48,7 +48,7 @@ public class NoticeServiceImpl implements NoticeService{
 		Notice dto = null;
 		
 		try {
-			dto = dao.selectOne("notice.listFile",filenum);
+			dto = dao.selectOne("notice.readFile",filenum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
