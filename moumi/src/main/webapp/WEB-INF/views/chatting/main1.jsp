@@ -3,20 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <style type="text/css">
-.container {
-	min-height: 800px;
-}
-
-main {
-	position: relative;
-	top: -55px;
-	background: white;
-}
-
 .body-container {
-	max-width: 1200px;
-	margin: auto;
-	padding: 20px;
+	max-width: 800px;
 }
 
 .chat-msg-container { display: flex; flex-direction:column; height: 310px; overflow-y: scroll; }
@@ -60,65 +48,16 @@ main {
     margin-right: 3px;
     margin-bottom: 5px;
 }
-
-
-tr {
-	font-size: 15px;
-}
-
-tr:hover {
-	background: #fff;
-	box-shadow: 0px 0px 4px rgb(72, 92, 161, 0.4);
-}
-
-.sort {
-	font-size: 10px;
-	border: 1px solid #e2e2e2;
-	width: 50px;
-	height: 20px;
-	border-radius: 20px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.sort-td {
-	width: 80px;
-}
-
-.date-th {
-	width: 100px;
-}
-
-.date-div {
-	text-align: center;
-}
-
-.container {
-	box-shadow: 4px 4px 4px rgb(72, 92, 161, 0.2);
-	border: none;
-	border-radius: 30px;
-	background-color: white;
-	margin: 100px auto;
-}
-
-.btn:active, .btn:focus, .btn:hover {
-	color: #eee;
-}
 </style>
 
 <div class="container">
 	<div class="body-container">	
 		<div class="body-title">
-			<h2>
-				<i class="bi bi-chat"></i> 채팅관리
-			</h2>
+			<h3><i class="bi bi-chat"></i> 채팅 <small class="fs-6 fw-normal">chatting</small> </h3>
 		</div>
 		
-		
 		<div class="body-main content-frame">
-			<!-- <form name="listForm" method="post"> -->
-			<div class="row board-list-header">
+			<div class="row">
 				<div class="col-8">
 					<p class="form-control-plaintext fs-6"><i class="bi bi-chevron-double-right"></i> 채팅 메시지</p>
 					<div class="border p-3 chat-msg-container"></div>
@@ -132,10 +71,7 @@ tr:hover {
 					<div class="border p-3 chat-connection-list"></div>
 				</div>
 			</div>
-			<!-- </form> -->
 		</div>
-		
-		
 	</div>
 </div>
 
@@ -183,7 +119,7 @@ $(function(){
 	
 	 // 서버 접속이 성공한 경우 호출되는 콜백함수
 	function onOpen(evt) {
-		 // Login 처리에서 세션에 memberIdx/email 저장 유무 확인
+		 // Login 처리에서 세션에 memberIdx 저장 유무 확인
 	    let email = "${sessionScope.member.email}";
 	    let nickName = "${sessionScope.member.userName}";
 	    if( ! email ) {

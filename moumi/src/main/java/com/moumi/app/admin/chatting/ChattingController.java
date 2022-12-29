@@ -10,7 +10,7 @@ public class ChattingController {
 	
 	@RequestMapping("list")
 	public String chattingManage() {
-		return ".admin.chatting.list";
+		return ".admin.chatting.list"; 
 	}
 
 }

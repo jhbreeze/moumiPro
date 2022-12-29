@@ -1,4 +1,4 @@
-package com.moumi.app.chat;
+package com.moumi.app.chatting;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -63,15 +63,16 @@ public class MySocketHandler extends TextWebSocketHandler {
 
 		if (type.equals("connect")) { // 처음 접속한 경우
 			// 접속한 사용자의 아이디를 키로 session과 유저 정보를 저장
-			String uid = jsonReceive.getString("uid");
+			String email = jsonReceive.getString("email");
 			String nickName = jsonReceive.getString("nickName");
 
 			User user = new User();
-			user.setUid(uid);
+			user.setEmail(email);
+			//user.setUid(uid);
 			user.setNickName(nickName);
 			user.setSession(session);
 
-			sessionMap.put(uid, user);
+			sessionMap.put(email, user);
 
 			// 처음 접속 사용자에게 현재 접속 중인 다른 유저를 전송
 			Iterator<String> it = sessionMap.keySet().iterator();
@@ -80,14 +81,15 @@ public class MySocketHandler extends TextWebSocketHandler {
 			while (it.hasNext()) {
 				String key = it.next();
 
-				if ( uid.equals(key) ) { // 자기 자신
+				if ( email.equals(key) ) { // 자기 자신
 					continue;
 				}
 				
 				User vo = sessionMap.get(key);
 
 				JSONArray arr = new JSONArray();
-				arr.put(vo.getUid());
+				arr.put(vo.getEmail());
+				// arr.put(vo.getUid());
 				arr.put(vo.getNickName());
 				arrUsers.put(arr);
 			}
@@ -101,10 +103,11 @@ public class MySocketHandler extends TextWebSocketHandler {
 			// 다른 클라이언트에게 접속 사실을 알림
 			JSONObject ob = new JSONObject();
 			ob.put("type", "userConnect");
-			ob.put("uid", uid);
+			ob.put("email", email);
+			// ob.put("uid", uid);
 			ob.put("nickName", nickName);
 
-			sendTextMessageToAll(ob.toString(), uid);
+			sendTextMessageToAll(ob.toString(), email);
 
 		} else if (type.equals("message")) { // 채팅 문자열을 전송 한 경우
 			User vo = getUser(session);
@@ -113,11 +116,12 @@ public class MySocketHandler extends TextWebSocketHandler {
 			JSONObject ob = new JSONObject();
 			ob.put("type", "message");
 			ob.put("chatMsg", msg);
-			ob.put("uid", vo.getUid());
+			ob.put("email", vo.getEmail());
+			// ob.put("uid", vo.getUid());
 			ob.put("nickName", vo.getNickName());
 
 			// 다른 사용자에게 전송하기
-			sendTextMessageToAll(ob.toString(), vo.getUid());
+			sendTextMessageToAll(ob.toString(), vo.getEmail());
 			
 		} else if (type.equals("whisper")) { // 위스퍼을 전송 한 경우
 			User user = getUser(session);
@@ -133,7 +137,7 @@ public class MySocketHandler extends TextWebSocketHandler {
 			JSONObject ob = new JSONObject();
 			ob.put("type", "whisper");
 			ob.put("chatMsg", msg);
-			ob.put("uid", user.getUid());
+			ob.put("email", user.getEmail());
 			ob.put("nickName", user.getNickName());
 
 			// 귓속말 대상자에게 메시지 보내기
@@ -228,17 +232,17 @@ public class MySocketHandler extends TextWebSocketHandler {
 		// 다른 클라이언트에게 접속 해제 사실을 알림
 		JSONObject job = new JSONObject();
 		job.put("type", "userDisconnect");
-		job.put("uid", user.getUid());
+		job.put("email", user.getEmail());
 		job.put("nickName", user.getNickName());
-		sendTextMessageToAll(job.toString(), user.getUid());
+		sendTextMessageToAll(job.toString(), user.getEmail());
 
 		try {
 			user.getSession().close();
 		} catch (Exception e) {
 		}
-		sessionMap.remove(user.getUid());
+		sessionMap.remove(user.getEmail());
 
-		return user.getUid();
+		return user.getEmail();
 	}
 
 	// 1분 마다 클라이언트에게 시간 전송(초 분 시 일 월 주 [년도]) 

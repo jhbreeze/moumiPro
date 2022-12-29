@@ -43,4 +43,16 @@ public class NoticeServiceImpl implements NoticeService{
 		return result;
 	}
 
+	@Override
+	public Notice readFile(long filenum) {
+		Notice dto = null;
+		
+		try {
+			dto = dao.selectOne("notice.readFile",filenum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
+
 }
