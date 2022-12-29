@@ -34,13 +34,12 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public void updateEvent(Event dto, String pathname) throws Exception {
 		try {
-			
+
 			String filename = fileManager.doFileUpload(dto.getThumbnailFile(), pathname);
 			dto.setThumbnail(filename);
-			
+
 			dao.updateData("adminEvent.updateEvent", dto);
-		
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -62,8 +61,13 @@ public class EventServiceImpl implements EventService {
 
 	@Override
 	public int dataCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		try {
+			result = dao.selectOne("adminEvent.dataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override

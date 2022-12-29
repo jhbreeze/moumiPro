@@ -1,10 +1,12 @@
 package com.moumi.app.admin.event;
 
 import java.io.File;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,18 +17,58 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.moumi.app.common.MyUtil;
+
 @Controller("admin.event.eventController")
 @RequestMapping("/admin/event/*")
 public class EventController {
 	@Autowired
 	private EventService service;
+	
+	@Autowired
+	private MyUtil myUtil;
+
 
 	@RequestMapping(value = "list")
-	public String list(Model model) throws Exception {
+	public String list(@RequestParam(value = "page", defaultValue = "1") int current_page,
+			@RequestParam(defaultValue = "all") String condition, @RequestParam(defaultValue = "") String keyword,
+			@RequestParam(value = "size", defaultValue = "10") int size, HttpServletRequest req, Model model)
+			throws Exception {
+
+		int total_page = 0;
+		int dataCount = 0;
+
+		if (req.getMethod().equalsIgnoreCase("GET")) {
+			keyword = URLDecoder.decode(keyword, "UTF-8");
+		}
+
 		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		
+		dataCount = service.dataCount(map);
+		total_page = myUtil.pageCount(dataCount, size);
+		
+		if (total_page < current_page) {
+			current_page = total_page;
+		}
+
+		int offset = (current_page - 1) * size;
+		if(offset < 0) offset = 0;
+
+		map.put("offset", offset);
+		map.put("size", size);
+
 
 		List<Event> list = service.listEvent(map);
 		model.addAttribute("list", list);
+		model.addAttribute("page", current_page);
+		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("size", size);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("condition", condition);
+		model.addAttribute("keyword", keyword);
+		
 
 		return ".admin.event.list";
 	}
@@ -66,7 +108,7 @@ public class EventController {
 
 			model.addAttribute("dto", dto);
 			model.addAttribute("mode", "update");
-		
+
 		} catch (Exception e) {
 			e.printStackTrace();
 

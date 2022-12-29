@@ -53,7 +53,7 @@ public class EventController {
 
 	// 댓글 리스트 : AJAX-TEXT
 	@GetMapping("listReply")
-	public String listReply(@RequestParam long num,
+	public String listReply(@RequestParam long eventNum,
 			@RequestParam(value = "pageNo", defaultValue = "1") int current_page, HttpSession session, Model model)
 			throws Exception {
 
@@ -64,12 +64,10 @@ public class EventController {
 		int dataCount = 0;
 
 		Map<String, Object> map = new HashMap<>();
-		map.put("num", num);
+		map.put("eventNum", eventNum);
 
 		map.put("userCode", 1);
-		// map.put("userId", info.getUserId());
-
-		map.put("num", num);
+		// map.put("userId", info.getUserId())
 
 		dataCount = service.replyCount(map);
 		total_page = myUtil.pageCount(dataCount, size);
@@ -99,8 +97,9 @@ public class EventController {
 		model.addAttribute("replyCount", dataCount);
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("paging", paging);
+		model.addAttribute("eventNum",eventNum);
 
-		return "bbs/listReply";
+		return "event/listReply";
 	}
 
 	// 댓글 및 댓글의 답글 등록 : AJAX-JSON

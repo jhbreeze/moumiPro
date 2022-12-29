@@ -43,33 +43,42 @@ public class EventServiceImpl implements EventService {
 
 	@Override
 	public void insertReply(Reply dto) throws Exception {
-		
+
 		try {
 			// 이벤트 리뷰 댓글
-			dao.insertData("event.insertReply",dto);
+			dao.insertData("event.insertReply", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 
 	}
 
 	@Override
 	public void deleteReply(Map<String, Object> paramMap) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public int replyCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		try {
+			result = dao.selectOne("event.dataCount",map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override
 	public List<Reply> listReply(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Reply> list = null;
+		try {
+			list = dao.selectList("event.listReply", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 }

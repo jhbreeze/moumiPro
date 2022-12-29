@@ -42,16 +42,27 @@ function ajaxFun(url, method, query, dataType, fn) {
 	});
 }
 
+//페이징 처리
+$(function(){
+	listPage(1);
+});
+
+function listPage(page) {
+
+	let url = "${pageContext.request.contextPath}/event/listReply";
+	let query = "eventNum=${dto.eventNum}&pageNo="+page;
+	let selector = "#listReply";
+	
+	const fn = function(data){
+		$(selector).html(data);
+	};
+	ajaxFun(url, "get", query, "html", fn);
+}
 
 // 리플 등록
 $(function(){
 	$(".btnSendReply").click(function(){
-
 		let eventNum = "${dto.eventNum}";
-		
-		console.log(eventNum);
-
-		
 		const $tb = $(this).closest("table");
 
 		let content = $tb.find("textarea").val().trim();

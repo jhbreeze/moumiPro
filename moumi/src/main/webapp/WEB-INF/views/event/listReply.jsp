@@ -24,22 +24,26 @@
 				<span class='reply-dropdown'><i class='bi bi-three-dots-vertical'></i></span>
 				<div class="reply-menu">
 					<c:choose>
-						<c:when test="${sessionScope.member.userId==vo.userId}">
+					 	<c:when test="${sessionScope.member.userCode == vo.userCode}">
 							<div class='deleteReply reply-menu-item' data-replyNum='${vo.replyNum}' data-pageNo='${pageNo}'>삭제</div>
-							<div class='hideReply reply-menu-item' data-replyNum='${vo.replyNum}' data-showReply='${vo.showReply}'>${vo.showReply == 1 ? "숨김":"표시"}</div>
+							<div class='notifyReplyAnswer reply-menu-item' data-replyNum='${vo.replyNum}' onclick="notify(${vo.replyNum});">신고</div>
 						</c:when>
-						<c:when test="${sessionScope.member.membership > 50}">
+						<c:when test="${sessionScope.member.userType == 0}">
 							<div class='deleteReply reply-menu-item' data-replyNum='${vo.replyNum}' data-pageNo='${pageNo}'>삭제</div>
-							<div class='blockReply reply-menu-item'>차단</div>
+							<div class='notifyReplyAnswer reply-menu-item' data-replyNum='${vo.replyNum}'  onclick="notify(${vo.replyNum});">신고</div>
 						</c:when>
+						<c:otherwise>
+							<div class="notifyReply reply-menu-item"  onclick="notify(${vo.replyNum});">신고</div>
+						</c:otherwise>
 					</c:choose>
 				</div>
 			</td>
 		</tr>
 		<tr>
-			<td colspan='2' valign='top' class="${vo.showReply == 0 ? 'text-primary text-opacity-50':''}">${vo.content}</td>
+			<td colspan='2' valign='top' <%-- class="${vo.showReply==0?'text-primary text-opacity-50':'' }" --%>>
+				${vo.content}
+			</td>
 		</tr>
-	
 	</c:forEach>
 </table>
 

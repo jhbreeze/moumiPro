@@ -20,4 +20,17 @@
 		INSERT INTO eventReply(replyNum, eventNum, userCode, content, regDate)
 		VALUES (eventReplyNum_seq.NEXTVAL, #{eventNum}, #{userCode}, #{content}, SYSDATE)
 	</insert>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*),0) FROM event e
+		JOIN member m ON e.userCode = m.userCode
+	</select>
+	
+	
+	<select id = "listReply" parameterType ="map" resultType ="com.moumi.app.event.Reply">
+		SELECT content, regDate, userCode
+		FROM eventReply
+		WHERE eventNum = #{eventNum}
+	</select>
+	
 </mapper>

@@ -152,7 +152,7 @@ li {
 }
 
 .map {
-	width: 800px;
+	width: 900px;
 	height: 600px;
 }
 
@@ -351,8 +351,6 @@ li {
 
 			</div>
 		</div>
-		
-	
 
 		<div class="container text-center">
 
@@ -367,7 +365,12 @@ li {
 
 				<p class="title">우리 지역 살리기</p>
 			
-				
+				<div class="box">
+					<p>
+						<input type="text" id="keyword" class="form-control">
+						<button type="button" class="btn btnSearch"> 검색 </button>
+					</p>
+				</div>
 				<div id="map" class="map"></div>
 			
 			</div>
