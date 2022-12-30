@@ -7,6 +7,18 @@
 
 <div class="body-container">
     <div class="body-main">
-    	<p> 관리자 페이지 입니다.</p>
+    	<div class="row g-1 mt-4 p-1">
+			<div class="col p-2">
+				<div class="fs-6 fw-semibold mb-2"><i class="bi bi-chevron-right"></i> 오늘 판매 현황</div>
+				<div class="border rounded p-5 text-center">
+					<div class="fs-5 mb-2">총 판매 건수 : 
+						<span class="product-totalAmount fw-semibold text-primary">${today.COUNT}</span><!-- 오라클에서만 대문자로 보냄. console.log로 꼭 확인해볼것 -->
+					</div>
+					<div class="fs-5">총 판매 금액 : 
+						<span class="product-totalAmount fw-semibold text-danger"><fmt:formatNumber value="${today.TOTAL}"/></span>원
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>

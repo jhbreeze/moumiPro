@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="memberManage">
+	<sql id="where-list">
+		<choose>
+			<when test="condition=='email'">
+				INSTR(m.userId, #{keyword}) &gt;= 1
+			</when>
+			<otherwise>
+				INSTR(${condition}, #{keyword}) &gt;= 1
+			</otherwise>
+		</choose>
+	</sql>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT COUNT(*)
+		FROM member
+		<where>
+			<if test="keyword!=null and keyword!='' ">
+				<include refid="where-list"/>
+			</if>
+			<if test="enabled!=''">
+				AND enabled = #{enabled}
+			</if>
+		</where>
+	</select>
+	
+	<select id="listMember" parameterType="map" resultType="com.moumi.app.admin.memberManage.Member">
+		SELECT m.userCode, m.email, userName, userType, nickName,
+			m.regDate, lastLogin, gender,
+			enabled, TO_CHAR(birth, 'YYYY-MM-DD') birth
+		FROM member m
+		<where>
+			<if test="keyword!=null and keyword!='' ">
+				<include refid="where-list"/>
+			</if>
+			<if test="enabled!=''">
+				AND enabled = #{enabled}
+			</if>
+		</where>
+		ORDER BY regDate DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
+	</select>
+	
+	<select id="readMember" parameterType="String" resultType="com.moumi.app.admin.memberManage.Member">
+		SELECT userCode, email, userName, userType, nickName,
+			regDate, lastLogin, gender,
+			enabled, TO_CHAR(birth, 'YYYY-MM-DD') birth
+		FROM member m
+		WHERE userCode = #{userCode}
+	</select>
+	
+	<update id="updateFailureCountReset" parameterType="String">
+		UPDATE member SET failure_cnt = 0
+		WHERE email = #{email}
+	</update>
+	
+	<update id="updateMemberEnabled" parameterType="map">
+		UPDATE member SET enabled= #{enabled} WHERE email = #{email}
+	</update>
+	
+	<insert id="insertmemberState" parameterType="com.moumi.app.admin.memberManage.Member">
+		INSERT INTO state(stateNum, userCode, stateCode, memo, registerCode, register_date)
+		VALUES (state_seq.NEXTVAL, #{userCode}, #{stateCode}, #{memo}, #{registerCode}, SYSDATE)
+	</insert>
+	
+	<select id="listMemberState" parameterType="String" resultType="com.moumi.app.admin.memberManage.Member">
+		SELECT stateNum, userCode, stateCode, memo, registerCode, register_date
+		FROM state
+		WHERE userCodt = #{userCode}
+		ORDER BY stateNum DESC
+	</select>
+	
+	<select id="readMemberState" parameterType="String" resultType="com.moumi.app.admin.memberManage.Member">
+		SELECT stateNum, userCode, stateCode, memo, registerCode, register_date
+		FROM state
+		WHERE userCodt = #{userCode}
+		ORDER BY stateNum DESC
+		FETCH FIRST 1 ROWS ONLY
+	</select>
+	
+
+</mapper>

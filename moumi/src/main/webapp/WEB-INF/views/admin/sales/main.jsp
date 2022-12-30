@@ -103,8 +103,16 @@ $(function() {
 	listPage(1);
 
     $("#sel").change(function(e) {
-
-    	listPage(1);
+    	 var v = $("#sel").val();
+         
+         if (v == 1){
+        	listPage(1);
+         } else if (v == 2){
+         	
+         } else if (v == 3){
+         	
+         }
+     	
 
     });
 
@@ -112,10 +120,8 @@ $(function() {
 
 function listPage(page) {
 	const $tab = $("#sel.active");
-	let categoryNum = $tab.attr("data-categoryNum");
 	
 	let url = "${pageContext.request.contextPath}/admin/sales/list";
-	let query = "pageNo="+page+"&categoryNum="+categoryNum;
 	
 	let selector = "#nav-content";
 	
@@ -133,22 +139,17 @@ function listPage(page) {
 			</h2>
 		</div>
 		
-		<select class="form-select" aria-label="Default select example" id="sel">
-		  <option value="1">기간별</option>
-		  <option value="2" selected>연령대별</option>
-		  <option value="3">성별</option>
-		</select>
-
 		<div class="body-main">
-			<form name="listForm" method="post">
-				<div class="row board-list-header"></div>
-				
-
-			<div class="col p-2">
-				<div class="fs-6 fw-semibold mb-2"><i class="bi bi-chevron-right"></i> 최근 1달 판매 현황</div>
-				<div id="charts-day" class="charts-day border rounded" style="height: 500px;"></div>
+			<select class="form-select" aria-label="Default select example" id="sel">
+		  		<option value="1">기간별</option>
+		  		<option value="2" selected>연령대별</option>
+		  		<option value="3">성별</option>
+			</select>
+			
+			<div class="tab-content pt-2" id="nav-tabContent">
+				<div class="tab-pane fade show active" id="nav-content" role="tabpanel" aria-labelledby="nav-tab-content">
+				</div>
 			</div>
-			</form>
 		</div>
 	</div>
 </div>
