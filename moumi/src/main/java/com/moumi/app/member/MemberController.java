@@ -228,7 +228,21 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "myPage")
-	public String myPageForm() {
+	public String myPageForm(Member dto,
+			HttpSession session,
+			Model model) throws Exception {
+		
+		try {
+			SessionInfo info = (SessionInfo) session.getAttribute("member");
+			
+			service.readMyPage(info.getEmail());
+			
+			model.addAttribute("dto", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
 		return ".member.myPage";
 	}
 	
