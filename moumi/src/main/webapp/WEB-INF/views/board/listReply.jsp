@@ -40,14 +40,14 @@
 					<c:choose>
 					 	<c:when test="${sessionScope.member.userCode == vo.userCode}">
 							<div class='deleteReply reply-menu-item' data-replyNum='${vo.replyNum}' data-pageNo='${pageNo}'>삭제</div>
-							<div class='notifyReplyAnswer reply-menu-item' data-replyNum='${vo.replyNum}' onclick="notify(${vo.replyNum});">신고</div>
+							<div class='notifyReply reply-menu-item' data-replyNum='${vo.replyNum}'>신고</div>
 						</c:when>
 						<c:when test="${sessionScope.member.userType == 0}">
 							<div class='deleteReply reply-menu-item' data-replyNum='${vo.replyNum}' data-pageNo='${pageNo}'>삭제</div>
-							<div class='notifyReplyAnswer reply-menu-item' data-replyNum='${vo.replyNum}'  onclick="notify(${vo.replyNum});">신고</div>
+							<div class='notifyReply reply-menu-item' data-replyNum='${vo.replyNum}'>신고</div>
 						</c:when>
 						<c:otherwise>
-							<div class="notifyReply reply-menu-item"  onclick="notify(${vo.replyNum});">신고</div>
+							<div class="notifyReply reply-menu-item">신고</div>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -114,7 +114,7 @@
         			<input type="text" name="notifyContent" class="form-control mt-3" placeholder="신고내용" style="height: 10rem;">
         		</div>
         		<input type="hidden" name="parent">
-        		<input type="hidden" name="page" value="${pageNo}">
+        		<input type="hidden" name="pageNo" value="${pageNo}">
         		<input type="hidden" name="communityNum" value="${communityNum}">
       		</form>
       	</div>
@@ -122,42 +122,13 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-        <button type="button" class="btn btn-success" onclick="sendModalNotify();">신고하기</button>
+        <button type="button" class="btn btn-success sendModalNotify">신고하기</button>
       </div>
     </div>
   </div>
 </div>
 <script type="text/javascript">
-function notify(num) {
-	  $("form[name=notifyForm] input[name=userName]").val("");
-	    $("form[name=notifyForm] input[name=notifyContent]").val("");
-	    
-	    $("form[name=notifyForm] input[name=parent]").val(num)
-	    
-		$("#notifyModal").modal("show");	
-		
-	    $("form[name=notifyForm] input[name=userName]").focus();
-}
-function sendModalNotify() {
-	 	var f = document.notifyForm;
-		var str;
-		
-		
-		str = f.userName.value;
-	    if(!str) {
-	        f.userName.focus();
-	        return;
-	    }
-		
-	    str = f.notifyContent.value;
-	    if(!str) {
-	        f.notifyContent.focus();
-	        return;
-	    }
-	
-	    f.action = "${pageContext.request.contextPath}/board/notify";
-	    f.submit();
-}
+
 </script>
 
 <div class="page-navigation">

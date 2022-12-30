@@ -309,6 +309,7 @@ public class BoardController {
 		map.put("size", size);
 		
 		List<Reply> listReply = service.listReply(map);
+	
 
 		for (Reply dto : listReply) {
 			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
@@ -437,10 +438,9 @@ public class BoardController {
 			
 			String query = "communityNum="+communityNum+"&page="+current_page;
 			try {
+				System.out.println("여기오니?");
 				dto.setReplyNum(parent);
-				System.out.println("여기까지 오니");
 				service.insertNotify(dto);
-				System.out.println("왔다.");
 			} catch (Exception e) {
 			}
 			return "redirect:/board/article?"+query;

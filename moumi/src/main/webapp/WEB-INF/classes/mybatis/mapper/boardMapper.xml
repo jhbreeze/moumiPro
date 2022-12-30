@@ -220,4 +220,10 @@
 			VALUES(commentStop_seq.NEXTVAL,#{replyNum},#{content},#{userName})
 	</insert>
 	
+	<select id="readReplyNum" parameterType="Long" resultType="Integer">
+		SELECT replyNum
+		FROM reply
+		WHERE replyNum = #{replyNum}
+	</select>
+	
 </mapper>
