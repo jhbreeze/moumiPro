@@ -322,19 +322,18 @@ li {
 			class="more">더보기</a> <br> <br>
 		<div class="container text-center">
 			<div class="row">
-				<c:forEach var="item" begin="0" end="7" step="1" varStatus="status">
-					<div class="col-lg-3 col-md-3">
-						<div class="card" style="width: 18rem;">
-							<img style="height: 280px; width: 285px;"
-								src="${pageContext.request.contextPath}/resources/images/noimage.png" />
+				<c:forEach var="dto" items="${listMainReport}" varStatus="status">	
+						<div class="col-md-4 col-lg-3 mt-4" style="width: 350px; margin:25px;" >
+					<div class="card" style="width: 18rem;" data-reportNum="${dto.reportNum}">
+						<img style="height: 280px; width: 285px;" src="${pageContext.request.contextPath}/uploads/report/${dto.thumbnail}" style="width: -webkit-fill-available;">
+						<div class="p-2">
 							<div class="card-body">
-								<p class="card-text">분석 리포트 제목</p>
+								<a href="${articleUrl}&reportNum=${dto.reportNum}" class="text-reset" style="text-decoration-line: none;">${dto.subject}</a>
 							</div>
 						</div>
-						<br>
-
 					</div>
-				</c:forEach>
+				</div>
+			</c:forEach>
 
 			</div>
 		</div>
@@ -401,10 +400,10 @@ li {
 
 				<div class="search-container">
 						<div class="col-auto p-1">
-							<c:if test="${!empty list}">
+							<c:if test="${!empty listRegion}">
 								<select name="regionCode" id="regionCode" style="width: 80px;"
 									class="select_02" onchange="javascript:myListener(this);">
-									<c:forEach var="region" items="${list}" varStatus="i">
+									<c:forEach var="region" items="${listRegion}" varStatus="i">
 										<option value="${region.regionCode}">${region.regionName}</option>
 									</c:forEach>
 								</select>

@@ -10,7 +10,7 @@ public interface ReportService {
 	
 	public int dataCount(Map<String, Object> map);
 	public List<Report> listReport(Map<String, Object> map);
-	
+
 	public Report readReport(long reportNum);
 	public Report preReadReport(Map<String, Object> map);
 	public Report nextReadReport(Map<String, Object> map);
