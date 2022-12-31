@@ -161,12 +161,29 @@ li {
 <script>
 	$(document).ready(function() {
 		
+		let areaCode = $("#areaCode").val(); // 지역코드
+		alert(areaCode);
+		let latitude = 37.557714093880406;
+		let longitude = 126.9245098110579;
+		
+		if(areaCode = 1){
+			latitude = 36.3504119;
+			longitude =  127.3845475;		
+		}
+		
+			
 		var mapContainer = document.getElementById('map');
 		var mapOption = {
-			center: new kakao.maps.LatLng(37.557714093880406, 126.92450981105797),  // 지도의 중심좌표 : 위도(latitude), 경도(longitude)
+			// center: new kakao.maps.LatLng(37.557714093880406, 126.92450981105797),  // 지도의 중심좌표 : 위도(latitude), 경도(longitude)
+				
+			
+								
+			center: new kakao.maps.LatLng(latitude, longitude),
 			level: 3  // 지도의 레벨(확대, 축소 정도)
 		};
-
+		
+		
+		
 		// 지도를 생성
 		var map = new kakao.maps.Map(mapContainer, mapOption);
 
@@ -242,6 +259,9 @@ li {
 		});
 	}
 });
+	
+	
+		
 </script>
 
 
@@ -365,12 +385,22 @@ li {
 
 				<p class="title">우리 지역 살리기</p>
 			
-				<div class="box">
-					<p>
-						<input type="text" id="keyword" class="form-control">
-						<button type="button" class="btn btnSearch"> 검색 </button>
-					</p>
+				<div class="search-container">
+
+
+					<c:if test="${!empty list}">
+						<select name="selectBox" id="selectBox" style="width: 80px;" class="select_02">
+							<c:forEach var="region" items="${list}" varStatus="i">
+								<option value="${region.regionCode}">${region.regionName}</option>
+								<input type="hidden" name ="latitude" value ="${region.latitude}">
+								<input type="hidden" name ="longitude" value ="${region.longitude}">
+							</c:forEach>
+
+						</select>
+
+					</c:if>
 				</div>
+				
 				<div id="map" class="map"></div>
 			
 			</div>
