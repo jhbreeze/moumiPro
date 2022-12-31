@@ -67,7 +67,7 @@ public class EventController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("eventNum", eventNum);
 
-		map.put("userCode", 1);
+		map.put("userCode", info.getUserCode());
 
 		dataCount = service.replyCount(map);
 

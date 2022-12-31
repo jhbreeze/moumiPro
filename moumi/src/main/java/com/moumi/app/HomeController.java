@@ -11,22 +11,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.moumi.app.Report;
-
 @Controller()
 
 public class HomeController {
 	@Autowired
 	private HomeService service;
 
-
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 
-		List<Region> listRegion = service.listRegion(map);
-		List<Report> listMainReport = service.listMainReport(map);
+		List<Region> listRegion = service.listRegion(map); // 지도 지역 카테고리 
+		List<Report> listMainReport = service.listMainReport(map); // 분석 리포트
 
 		model.addAttribute("listRegion", listRegion);
 

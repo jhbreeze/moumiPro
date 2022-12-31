@@ -2,6 +2,8 @@ package com.moumi.app.admin.event;
 
 import java.io.File;
 import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,10 +26,9 @@ import com.moumi.app.common.MyUtil;
 public class EventController {
 	@Autowired
 	private EventService service;
-	
+
 	@Autowired
 	private MyUtil myUtil;
-
 
 	@RequestMapping(value = "list")
 	public String list(@RequestParam(value = "page", defaultValue = "1") int current_page,
@@ -45,20 +46,20 @@ public class EventController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("condition", condition);
 		map.put("keyword", keyword);
-		
+
 		dataCount = service.dataCount(map);
 		total_page = myUtil.pageCount(dataCount, size);
-		
+
 		if (total_page < current_page) {
 			current_page = total_page;
 		}
 
 		int offset = (current_page - 1) * size;
-		if(offset < 0) offset = 0;
+		if (offset < 0)
+			offset = 0;
 
 		map.put("offset", offset);
 		map.put("size", size);
-
 
 		List<Event> list = service.listEvent(map);
 		model.addAttribute("list", list);
@@ -68,7 +69,6 @@ public class EventController {
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
-		
 
 		return ".admin.event.list";
 	}
@@ -104,8 +104,34 @@ public class EventController {
 
 		try {
 
+			Calendar cal = Calendar.getInstance();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			
 			Event dto = service.readEvent(eventNum);
+			// String s = dto.getEday().replaceAll("\\-|\\.|/", "");
+			String s = dto.getStartDate().replaceAll("\\-|\\.|/", "");
+			String e = dto.getEndDate().replaceAll("\\-|\\.|/", "");
+			
+			int sy = Integer.parseInt(s.substring(0, 4));
+			int sm = Integer.parseInt(s.substring(4, 6));
+			int sd = Integer.parseInt(s.substring(6));
 
+
+			cal.set(sy, sm - 1, sd+1);
+			cal.add(Calendar.DATE, -1);
+	
+			dto.setStartDate(sdf.format(cal.getTime()));
+
+
+			int ey = Integer.parseInt(e.substring(0, 4));
+			int em = Integer.parseInt(e.substring(4, 6));
+			int ed = Integer.parseInt(e.substring(6));
+
+			cal.set(ey, em - 1, ed+1);
+
+			cal.add(Calendar.DATE, -1);
+
+			dto.setEndDate(sdf.format(cal.getTime()));
 			model.addAttribute("dto", dto);
 			model.addAttribute("mode", "update");
 

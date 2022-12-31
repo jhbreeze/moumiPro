@@ -5,6 +5,5 @@ import java.util.Map;
 
 public interface HomeService {
 	public List<Region> listRegion(Map<String, Object> map);
-
 	public List<Report> listMainReport(Map<String, Object> map);
 }
