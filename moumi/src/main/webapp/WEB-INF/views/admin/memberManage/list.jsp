@@ -17,7 +17,9 @@ main {
 .body-container {
 	max-width: 1200px;
 	margin: auto;
-	padding: 20px;
+	padding-top: 90px;
+	padding-left: inherit;
+	padding-right: inherit;
 	
 }
 
@@ -92,16 +94,17 @@ function ajaxFun(url, method, query, dataType, fn) {
 		url:url,
 		data:query,
 		dataType:dataType,
-		success:function(data) {
+		success:function(data){
 			fn(data);
 		},
-		beforeSend : function(jqXHR){
+		beforeSend : function(jqXHR) {
 			jqXHR.setRequestHeader("AJAX", true);
 		},
-		error  : function(jqXHR){
-			if(jqXHR.status === 403){
+		error : function(jqXHR) {
+			if (jqXHR.status === 403) {
 				location.href="${pageContext.request.contextPath}/member/login";
-			} else if(jqXHR.status === 400){
+				return false;
+			} else if(jqXHR.status === 400) {
 				alert("요청 처리가 실패했습니다.");
 				return false;
 			}
@@ -112,13 +115,13 @@ function ajaxFun(url, method, query, dataType, fn) {
 
 function searchList() {
 	const f = document.searchForm;
-	f.enatbled.value = $("#selectEnabled").val();
+	f.enabled.value=$("#selectEnabled").val();
 	f.action = "${pageContext.request.contextPath}/admin/memberManage/list";
 	f.submit();
 }
 
-function detailMember(email){
-	let dig = $("#member-dialog").dialog({
+function detailedMember(userCode){
+	let dlg = $("#member-dialog").dialog({
 		autoOpen: false,
 		model: true,
 		buttons: {
@@ -139,7 +142,7 @@ function detailMember(email){
 		}
 	});
 	
-	let url = "${pageContext.request.contextPath}/admin/memberManage/detail";
+	let url = "${pageContext.request.contextPath}/admin/memberManage/detaile";
 	let query = "userCode="+userCode;
 	
 	const fn = function(data) {
@@ -150,7 +153,7 @@ function detailMember(email){
 }
 
 function updateOk() {
-	const f = document.detailMemberForm;
+	const f = document.deteailedMemberForm;
 	
 	if(! f.stateCode.value){
 		f.stateCode.focus();
@@ -162,15 +165,54 @@ function updateOk() {
 	}
 	
 	let url = "${pageContext.request.contextPath}/admin/memberManage/updateMemberState";
-	let query = $("#detailMemberForm").sereialize();
+	let query = $("#deteailedMemberForm").serialize();
 	
 	const fn = function(data) {
 		$("form input[name=page]").val("${page}");
 		searchList();
 	};
-	ajaxFum(url, "post", query, "json", fn);
+	ajaxFun(url, "post", query, "json", fn);
 	
 	$('#member-dialog').dialog("close");
+}
+
+function deleteOk(userCode) {
+	if(confirm("선택한 계정을 삭제 하시겠습니까 ?")) {
+
+	}
+	
+	$('#member-dialog').dialog("close");
+}
+
+function memberStateDetaileView() {
+	$('#memberStateDetaile').dialog({
+		  modal: true,
+		  minHeight: 100,
+		  maxHeight: 450,
+		  width: 750,
+		  title: '계정상태 상세',
+		  close: function(event, ui) {
+			   $(this).dialog("destroy"); // 이전 대화상자가 남아 있으므로 필요
+		  }
+	  });	
+}
+
+function selectStateChange() {
+	const f = document.deteailedMemberForm;
+	
+	let s = f.stateCode.value;
+	let txt = f.stateCode.options[f.stateCode.selectedIndex].text;
+	
+	f.memo.value = "";	
+	if(! s) {
+		return;
+	}
+
+	if(s!=="0" && s!=="6") {
+		f.memo.value = txt;
+	}
+	
+	f.memo.focus();
 }
 </script>
 <div class="container">
@@ -221,12 +263,25 @@ function updateOk() {
 				
 				<tbody>
 					<c:forEach var="dto" items="${list}" varStatus="status">
-						<tr class="hover" onclick="detailMember('${dto.email}');"> 
+						<tr class="hover" onclick="detailedMember('${dto.userCode}');"> 
 							<td>${dataCount - (page-1) * size - status.index}</td>
 							<td>${dto.email}</td>
 							<td>${dto.userName}</td>
 							<td>${dto.birth}</td>
-							<td>${dto.userType}</td>
+							<td> 
+								<c:if test="${dto.userType == 0}">
+									관리자
+								</c:if>
+								<c:if test="${dto.userType == 1}">
+									일반회원
+								</c:if> 
+								<c:if test="${dto.userType == 2}">
+									유료회원
+								</c:if>
+								<c:if test="${dto.userType == 3}">
+									기업회원
+								</c:if>  
+							</td>
 							<td>${dto.enabled==1?"활성":"잠금"}</td>
 							<td>${dto.email}</td>
 						</tr>
@@ -265,3 +320,5 @@ function updateOk() {
 		</div>
 	</div>
 </div>
+
+<div id="member-dialog" style="display: none;"></div>
