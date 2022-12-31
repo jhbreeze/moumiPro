@@ -58,6 +58,7 @@
 		WHERE email = #{email}
 	</select>
 	
+	
     <!-- 회원정보 수정  --> 
     <update id="updateMember1" parameterType="com.moumi.app.member.Member">
 		UPDATE member SET pwd=#{pwd}

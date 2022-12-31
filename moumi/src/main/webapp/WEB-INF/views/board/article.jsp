@@ -492,6 +492,46 @@ $(function(){
 		ajaxFun(url,"post",query,"json",fn);
 	});
 });
+// 모달
+$(function(){
+	$("body").on("click",".notifyReply",function(){
+		$("form[name=notifyForm] input[name=userName]").val("");
+	    $("form[name=notifyForm] input[name=notifyContent]").val("");
+	    let replyNum = $(".btnReplyAnswerLayout").attr("data-replyNum");
+	    
+	    $("form[name=notifyForm] input[name=parent]").val(replyNum)
+	    
+	    
+		$("#notifyModal").modal("show");	
+		
+	    $("form[name=notifyForm] input[name=userName]").focus();
+	});
+});
+// 모달값 보내기
+$(function(){
+	$("body").on("click",".sendModalNotify",function() {
+		var f = document.notifyForm;
+		var str;
+		
+		
+		str = f.userName.value;
+	    if(!str) {
+	        f.userName.focus();
+	        return;
+	    }
+		
+	    str = f.notifyContent.value;
+	    if(!str) {
+	        f.notifyContent.focus();
+	        return;
+	    }
+	    alert(f.parent.value);
+		alert(f.pageNo.value);
+		alert(f.communityNum.value);
+	    f.action = "${pageContext.request.contextPath}/board/notify";
+	    f.submit();
+	});
+});
 </script>
 
 <div class="container">

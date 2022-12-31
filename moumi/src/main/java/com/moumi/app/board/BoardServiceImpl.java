@@ -312,5 +312,15 @@ public class BoardServiceImpl implements BoardService{
 		}
 		
 	}
+	@Override
+	public long readReplyNum(long num) {
+			long result = 0;
+		try {
+			result = dao.selectOne("board.readReplyNum",num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 
 }
