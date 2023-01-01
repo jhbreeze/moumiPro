@@ -318,7 +318,7 @@ li {
 
 
 		<p class="title">분석 리포트</p>
-		<a href="${pageContext.request.contextPath}/report/reportList"
+		<a href="${pageContext.request.contextPath}/reportList"
 			class="more">더보기</a> <br> <br>
 		<div class="container text-center">
 			<div class="row">

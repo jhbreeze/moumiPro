@@ -21,5 +21,21 @@
         WHERE ROWNUM &lt;= 8
         ORDER BY regDate ASC
 	</select>
+	
+	<select id = "listReport" parameterType="map" resultType="com.moumi.app.Report"> 
+		SELECT subject, content, regDate, reportNum
+		FROM report
+	</select>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM report r
+	</select>
+	
+	<select id = "readReport" parameterType="Long" resultType="com.moumi.app.Report"> 
+		SELECT subject, content, regDate, reportNum
+		FROM report
+		WHERE reportNum = #{reportNum}
+	</select>
 
 </mapper>

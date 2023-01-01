@@ -17,13 +17,13 @@
 		<div class="inner-page">
 			<br> <br> <br>
 			<div class="row">
-				<c:forEach var="item" begin="0" end="11" step="1" varStatus="status">
+				<c:forEach var="dto" items="${list}" varStatus="status">
 					<div class="col-lg-3 col-md-3">
-						<div class="card" style="width: 18rem;">
+						<div class="card" style="width: 18rem;" onclick="location.href='${pageContext.request.contextPath}/article?&reportNum=${dto.reportNum}'">
 							<img style="height: 280px; width: 285px;"
-								src="${pageContext.request.contextPath}/resources/images/noimage.png" />
+								src="${pageContext.request.contextPath}/uploads/report/${dto.thumbnail}">
 							<div class="card-body">
-								<p class="card-text">분석 리포트 제목</p>
+								<p class="card-text">${dto.subject}"</p>
 							</div>
 						</div>
 						<br>
