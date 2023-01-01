@@ -2,6 +2,8 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<jsp:useBean id="now" class="java.util.Date" />
+<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
 
 <h3 style="font-size: 15px; padding-top: 10px;"><i class="fa-solid fa-angles-right"></i> 회원 정보</h3>
 <table class="table td-border mx-auto my-10" style="width: 99%;">
@@ -35,14 +37,30 @@
 		</td>
 		<td class="text-center ">구독상태</td>
 		<td class="ps-5"> 
-			미구독
+		<c:choose>
+			<c:when test="${dto.endDate == null || dto.endDate < today}">
+				미구독
+			</c:when>
+			<c:otherwise>
+				구독
+			</c:otherwise>
+		</c:choose>
 		</td>
 	</tr>
 	<tr>
 		<td class="text-center ">회원가입일</td>
 		<td class="ps-5">${dto.regDate}</td>
 		<td class="text-center">구독기간</td>
-		<td class="ps-5">${dto.startDate} ~ ${dto.endDate}</td>
+		<td class="ps-5">
+			<c:choose>
+			<c:when test="${dto.endDate == null || dto.endDate < today}">
+				미구독
+			</c:when>
+			<c:otherwise>
+				${dto.startDate} ~ ${dto.endDate}
+			</c:otherwise>
+		</c:choose>
+		</td>
 	</tr>
 	
 	<tr>
@@ -64,8 +82,8 @@
 		<tr>
 			<td class="wp-15 text-center bg-light">계정상태</td>
 			<td class="ps-5">
-				<select class="form-select" name="stateCode" id="stateCode" onchange="selectStateChange()" style="width: auto; background-color: #ECF4EB; color: #198754;">
-					<option value="">::상태코드::</option>
+				<select class="form-select change" name="stateCode" id="stateCode" onchange="selectStateChange()" style="width: auto; background-color: #ECF4EB; color: #198754;">
+					<option value="">상태코드</option>
 					<c:if test="${dto.enabled==0}">
 						<option value="0">잠금 해제</option>
 					</c:if>

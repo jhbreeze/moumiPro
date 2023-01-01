@@ -5,7 +5,24 @@
 	<select id="todaySales" resultType="map">
 		SELECT COUNT(*) count, NVL(SUM(paymentPrice), 0) total
 		FROM payment
+		JOIN 
 		WHERE TO_CHAR(payDate, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+	</select>
+	
+	<select id="todaySalesW" resultType="map">
+		SELECT COUNT(*) count, NVL(SUM(paymentPrice), 0) total
+		FROM payment p
+        join member m on p.userCode = m.userCode
+        WHERE gender = '여자'
+		AND TO_CHAR(payDate, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+	</select>
+	
+	<select id="todaySalesM" resultType="map">
+		SELECT COUNT(*) count, NVL(SUM(paymentPrice), 0) total
+		FROM payment p
+        join member m on p.userCode = m.userCode
+        WHERE gender = '남자'
+		AND TO_CHAR(payDate, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
 	</select>
 	
 	<select id="monthSales" resultType="map">
@@ -63,47 +80,17 @@
 		WHERE TO_CHAR(payDate, 'YYYY-MM-DD') = #{date} 
 	</select>
 	
-	<select id="dayTotalSalesW"  parameterType="String" resultType="map">
-		SELECT TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-6, 'YYYY-MM-DD') payDate, 
-				NVL(SUM(paymentPrice), 0) paymentPrice 
-		FROM payment p  
-		JOIN member m ON p.userCode = m.userCode
-		WHERE TO_CHAR(payDate, 'YYYY-MM-DD') = TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-6, 'YYYY-MM-DD') AND GENDER = '여자'
-		  UNION ALL
-		  
-		SELECT TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-5, 'YYYY-MM-DD') payDate, 
-				NVL(SUM(paymentPrice), 0) paymentPrice 
-		FROM payment 
-		WHERE TO_CHAR(payDate, 'YYYY-MM-DD') = TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-5, 'YYYY-MM-DD') AND GENDER = '여자'
-		  UNION ALL
-		  
-		SELECT TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-4, 'YYYY-MM-DD') payDate, 
-				NVL(SUM(paymentPrice), 0) paymentPrice 
-		FROM payment 
-		WHERE TO_CHAR(payDate, 'YYYY-MM-DD') = TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-4, 'YYYY-MM-DD') AND GENDER = '여자' 
-		  UNION ALL
-		  
-		SELECT TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-3, 'YYYY-MM-DD') payDate, 
-				NVL(SUM(paymentPrice), 0) paymentPrice 
-		FROM payment 
-		WHERE TO_CHAR(payDate, 'YYYY-MM-DD') = TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-3, 'YYYY-MM-DD') AND GENDER = '여자' 
-		  UNION ALL
-		  
-		SELECT TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-2, 'YYYY-MM-DD') payDate, 
-				NVL(SUM(paymentPrice), 0) paymentPrice 
-		FROM payment 
-		WHERE TO_CHAR(payDate, 'YYYY-MM-DD') = TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-2, 'YYYY-MM-DD') AND GENDER = '여자' 
-		  UNION ALL
-		  
-		SELECT TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-1, 'YYYY-MM-DD') payDate, 
-				NVL(SUM(paymentPrice), 0) paymentPrice 
-		FROM payment 
-		WHERE TO_CHAR(payDate, 'YYYY-MM-DD') = TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-1, 'YYYY-MM-DD') AND GENDER = '여자' 
-		  UNION ALL
-		  
-		SELECT #{date} payDate, 
-				NVL(SUM(paymentPrice), 0) paymentPrice 
-		FROM payment 
-		WHERE TO_CHAR(payDate, 'YYYY-MM-DD') = #{date} AND GENDER = '여자' 
+	<select id="dayOfWeekTotalCount" parameterType="String" resultType="map">
+            SELECT COUNT(*) total,
+                   NVL(COUNT(DECODE(TO_CHAR(payDate, 'D'), 1, 1)), 0) "SUN",
+                   NVL(COUNT(DECODE(TO_CHAR(payDate, 'D'), 2, 1)), 0) "MON",
+                   NVL(COUNT(DECODE(TO_CHAR(payDate, 'D'), 3, 1)), 0) "TUE",
+                   NVL(COUNT(DECODE(TO_CHAR(payDate, 'D'), 4, 1)), 0) "WED",
+                   NVL(COUNT(DECODE(TO_CHAR(payDate, 'D'), 5, 1)), 0) "THU",
+                   NVL(COUNT(DECODE(TO_CHAR(payDate, 'D'), 6, 1)), 0) "FRI",
+                   NVL(COUNT(DECODE(TO_CHAR(payDate, 'D'), 7, 1)), 0) "SAT"
+            FROM payment
+            WHERE TO_CHAR(payDate, 'YYYYMM') = #{month}
 	</select>
+	
 </mapper>

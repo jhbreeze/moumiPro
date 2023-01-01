@@ -48,4 +48,41 @@ public class MainTotalServiceImpl implements MainTotalService{
 		return resultMap;
 	}
 
+	@Override
+	public Map<String, Object> dayOfWeekTotalCount(String month) {
+		Map<String, Object> resultMap = null;
+		try {
+			resultMap = dao.selectOne("sales.dayOfWeekTotalCount", month);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return resultMap;
+	}
+
+	@Override
+	public Map<String, Object> todaySalesW() {
+		Map<String, Object> resultMap = null;
+		
+		try {
+			resultMap = dao.selectOne("sales.todaySalesW");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return resultMap;
+	}
+
+	@Override
+	public Map<String, Object> todaySalesM() {
+		Map<String, Object> resultMap = null;
+		
+		try {
+			resultMap = dao.selectOne("sales.todaySalesW");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return resultMap;
+	}
+
 }

@@ -7,18 +7,24 @@
 .container {
 	min-height: 800px;
 }
-
 main {
 	position: relative;
 	top: -55px;
 	background: white;
 }
 
-#btn{
+.btn{
 	background-color: #ECF4EB;
 	color: #198754;
 }
-
+.form-select.change {
+	-webkit-appearance:none;
+	moz-appearance:none;
+	appearance:none;
+	background:#fff;
+	text-align-last: center;
+}
+select::-ms-expand {opacity:0;}
 
 .body-container {
 	max-width: 1200px;
@@ -83,6 +89,9 @@ tr:hover {
 
 #tablee{
 	background-color: #ECF4EB;
+}
+td{
+	vertical-align: middle;
 }
 </style>
 
@@ -258,12 +267,12 @@ function selectStateChange() {
 					</td>
 					<td align="right">
 						<select id="selectEnabled" class="form-select" onchange="searchList();" style="width: auto; float: right;">
-							<option value="" ${enabled=="" ? "selected='selected'":""}>::계정상태::</option>
+							<option value="" ${enabled=="" ? "selected='selected'":""}>계정상태</option>
 							<option value="0" ${enabled=="0" ? "selected='selected'":""}>잠금 계정</option>
 							<option value="1" ${enabled=="1" ? "selected='selected'":""}>활성 계정</option>
 						</select>
 						<select id="selectEnabled2" class="form-select" onchange="searchList2();" style="width: auto;">
-							<option value=-1 ${userType== -1 ? "selected='selected'":""}>::회원분류::</option>
+							<option value=-1 ${userType== -1 ? "selected='selected'":""}>회원분류</option>
 							<option value=0 ${userType==0 ? "selected='selected'":""}>관리자</option>
 							<option value=1 ${userType==1 ? "selected='selected'":""}>일반회원</option>
 							<option value=2 ${userType==2 ? "selected='selected'":""}>유료회원</option>
@@ -278,7 +287,7 @@ function selectStateChange() {
 					<tr id="tablec"> 
 						<th class="wx-60">번호</th>
 						<th class="wx-120">회원구분</th>
-						<th class="wx-100">아이디</th>
+						<th class="wx-100">아이디(이메일)</th>
 						<th class="wx-100">이름</th>
 						<th class="wx-60">계정 상태</th>
 						<th class="wx-100">가입일</th>
