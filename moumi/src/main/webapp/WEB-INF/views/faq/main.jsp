@@ -7,6 +7,47 @@
 .body-container {
 	max-width: 800px;
 }
+
+.side {
+list-style: none;
+font-family:"Malgun Gothic", "맑은 고딕", NanumGothic, 나눔고딕, 돋움, sans-serif;
+font-size: 20px;
+
+}
+.side-menu1{
+position:absolute;
+top: 10rem;
+left: 15rem;
+background: #198754;
+width: 9rem;
+height: 3rem;
+text-align: center;
+color: white;
+padding-top: 0.5rem;
+}
+.side-menu2{
+position:absolute;
+top: 14rem;
+left: 15rem;
+
+}
+.side-menu2 a{
+text-decoration: none;
+color: gray;
+
+}
+.side-menu3{
+position:absolute;
+top: 17rem;
+left: 15rem;
+
+}
+.side-menu3 a{
+color: #198754;
+font-weight: bold;
+text-decoration: none;
+
+}
 </style>
 
 <script type="text/javascript">
@@ -56,7 +97,7 @@ function listPage(page) {
 	let categoryNum = $tab.attr("data-categoryNum");
 	
 	let url = "${pageContext.request.contextPath}/faq/list";
-	let query = "pageNo="+page+"&categoryNum="+categoryNum;
+	let query = "categoryNum="+categoryNum;
 	let search = $('form[name=faqSearchForm]').serialize();
 	query = query+"&"+search;
 	
@@ -87,22 +128,21 @@ function reloadFaq() {
 	listPage(1);
 }
 
-// 글 삭제
-function deleteFaq(num, page) {
-	let url = "${pageContext.request.contextPath}/faq/delete";
-	let query = "num="+num;
-	
-	if(! confirm("위 게시물을 삭제 하시 겠습니까 ? ")) {
-		  return;
-	}
-	
-	const fn = function(data){
-		listPage(page);
-	};
-	
-	ajaxFun(url, "post", query, "json", fn);
-}
+
 </script>
+<nav>
+	<ul class="side">
+		<li class="side-menu1">
+			고객센터
+		</li>
+		<li class="side-menu2">
+			<a href="${pageContext.request.contextPath}/notice/main">공지사항</a>
+		</li>
+		<li class="side-menu3">
+			<a href="${pageContext.request.contextPath}/faq/main">자주 묻는 질문</a>
+		</li>
+	</ul>
+</nav>
 
 <div class="container">
 	<div class="body-container">	
@@ -122,7 +162,7 @@ function deleteFaq(num, page) {
 				</li>
 				<c:forEach var="dto" items="${listCategory}" varStatus="status">
 					<li class="nav-item" role="presentation">
-						<button class="nav-link" id="tab-${status.count}" data-bs-toggle="tab" data-bs-target="#nav-content" type="button" role="tab" aria-controls="${status.count}" aria-selected="true" data-categoryNum="${dto.categoryNum}">${dto.category}</button>
+						<button class="nav-link" id="tab-${status.count}" data-bs-toggle="tab" data-bs-target="#nav-content" type="button" role="tab" aria-controls="${status.count}" aria-selected="true" data-categoryNum="${dto.categoryNum}">${dto.categoryName}</button>
 					</li>
 				</c:forEach>
 			</ul>

@@ -33,6 +33,19 @@
 		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
 	</select>
 	
+	<select id="listFaqU" parameterType="map" resultType="com.moumi.app.admin.faq.Faq">
+		SELECT f.faqNum, userName, subject, categoryName, c.categoryNum, content
+		FROM faq f
+		JOIN member m ON f.userCode = m.userCode
+		JOIN faqCategory c ON f.categoryNum = c.categoryNum
+		<where>
+			<if test="categoryNum!=0">
+				( f.categoryNum = #{categoryNum} )
+			</if>
+		</where>
+		ORDER BY faqNum DESC
+	</select>	
+	
 	<select id="readFaq" parameterType="Long" resultType="com.moumi.app.admin.faq.Faq">
 		SELECT content, subject, f.faqNum, c.categoryNum, userName, f.userCode
 		FROM faq f
