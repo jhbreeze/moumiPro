@@ -32,8 +32,6 @@
 	</delete>
 	
 	<select id="dataCount" parameterType="map" resultType="Integer">
-		SELECT NVL(COUNT(*),0) FROM event e
-		JOIN member m ON e.userCode = m.userCode
-		
+		SELECT NVL(COUNT(*),0) FROM event e		
 	</select>
 </mapper>

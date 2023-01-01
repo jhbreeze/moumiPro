@@ -2,6 +2,7 @@ package com.moumi.app.admin.event;
 
 import java.io.File;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,14 +30,16 @@ public class EventController {
 	private EventService service;
 
 	@Autowired
+	@Qualifier("myUtil")
 	private MyUtil myUtil;
 
 	@RequestMapping(value = "list")
-	public String list(@RequestParam(value = "page", defaultValue = "1") int current_page,
+	public String list(@RequestParam(defaultValue = "0") long eventNum,
+			@RequestParam(value = "page", defaultValue = "1") int current_page,
 			@RequestParam(defaultValue = "all") String condition, @RequestParam(defaultValue = "") String keyword,
-			@RequestParam(value = "size", defaultValue = "10") int size, HttpServletRequest req, Model model)
-			throws Exception {
+			HttpServletRequest req, Model model) throws Exception {
 
+		int size = 6;
 		int total_page = 0;
 		int dataCount = 0;
 
@@ -50,23 +54,43 @@ public class EventController {
 		dataCount = service.dataCount(map);
 		total_page = myUtil.pageCount(dataCount, size);
 
-		if (total_page < current_page) {
+		if(current_page > total_page) {
 			current_page = total_page;
 		}
-
+		
 		int offset = (current_page - 1) * size;
 		if (offset < 0)
 			offset = 0;
 
 		map.put("offset", offset);
 		map.put("size", size);
-
+		
 		List<Event> list = service.listEvent(map);
+		
+		String cp = req.getContextPath();
+		String query = "";
+		String listUrl = cp + "/admin/event/list";
+		String articleUrl = cp + "/admin/event/article?page=" + current_page;
+		if (keyword.length() != 0) {
+			query = "condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "utf-8");
+		}
+
+		if (query.length() != 0) {
+			listUrl = cp + "/admin/event/list?" + query;
+			articleUrl = cp + "/admin/event/article?page=" + current_page + "&" + query;
+		}
+		
+		String paging = myUtil.pagingUrl(current_page, total_page, listUrl);
+		
 		model.addAttribute("list", list);
+		model.addAttribute("eventNum", eventNum);
 		model.addAttribute("page", current_page);
 		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("size", size);
 		model.addAttribute("total_page", total_page);
+		model.addAttribute("articleUrl", articleUrl);
+		model.addAttribute("paging", paging);
+		
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
 
@@ -106,28 +130,26 @@ public class EventController {
 
 			Calendar cal = Calendar.getInstance();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			
+
 			Event dto = service.readEvent(eventNum);
 			// String s = dto.getEday().replaceAll("\\-|\\.|/", "");
 			String s = dto.getStartDate().replaceAll("\\-|\\.|/", "");
 			String e = dto.getEndDate().replaceAll("\\-|\\.|/", "");
-			
+
 			int sy = Integer.parseInt(s.substring(0, 4));
 			int sm = Integer.parseInt(s.substring(4, 6));
 			int sd = Integer.parseInt(s.substring(6));
 
-
-			cal.set(sy, sm - 1, sd+1);
+			cal.set(sy, sm - 1, sd + 1);
 			cal.add(Calendar.DATE, -1);
-	
-			dto.setStartDate(sdf.format(cal.getTime()));
 
+			dto.setStartDate(sdf.format(cal.getTime()));
 
 			int ey = Integer.parseInt(e.substring(0, 4));
 			int em = Integer.parseInt(e.substring(4, 6));
 			int ed = Integer.parseInt(e.substring(6));
 
-			cal.set(ey, em - 1, ed+1);
+			cal.set(ey, em - 1, ed + 1);
 
 			cal.add(Calendar.DATE, -1);
 

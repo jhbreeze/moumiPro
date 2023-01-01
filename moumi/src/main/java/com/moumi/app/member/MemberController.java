@@ -20,21 +20,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller("member.memberController")
-@RequestMapping(value="/member/*")
+@RequestMapping(value = "/member/*")
 public class MemberController {
 	@Autowired
 	private MemberService service;
-	
+
 	@RequestMapping(value = "member")
 	public String memberForm(Model model) {
 		model.addAttribute("mode", "member");
 		return ".member.member";
 	}
-	
+
 	@RequestMapping(value = "member", method = RequestMethod.POST)
-	public String memberSubmit(Member dto,
-			final RedirectAttributes reAttr,
-			Model model) {
+	public String memberSubmit(Member dto, final RedirectAttributes reAttr, Model model) {
 
 		try {
 			service.insertMember(dto);
@@ -62,8 +60,7 @@ public class MemberController {
 
 		return "redirect:/member/complete";
 	}
-	
-	
+
 	@RequestMapping(value = "complete")
 	public String complete(@ModelAttribute("message") String message) throws Exception {
 
@@ -99,13 +96,10 @@ public class MemberController {
 
 		return ".member.pwd";
 	}
-	
+
 	@RequestMapping(value = "pwd", method = RequestMethod.POST)
-	public String pwdSubmit(@RequestParam String pwd,
-			@RequestParam String mode, 
-			final RedirectAttributes reAttr,
-			HttpSession session,
-			Model model) {
+	public String pwdSubmit(@RequestParam String pwd, @RequestParam String mode, final RedirectAttributes reAttr,
+			HttpSession session, Model model) {
 
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 
@@ -116,8 +110,8 @@ public class MemberController {
 		}
 
 		boolean bPwd = service.isPasswordCheck(info.getEmail(), pwd);
-		
-		if ( ! bPwd ) {
+
+		if (!bPwd) {
 			if (mode.equals("update")) {
 				model.addAttribute("mode", "update");
 			} else {
@@ -132,9 +126,8 @@ public class MemberController {
 
 			// 회원탈퇴 처리
 			/*
-			 * Map<String, Object> map = new HashMap<>();
-			 * map.put("memberIdx", info.getMemberIdx());
-			 * map.put("userId", info.getUserId());
+			 * Map<String, Object> map = new HashMap<>(); map.put("memberIdx",
+			 * info.getMemberIdx()); map.put("userId", info.getUserId());
 			 */
 
 			// 세션 정보 삭제
@@ -158,20 +151,16 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "update", method = RequestMethod.POST)
-	public String updateSubmit(Member dto,
-			final RedirectAttributes reAttr,
-			Model model) {
+	public String updateSubmit(Member dto, final RedirectAttributes reAttr, Model model) {
 
 		try {
 			service.updateMember(dto);
 		} catch (Exception e) {
 		}
 
-		 
-
 		return "redirect:/member/myPage";
 	}
-	
+
 	@RequestMapping(value = "emailCheck", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> idCheck(@RequestParam String email) throws Exception {
@@ -186,36 +175,35 @@ public class MemberController {
 		model.put("passed", p);
 		return model;
 	}
-	
+
 	@RequestMapping(value = "nickNameCheck", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> nickCheck(@RequestParam String nickName) throws Exception {
-		
+
 		String p = "true";
 		Member dto = service.readMember1(nickName);
 		if (dto != null) {
 			p = "false";
 		}
-		
+
 		Map<String, Object> model = new HashMap<>();
 		model.put("passed", p);
 		return model;
 	}
-	
+
 	@GetMapping("updatePwd")
 	public String updatePwdForm() throws Exception {
 		return ".member.updatePwd";
 	}
-	
+
 	@PostMapping("updatePwd")
-	public String updatePwdSubmit(@RequestParam String pwd,
-			HttpSession session, Model model) throws Exception {
-		
-		SessionInfo info = (SessionInfo)session.getAttribute("member");
+	public String updatePwdSubmit(@RequestParam String pwd, HttpSession session, Model model) throws Exception {
+
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		Member dto = new Member();
 		dto.setEmail(info.getEmail());
 		dto.setPwd(pwd);
-		
+
 		try {
 			service.updatePwd(dto);
 		} catch (RuntimeException e) {
@@ -223,28 +211,25 @@ public class MemberController {
 			return ".member.updatePwd";
 		} catch (Exception e) {
 		}
-		
+
 		return "redirect:/";
 	}
-	
+
 	@RequestMapping(value = "myPage")
-	public String myPageForm(Member dto,
-			HttpSession session,
-			Model model) throws Exception {
-		
+	public String myPageForm(Member dto, HttpSession session, Model model) throws Exception {
+
 		try {
 			SessionInfo info = (SessionInfo) session.getAttribute("member");
-			
+
 			service.readMyPage(info.getEmail());
-			
+
 			model.addAttribute("dto", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
-		
+
 		return ".member.myPage";
 	}
-	
- 
+
 }

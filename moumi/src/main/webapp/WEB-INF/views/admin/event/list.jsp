@@ -15,6 +15,16 @@
 					<i class="fa-sharp fa-solid fa-gift"></i>&nbsp;이벤트 관리
 				</h2>
 			</div>
+			
+			<div class="body-main">
+			<div class="row board-list-header">
+				<div class="col-auto me-auto">
+					<div>
+						<p class="form-control-plaintext">${dataCount}개(${page}/${total_page}페이지)</p>
+					</div>
+				</div>
+			</div>
+			</div>
 
 			<div class="body-main">
 				<form name="listForm" method="post">
@@ -39,7 +49,7 @@
 					</div>
 				</form>
 
-				<div class="page-navigation">${dataCount == 0 ? "등록된 게시물이 없습니다." : paging}
+				<div class="page-navigation mt-5">${dataCount == 0 ? "등록된 이벤트가 없습니다." : paging}
 				</div>
 
 
