@@ -60,22 +60,6 @@
 
 
 
-<div class="modal fade" id="chatModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
-	aria-labelledby="chatModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document" style="width: 400px;">
-		<div class="modal-content" data-target="#myDialog">
-			<div class="modal-header">
-				<div class="mb-2">
-					<h4 class="modal-title" id="chatViewerModalLabel">
-						<img class="mb-2" style="height: 30px; width: 40px;"
-							src="${pageContext.request.contextPath}/resources/moumi/logo/circle1.png">
-						&nbsp; MOUMI
-					</h4>
-				</div>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-
-			<div class="modal-body pt-1">
 			
 			
 				<div class="container">
@@ -95,14 +79,6 @@
 				</div>
 				
 				
-				
-			</div>
-			
-			
-			
-		</div>
-	</div>
-</div>
 
 
 <script type="text/javascript">
