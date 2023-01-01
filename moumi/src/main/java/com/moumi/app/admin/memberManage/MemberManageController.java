@@ -100,9 +100,9 @@ public class MemberManageController {
 		return ".admin.memberManage.list";
 	}
 	
-	@RequestMapping(value = "detail")
-	public String detailMember(@RequestParam String email, @RequestParam String userCode, Model model) throws Exception{
-		Member dto = service.readMember(email);
+	@RequestMapping(value = "detaile")
+	public String detaileMember(@RequestParam long userCode, Model model) throws Exception{
+		Member dto = service.readMember(userCode);
 		Member memberState = service.readMemberState(userCode);
 		List<Member> listState = service.listMemberState(userCode);
 		
@@ -110,7 +110,7 @@ public class MemberManageController {
 		model.addAttribute("memberState", memberState);
 		model.addAttribute("listState", listState);
 
-		return "admin/memberManage/detail";
+		return "admin/memberManage/detaile";
 		
 	}
 	
@@ -122,7 +122,7 @@ public class MemberManageController {
 		try {
 			// 회원 활성/비활성 변경
 			Map<String, Object> map = new HashMap<>();
-			map.put("userId", dto.getUserCode());
+			map.put("userCode", dto.getUserCode());
 			if (dto.getStateCode() == 0) {
 				map.put("enabled", 1);
 			} else {
@@ -135,7 +135,7 @@ public class MemberManageController {
 
 			if (dto.getStateCode() == 0) {
 				// 회원 패스워드 실패횟수 초기화
-				service.updateFailureCountReset(dto.getEmail());
+				service.updateFailureCountReset(dto.getUserCode());
 			}
 		} catch (Exception e) {
 			state = "false";

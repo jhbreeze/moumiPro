@@ -7,12 +7,12 @@ public interface MemberManageService {
 	public int dataCount(Map<String, Object> map);
 	public List<Member> listMember(Map<String, Object> map);
 	
-	public Member readMember(String email);
+	public Member readMember(long userCode);
 	
-	public void updateFailureCountReset(String email) throws Exception;
+	public void updateFailureCountReset(long userCode) throws Exception;
 	public void updateMemberEnabled(Map<String, Object> map) throws Exception;
 	public void insertMemberState(Member dto) throws Exception;
-	public List<Member> listMemberState(String userCode);
-	public Member readMemberState(String userCode);
+	public List<Member> listMemberState(long userCode);
+	public Member readMemberState(long userCode);
 
 }

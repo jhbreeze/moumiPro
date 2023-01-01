@@ -39,11 +39,11 @@ public class MemberServiceImpl implements MemberManageService{
 	}
 
 	@Override
-	public Member readMember(String email) {
+	public Member readMember(long userCode) {
 		Member dto = null;
 		
 		try {
-			dto = dao.selectOne("memberManage.readMember", email);
+			dto = dao.selectOne("memberManage.readMember", userCode);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -51,9 +51,9 @@ public class MemberServiceImpl implements MemberManageService{
 	}
 
 	@Override
-	public void updateFailureCountReset(String email) throws Exception {
+	public void updateFailureCountReset(long userCode) throws Exception {
 		try {
-			dao.updateData("memberManage.updateFailureCountReset", email);
+			dao.updateData("memberManage.updateFailureCountReset", userCode);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -84,7 +84,7 @@ public class MemberServiceImpl implements MemberManageService{
 	}
 
 	@Override
-	public List<Member> listMemberState(String userCode) {
+	public List<Member> listMemberState(long userCode) {
 		List<Member> list = null;
 		
 		try {
@@ -96,7 +96,7 @@ public class MemberServiceImpl implements MemberManageService{
 	}
 
 	@Override
-	public Member readMemberState(String userCode) {
+	public Member readMemberState(long userCode) {
 		Member dto = null;
 		
 		try {

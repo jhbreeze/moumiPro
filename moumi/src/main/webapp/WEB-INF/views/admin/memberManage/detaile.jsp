@@ -33,14 +33,14 @@
 	<tr>
 		<td class="text-center bg-light">계정상태</td>
 		<td colspan="3" class="ps-5">
-			${dto.enabled==0?"활성":"잠금"}
+			${dto.enabled==1?"활성":"잠금"}
 			<c:if test="${dto.enabled==0 && not empty memberState}">, ${memberState.memo}</c:if>
 			&nbsp;<span class="btn" onclick="memberStateDetaileView();" style="cursor: pointer;">자세히</span>
 		</td>
 	</tr>
 </table>
 
-<form id="detailMemberForm" name="detailMemberForm" method="post">
+<form id="deteailedMemberForm" name="deteailedMemberForm" method="post">
 	<h3 style="font-size: 15px; padding-top: 10px;"><i class="fa-solid fa-angles-right"></i> 유저 상태 변경</h3>
 	
 	<table class="table td-border mx-auto my-5">

@@ -43,7 +43,7 @@
 		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
 	</select>
 	
-	<select id="readMember" parameterType="String" resultType="com.moumi.app.admin.memberManage.Member">
+	<select id="readMember" parameterType="long" resultType="com.moumi.app.admin.memberManage.Member">
 		SELECT userCode, email, userName, userType, nickName,
 			regDate, lastLogin, gender,
 			enabled, TO_CHAR(birth, 'YYYY-MM-DD') birth
@@ -51,13 +51,13 @@
 		WHERE userCode = #{userCode}
 	</select>
 	
-	<update id="updateFailureCountReset" parameterType="String">
+	<update id="updateFailureCountReset" parameterType="long">
 		UPDATE member SET failure_cnt = 0
-		WHERE email = #{email}
+		WHERE userCode = #{userCode}
 	</update>
 	
 	<update id="updateMemberEnabled" parameterType="map">
-		UPDATE member SET enabled= #{enabled} WHERE email = #{email}
+		UPDATE member SET enabled= #{enabled} WHERE userCode = #{userCode}
 	</update>
 	
 	<insert id="insertmemberState" parameterType="com.moumi.app.admin.memberManage.Member">
@@ -65,17 +65,17 @@
 		VALUES (state_seq.NEXTVAL, #{userCode}, #{stateCode}, #{memo}, #{registerCode}, SYSDATE)
 	</insert>
 	
-	<select id="listMemberState" parameterType="String" resultType="com.moumi.app.admin.memberManage.Member">
+	<select id="listMemberState" parameterType="long" resultType="com.moumi.app.admin.memberManage.Member">
 		SELECT stateNum, userCode, stateCode, memo, registerCode, register_date
 		FROM state
-		WHERE userCodt = #{userCode}
+		WHERE userCode = #{userCode}
 		ORDER BY stateNum DESC
 	</select>
 	
-	<select id="readMemberState" parameterType="String" resultType="com.moumi.app.admin.memberManage.Member">
+	<select id="readMemberState" parameterType="long" resultType="com.moumi.app.admin.memberManage.Member">
 		SELECT stateNum, userCode, stateCode, memo, registerCode, register_date
 		FROM state
-		WHERE userCodt = #{userCode}
+		WHERE userCode = #{userCode}
 		ORDER BY stateNum DESC
 		FETCH FIRST 1 ROWS ONLY
 	</select>
