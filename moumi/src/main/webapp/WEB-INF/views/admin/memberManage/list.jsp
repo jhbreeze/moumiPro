@@ -14,6 +14,12 @@ main {
 	background: white;
 }
 
+#btn{
+	background-color: #ECF4EB;
+	color: #198754;
+}
+
+
 .body-container {
 	max-width: 1200px;
 	margin: auto;
@@ -66,6 +72,18 @@ tr:hover {
 .btn:active, .btn:focus, .btn:hover {
 	color: #eee;
 }
+
+#tablec{
+	background-color: #ECF4EB;
+}
+
+#tabled{
+	background-color: #ECF4EB;
+}
+
+#tablee{
+	background-color: #ECF4EB;
+}
 </style>
 
 
@@ -73,21 +91,6 @@ tr:hover {
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/board.css" type="text/css">
 
 <script type="text/javascript">
-$(function() {
-	$("#tab-0").addClass("active");
-	
-	$("ul.tabs li").click(function() {
-		let tab = $(this).attr("data-tab");
-		
-		$("ul.tabs li").each(function() {
-			$(this).removeClass("active");
-		});
-		
-		$("#tab-"+tab).addClass("active");
-		
-	});
-});
-
 function ajaxFun(url, method, query, dataType, fn) {
 	$.ajax({
 		type:method,
@@ -116,6 +119,13 @@ function ajaxFun(url, method, query, dataType, fn) {
 function searchList() {
 	const f = document.searchForm;
 	f.enabled.value=$("#selectEnabled").val();
+	f.action = "${pageContext.request.contextPath}/admin/memberManage/list";
+	f.submit();
+}
+
+function searchList2() {
+	const f = document.searchForm;
+	f.userType.value=$("#selectEnabled2").val();
 	f.action = "${pageContext.request.contextPath}/admin/memberManage/list";
 	f.submit();
 }
@@ -170,6 +180,7 @@ function updateOk() {
 	const fn = function(data) {
 		$("form input[name=page]").val("${page}");
 		searchList();
+		searchList2();
 	};
 	ajaxFun(url, "post", query, "json", fn);
 	
@@ -191,6 +202,19 @@ function memberStateDetaileView() {
 		  maxHeight: 450,
 		  width: 750,
 		  title: '계정상태 상세',
+		  close: function(event, ui) {
+			   $(this).dialog("destroy"); // 이전 대화상자가 남아 있으므로 필요
+		  }
+	  });	
+}
+
+function memberStateDetaileView2() {
+	$('#memberSubDetaile').dialog({
+		  modal: true,
+		  minHeight: 100,
+		  maxHeight: 450,
+		  width: 750,
+		  title: '구독 기록',
 		  close: function(event, ui) {
 			   $(this).dialog("destroy"); // 이전 대화상자가 남아 있으므로 필요
 		  }
@@ -224,12 +248,6 @@ function selectStateChange() {
 		</div>
 
 		<div class="body-main">
-			<div>
-				<ul class="tabs">
-					<li id="tab-0" data-tab="0"><i class="fa-solid fa-person"></i> 회원 리스트</li>
-					<li id="tab-1" data-tab="1"><i class="fa-solid fa-chart-column"></i> 회원 분석</li>
-				</ul>
-			</div>
 			
 			<div id="tab-content" style="clear:both; padding: 20px 10px 0;">
 		
@@ -239,10 +257,17 @@ function selectStateChange() {
 						${dataCount}개(${page}/${total_page} 페이지)
 					</td>
 					<td align="right">
-						<select id="selectEnabled" class="form-select" onchange="searchList();">
+						<select id="selectEnabled" class="form-select" onchange="searchList();" style="width: auto; float: right;">
 							<option value="" ${enabled=="" ? "selected='selected'":""}>::계정상태::</option>
 							<option value="0" ${enabled=="0" ? "selected='selected'":""}>잠금 계정</option>
 							<option value="1" ${enabled=="1" ? "selected='selected'":""}>활성 계정</option>
+						</select>
+						<select id="selectEnabled2" class="form-select" onchange="searchList2();" style="width: auto;">
+							<option value=-1 ${userType== -1 ? "selected='selected'":""}>::회원분류::</option>
+							<option value=0 ${userType==0 ? "selected='selected'":""}>관리자</option>
+							<option value=1 ${userType==1 ? "selected='selected'":""}>일반회원</option>
+							<option value=2 ${userType==2 ? "selected='selected'":""}>유료회원</option>
+							<option value=3 ${userType==3 ? "selected='selected'":""}>기업회원</option>
 						</select>
 					</td>
 				</tr>
@@ -250,14 +275,13 @@ function selectStateChange() {
 				
 			<table class="table table-border table-list">
 				<thead>
-					<tr> 
+					<tr id="tablec"> 
 						<th class="wx-60">번호</th>
+						<th class="wx-120">회원구분</th>
 						<th class="wx-100">아이디</th>
 						<th class="wx-100">이름</th>
-						<th class="wx-100">생년월일</th>
-						<th class="wx-120">회원유형</th>
-						<th class="wx-60">상태</th>
-						<th>이메일</th>
+						<th class="wx-60">계정 상태</th>
+						<th class="wx-100">가입일</th>
 					</tr>
 				</thead>
 				
@@ -265,9 +289,6 @@ function selectStateChange() {
 					<c:forEach var="dto" items="${list}" varStatus="status">
 						<tr class="hover" onclick="detailedMember('${dto.userCode}');"> 
 							<td>${dataCount - (page-1) * size - status.index}</td>
-							<td>${dto.email}</td>
-							<td>${dto.userName}</td>
-							<td>${dto.birth}</td>
 							<td> 
 								<c:if test="${dto.userType == 0}">
 									관리자
@@ -282,8 +303,19 @@ function selectStateChange() {
 									기업회원
 								</c:if>  
 							</td>
-							<td>${dto.enabled==1?"활성":"잠금"}</td>
 							<td>${dto.email}</td>
+							<td>${dto.userName}</td>
+							<c:if test="${dto.enabled == 0}">
+								<td style="color: red;">
+									잠금
+								</td>						
+							</c:if>
+							<c:if test="${dto.enabled == 1}">
+								<td>
+									활성
+								</td>						
+							</c:if>
+							<td>${dto.regDate}</td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -296,23 +328,26 @@ function selectStateChange() {
 			<table class="table">
 				<tr>
 					<td align="left" width="100">
-						<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/admin/memberManage/list';">새로고침</button>
+						<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/admin/memberManage/list';" style="width:max-content;">새로고침</button>
 					</td>
+					<td align="right" width="100">&nbsp;</td>
+					<td align="right" width="100">&nbsp;</td>
+					<td align="right" width="100">&nbsp;</td>
 					<td align="center">
 						<form name="searchForm" action="${pageContext.request.contextPath}/admin/memberManage/list" method="post">
-							<select name="condition" class="form-select">
-								<option value="email"     ${condition=="userCode" ? "selected='selected'":""}>아이디</option>
-								<option value="userName"   ${condition=="userName" ? "selected='selected'":""}>이름</option>
-								<option value="email"      ${condition=="email" ? "selected='selected'":""}>이메일</option>
-								<option value="tel"        ${condition=="userType" ? "selected='selected'":""}>회원유형</option>
+							<select name="condition" class="form-select" style="width: auto; float: left;">
+								<option value="email"     ${condition=="email" ? "selected='selected'":""}>아이디</option>
+								<option value="userName"  ${condition=="userName" ? "selected='selected'":""}>이름</option>
+								<option value="nickName"  ${condition=="nickName" ? "selected='selected'":""}>닉네임</option>
+								<option value="userType"  ${condition=="userType" ? "selected='selected'":""}>회원유형</option>
 							</select>
-							<input type="text" name="keyword" class="form-control" value="${keyword}">
-							<input type="hidden" name="enabled" value="${enabled}">
-							<input type="hidden" name="page" value="1">
+							<input type="text" name="keyword" class="form-control" value="${keyword}" style="width: auto; float: left;">
+								<input type="hidden" name="enabled" value="${enabled}">
+								<input type="hidden" name="userType" value="${userType}">
+								<input type="hidden" name="page" value="1">
 							<button type="button" class="btn" onclick="searchList()">검색</button>
 						</form>
 					</td>
-					<td align="right" width="100">&nbsp;</td>
 				</tr>
 			</table>
 		

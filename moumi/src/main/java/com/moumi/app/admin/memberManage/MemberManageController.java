@@ -35,6 +35,7 @@ public class MemberManageController {
 			@RequestParam(defaultValue = "email") String condition,
 			@RequestParam(defaultValue = "") String keyword,
 			@RequestParam(defaultValue = "") String enabled,
+			@RequestParam(defaultValue = "-1") Long userType,
 			HttpServletRequest req,
 			Model model) throws Exception {
 		
@@ -50,6 +51,7 @@ public class MemberManageController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("enabled", enabled);
+		map.put("userType", userType);
 		map.put("condition", condition);
 		map.put("keyword", keyword);
 		
@@ -81,6 +83,14 @@ public class MemberManageController {
 			}
 		}
 		
+		if(userType != null) {
+			if(query.length() != 0) {
+				query = query + "&userType=" + userType;
+			} else {
+				query = "userType=" + userType;
+			}
+		}
+		
 		if (query.length() != 0) {
 			listUrl = listUrl + "?" + query;
 		}
@@ -94,6 +104,7 @@ public class MemberManageController {
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("paging", paging);
 		model.addAttribute("enabled", enabled);
+		model.addAttribute("userType", userType);
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
 		
@@ -105,10 +116,12 @@ public class MemberManageController {
 		Member dto = service.readMember(userCode);
 		Member memberState = service.readMemberState(userCode);
 		List<Member> listState = service.listMemberState(userCode);
+		List<Member> listSub = service.listMemberSub(userCode);
 		
 		model.addAttribute("dto", dto);
 		model.addAttribute("memberState", memberState);
 		model.addAttribute("listState", listState);
+		model.addAttribute("listSub", listSub);
 
 		return "admin/memberManage/detaile";
 		

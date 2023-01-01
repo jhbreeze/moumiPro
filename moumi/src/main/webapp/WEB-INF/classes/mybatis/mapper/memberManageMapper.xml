@@ -5,7 +5,7 @@
 	<sql id="where-list">
 		<choose>
 			<when test="condition=='email'">
-				INSTR(m.userId, #{keyword}) &gt;= 1
+				INSTR(m.userCode, #{keyword}) &gt;= 1
 			</when>
 			<otherwise>
 				INSTR(${condition}, #{keyword}) &gt;= 1
@@ -23,13 +23,16 @@
 			<if test="enabled!=''">
 				AND enabled = #{enabled}
 			</if>
+			<if test="userType gt 0">
+				AND userType = #{userType}
+			</if>
 		</where>
 	</select>
 	
 	<select id="listMember" parameterType="map" resultType="com.moumi.app.admin.memberManage.Member">
 		SELECT m.userCode, m.email, userName, userType, nickName,
-			m.regDate, lastLogin, gender,
-			enabled, TO_CHAR(birth, 'YYYY-MM-DD') birth
+			lastLogin, gender,
+			enabled, TO_CHAR(regDate, 'YYYY-MM-DD') regDate
 		FROM member m
 		<where>
 			<if test="keyword!=null and keyword!='' ">
@@ -38,17 +41,22 @@
 			<if test="enabled!=''">
 				AND enabled = #{enabled}
 			</if>
+			<if test="userType gt -1">
+				AND userType = #{userType}
+			</if>
 		</where>
 		ORDER BY regDate DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
 	</select>
 	
 	<select id="readMember" parameterType="long" resultType="com.moumi.app.admin.memberManage.Member">
-		SELECT userCode, email, userName, userType, nickName,
+		SELECT m.userCode, email, userName, userType, nickName, SYSDATE,
 			regDate, lastLogin, gender,
-			enabled, TO_CHAR(birth, 'YYYY-MM-DD') birth
+			enabled, TO_CHAR(regDate, 'YYYY-MM-DD') regDate, TO_CHAR((startDate+30), 'YYYY-MM-DD') endDate, TO_CHAR(startDate, 'YYYY-MM-DD') startDate
 		FROM member m
-		WHERE userCode = #{userCode}
+        LEFT OUTER JOIN payment p ON m.userCode = p.userCode
+		WHERE m.userCode = #{userCode}
+		ORDER BY endDate DESC
 	</select>
 	
 	<update id="updateFailureCountReset" parameterType="long">
@@ -60,15 +68,16 @@
 		UPDATE member SET enabled= #{enabled} WHERE userCode = #{userCode}
 	</update>
 	
-	<insert id="insertmemberState" parameterType="com.moumi.app.admin.memberManage.Member">
+	<insert id="insertMemberState" parameterType="com.moumi.app.admin.memberManage.Member">
 		INSERT INTO state(stateNum, userCode, stateCode, memo, registerCode, register_date)
 		VALUES (state_seq.NEXTVAL, #{userCode}, #{stateCode}, #{memo}, #{registerCode}, SYSDATE)
 	</insert>
 	
 	<select id="listMemberState" parameterType="long" resultType="com.moumi.app.admin.memberManage.Member">
-		SELECT stateNum, userCode, stateCode, memo, registerCode, register_date
-		FROM state
-		WHERE userCode = #{userCode}
+		SELECT stateNum, s.userCode, stateCode, memo, registerCode, register_date
+		FROM state s
+		JOIN member m ON s.userCode = m.userCode
+		WHERE s.userCode = #{userCode}
 		ORDER BY stateNum DESC
 	</select>
 	
@@ -78,6 +87,13 @@
 		WHERE userCode = #{userCode}
 		ORDER BY stateNum DESC
 		FETCH FIRST 1 ROWS ONLY
+	</select>
+	
+	<select id="listMemberSub" parameterType="long" resultType="com.moumi.app.admin.memberManage.Member">
+		SELECT paymentNum, TO_CHAR((startDate+30), 'YYYY-MM-DD') endDate, TO_CHAR(startDate, 'YYYY-MM-DD') startDate, payDate
+		FROM payment
+		WHERE userCode = #{userCode}
+		ORDER BY paymentNum DESC
 	</select>
 	
 

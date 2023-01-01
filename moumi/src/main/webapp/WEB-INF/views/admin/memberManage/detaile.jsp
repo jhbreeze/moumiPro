@@ -6,37 +6,54 @@
 <h3 style="font-size: 15px; padding-top: 10px;"><i class="fa-solid fa-angles-right"></i> 회원 정보</h3>
 <table class="table td-border mx-auto my-10" style="width: 99%;">
 	<tr>
-		<td class="wp-15 text-center bg-light">회원번호</td>
+		<td class="wp-15 text-center ">회원번호</td>
 		<td class="wp-35 ps-5">${dto.userCode}</td>
-		<td class="wp-15 text-center bg-light">아이디</td>
+		<td class="wp-15 text-center ">아이디</td>
 		<td class="wp-35 ps-5">${dto.email}</td>
 	</tr>
 	<tr>
-		<td class="text-center bg-light">이 름</td>
+		<td class="text-center ">이 름</td>
 		<td class="ps-5">${dto.userName}</td>
-		<td class="text-center bg-light">생년월일</td>
-		<td class="ps-5">${dto.birth}</td>
+		<td class="text-center ">닉네임</td>
+		<td class="ps-5">${dto.nickName}</td>
 	</tr>
 	<tr>
-		<td class="text-center bg-light">회원유형</td>
-		<td class="ps-5">${dto.userType}</td>
-		<td class="text-center bg-light">이메일</td>
-		<td class="ps-5">${dto.email}</td>
+		<td class="text-center ">회원유형</td>
+		<td class="ps-5">
+			<c:if test="${dto.userType == 0}">
+				관리자
+			</c:if>
+			<c:if test="${dto.userType == 1}">
+				일반회원
+			</c:if> 
+			<c:if test="${dto.userType == 2}">
+				유료회원
+			</c:if>
+			<c:if test="${dto.userType == 3}">
+				기업회원
+			</c:if>  
+		</td>
+		<td class="text-center ">구독상태</td>
+		<td class="ps-5"> 
+			미구독
+		</td>
 	</tr>
 	<tr>
-		<td class="text-center bg-light">회원가입일</td>
+		<td class="text-center ">회원가입일</td>
 		<td class="ps-5">${dto.regDate}</td>
-		<td class="text-center bg-light">최근로그인</td>
-		<td class="ps-5">${dto.last_login}</td>
+		<td class="text-center">구독기간</td>
+		<td class="ps-5">${dto.startDate} ~ ${dto.endDate}</td>
 	</tr>
 	
 	<tr>
-		<td class="text-center bg-light">계정상태</td>
-		<td colspan="3" class="ps-5">
+		<td class="text-center ">계정상태</td>
+		<td class="ps-5">
 			${dto.enabled==1?"활성":"잠금"}
 			<c:if test="${dto.enabled==0 && not empty memberState}">, ${memberState.memo}</c:if>
-			&nbsp;<span class="btn" onclick="memberStateDetaileView();" style="cursor: pointer;">자세히</span>
+			&nbsp;<span class="btn" onclick="memberStateDetaileView();" style="cursor: pointer;" id="btn">자세히</span>
 		</td>
+		<td class="text-center ">구독기록</td>
+		<td class="ps-5"><span class="btn" onclick="memberStateDetaileView2();" style="cursor: pointer;">자세히</span></td>
 	</tr>
 </table>
 
@@ -47,7 +64,7 @@
 		<tr>
 			<td class="wp-15 text-center bg-light">계정상태</td>
 			<td class="ps-5">
-				<select class="form-select" name="stateCode" id="stateCode" onchange="selectStateChange()">
+				<select class="form-select" name="stateCode" id="stateCode" onchange="selectStateChange()" style="width: auto; background-color: #ECF4EB; color: #198754;">
 					<option value="">::상태코드::</option>
 					<c:if test="${dto.enabled==0}">
 						<option value="0">잠금 해제</option>
@@ -76,7 +93,7 @@
 <div id="memberStateDetaile" style="display: none;">
 	<table class="table table-border mx-auto my-10">
 		<thead>
-			<tr class="bg-light">
+			<tr id="tabled">
 				<th>내용</th>
 				<th width="130">담당자</th>
 				<th width="200">등록일</th>
@@ -93,6 +110,33 @@
 			</c:forEach>
 	  
 			<c:if test="${listState.size()==0}">
+				<tr align="center" style="border: none;">
+					<td colspan="3">등록된 정보가 없습니다.</td>
+				</tr>  
+			</c:if>
+		</tbody>
+	</table>  
+</div>
+
+<div id="memberSubDetaile" style="display: none;">
+	<table class="table table-border mx-auto my-10">
+		<thead>
+			<tr style="background-color: #ECF4EB;">
+				<th>내용</th>
+				<th width="130">담당자</th>
+				<th width="200">등록일</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<c:forEach var="vo" items="${listSub}">
+				<tr>
+					<td class="text-center">${dto.startDate} ~ ${dto.endDate}</td>
+					<td class="text-center">${vo.payDate}</td>
+				</tr>
+			</c:forEach>
+	  
+			<c:if test="${listSub.size()==0}">
 				<tr align="center" style="border: none;">
 					<td colspan="3">등록된 정보가 없습니다.</td>
 				</tr>  
