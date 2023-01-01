@@ -29,8 +29,13 @@
     color: #333;
     white-space: pre-wrap;
     vertical-align: baseline;
-    border-radius: 0.25rem;
+    border-radius: 0.5rem;
 }
+
+.msg-box {
+    background-color: #e2e2e252;
+}
+
 .chat-info {
     background: #f8f9fa;
     color: #333;
@@ -42,50 +47,63 @@
     margin-right: auto;
     margin-left: 8px;
     margin-bottom: 5px;
+    background-color: #e2e2e252;
 }
 .msg-right {
 	margin-left: auto;
     margin-right: 3px;
     margin-bottom: 5px;
+    background-color: #429F6B;
+    color: white;
 }
 </style>
 
-<div class="container">
-	<div class="body-container">	
-		<div class="body-title">
-			<h3><i class="bi bi-chat"></i> 채팅 <small class="fs-6 fw-normal">chatting</small> </h3>
-		</div>
-		
-		<div class="body-main content-frame">
-			<div class="row">
-				<div class="col-8">
-					<p class="form-control-plaintext fs-6"><i class="bi bi-chevron-double-right"></i> 채팅 메시지</p>
-					<div class="border p-3 chat-msg-container"></div>
-					<div class="mt-2">
-						<input type="text" id="chatMsg" class="form-control" placeholder="메시지를 입력하세요">
+
+
+<div class="modal fade" id="chatModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
+	aria-labelledby="chatModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document" style="width: 400px;">
+		<div class="modal-content" data-target="#myDialog">
+			<div class="modal-header">
+				<div class="mb-2">
+					<h4 class="modal-title" id="chatViewerModalLabel">
+						<img class="mb-2" style="height: 30px; width: 40px;"
+							src="${pageContext.request.contextPath}/resources/moumi/logo/circle1.png">
+						&nbsp; MOUMI
+					</h4>
+				</div>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+
+			<div class="modal-body pt-1">
+			
+			
+				<div class="container">
+					<div class="body-container">	
+						<div class="body-main content-frame">
+							<div class="row">
+								<div class="col-8">
+									<p class="form-control-plaintext fs-6"><i class="bi bi-chevron-double-right"></i> 채팅 메시지</p>
+									<div class="border p-3 chat-msg-container"></div>
+									<div class="mt-2">
+										<input type="text" id="chatMsg" class="form-control msg-box" placeholder="메시지를 입력하세요">
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 				
+				
+				
 			</div>
+			
+			
+			
 		</div>
 	</div>
 </div>
 
-<!-- 귓속말 Modal -->
-<div class="modal fade" id="myDialogModal" tabindex="-1" aria-labelledby="myDialogModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="myDialogModalLabel">귓속말</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body pt-1">
-				<input type="text" id="chatOneMsg" class="form-control" 
-							placeholder="귓속말을 입력 하세요...">
-			</div>
-		</div>
-	</div>
-</div>
 
 <script type="text/javascript">
 $(function(){
@@ -113,17 +131,15 @@ $(function(){
 	socket.onmessage = function(evt) { onMessage(evt) };
 	socket.onerror = function(evt) { onError(evt) };
 	
-	 // 서버 접속이 성공한 경우 호출되는 콜백함수
 	function onOpen(evt) {
-		 // Login 처리에서 세션에 memberIdx 저장 유무 확인
 	    let email = "${sessionScope.member.email}";
-	    let nickName = "${sessionScope.member.userName}";
+	    let nickName = "${sessionScope.member.nickName}";
 	    if( ! email ) {
 	    	location.href="${pageContext.request.contextPath}/member/login";
 	    	return;
 	    }
 	    
-		writeToScreen("<div class='msg-right'>채팅방에 입장했습니다.</div>");
+		writeToScreen("<div class='msg-left'> 안녕하세요, MOUMI입니다 :) <br> 어떤 점이 궁금하신가요? </div>");
 	    
 	    // 서버 접속이 성공 하면 아이디와 이름을 JSON으로 서버에 전송
 	    let obj = {};
@@ -134,9 +150,7 @@ $(function(){
 	    let jsonStr = JSON.stringify(obj);  // JSON.stringify() : 자바스크립트 값을 JSON 문자열로 변환
 	    socket.send(jsonStr);
 	    
-	    // 채팅입력창에 메시지를 입력하기 위해 #chatMsg에 keydown 이벤트 등록
 	    $("#chatMsg").on("keydown",function(evt) {
-	    	// 엔터키가 눌린 경우, 서버로 메시지를 전송한다. 맥은 13 으로만 비교해야 함
 	    	let key = evt.key || evt.keyCode;
 	        if (key === "Enter" || key === 13) {
 	            sendMessage();
@@ -144,11 +158,10 @@ $(function(){
 	    });
 	}
 
-	// 연결이 끊어진 경우에 호출되는 콜백함수
 	function onClose(evt) {
 		// 채팅 입력창 이벤트를 제거 한다.
        	$("#chatMsg").off("keydown");
-       	writeToScreen("<div class='chat-info'>Info: WebSocket closed.</div>");
+       	writeToScreen("<div class='chat-info'> 답변이 없어 5분뒤, 자동으로 상담이 종료됩니다. <br> 감사합니다 :D </div>");
 	}
 
 	// 서버로부터 메시지를 받은 경우에 호출되는 콜백함수
@@ -159,27 +172,7 @@ $(function(){
     	let data = JSON.parse(evt.data); // JSON 파싱
     	let cmd = data.type;
     	
-    	if(cmd === "userList") { // 처음 접속할때 접속자 리스트를 받는다.
-    		let users = data.users;
-    		for(let i = 0; i < users.length; i++) {
-    			let email = users[i][0];
-    			let nickName = users[i][1];
-    			
-    			let out = "<span id='user-"+email+"' data-email='"+email+"'><i class='bi bi-person-square'></i> "+nickName+"</span>";
-        		$(".chat-connection-list").append(out);
-    		}
-    		
-    	} else if(cmd === "userConnect") { // 다른 접속자가 접속했을 때
-    		let email = data.email;
-    		let nickName = data.nickName;
-    		
-    		let out = "<div class='chat-info'>"+nickName+"님이 입장하였습니다.</div>";
-    		writeToScreen(out);
-    		
-    		out = "<span id='user-"+email+"' data-email='"+email+"'><i class='bi bi-person-square'></i> "+nickName+"<span>";
-    		$(".chat-connection-list").append(out);
-    		
-    	} else if(cmd === "userDisconnect") { // 접속자가 나갔을 때
+    	if(cmd === "userDisconnect") { // 접속자가 나갔을 때
     		let email = data.email;
     		let nickName = data.nickName;
     		
@@ -197,15 +190,6 @@ $(function(){
     		out += "<div class='msg-left'>" + msg + "</div>";
     		writeToScreen(out);
     		
-    	} else if(cmd === "whisper") { // 위스퍼
-    		let email = data.email;
-    		let nickName = data.nickName;
-    		let msg = data.chatMsg;
-    		
-    		let out = "<div class='user-left'>" + nickName + "(귓속)</div>";
-    		out += "<div class='msg-left'>" + msg + "</div>";
-    		
-    		writeToScreen(out);
     	}  else if(cmd === "time") {
     		// console.log(evt.data);
     	}
@@ -263,32 +247,6 @@ $(function(){
 		$("#chatOneMsg").off("keydown");
 		$("#chatOneMsg").val("");
 	});
-	
-	// -----------------------------------------
-	// 귓속말 전송
-	function sendOneMessage() {
-		let msg = $("#chatOneMsg").val().trim();
-		if(! msg) {
-			$("#chatOneMsg").focus();
-			return;
-		}
-		
-		let email = $('#chatOneMsg').attr("data-email");
-		let nickName = $('#chatOneMsg').attr("data-nickName").trim();
-		
-		let obj = {};
-        obj.type = "whisper";
-        obj.chatMsg = msg;
-        obj.receiver = email;
-        
-        let jsonStr = JSON.stringify(obj);
-        socket.send(jsonStr);
-        
-        writeToScreen("<div class='msg-right'>"+msg+"("+nickName+")</div>");
-        
-        $("#chatOneMsg").val("");
-        $("#myDialogModal").modal("hide");
-	}
 	
 });
 
