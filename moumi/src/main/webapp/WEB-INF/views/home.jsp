@@ -328,7 +328,7 @@ li {
 						<img style="height: 280px; width: 285px;" src="${pageContext.request.contextPath}/uploads/report/${dto.thumbnail}" style="width: -webkit-fill-available;">
 						<div class="p-2">
 							<div class="card-body">
-								<a href="${articleUrl}&reportNum=${dto.reportNum}" class="text-reset" style="text-decoration-line: none;">${dto.subject}</a>
+								<a href="${pageContext.request.contextPath}/report/article&reportNum=${dto.reportNum}" class="text-reset" style="text-decoration-line: none;">${dto.subject}</a>
 							</div>
 						</div>
 					</div>
