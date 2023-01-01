@@ -22,15 +22,5 @@ public class ChattingController {
 		return ".chatting.main";
 	}
 	
-	@GetMapping("dialog")
-	public String dialog(HttpServletRequest req, Model model) throws Exception {
-		
-		String cp = req.getContextPath();
-		String wsURL = "ws://"+req.getServerName()+":"+req.getServerPort()+cp+"/chat.msg";
-		model.addAttribute("wsURL", wsURL);
-		
-		return ".chatting.dialog";
-		
-	}
 	
 }
