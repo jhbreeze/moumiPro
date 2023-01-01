@@ -130,7 +130,6 @@ function chattingModal() {
 	<img style="height: 50px; width: 60px;" src="${pageContext.request.contextPath}/resources/moumi/logo/circle1.png">
 </button>
 
-
 <div class="modal fade" id="chatModalToggle" aria-hidden="true"
 	aria-labelledby="chatModalToggleLabel" tabindex="-1"
 	data-bs-backdrop="static">
