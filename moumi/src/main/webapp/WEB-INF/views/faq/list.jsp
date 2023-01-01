@@ -15,7 +15,7 @@
 				<div id="flush-collapse-${status.index}" class="accordion-collapse collapse" aria-labelledby="flush-heading-${status.index}" data-bs-parent="#accordionFlush">
 					<div class="accordion-body">
 
-						<div class="row border-bottom pb-1">분류 : ${dto.category}</div>
+						<div class="row border-bottom pb-1">분류 : ${dto.categoryName}</div>
 						<div class="row p-2">
 							${dto.content}
 						</div>
@@ -25,12 +25,6 @@
 		</c:forEach>
 	</div>
 </c:if>
-
-
- 
-<div class="page-navigation">
-	${dataCount == 0 ? "등록된 게시물이 없습니다." : paging}
-</div>
 
 <div class="row py-3">
 	<div class="col">
