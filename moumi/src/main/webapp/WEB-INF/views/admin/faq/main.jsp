@@ -176,10 +176,6 @@ function reloadFaq() {
 				<i class="fa-brands fa-perbyte"></i> 자주하는 질문
 			</h2>
 		</div>
-		
-	    <div class="alert alert-info" role="alert">
-	        <i class="bi bi-search"></i> 궁금한 문의 사항을 빠르게 검색 할 수 있습니다.
-	    </div>
 	    		
 		<div class="body-main">
 			

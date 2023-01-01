@@ -50,7 +50,7 @@
 	</select>
 	
 	<select id="readMember" parameterType="long" resultType="com.moumi.app.admin.memberManage.Member">
-		SELECT m.userCode, email, userName, userType, nickName, SYSDATE,
+		SELECT m.userCode, email, userName, userType, nickName,
 			regDate, lastLogin, gender,
 			enabled, TO_CHAR(regDate, 'YYYY-MM-DD') regDate, TO_CHAR((startDate+30), 'YYYY-MM-DD') endDate, TO_CHAR(startDate, 'YYYY-MM-DD') startDate
 		FROM member m
