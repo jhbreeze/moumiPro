@@ -71,31 +71,27 @@
 
 <script type="text/javascript">
 function chattingModal() {
-	$("#chatModalToggle").modal("show");	
+	$("#chatModal").modal("show");	
 }
+
 </script>
 
-<button type="button" class="btn chatBtn btn-lg shadow" id="chatViewerModalLabel" onclick="chattingModal();">문의하기
-	<img style="height: 50px; width: 60px;" src="${pageContext.request.contextPath}/resources/moumi/logo/circle1.png">
-</button>
+<div class="modal fade" id="#myDialog">
+	<div class="modal-dialog" role="document" style="width: 400px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<div class="mb-2">
+					<h4 class="modal-title" id="chatViewerModalLabel">
+						<img class="mb-2" style="height: 30px; width: 40px;"
+							src="${pageContext.request.contextPath}/resources/moumi/logo/circle1.png">
+						&nbsp; MOUMI
+					</h4>
+				</div>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
 
-
-<div class="modal fade" id="chatModalToggle" aria-hidden="true" aria-labelledby="chatModalToggleLabel" tabindex="-1">
-  <div class="modal-dialog" role="document" style="width: 400px;">
-    <div class="modal-content">
-      <div class="modal-header">
-		<div class="mb-2">
-			<h4 class="modal-title" id="chatModalToggleLabel">
-				<img class="mb-2" style="height: 30px; width: 40px;"
-					src="${pageContext.request.contextPath}/resources/moumi/logo/circle1.png">
-				&nbsp; MOUMI
-			</h4>
-		</div>
-		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	 </div>
-	
-      <div class="modal-body pt-1">
-        <p class="modal-body-text m-1 fw-semibold"> MOUMI 실시간 1:1 문의 채널입니다. </p>
+			<div class="modal-body pt-1">
+				<p class="modal-body-text m-1 fw-semibold"> MOUMI 실시간 1:1 문의 채널입니다. </p>
 				<section class="modal-body-1 mt-2 mb-4 pt-1 ps-2 pe-2 pb-2">
 					<div class="modal-body-text fw-semibold ms-2 mt-1"> 문의 내역 &nbsp; >>> </div>
 					<div class="d-flex mb-1">
@@ -138,7 +134,7 @@ function chattingModal() {
 					</div>
 					
 					<div class="pb-2">
-						<button class="btn btn-success btn-lg shadow chatBtn2" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">
+						<button type="button" class="btn btn-success btn-lg shadow chatBtn2" id="chatViewerModalLabel" onclick="location.href='${pageContext.request.contextPath}/chatting/dialog'">
 							<img class="me-1" style="height: 40px; width: 50px;" src="${pageContext.request.contextPath}/resources/moumi/logo/circle1.png">
 							  문의하기&nbsp;&nbsp;>>>
 						</button>
@@ -149,26 +145,11 @@ function chattingModal() {
 					</div>
 					
 				</section>
-      </div>
-    </div>
-  </div>
+			</div>
+			
+			
+			
+		</div>
+	</div>
 </div>
 
-
-<div class="modal fade" id="chatModalToggle2" aria-hidden="true" aria-labelledby="chatModalToggleLabel2" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="chatModalToggleLabel2">Modal 2</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Hide this modal and show the first with the button below.
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-primary" data-bs-target="#chatModalToggle" data-bs-toggle="modal">Back to first</button>
-      </div>
-    </div>
-  </div>
-</div>
-<a class="btn btn-primary" data-bs-toggle="modal" href="#chatModalToggle" role="button">Open first modal</a>
