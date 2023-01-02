@@ -15,8 +15,8 @@
 }
 .card-img-top {
 	width: 90px;
-	margin-left: 10px;
-	margin-top: 10px;
+	margin-left: 17px;
+	margin-top: 15px;
 }
 .row {
 	width: 910px;
@@ -50,7 +50,7 @@
 }
 .shortcut{
 	margin-top: 30px;
-	margin-left: 20px;
+	margin-left: 10px;
 	font-size: 13px;
 	color: gray;
 }
@@ -67,10 +67,10 @@ table{
 	width: 130px;
 }
 .shortcutp{
-	margin-top: 30px;
-	margin-left: 20px;
 	color: gray;
 	font-weight: 900;
+	border: none;
+	background: none;
 }
 .welcome{
 	font-size: 20px;
@@ -100,8 +100,8 @@ table{
 					<div class="lbox">
 						<table>
 							<tbody>
-								<tr><td rowspan="5" class="logoimg"><img src="${pageContext.request.contextPath}/resources/moumi/logo/circle.png"  class="card-img-top"></td><td>&nbsp;</td></tr>
-								<tr><td class="shortcutp" style="text-align: right;">회원정보 수정 ></td></tr>
+								<tr><td rowspan="5" class="logoimg"><img src="${pageContext.request.contextPath}/resources/moumi/logo/circle1.png"  class="card-img-top"></td><td>&nbsp;</td></tr>
+								<tr><td style="text-align: right;"><button class="shortcutp" onclick="location.href='${pageContext.request.contextPath}/member/login';">회원정보 수정 ></button></td></tr>
 						        <tr><td class="welcome"><span style="color: #198754"> ${dto.nickName}닉네임</span>님 환영합니다.</td></tr>
 						        <tr><td class="id">ID ${email}admin</td></tr>
 								<tr><td>&nbsp;</td></tr>
@@ -109,7 +109,7 @@ table{
 						</table>	
 							<hr class="line">
 							<div class="scontent">
-								${dto.nickName} 회원님은 MOUMI의 <span style="color: #FFC107; font-weight: bold;">${dto.userType}</span> 입니다.
+								${dto.nickName} 닉네임회원님은 MOUMI의 <span style="color: #FFC107; font-weight: bold;">${dto.userType}</span> 입니다.
 							</div>
 					</div>
 				
@@ -120,9 +120,9 @@ table{
 						<div class="scontent">
 							MOUMI에 보유한 <br> 이용권 내역을 확인할 수 있습니다. 
 						</div>
-						<div class="shortcut">
+						<button type="button" class="btn shortcut" onclick="location.href='${pageContext.request.contextPath}/mypage/mypayment/main';">
 							바로가기 >
-						</div>
+						</button>
 					</div>
 				</div>	
 	
@@ -134,9 +134,9 @@ table{
 						<div class="scontent">
 							MOUMI에서 작성한 글과 댓글을 확인, 삭제할 수 있습니다.<br> &nbsp;
 						</div>
-						<div class="shortcut">
+						<button type="button" class="btn shortcut" onclick="location.href='${pageContext.request.contextPath}/mypage/myhistory/main';">
 							바로가기 >
-						</div>
+						</button>
 					</div>
 				
 					<div class="sbox">
@@ -146,9 +146,9 @@ table{
 						<div class="scontent">
 							MOUMI에서 좋아요한 글과 <br> 찜한 채용공고를 확인할 수 있습니다.
 						</div>
-						<div class="shortcut">
+						<button type="button" class="btn shortcut" onclick="location.href='${pageContext.request.contextPath}/mypage/mypick/main';">
 							바로가기 >
-						</div>
+						</button>
 					</div>
 				</div>	
 			</div>	
