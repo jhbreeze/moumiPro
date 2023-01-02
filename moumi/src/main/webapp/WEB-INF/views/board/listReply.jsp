@@ -96,40 +96,6 @@
 	    	
 	</c:forEach>
 </table>
-<!-- Notify Modal -->
-<div class="modal fade" id="notifyModal" tabindex="-1" aria-labelledby="notifyModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">신고하기</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body modal-notify">
-      	<div class = "p-3">
-      	    <form name="notifyForm" method="post" class="row g-3">
-        		<div class="mt-0">
-        			<input type="text" name="userName" class="form-control" placeholder="신고자">
-        		</div>
-        		<div class="mt-0">
-        			<input type="text" name="notifyContent" class="form-control mt-3" placeholder="신고내용" style="height: 10rem;">
-        		</div>
-        		<input type="hidden" name="parent">
-        		<input type="hidden" name="pageNo" value="${pageNo}">
-        		<input type="hidden" name="communityNum" value="${communityNum}">
-      		</form>
-      	</div>
- 
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-        <button type="button" class="btn btn-success sendModalNotify">신고하기</button>
-      </div>
-    </div>
-  </div>
-</div>
-<script type="text/javascript">
-
-</script>
 
 <div class="page-navigation">
 	${paging}
