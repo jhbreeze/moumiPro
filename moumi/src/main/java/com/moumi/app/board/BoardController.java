@@ -432,17 +432,22 @@ public class BoardController {
 		}
 	
 		@PostMapping("notify")
-		public String notifyWrite(@RequestParam long parent,
-				@RequestParam(value = "pageNo", defaultValue = "1") int current_page,
-				@RequestParam long communityNum,Board dto) {
+		public Map<String,Object> notifyWrite(@RequestParam long parent,
+				@RequestParam long communityNum,Board dto ,HttpSession session) {
 			
-			String query = "communityNum="+communityNum+"&page="+current_page;
+			SessionInfo info = (SessionInfo)session.getAttribute("member");
+			
+			Map<String, Object> model = new HashMap<>();
+			String state = "true";
 			try {
-				System.out.println("여기오니?");
+				dto.setUserCode(info.getUserCode());
 				dto.setReplyNum(parent);
 				service.insertNotify(dto);
 			} catch (Exception e) {
+				state = "false";
 			}
-			return "redirect:/board/article?"+query;
+			model.put("state",state);
+			
+			return model;
 		}
 }

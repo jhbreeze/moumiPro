@@ -129,6 +129,8 @@ li {
 	border-radius: 50px;
 	margin-top: 7rem;
 	margin-left: 10rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
 }
 .content .f-content-h {
 	color: #313842;
@@ -254,6 +256,37 @@ li {
 .pay-detail-list>li.type-premium {
     color: #5845ea;
 }
+.pay-detail-subject {
+	height:2rem;
+    background: #ECF4EB;
+    border-radius: 0.7rem;
+    padding: 0.3rem 1rem;
+    margin: 0 2rem;
+    margin-bottom: 1rem;
+}
+.pay-detail-subject p {
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: left;
+    margin-bottom: 1rem;
+}
+.pay-detail-desc-row {
+    display: flex;
+}
+.pay-detail-desc-tit {
+    align-items: center;
+    display: flex;
+    flex: 0 0 25rem;
+    width: 16rem;
+    margin-left: 3.5rem;
+}
+.pay-detail-list .second {
+	width: 12rem;
+}
+.pay-detail-desc .line {
+	border-bottom: 1px solid #f1f2f4;
+	
+}
 </style>
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
@@ -317,28 +350,50 @@ li {
 			</div>
 		</div>
 	</div>
-	<div class="paycontent">
-		<div class="pay-detail-head">
-			<ul class="pay-detail-list">
-				<li>Free</li>
-				<li class="type-basic">Basic</li>
-				<li class="type-premium">Premium</li>
-			</ul>
-		</div>
-		<div class="pay-detail-body">
-			<div class="pay-detail-content">
-				<div class="pay-detail-subject">
-					<p>이용안내</p>
-				</div>
-				<div class="pay-detail-desc">
-					<div class="pay-detail-desc-row">
-						<h6>이용 기간</h6>
+	<div class="pay-detail">
+		<div class="paycontent">
+			<div class="pay-detail-head">
+				<ul class="pay-detail-list">
+					<li>Free</li>
+					<li class="type-basic">Basic</li>
+					<li class="type-premium">Premium</li>
+				</ul>
+			</div>
+			<div class="pay-detail-body">
+				<div class="pay-detail-content">
+					<div class="pay-detail-subject">
+						<p>이용안내</p>
 					</div>
-					<ul class="pay-detail-list">
-						<li>무제한</li>
-						<li>30일</li>
-						<li>50일</li>
-					</ul>
+					<div class="pay-detail-desc">
+						<div class="pay-detail-desc-row">
+							<div class="pay-detail-desc-tit">
+								<h6>이용 기간</h6>
+							</div>
+						
+							<ul class="pay-detail-list">
+								<li>무제한</li>
+								<li class="second">30일</li>
+								<li>50일</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="pay-detail-content">
+					<div class="pay-detail-subject">
+						<p>분석조건</p>
+					</div>
+					<div class="pay-detail-desc">
+						<div class="pay-detail-desc-row line">
+							<div class="pay-detail-desc-tit">
+								<h6>기간별검색</h6>
+							</div>
+							<ul class="pay-detail-list">
+								<li>1개월</li>
+								<li class="second">3개월</li>
+								<li>3개월</li>
+							</ul>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

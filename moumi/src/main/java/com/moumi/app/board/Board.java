@@ -23,7 +23,7 @@ public class Board {
 	private String userName;
 	private String notifyContent;
 	private long replyNum;
-	
+
 	
 	public long getCommunityNum() {
 		return communityNum;
@@ -121,7 +121,4 @@ public class Board {
 	public void setReplyNum(long replyNum) {
 		this.replyNum = replyNum;
 	}
-	
-	
-	
 }
