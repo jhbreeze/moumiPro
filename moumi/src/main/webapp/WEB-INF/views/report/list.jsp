@@ -33,6 +33,11 @@
 
 			</div>
 		</div>
+		
+		
+				<div class="page-navigation mt-5">${dataCount == 0 ? "등록된 이벤트가 없습니다." : paging}
+				
+	</div>
 	</div>
 </body>
 </html>

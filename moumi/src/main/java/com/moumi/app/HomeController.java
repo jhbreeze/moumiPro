@@ -1,6 +1,5 @@
 package com.moumi.app;
 
-import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
@@ -57,7 +56,7 @@ public class HomeController {
 			@RequestParam(defaultValue = "all") String condition, @RequestParam(defaultValue = "") String keyword,
 			HttpServletRequest req, Model model) throws Exception {
 
-		int size = 6;
+		int size = 8;
 		int total_page;
 		int dataCount;
 
@@ -65,11 +64,11 @@ public class HomeController {
 		map.put("condition", condition);
 		map.put("keyword", keyword);
 
-		// dataCount = service.dataCount(map);
-//		total_page = myUtil.pageCount(dataCount, size);
-//		if (current_page > total_page) {
-//			current_page = total_page;
-//		}
+		dataCount = service.dataCount(map);
+		total_page = myUtil.pageCount(dataCount, size);
+		if (current_page > total_page) {
+			current_page = total_page;
+		}
 
 		int offset = (current_page - 1) * size;
 		if (offset < 0)
@@ -93,15 +92,15 @@ public class HomeController {
 			articleUrl = cp + "/report/article?page=" + current_page + "&" + query;
 		}
 
-		// String paging = myUtil.pagingUrl(current_page, total_page, listUrl);
+		String paging = myUtil.pagingUrl(current_page, total_page, listUrl);
 
 		model.addAttribute("list", list);
 		model.addAttribute("reportNum", reportNum);
 		model.addAttribute("page", current_page);
-		// model.addAttribute("dataCount", dataCount);
+		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("size", size);
-		// model.addAttribute("total_page", total_page);
-		// model.addAttribute("paging", paging);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("paging", paging);
 		model.addAttribute("articleUrl", articleUrl);
 
 		model.addAttribute("condition", condition);

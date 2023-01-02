@@ -140,6 +140,7 @@ function searchList() {
 							<button type="button" class="btn btn-light" onclick="searchList()"> <i class="bi bi-search"></i> </button>
 						</div>
 					</form>
+
 				</div>
 		<div class="col text-end">
 			<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/admin/report/write';">글올리기</button>

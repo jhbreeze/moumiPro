@@ -136,7 +136,6 @@ public class EventController {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 			Event dto = service.readEvent(eventNum);
-			// String s = dto.getEday().replaceAll("\\-|\\.|/", "");
 			String s = dto.getStartDate().replaceAll("\\-|\\.|/", "");
 			String e = dto.getEndDate().replaceAll("\\-|\\.|/", "");
 
