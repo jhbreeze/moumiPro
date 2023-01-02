@@ -78,7 +78,7 @@ public class EventServiceImpl implements EventService {
 		List<Event> list = null;
 		try {
 
-			list = dao.selectList("adminEvent.listEvent");
+			list = dao.selectList("adminEvent.listEvent", map);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -91,7 +91,6 @@ public class EventServiceImpl implements EventService {
 	public Event readEvent(long eventNum) {
 		Event dto = null;
 		try {
-			// 이벤트 게시글 가져오기
 			dto = dao.selectOne("adminEvent.readEvent", eventNum);
 		} catch (Exception e) {
 			e.printStackTrace();

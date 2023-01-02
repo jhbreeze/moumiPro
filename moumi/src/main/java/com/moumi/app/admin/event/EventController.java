@@ -39,9 +39,9 @@ public class EventController {
 			@RequestParam(defaultValue = "all") String condition, @RequestParam(defaultValue = "") String keyword,
 			HttpServletRequest req, Model model) throws Exception {
 
-		int size = 6;
-		int total_page = 0;
-		int dataCount = 0;
+		int size = 8;
+		int total_page;
+		int dataCount;
 
 		if (req.getMethod().equalsIgnoreCase("GET")) {
 			keyword = URLDecoder.decode(keyword, "UTF-8");
@@ -64,6 +64,10 @@ public class EventController {
 
 		map.put("offset", offset);
 		map.put("size", size);
+		
+		System.out.println(offset +"offset");
+		System.out.println(size +"size");
+
 		
 		List<Event> list = service.listEvent(map);
 		

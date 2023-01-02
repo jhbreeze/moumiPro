@@ -13,8 +13,8 @@
 		SELECT eventNum, subject, content, thumbnail, TO_CHAR(regDate,'yyyy.mm.dd') AS regDate, TO_CHAR(startDate, 'yyyy.mm.dd') AS startDate, TO_CHAR(endDate,'yyyy.mm.dd') AS endDate
 		FROM event
 		ORDER BY eventNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
 	</select>
-
 	<select id="readEvent" parameterType="Long" resultType="com.moumi.app.admin.event.Event">
 		SELECT eventNum, userCode, subject, content, thumbnail, TO_CHAR(regDate, 'yyyy.mm.dd') AS regDate, TO_CHAR(startDate, 'yyyy.mm.dd') AS startDate, TO_CHAR(endDate, 'yyyy.mm.dd') AS endDate, price
 		FROM event 
