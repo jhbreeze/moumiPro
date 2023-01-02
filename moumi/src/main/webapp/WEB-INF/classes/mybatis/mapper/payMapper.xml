@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pay">
+	<insert id="insertPay" parameterType="com.moumi.app.pay.Pay">
+		INSERT INTO payment(paymentNum,paymentPrice,userCode,payDate,discount)
+			VALUES(payment_seq.NEXTVAL,#{paymentPrice},#{userCode},SYSDATE,#{discount})
+	</insert>
+	<select id="selectMember" parameterType="Long" resultType="com.moumi.app.pay.Pay">
+		SELECT userName,email
+		FROM member
+		WHERE userCode = #{userCode}
+	</select>
+	<select id="selectProduct" parameterType="Integer" resultType="com.moumi.app.pay.Pay">
+		SELECT subject,content
+		FROM payCategory
+		WHERE categoryNum = #{categoryNum}
+	</select>
+</mapper>

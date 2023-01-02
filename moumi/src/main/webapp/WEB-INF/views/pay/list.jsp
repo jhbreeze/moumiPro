@@ -76,35 +76,34 @@ li {
 	margin-top: 50px;
 	color: white;
 	text-weight: bold;
+	font-family: 'GmarketSansMedium';
+	font-weight: 900;
 }
 
-.customInput{
+.customInput {
 	position: relative;
-    width: 100%;
-    height: 48px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    border-radius: 24px;
-    border: 0.3px solid white;
-    background-color: white;
-	
-
+	width: 100%;
+	height: 48px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	border-radius: 24px;
+	border: 0.3px solid white;
+	background-color: white;
 }
 
-.inputSearch{
-	border: none;	
-
+.inputSearch {
+	border: none;
 }
 
-.btnSearch{
+.btnSearch {
 	background: white;
 	width: 60px;
 	heigth: 20px;
 	border-radius: 90px;
 	padding: 10px;
-	border:none; 
+	border: none;
 }
 .pay {
 	display: flex;
@@ -121,13 +120,15 @@ li {
 	border-radius: 50px;
 	margin-right: 2rem;
 }
+.pay-detail {
+	margin-top: 5rem;
+}
 .paycontent {
 	width: 64rem;
 	height: 50rem;
 	background: #FFFFFF;
 	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
 	border-radius: 50px;
-	margin-top: 7rem;
 	margin-left: 10rem;
 	padding-left: 1rem;
 	padding-right: 1rem;
@@ -162,10 +163,9 @@ li {
 	margin-left: 2rem;
 	line-height: 1;
 	margin-bottom: 1rem;
-	background: #198754;
+	background: black;
 	color: white;
 	text-align: center;
-	transition: background .3s,transform .3s;
 	width: 15rem;
 	height: 2.5rem;
 	border-radius: 0.5rem;
@@ -287,6 +287,9 @@ li {
 	border-bottom: 1px solid #f1f2f4;
 	
 }
+.pay-detail-list .bi-check-lg {
+	font-size: 2rem;
+}
 </style>
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
@@ -317,12 +320,12 @@ li {
 		<div class="paybox">
 			<div class="paylist">
 				<div class="content">
-					<h6 class="f-content-h">free</h6>
+					<h6 class="f-content-h">Free</h6>
 					<h4>
 						<b>무료</b>
 						<span>/무제한</span>
 					</h4>
-					<button>가입하기</button>
+					<button onclick="location.href='${pageContext.request.contextPath}/member/member'">가입하기</button>
 					<p class="f-contentp">회원가입하고 다양한 <br>정보를 볼 수 있어요!</p>
 				</div>
 			</div>
@@ -333,7 +336,7 @@ li {
 						<b>15,000</b>
 						<span>/30일</span>
 					</h4>
-					<button class="s-content">시작하기</button>
+					<button class="s-content" onclick="location.href='${pageContext.request.contextPath}/pay/payment?productnum=1&price=15000'">시작하기</button>
 					<p class="f-contentp">데이터를 파일로 다운 받을 수 있고<br>마음껏 분석할 수 있어요!</p>
 				</div>
 			</div>
@@ -344,7 +347,7 @@ li {
 						<b>25,000</b>
 						<span>/50일</span>
 					</h4>
-					<button class="t-content">시작하기</button>
+					<button class="t-content" onclick="location.href='${pageContext.request.contextPath}/pay/payment?productnum=2&price=25000'">시작하기</button>
 					<p class="f-contentp">많은 기간 데이터를<br>마음껏 분석할 수 있어요!</p>
 				</div>
 			</div>
@@ -394,6 +397,84 @@ li {
 							</ul>
 						</div>
 					</div>
+					<div class="pay-detail-desc">
+						<div class="pay-detail-desc-row line">
+							<div class="pay-detail-desc-tit">
+								<h6 style="padding-top:0.5rem;">트위터분석</h6>
+							</div>
+							<ul class="pay-detail-list">
+								<li><i class="bi bi-check-lg"></i></li>
+								<li class="second"><i class="bi bi-check-lg"></i></li>
+								<li><i class="bi bi-check-lg"></i></li>
+							</ul>
+						</div>
+					</div>
+					<div class="pay-detail-desc">
+						<div class="pay-detail-desc-row line">
+							<div class="pay-detail-desc-tit">
+								<h6 style="padding-top:0.5rem;">블로그분석</h6>
+							</div>
+							<ul class="pay-detail-list">
+								<li><i class="bi bi-check-lg"></i></li>
+								<li class="second"><i class="bi bi-check-lg"></i></li>
+								<li><i class="bi bi-check-lg"></i></li>
+							</ul>
+						</div>
+					</div>
+					<div class="pay-detail-desc">
+						<div class="pay-detail-desc-row line">
+							<div class="pay-detail-desc-tit">
+								<h6 style="padding-top:0.5rem;">유튜브분석</h6>
+							</div>
+							<ul class="pay-detail-list">
+								<li></li>
+								<li class="second"><i class="bi bi-check-lg"></i></li>
+								<li><i class="bi bi-check-lg"></i></li>
+							</ul>
+						</div>
+					</div>
+					<div class="pay-detail-desc">
+						<div class="pay-detail-desc-row line">
+							<div class="pay-detail-desc-tit">
+								<h6 style="padding-top:0.5rem;">인스타분석</h6>
+							</div>
+							<ul class="pay-detail-list">
+								<li></li>
+								<li class="second"><i class="bi bi-check-lg"></i></li>
+								<li><i class="bi bi-check-lg"></i></li>
+							</ul>
+						</div>
+					</div>
+					<div class="pay-detail-desc">
+						<div class="pay-detail-desc-row line" style="border-bottom: none;">
+							<div class="pay-detail-desc-tit">
+								<h6 style="padding-top:0.5rem;">페이스북분석</h6>
+							</div>
+							<ul class="pay-detail-list">
+								<li></li>
+								<li class="second"><i class="bi bi-check-lg"></i></li>
+								<li><i class="bi bi-check-lg"></i></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="pay-detail-content">
+					<div class="pay-detail-subject">
+						<p>분석결과</p>
+					</div>
+					<div class="pay-detail-desc">
+						<div class="pay-detail-desc-row line" style="border-bottom: none;">
+							<div class="pay-detail-desc-tit">
+								<h6>파일 다운로드</h6>
+							</div>
+							<ul class="pay-detail-list">
+								<li></li>
+								<li class="second"><i class="bi bi-check-lg"></i></li>
+								<li><i class="bi bi-check-lg"></i></li>
+							</ul>
+						</div>
+					</div>
+				</div>
 				</div>
 			</div>
 		</div>
