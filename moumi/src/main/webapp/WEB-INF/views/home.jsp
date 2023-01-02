@@ -147,8 +147,14 @@ li {
 }
 
 .map {
-	width: 900px;
-	height: 600px;
+	width: 500px;
+	height: 500px;
+}
+
+.customSelect{
+	width: 200px;
+	height: 25px;
+	font-size: 16px;
 }
 </style>
 <script type="text/javascript"
@@ -280,7 +286,6 @@ li {
 
 
 <script type="text/javascript">
-<!--%load_js_plugin("ui")-->
 	nongsaroOpenApiRequest.apiKey = "20221216AK1MXVA9FRV2EBTZJ6GZ1G";
 	nongsaroOpenApiRequest.serviceName = "areaBrand";
 	nongsaroOpenApiRequest.operationName = "selectSclCodeLst";
@@ -318,24 +323,20 @@ li {
 
 
 		<p class="title">분석 리포트</p>
-		<a href="${pageContext.request.contextPath}/reportList" class="more">더보기</a>
-		<br> <br>
+		<a href="${pageContext.request.contextPath}/reportList" class="more">더보기</a> <br> <br>
 		<div class="container text-center">
 			<div class="row">
 				<c:forEach var="dto" items="${listMainReport}" varStatus="status">
 					<div class="col-md-4 col-lg-3 mt-4"
 						style="width: 350px; margin: 25px;">
 						<div class="card" style="width: 18rem;"
-							data-reportNum="${dto.reportNum}">
+							data-reportNum="${dto.reportNum}"
+							onclick="location.href='${pageContext.request.contextPath}/article?&reportNum=${dto.reportNum}'">
 							<img style="height: 280px; width: 285px;"
 								src="${pageContext.request.contextPath}/uploads/report/${dto.thumbnail}"
 								style="width: -webkit-fill-available;">
 							<div class="p-2">
-								<div class="card-body">
-									<a
-										href="${pageContext.request.contextPath}/report/article&reportNum=${dto.reportNum}"
-										class="text-reset" style="text-decoration-line: none;">${dto.subject}</a>
-								</div>
+								<div class="card-body">${dto.subject}</div>
 							</div>
 						</div>
 					</div>
@@ -396,7 +397,7 @@ li {
 			<div class="container">
 				<p class="title">우리 농가 살리기</p>
 
-
+	
 				<div id="nongsaroApiLoadingArea"></div>
 				<div id="nongsaroApiLoadingAreaResult"></div>
 
@@ -407,8 +408,8 @@ li {
 				<div class="search-container">
 					<div class="col-auto p-1">
 						<c:if test="${!empty listRegion}">
-							<select name="regionCode" id="regionCode" style="width: 80px;"
-								class="select_02" onchange="javascript:myListener(this);">
+							<select name="regionCode" id="regionCode"
+								class="select_02 customSelect" onchange="javascript:myListener(this);">
 								<c:forEach var="region" items="${listRegion}" varStatus="i">
 									<option value="${region.regionCode}">${region.regionName}</option>
 								</c:forEach>
