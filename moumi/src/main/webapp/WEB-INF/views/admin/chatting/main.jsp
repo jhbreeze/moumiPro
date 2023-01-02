@@ -41,24 +41,30 @@ main {
     color: #333;
     white-space: pre-wrap;
     vertical-align: baseline;
-    border-radius: 0.25rem;
+    border-radius: 0.5rem;
 }
+
+.msg-box {
+    background-color: #f8f9fa;
+}
+
 .chat-info {
     background: #f8f9fa;
     color: #333;
     margin-right: auto;
-    margin-left: 3px;
-    margin-bottom: 5px;
+    margin-bottom: 7px;
+
 }
 .msg-left {
-    margin-right: auto;
-    margin-left: 8px;
-    margin-bottom: 5px;
+     margin-right: auto;
+    margin-bottom: 7px;
+    background-color: #f8f9fa;
 }
 .msg-right {
 	margin-left: auto;
-    margin-right: 3px;
-    margin-bottom: 5px;
+    margin-bottom: 7px;
+    background-color: #429F6B;
+    color: white;
 }
 
 
@@ -105,39 +111,97 @@ tr:hover {
 .btn:active, .btn:focus, .btn:hover {
 	color: #eee;
 }
+
+.myDialogList {
+    display: flex;
+    padding: 16px 0;
+    align-items: stretch;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border-bottom: 1px solid #f1f3f5;
+}
+
+.myDialogList:hover {
+	cursor: pointer;
+	background-color: #ECF4EB;
+	box-shadow: 2px 2px 2px 0;
+	border-radius: 20px;
+}
+
+.myDialogListInfo {
+	display: flex;
+    flex-direction: column;
+    width: 90%;
+}
+
+.myDialogListDate {
+	font-weight: 400;
+    line-height: 1.43;
+    letter-spacing: -.3px;
+    font-size: 14px;
+    min-width: 150px;
+    text-align: center;
+    vertical-align: middle;
+}
+
 </style>
 
 <div class="container">
 	<div class="body-container">	
-		<div class="body-title">
-			<h2>
-				<i class="bi bi-chat"></i> 채팅관리
-			</h2>
-		</div>
+		<ul class="nav nav-tabs" id="myTab" role="tablist">
+			<li class="nav-item" role="presentation">
+				<button class="nav-link active" id="tab-1" data-bs-toggle="tab" data-bs-target="#panel-1" 
+					type="button" role="tab" data-div="1" aria-controls="panel-1" aria-selected="true">참여중 채팅</button>
+			</li>
+			<li class="nav-item" role="presentation">
+				<button class="nav-link" id="tab-2" data-bs-toggle="tab" data-bs-target="#panel-2"
+					type="button" role="tab" data-div="2" aria-controls="panel-2" aria-selected="true">완료된 채팅</button>
+			</li>
+		</ul>
 		
-		
-		<div class="body-main content-frame">
-			<!-- <form name="listForm" method="post"> -->
-			<div class="row board-list-header">
-				<div class="col-8">
-					<p class="form-control-plaintext fs-6"><i class="bi bi-chevron-double-right"></i> 채팅 메시지</p>
-					<div class="border p-3 chat-msg-container"></div>
-					<div class="mt-2">
-						<input type="text" id="chatMsg" class="form-control" 
-							placeholder="채팅 메시지를 입력 하세요...">
+		<div class="tab-content pt-3" id="nav-tabContent">
+			<div class="tab-pane fade show active" id="panel-1" role="tabpanel" aria-labelledby="tab-1">
+				<div class="myDialogList">
+					<div class="myDialogImg" style="margin-right: 16px;">
+						<img class="m-1 me-2" style="height: 50px; width: 50px;"
+						src="${pageContext.request.contextPath}/resources/moumi/logo/callcenter.png">
 					</div>
+					<div class="myDialogListInfo"> 
+						<h5 class="fw-bold">ID/ 닉네임</h5>
+						<div>유료회원이 되고싶어요</div>  
+					</div>
+					<div class="myDialogListDate align-self-center"> 2022.12.25 16:10 </div>
 				</div>
-				<div class="col-4">
-					<p class="form-control-plaintext fs-6"><i class="bi bi-chevron-double-right"></i> 접속자 리스트</p>
-					<div class="border p-3 chat-connection-list"></div>
+				
+				<div class="myDialogList">
+					<div class="myDialogImg" style="margin-right: 16px;">
+						<img class="m-1 me-2" style="height: 50px; width: 50px;"
+						src="${pageContext.request.contextPath}/resources/moumi/logo/callcenter.png">
+					</div>
+					<div class="myDialogListInfo"> 
+						<h5 class="fw-bold">ID/ 닉네임</h5>
+						<div>유료회원이 되고싶어요</div>  
+					</div>
+					<div class="myDialogListDate align-self-center"> 2022.12.25 16:10 </div>
 				</div>
+
 			</div>
-			<!-- </form> -->
 		</div>
 		
+		<div class="tab-content pt-2" id="nav-tabContent2">
+			<div class="tab-pane fade show active" id="panel-2" role="tabpanel" aria-labelledby="tab-2">
+				
+				
+				
+			</div>
+		</div>
 		
+
 	</div>
 </div>
+
 
 <!-- 귓속말 Modal -->
 <div class="modal fade" id="myDialogModal" tabindex="-1" aria-labelledby="myDialogModalLabel" aria-hidden="true">
@@ -191,7 +255,7 @@ $(function(){
 	    	return;
 	    }
 	    
-		writeToScreen("<div class='msg-right'>채팅방에 입장했습니다.</div>");
+	    writeToScreen("<div class='msg-right'> 안녕하세요, MOUMI입니다 :) <br> 어떤 점이 궁금하신가요? </div>");
 	    
 	    // 서버 접속이 성공 하면 아이디와 이름을 JSON으로 서버에 전송
 	    let obj = {};

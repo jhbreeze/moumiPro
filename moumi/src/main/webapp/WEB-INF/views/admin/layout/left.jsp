@@ -159,7 +159,7 @@ color: #198754;
 		</li>
 		
 		<li class="menu--item">
-			<a href="${pageContext.request.contextPath}/admin/chatting/list" class="menu--link" title="채팅 관리">
+			<a href="${pageContext.request.contextPath}/admin/chatting/main" class="menu--link" title="채팅 관리">
 				<i class="menu--icon  fa-fw fa-solid bi-chat-dots-fill"></i>
 				<span class="menu--label">채팅 관리</span>
 			</a>
