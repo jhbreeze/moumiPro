@@ -15,10 +15,15 @@ public class Member {
 	private String birth;
 	
 	private long stateNum;
-	private String registerCode;
+	private long registerCode;
 	private String register_date;
 	private int stateCode;
 	private String memo;
+	
+	private String endDate;
+	private String startDate;
+	private String payDate;
+	
 	public long getUserCode() {
 		return userCode;
 	}
@@ -97,10 +102,10 @@ public class Member {
 	public void setStateNum(long stateNum) {
 		this.stateNum = stateNum;
 	}
-	public String getRegisterCode() {
+	public long getRegisterCode() {
 		return registerCode;
 	}
-	public void setRegisterCode(String registerCode) {
+	public void setRegisterCode(long registerCode) {
 		this.registerCode = registerCode;
 	}
 	public String getRegister_date() {
@@ -121,7 +126,24 @@ public class Member {
 	public void setMemo(String memo) {
 		this.memo = memo;
 	}
-	
+	public String getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+	public String getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+	public String getPayDate() {
+		return payDate;
+	}
+	public void setPayDate(String payDate) {
+		this.payDate = payDate;
+	}
 	
 
 }

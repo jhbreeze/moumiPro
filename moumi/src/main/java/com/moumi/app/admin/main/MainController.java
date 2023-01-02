@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller("admin.main.mainController")
@@ -19,13 +20,17 @@ public class MainController {
 	private MainTotalService service;
 	
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
-	public String main(Model model) {
+	public String main(@RequestParam(defaultValue = "") String gender, Model model) {
 		
 		Map<String, Object> today = service.todaySales();
+		Map<String, Object> todayW = service.todaySalesW();
+		Map<String, Object> todayM = service.todaySalesM();
 		Map<String, Object> thisMonth = service.thisMonthSales();
 		Map<String, Object> previousMonth = service.previousMonthSales();
 		
 		model.addAttribute("today", today);
+		model.addAttribute("todayW", todayW);
+		model.addAttribute("todayM", todayM);
 		model.addAttribute("thisMonth", thisMonth);
 		model.addAttribute("previousMonth", previousMonth);
 		
@@ -48,8 +53,11 @@ public class MainController {
 			m = cal.get(Calendar.MONTH) + 1;
 			month = String.format("%04d%02d", y, m);
 		}
+		Map<String, Object> dayOfWeek = service.dayOfWeekTotalCount(month);
+		dayOfWeek.put("month", month);
 		
 		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("dayOfWeek", dayOfWeek);
 		
 		return model;
 	}

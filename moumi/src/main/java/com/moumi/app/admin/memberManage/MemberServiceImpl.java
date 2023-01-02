@@ -107,4 +107,16 @@ public class MemberServiceImpl implements MemberManageService{
 		return dto;
 	}
 
+	@Override
+	public List<Member> listMemberSub(long userCode) {
+		List<Member> list = null;
+		
+		try {
+			list = dao.selectList("memberManage.listMemberSub", userCode);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 }
