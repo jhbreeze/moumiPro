@@ -41,14 +41,7 @@
 					</li>
 					
 					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" style="color:#fff" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							마이페이지
-						</a>
-						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<li><a class="dropdown-item" href="#">나의 이용 내역</a></li>
-							<li><a class="dropdown-item" href="#">개인 정보 관리</a></li>
-							<li><a class="dropdown-item" href="#">관심 질문</a></li>
-						</ul>
+						<a class="nav-link" style="color:#fff" href="${pageContext.request.contextPath}/member/mypage" >마이페이지</a>
 					</li>
 					
 				</ul>

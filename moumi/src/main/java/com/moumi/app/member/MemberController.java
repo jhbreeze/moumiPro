@@ -158,7 +158,7 @@ public class MemberController {
 		} catch (Exception e) {
 		}
 
-		return "redirect:/member/myPage";
+		return "redirect:/member/mypage";
 	}
 
 	@RequestMapping(value = "emailCheck", method = RequestMethod.POST)
@@ -215,13 +215,13 @@ public class MemberController {
 		return "redirect:/";
 	}
 
-	@RequestMapping(value = "myPage")
+	@RequestMapping(value = "mypage")
 	public String myPageForm(Member dto, HttpSession session, Model model) throws Exception {
 
 		try {
-			SessionInfo info = (SessionInfo) session.getAttribute("member");
+//			SessionInfo info = (SessionInfo) session.getAttribute("member");
 
-			service.readMyPage(info.getEmail());
+//			service.readMypage(info.getEmail());
 
 			model.addAttribute("dto", dto);
 		} catch (Exception e) {
@@ -229,7 +229,7 @@ public class MemberController {
 			throw e;
 		}
 
-		return ".member.myPage";
+		return ".member.mypage";
 	}
 
 }

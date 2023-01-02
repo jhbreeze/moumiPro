@@ -215,7 +215,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Member readMyPage(String email) throws Exception {
+	public Member readMypage(String email) throws Exception {
 		Member dto = null;
 		try {
 			dto = dao.selectOne("member.readMember", email);
