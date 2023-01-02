@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.moumi.app.common.MyUtil;
 import com.moumi.app.event.Reply;
-import com.moumi.app.member.SessionInfo;
+
 
 @Controller("admin.event.eventController")
 @RequestMapping("/admin/event/*")

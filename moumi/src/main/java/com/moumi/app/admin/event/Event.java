@@ -14,6 +14,7 @@ public class Event {
 	private int hitCount;
 	private MultipartFile thumbnailFile;
 	private String thumbnail;
+	private int deadLineABS;
 
 	public long getEventNum() {
 		return eventNum;
@@ -102,5 +103,15 @@ public class Event {
 	public void setThumbnail(String thumbnail) {
 		this.thumbnail = thumbnail;
 	}
+
+	public int getDeadLineABS() {
+		return deadLineABS;
+	}
+
+	public void setDeadLineABS(int deadLineABS) {
+		this.deadLineABS = deadLineABS;
+	}
+	
+	
 
 }

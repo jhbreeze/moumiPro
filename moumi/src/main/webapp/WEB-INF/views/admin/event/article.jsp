@@ -110,15 +110,17 @@
 			<table class="table table-borderless mb-2">
 				<tr>
 					<td width="50%">
-							<button type="button" class="btn btn-success"
+						<button type="button" class="btn btn-success"
 									onclick="location.href='${pageContext.request.contextPath}/admin/event/update?&eventNum=${dto.eventNum}';">수정</button>
 						<button type="button" class="btn btn btn-outline-success"
 									onclick="deleteEvent()">삭제</button>	
-					
+						<button type="button" class="btn btn-success"
+							onclick="location.href='${pageContext.request.contextPath}/admin/event/pick';">추첨</button>
 						</td>
+						
 					<td class="text-end">
 						<button type="button" class="btn btn-success"
-							onclick="location.href='${pageContext.request.contextPath}/bbs/list?${query}';">리스트</button>
+							onclick="location.href='${pageContext.request.contextPath}/admin/event/list?${query}';">리스트</button>
 					</td>
 				</tr>
 			</table>

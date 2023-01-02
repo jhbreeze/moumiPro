@@ -5,7 +5,7 @@
 	
 	<select id="listEvent" parameterType="map" resultType="com.moumi.app.event.Event">
 		SELECT eventNum, subject, content, thumbnail, TO_CHAR(regDate,'yyyy.mm.dd') AS regDate, TO_CHAR(startDate, 'yyyy.mm.dd') AS startDate,
-    	TO_CHAR(endDate,'yyyy.mm.dd') AS endDate, TRUNC(SYSDATE - endDate) AS deadline
+		TO_CHAR(endDate,'yyyy.mm.dd') AS endDate, TRUNC(SYSDATE - endDate) AS deadline, ABS(TRUNC(SYSDATE - endDate)) AS deadlineABS
 		FROM event
 		ORDER BY eventNum DESC
 	</select>
