@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -67,6 +68,21 @@ public class CommentController {
 		model.addAttribute("reply", reply);
 
 		return "admin/comment/list";
+	}
+	
+	@PostMapping("update")
+	public String update(@RequestParam long stopNum, @RequestParam int reply) throws Exception {
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("stopNum", stopNum);
+			map.put("reply", reply);
+			
+			service.updateComment(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return "redirect:/admin/comment/main";
 	}
 
 }

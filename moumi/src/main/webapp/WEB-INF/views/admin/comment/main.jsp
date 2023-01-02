@@ -138,15 +138,6 @@ function listPage(page) {
 	ajaxFun(url, "get", query, "html", fn);
 }
 
-// 새로고침
-function reloadFaq() {
-	const f = document.searchForm;
-	f.condition.value = "all";
-	f.keyword.value = "";
-	
-	listPage(1);
-}
-
 </script>
 	
 <div class="container">

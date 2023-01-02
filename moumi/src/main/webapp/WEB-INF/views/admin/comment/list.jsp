@@ -19,8 +19,14 @@
 				<div id="flush-collapse-${status.index}" class="accordion-collapse collapse" aria-labelledby="flush-heading-${status.index}" data-bs-parent="#accordionFlush" style="clear: left;">
 					<div class="accordion-body" style="clear: left; width: 95%;">
 						<div class="row border-bottom pb-1"> <div  style="width: 90%;"> 분류 : ${dto.categoryName}</div><div class="col text-end" style="float: right; width: 10%">
-							<a href="#" onclick="javascript:location.href='${pageContext.request.contextPath}/admin/comment/update?stopNum=${dto.stopNum}';" class="text-line">수정</a>
-						</div></div>
+							<c:if test="${dto.reply == 0}">
+								<a href="#" onclick="javascript:location.href='${pageContext.request.contextPath}/admin/comment/update?stopNum=${dto.stopNum}&reply=1';" class="text-line">댓글 숨김</a>
+							</c:if>
+							<c:if test="${dto.reply == 1}">
+								<a href="#" onclick="javascript:location.href='${pageContext.request.contextPath}/admin/comment/update?stopNum=${dto.stopNum}&reply=0';" class="text-line">댓글 보임</a>
+							</c:if>
+						</div>
+				</div>
 						
 						<div class="row p-2">
 							${dto.content}
@@ -35,11 +41,4 @@
  
 <div class="page-navigation">
 	${dataCount == 0 ? "등록된 게시물이 없습니다." : paging}
-</div>
-
-<div class="row py-3">
-	<div class="col">
-		<button type="button" class="btn btn-light" onclick="reloadFaq();">새로고침</button>
-	</div>
-	
 </div>

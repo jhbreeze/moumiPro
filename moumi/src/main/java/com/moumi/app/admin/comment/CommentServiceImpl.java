@@ -26,9 +26,9 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public void updateComment(Comment dto) throws Exception {
+	public void updateComment(Map<String, Object> map) throws Exception {
 		try {
-			dao.updateData("comment.updateComment", dto);
+			dao.updateData("comment.updateComment", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

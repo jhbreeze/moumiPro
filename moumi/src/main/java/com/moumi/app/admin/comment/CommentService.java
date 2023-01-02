@@ -5,6 +5,6 @@ import java.util.Map;
 
 public interface CommentService {
 	public List<Comment> listComment(Map<String, Object> map);
-	public void updateComment(Comment dto) throws Exception;
+	public void updateComment(Map<String, Object> map) throws Exception;
 
 }
