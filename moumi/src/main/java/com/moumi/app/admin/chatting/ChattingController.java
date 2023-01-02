@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
@@ -15,12 +16,22 @@ public class ChattingController {
 	
 	@RequestMapping("main")
 	public String main(HttpServletRequest req, Model model) throws Exception {
-
+		
 		String cp = req.getContextPath();
 		String wsURL = "ws://"+req.getServerName()+":"+req.getServerPort()+cp+"/chat.msg";
 		model.addAttribute("wsURL", wsURL);
 		
 		return ".admin.chatting.main";
+	}
+	
+	@GetMapping("list")
+	public String list(HttpServletRequest req, Model model) {
+		
+		String cp = req.getContextPath();
+		String wsURL = "ws://"+req.getServerName()+":"+req.getServerPort()+cp+"/chat.msg";
+		model.addAttribute("wsURL", wsURL);
+		
+		return ".admin.chatting.list";
 	}
 	
 
