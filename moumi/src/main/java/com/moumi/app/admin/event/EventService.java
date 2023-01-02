@@ -7,6 +7,7 @@ import com.moumi.app.event.Reply;
 
 public interface EventService {
 	public void insertEvent(Event dto, String pathname) throws Exception;
+	public void insertCoupon(Coupon dto) throws Exception;
 	public void updateEvent(Event dto, String pathname) throws Exception;
 	public void deleteEvent(long eventNum, String pathname) throws Exception;
 	
@@ -20,5 +21,7 @@ public interface EventService {
 	public List<Event> listEventFile(long eventNum);
 	public List<Reply> listReply(Map<String, Object> map);
 	public int replyCount(Map<String, Object> map);
+	
+	public int selectEventCount(Map<String, Object> map);
 	
 }
