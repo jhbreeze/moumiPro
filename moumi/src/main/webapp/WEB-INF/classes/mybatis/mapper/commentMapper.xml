@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="comment">
+	<select id="listComment" parameterType="map" resultType="com.moumi.app.admin.comment.Comment">
+		SELECT s.stopNum, s.content, m.userName, reply, r.userCode, s.userCode, subject, b.brandName
+		FROM replyStop s
+		JOIN member m ON m.userCode = s.userCode
+		JOIN replyStatus p ON s.stopNum = p.stopNum
+		JOIN reply r ON s.replyNum = s.replyNum
+		JOIN community c ON r.communityNum = c.communityNum
+		JOIN brandcategory b ON c.brandNum = b.brandNum
+		<where>
+			<if test="stopNum!=null">
+				( s.stopNum = #{stopNum} )
+			</if>
+		</where>
+		ORDER BY s.stopNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
+	</select>
+	
+	<update id="updateComment" parameterType="com.moumi.app.admin.comment.Comment">
+		UPDATE replyStatus SET reply = #{reply} WHERE stopNum = #{stopNum}
+	</update>
+
+</mapper>

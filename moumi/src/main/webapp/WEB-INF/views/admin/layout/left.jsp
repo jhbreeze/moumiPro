@@ -150,13 +150,6 @@ color: #198754;
 				</li>
 			</ul>
 		</li>
-
-		<li class="menu--item">
-			<a href="${pageContext.request.contextPath}/admin/community/list" class="menu--link" title="질문게시판 관리">
-				<i class="menu--icon  fa-fw fa-regular bi-patch-question-fill"></i>
-				<span class="menu--label">브랜드 커뮤니티 관리</span>
-			</a>
-		</li>
 		
 		<li class="menu--item">
 			<a href="${pageContext.request.contextPath}/admin/chatting/main" class="menu--link" title="채팅 관리">
@@ -166,7 +159,7 @@ color: #198754;
 		</li>
 
 		<li class="menu--item">
-			<a href="${pageContext.request.contextPath}/admin/comment/list" class="menu--link" title="신고댓글 관리">
+			<a href="${pageContext.request.contextPath}/admin/comment/main" class="menu--link" title="신고댓글 관리">
 				<i class="menu--icon  fa-fw bi-filter-left"></i>
 				<span class="menu--label">신고댓글 관리</span>
 			</a>
