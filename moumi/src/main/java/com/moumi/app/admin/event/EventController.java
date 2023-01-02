@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.moumi.app.common.MyUtil;
+import com.moumi.app.event.Reply;
+import com.moumi.app.member.SessionInfo;
 
 @Controller("admin.event.eventController")
 @RequestMapping("/admin/event/*")
@@ -54,23 +56,19 @@ public class EventController {
 		dataCount = service.dataCount(map);
 		total_page = myUtil.pageCount(dataCount, size);
 
-		if(current_page > total_page) {
+		if (current_page > total_page) {
 			current_page = total_page;
 		}
-		
+
 		int offset = (current_page - 1) * size;
 		if (offset < 0)
 			offset = 0;
 
 		map.put("offset", offset);
 		map.put("size", size);
-		
-		System.out.println(offset +"offset");
-		System.out.println(size +"size");
 
-		
 		List<Event> list = service.listEvent(map);
-		
+
 		String cp = req.getContextPath();
 		String query = "";
 		String listUrl = cp + "/admin/event/list";
@@ -83,9 +81,9 @@ public class EventController {
 			listUrl = cp + "/admin/event/list?" + query;
 			articleUrl = cp + "/admin/event/article?page=" + current_page + "&" + query;
 		}
-		
+
 		String paging = myUtil.pagingUrl(current_page, total_page, listUrl);
-		
+
 		model.addAttribute("list", list);
 		model.addAttribute("eventNum", eventNum);
 		model.addAttribute("page", current_page);
@@ -94,7 +92,7 @@ public class EventController {
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("articleUrl", articleUrl);
 		model.addAttribute("paging", paging);
-		
+
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
 
@@ -214,6 +212,56 @@ public class EventController {
 
 		return "redirect:/admin/event/list";
 
+	}
+
+	// 댓글 리스트 : AJAX-TEXT
+	@GetMapping("listReply")
+	public String listReply(@RequestParam long eventNum,
+			@RequestParam(value = "pageNo", defaultValue = "1") int current_page, HttpSession session, Model model)
+			throws Exception {
+
+		int size = 5;
+		int total_page = 0;
+		int dataCount = 0;
+
+		Map<String, Object> map = new HashMap<>();
+		map.put("eventNum", eventNum);
+
+		// map.put("userCode", info.getUserCode());
+
+		dataCount = service.replyCount(map);
+
+		total_page = myUtil.pageCount(dataCount, size);
+
+		if (current_page > total_page) {
+			current_page = total_page;
+		}
+
+		int offset = (current_page - 1) * size;
+		if (offset < 0)
+			offset = 0;
+
+		map.put("offset", offset);
+		map.put("size", size);
+
+		List<Reply> listReply = service.listReply(map);
+
+		for (Reply dto : listReply) {
+			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
+		}
+
+		// AJAX 용 페이징
+		String paging = myUtil.pagingMethod(current_page, total_page, "listPage");
+
+		// 포워딩할 jsp로 넘길 데이터
+		model.addAttribute("listReply", listReply);
+		model.addAttribute("pageNo", current_page);
+		model.addAttribute("replyCount", dataCount);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("paging", paging);
+		model.addAttribute("eventNum", eventNum);
+
+		return "admin/event/listReply";
 	}
 
 }

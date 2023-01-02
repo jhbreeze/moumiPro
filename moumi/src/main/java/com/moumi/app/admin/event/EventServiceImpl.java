@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.moumi.app.common.FileManager;
 import com.moumi.app.common.dao.CommonDAO;
+import com.moumi.app.event.Reply;
 
 @Service("admin.event.eventService")
 public class EventServiceImpl implements EventService {
@@ -114,4 +115,25 @@ public class EventServiceImpl implements EventService {
 		return null;
 	}
 
+	@Override
+	public List<Reply> listReply(Map<String, Object> map) {
+		List<Reply> list = null;
+		try {
+			list = dao.selectList("event.listReply", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public int replyCount(Map<String, Object> map) {
+		int result = 0;
+		try {
+			result = dao.selectOne("event.dataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

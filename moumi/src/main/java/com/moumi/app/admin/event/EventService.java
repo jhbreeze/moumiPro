@@ -3,6 +3,8 @@ package com.moumi.app.admin.event;
 import java.util.List;
 import java.util.Map;
 
+import com.moumi.app.event.Reply;
+
 public interface EventService {
 	public void insertEvent(Event dto, String pathname) throws Exception;
 	public void updateEvent(Event dto, String pathname) throws Exception;
@@ -16,5 +18,7 @@ public interface EventService {
 	public Event nextReadEvent(Map<String, Object> map);
 	
 	public List<Event> listEventFile(long eventNum);
+	public List<Reply> listReply(Map<String, Object> map);
+	public int replyCount(Map<String, Object> map);
 	
 }
