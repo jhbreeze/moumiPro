@@ -92,21 +92,25 @@
 				<tbody>
 					<tr>
 						<td align="right">등록일 | ${dto.regDate}</td>
-						
+
 					</tr>
-						<tr>
-							<td width="50%"> ${dto.startDate}~${dto.endDate} </td>
-						</tr>
+					<tr>
+						<td width="50%">${dto.startDate}~${dto.endDate}</td>
+					</tr>
+
+					<tr>
+						<td width="50%">${dto.pickCount}</td>
+					</tr>
 
 					<tr>
 						<td colspan="2" valign="top" height="200"
 							style="border-bottom: none;">${dto.content}</td>
 					</tr>
-				
+
 				</tbody>
-				
+
 			</table>
-			
+
 			<table class="table table-borderless mb-2">
 				<tr>
 					<td width="50%">

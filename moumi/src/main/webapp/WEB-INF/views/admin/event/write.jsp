@@ -132,6 +132,13 @@ $(function(){
 							<td><input type="date" name="endDate" value="${dto.endDate}" class="form-control"
 								style="width: 93%;"></td>
 						</tr>
+						
+						<tr>
+							<td class="table-light col-sm-2">당첨자 인원</td>
+							<td><input type="text" name="pickCount" value="${dto.pickCount}" class="form-control"
+								style="width: 93%;"></td>
+						</tr>
+						
 
 						<tr>
 							<td class="table-light col-sm-2">이벤트 내용</td>

@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.moumi.app.common.MyUtil;
 import com.moumi.app.event.Reply;
 
-
 @Controller("admin.event.eventController")
 @RequestMapping("/admin/event/*")
 public class EventController {
@@ -108,15 +107,53 @@ public class EventController {
 	}
 
 	@PostMapping("write")
-	public String writeSubmit(Event dto, HttpSession session, Model model) throws Exception {
+	public String writeSubmit(Event dto, Coupon cdto, HttpSession session, Model model) throws Exception {
 		// SessionInfo info = (SessionInfo) session.getAttribute("member");
 		try {
+
+			dto.setUserCode(1);
+
+			Calendar cal = Calendar.getInstance();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 			String root = session.getServletContext().getRealPath("/");
 			String path = root + "uploads" + File.separator + "event";
 
-			dto.setUserCode(1);
 			service.insertEvent(dto, path);
+
+			Map<String, Object> map = new HashMap<String, Object>();
+
+			long EventNum = service.selectEventCount(map);
+
+			cdto.setCouponName(dto.getSubject());
+			cdto.setCouponPrice(dto.getPrice());
+
+			String s = dto.getStartDate().replaceAll("\\-|\\.|/", "");
+			String e = dto.getEndDate().replaceAll("\\-|\\.|/", "");
+
+			int sy = Integer.parseInt(s.substring(0, 4));
+			int sm = Integer.parseInt(s.substring(4, 6));
+			int sd = Integer.parseInt(s.substring(6));
+
+			cal.set(sy, sm - 1, sd + 1);
+			cal.add(Calendar.DATE, -1);
+
+			cdto.setStartDate(sdf.format(cal.getTime()));
+
+			int ey = Integer.parseInt(e.substring(0, 4));
+			int em = Integer.parseInt(e.substring(4, 6));
+			int ed = Integer.parseInt(e.substring(6));
+
+			cal.set(ey, em - 1, ed + 1);
+
+			cal.add(Calendar.DATE, -1);
+
+			cdto.setEndDate(sdf.format(cal.getTime()));
+
+			cdto.setEventNum(EventNum);
+
+			service.insertCoupon(cdto);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -171,7 +208,6 @@ public class EventController {
 		// SessionInfo info = (SessionInfo) session.getAttribute("member");
 		try {
 
-			System.out.println("후 ..... ");
 			String root = session.getServletContext().getRealPath("/");
 			String path = root + "uploads" + File.separator + "event";
 
