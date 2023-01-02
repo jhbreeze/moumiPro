@@ -161,15 +161,16 @@ tr:hover {
 			</li>
 		</ul>
 		
+		
 		<div class="tab-content pt-3" id="nav-tabContent">
 			<div class="tab-pane fade show active" id="panel-1" role="tabpanel" aria-labelledby="tab-1">
-				<div class="myDialogList">
+				<div class="myDialogList" onclick="location.href='${pageContext.request.contextPath}/admin/chatting/list';">
 					<div class="myDialogImg" style="margin-right: 16px;">
 						<img class="m-1 me-2" style="height: 50px; width: 50px;"
 						src="${pageContext.request.contextPath}/resources/moumi/logo/callcenter.png">
 					</div>
 					<div class="myDialogListInfo"> 
-						<h5 class="fw-bold">ID/ 닉네임</h5>
+						<h5 class="fw-bold">닉네임</h5>
 						<div>유료회원이 되고싶어요</div>  
 					</div>
 					<div class="myDialogListDate align-self-center"> 2022.12.25 16:10 </div>
@@ -181,7 +182,7 @@ tr:hover {
 						src="${pageContext.request.contextPath}/resources/moumi/logo/callcenter.png">
 					</div>
 					<div class="myDialogListInfo"> 
-						<h5 class="fw-bold">ID/ 닉네임</h5>
+						<h5 class="fw-bold">닉네임</h5>
 						<div>유료회원이 되고싶어요</div>  
 					</div>
 					<div class="myDialogListDate align-self-center"> 2022.12.25 16:10 </div>
@@ -204,20 +205,7 @@ tr:hover {
 
 
 <!-- 귓속말 Modal -->
-<div class="modal fade" id="myDialogModal" tabindex="-1" aria-labelledby="myDialogModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="myDialogModalLabel">귓속말</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body pt-1">
-				<input type="text" id="chatOneMsg" class="form-control" 
-							placeholder="귓속말을 입력 하세요...">
-			</div>
-		</div>
-	</div>
-</div>
+
 
 <script type="text/javascript">
 $(function(){
@@ -247,9 +235,9 @@ $(function(){
 	
 	 // 서버 접속이 성공한 경우 호출되는 콜백함수
 	function onOpen(evt) {
-		 // Login 처리에서 세션에 memberIdx/email 저장 유무 확인
-	    let email = "${sessionScope.member.email}";
-	    let nickName = "${sessionScope.member.userName}";
+
+		let email = "${sessionScope.member.email}";
+	    let nickName = "${sessionScope.member.nickName}";
 	    if( ! email ) {
 	    	location.href="${pageContext.request.contextPath}/member/login";
 	    	return;
@@ -264,11 +252,9 @@ $(function(){
 	    obj.nickName = nickName;
 	    
 	    let jsonStr = JSON.stringify(obj);  // JSON.stringify() : 자바스크립트 값을 JSON 문자열로 변환
-	    socket.send(jsonStr);
+		socket.send(jsonStr); // {"type":"connect","email":"admin","nickName":"관리자"}
 	    
-	    // 채팅입력창에 메시지를 입력하기 위해 #chatMsg에 keydown 이벤트 등록
 	    $("#chatMsg").on("keydown",function(evt) {
-	    	// 엔터키가 눌린 경우, 서버로 메시지를 전송한다. 맥은 13 으로만 비교해야 함
 	    	let key = evt.key || evt.keyCode;
 	        if (key === "Enter" || key === 13) {
 	            sendMessage();
