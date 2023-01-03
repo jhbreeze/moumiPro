@@ -434,7 +434,8 @@ public class BoardController {
 		@PostMapping("notify")
 		@ResponseBody
 		public Map<String,Object> notifyWrite(@RequestParam long parent,
-				@RequestParam long communityNum,Board dto ,HttpSession session) {
+				@RequestParam long communityNum,
+				@RequestParam(defaultValue = "0") long parentNum , Board dto ,HttpSession session) {
 			
 			SessionInfo info = (SessionInfo)session.getAttribute("member");
 			
@@ -443,6 +444,7 @@ public class BoardController {
 			try {
 				dto.setUserCode(info.getUserCode());
 				dto.setReplyNum(parent);
+				dto.setParent(parentNum);
 				service.insertNotify(dto);
 			} catch (Exception e) {
 				state = "false";

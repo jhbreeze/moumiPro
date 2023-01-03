@@ -23,6 +23,7 @@ public class Board {
 	private String userName;
 	private String notifyContent;
 	private long replyNum;
+	private long parent;
 
 	
 	public long getCommunityNum() {
@@ -120,5 +121,11 @@ public class Board {
 	}
 	public void setReplyNum(long replyNum) {
 		this.replyNum = replyNum;
+	}
+	public long getParent() {
+		return parent;
+	}
+	public void setParent(long parent) {
+		this.parent = parent;
 	}
 }

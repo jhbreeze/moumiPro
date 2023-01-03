@@ -493,14 +493,33 @@ $(function(){
 	});
 });
 
-// 모달
+// 댓글모달
 $(function(){
 	$("body").on("click",".notifyReply",function(){
 		$("form[name=notifyForm] input[name=userName]").val("");
 	    $("form[name=notifyForm] input[name=notifyContent]").val("");
-	    let replyNum = $(".btnReplyAnswerLayout").attr("data-replyNum");
+	    
+	    let replyNum = $(this).attr("data-replyNum");
 	    
 	    $("form[name=notifyForm] input[name=parent]").val(replyNum)
+	    
+	    
+		$("#notifyModal").modal("show");	
+		
+	    $("form[name=notifyForm] input[name=userName]").focus();
+	});
+});
+// 대댓글모달
+$(function(){
+	$("body").on("click",".notifyReplyAnswer",function(){
+		$("form[name=notifyForm] input[name=userName]").val("");
+	    $("form[name=notifyForm] input[name=notifyContent]").val("");
+	    
+	    let replyNum = $(this).attr("data-replyNum");
+	    let parentNum = $(this).attr("data-answer");
+	    
+	    $("form[name=notifyForm] input[name=parent]").val(replyNum)
+	    $("form[name=notifyForm] input[name=parentNum]").val(parentNum)
 	    
 	    
 		$("#notifyModal").modal("show");	
@@ -685,6 +704,7 @@ $(function(){
         		<div class="mt-0">
         			<input type="text" name="notifyContent" class="form-control mt-3" placeholder="신고내용" style="height: 10rem;">
         		</div>
+        		<input type="hidden" name ="parentNum">
         		<input type="hidden" name="parent">
         		<input type="hidden" name="communityNum" value="${dto.communityNum}">
       		</form>

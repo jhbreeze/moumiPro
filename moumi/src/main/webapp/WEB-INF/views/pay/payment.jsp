@@ -164,7 +164,7 @@
 							<p>결제금액</p>
 						</div>
 						<div class="pay-detail-desc-con">
-							<p style="color: #198754; font-weight: bold;">15,000<span>원</span></p>
+							<p style="color: #198754; font-weight: bold;">${price}<span>원</span></p>
 						</div>
 					</div>
 				</div>
