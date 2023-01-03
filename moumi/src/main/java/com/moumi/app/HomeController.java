@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.moumi.app.common.MyUtil;
+import com.moumi.app.event.Event;
 
 @Controller()
 
@@ -38,7 +39,6 @@ public class HomeController {
 		List<Report> listMainReport = service.listMainReport(map); // 분석 리포트
 
 		model.addAttribute("listRegion", listRegion);
-
 		model.addAttribute("listMainReport", listMainReport);
 
 		return ".home";
@@ -152,5 +152,13 @@ public class HomeController {
 
 		return ".report.article";
 	}
+
+	@RequestMapping(value = "farm")
+	public String farm() throws Exception {
+
+		return ".api.api";
+	}
+
+	
 
 }

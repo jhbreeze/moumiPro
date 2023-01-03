@@ -3,14 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<link href="http://api.nongsaro.go.kr/css/api.css" rel="stylesheet"
-	type="text/css">
-
-<script type="text/javascript"
-	src="http://api.nongsaro.go.kr/js/framework.js"></script>
-<script type="text/javascript"
-	src="http://api.nongsaro.go.kr/js/openapi_nongsaro.js"></script>
-
 
 <style>
 @font-face {
@@ -162,7 +154,6 @@ li {
 <script>
 	$(document).ready(function() {
 		let regionCode = $("#regionCode").val(); // 지역코드
-		alert(regionCode);
 		let latitude = 37.557714093880406;
 		let longitude = 126.9245098110579;
 			
@@ -284,15 +275,6 @@ li {
     }
 </script>
 
-
-<script type="text/javascript">
-	nongsaroOpenApiRequest.apiKey = "20221216AK1MXVA9FRV2EBTZJ6GZ1G";
-	nongsaroOpenApiRequest.serviceName = "areaBrand";
-	nongsaroOpenApiRequest.operationName = "selectSclCodeLst";
-	nongsaroOpenApiRequest.htmlArea = "nongsaroApiLoadingArea";
-	nongsaroOpenApiRequest.callback = "http://localhost:9090/app/call/ajax_local_callback.jsp";
-</script>
-
 <div class="mainBox">
 	<h3 class="mainText">MOUMI 분석 서비스</h3>
 	<form class="d-flex searchBox" role="search">
@@ -359,8 +341,8 @@ li {
 
 					</a></li>
 					<li class="imageContent" style="background: #ffdd91"><a
-						href="${pageContext.request.contextPath}/admin/event/list"> <span
-							class="recFont"> <strong class="recTitle">채용 공고!</strong><br>
+						href="${pageContext.request.contextPath}/farm"> <span
+							class="recFont"> <strong class="recTitle">우리 농가 살리기</strong><br>
 								MOUMI는 처음이지?<br> <em class="recEmTitle">초보 MOUMI 유저를
 									위한 이용방법</em>
 						</span> <img style="height: 130px; width: 160px; float: right"
@@ -395,14 +377,6 @@ li {
 		<div class="container text-center">
 
 			<div class="container">
-				<p class="title">우리 농가 살리기</p>
-
-	
-				<div id="nongsaroApiLoadingArea"></div>
-				<div id="nongsaroApiLoadingAreaResult"></div>
-
-				<br> <br>
-
 				<p class="title">우리 지역 살리기</p>
 
 				<div class="search-container">

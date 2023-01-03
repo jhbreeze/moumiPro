@@ -56,7 +56,6 @@
 					<div class="row board-list-header"></div>
 					<div class="row">
 						<c:forEach var="dto" items="${list}" varStatus="status">
-							<c:if test="${dto.deadLine > 0 }">
 								<div class="col-lg-4 col-sm-3">
 									<div class="card" style="width: 20rem; overflow: hidden;"
 										onclick="location.href='${pageContext.request.contextPath}/admin/event/article?&eventNum=${dto.eventNum}'">
@@ -65,32 +64,18 @@
 										<div class="card-body">
 											<p class="card-text">
 											<p class="eventName">${dto.subject}
-											<p class="term">${dto.startDate}
-												~ ${dto.endDate}&nbsp;<em class="deadLine">D-${dto.deadLineABS}</em>
+											<c:if test="${dto.deadLine > 0 }">
+												<p class="term">${dto.startDate}
+												~ ${dto.endDate}&nbsp;<em class="deadLineEnd"> 종료된 이벤트</em></c:if>
+											<c:if test="${dto.deadLine < 0 }">
+												<p class="term">${dto.startDate}
+												~ ${dto.endDate}&nbsp;<em class="deadLine">D-${dto.deadLineABS}</em></c:if>
 											</p>
 										</div>
 									</div>
 									<br>
 								</div>
-							</c:if>
 							
-							<c:if test="${dto.deadLine < 0 }">
-								<div class="col-lg-4 col-sm-3">
-									<div class="card" style="width: 20rem; overflow: hidden;"
-										onclick="location.href='${pageContext.request.contextPath}/admin/event/article?&eventNum=${dto.eventNum}'">
-										<img style="height: 280px; width: 319px;"
-											src="${pageContext.request.contextPath}/uploads/event/${dto.thumbnail}" />
-										<div class="card-body">
-											<p class="card-text">
-											<p class="eventName">${dto.subject}
-											<p class="term">${dto.startDate}
-												~ ${dto.endDate}&nbsp;<em class="deadLineEnd">D+${dto.deadLineABS} (종료된 이벤트)</em>
-											</p>
-										</div>
-									</div>
-									<br>
-								</div>
-							</c:if>
 						</c:forEach>
 					</div>
 				</form>
