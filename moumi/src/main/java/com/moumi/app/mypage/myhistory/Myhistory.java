@@ -1,14 +1,10 @@
-package com.moumi.app.mypage;
+package com.moumi.app.mypage.myhistory;
 
-public class Mypage {
+public class Myhistory {
 	private long Num;
 	private String subject;
 	private String nickName;
 	private String regDate;
-	
-	private String corporation;
-	private String startDate;
-	private String endDate;
 	
 	public long getNum() {
 		return Num;
@@ -34,24 +30,4 @@ public class Mypage {
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
-	public String getCorporation() {
-		return corporation;
-	}
-	public void setCorporation(String corporation) {
-		this.corporation = corporation;
-	}
-	public String getStartDate() {
-		return startDate;
-	}
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
-	}
-	public String getEndDate() {
-		return endDate;
-	}
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
-	}
-	
-	
 }

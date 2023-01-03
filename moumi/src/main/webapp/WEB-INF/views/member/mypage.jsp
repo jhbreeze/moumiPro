@@ -93,7 +93,6 @@ table{
 		<h5 class="title"> MY PAGE </h5>
 		
 		<div class="body-main">
-			<form name="memberForm" method="post">
 			
 			<div class="container">
 				<div class="row">
@@ -101,15 +100,30 @@ table{
 						<table>
 							<tbody>
 								<tr><td rowspan="5" class="logoimg"><img src="${pageContext.request.contextPath}/resources/moumi/logo/circle1.png"  class="card-img-top"></td><td>&nbsp;</td></tr>
-								<tr><td style="text-align: right;"><button class="shortcutp" onclick="location.href='${pageContext.request.contextPath}/member/login';">회원정보 수정 ></button></td></tr>
-						        <tr><td class="welcome"><span style="color: #198754"> ${dto.nickName}닉네임</span>님 환영합니다.</td></tr>
-						        <tr><td class="id">ID ${email}admin</td></tr>
+								<tr><td style="text-align: right;"><button type="button"  class="shortcutp" onclick="location.href='${pageContext.request.contextPath}/member/pwd';">회원정보 수정 ></button></td></tr>
+						        <tr><td class="welcome"><span style="color: #198754"> ${dto.nickName}</span>님 환영합니다.</td></tr>
+						        <tr><td class="id">ID ${dto.email}</td></tr>
 								<tr><td>&nbsp;</td></tr>
 							</tbody>
 						</table>	
 							<hr class="line">
 							<div class="scontent">
-								${dto.nickName} 닉네임회원님은 MOUMI의 <span style="color: #FFC107; font-weight: bold;">${dto.userType}</span> 입니다.
+								${dto.nickName} 회원님은 MOUMI의 <span style="color: #FFC107; font-weight: bold;">
+								<c:choose>
+									<c:when test="${userType==0}">
+										관리자
+									</c:when>
+									<c:when test="${userType==1}">
+										일반회원
+									</c:when>
+									<c:when test="${userType==2}">
+										유료회원
+									</c:when>
+									<c:otherwise>
+										기업회원
+									</c:otherwise>
+								</c:choose>
+								</span>입니다.
 							</div>
 					</div>
 				
@@ -153,7 +167,6 @@ table{
 				</div>	
 			</div>	
 			
-			</form>
 		</div>
 	</div>
 </div>

@@ -13,10 +13,10 @@
 function sendOk() {
 	const f = document.pwdForm;
 
-	let str = f.userPwd.value.trim();
+	let str = f.pwd.value.trim();
 	if(!str) {
 		alert("패스워드를 입력하세요. ");
-		f.userPwd.focus();
+		f.pwd.focus();
 		return;
 	}
 
@@ -39,15 +39,15 @@ function sendOk() {
 		                </div>
                         
                         <div class="d-grid">
-                            <input type="text" name="userId" class="form-control form-control-lg" placeholder="아이디"
-                            		value="${sessionScope.member.userId}" 
+                            <input type="text" name="email" class="form-control form-control-lg" placeholder="이메일"
+                            		value="${sessionScope.member.email}" 
                             		readonly="readonly">
                         </div>
                         <div class="d-grid">
-                            <input type="password" name="userPwd" class="form-control form-control-lg" placeholder="패스워드">
+                            <input type="password" name="pwd" class="form-control form-control-lg" placeholder="패스워드">
                         </div>
                         <div class="d-grid">
-                            <button type="button" class="btn btn-lg btn-primary" onclick="sendOk();">확인 <i class="bi bi-check2"></i> </button>
+                            <button type="button" class="btn btn-success" onclick="sendOk();">확인 <i class="bi bi-check2"></i> </button>
                             <input type="hidden" name="mode" value="${mode}">
                         </div>
                     </form>

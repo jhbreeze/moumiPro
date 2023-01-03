@@ -19,7 +19,7 @@
 	<c:if test="${list.size() > 0}">
 	<tbody class="text-center">
 		<c:forEach var="dto" items="${list}" varStatus="status">
-			<tr class="recruit-table-tr" data-rNum="${dto.recruitNum}">
+			<tr class="recruit-table-tr" data-rNum="${dto.num}">
 				<td>${dataCount - (pageNo-1) * size - status.index}</td>
 				<td colspan="4"><c:url var="url" value="/recruit/article">
 						<c:param name="recruitNum" value="${dto.recruitNum}"/>

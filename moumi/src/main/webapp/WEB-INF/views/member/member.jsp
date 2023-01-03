@@ -244,6 +244,8 @@ $(function(){
 	
 });
 
+
+
 </script>
 
 
@@ -261,10 +263,10 @@ $(function(){
 			<form name="memberForm" method="post">
 				
 				<div class="division1" role="group" aria-label="Basic radio toggle button group">
-				  <input type="radio" class="btn-check" name="userType" id="userType1" checked="checked" value="1" >
+				  <input type="radio" class="btn-check" name="userType" id="userType1" checked="checked" value="1" ${mode=="update" ? "onclick=return(false);":""}>
 				  <label class="userType btn btn-outline-success" for="userType1">개인 회원</label>
 				
-				  <input type="radio" class="btn-check" name="userType" id="userType3" value="3">
+				  <input type="radio" class="btn-check" name="userType" id="userType3" value="3" ${mode=="update" ? "onclick=return(false);":""}>
 				  <label class="userType btn btn-outline-success" for="userType3">기업 회원</label>
 				
 				</div>
@@ -278,7 +280,7 @@ $(function(){
 				<div class="inputBox">
 				  	<label class="form-label" for="email">이메일</label>
 				  	<div class="email-box" style="width: 400px;">
-				  		<input type="text" name="email" id="email" class="form-control" value="${dto.email}" placeholder="이메일 형식" style="width: 270px; display: inline-block;">
+				  		<input type="text" name="email" id="email" class="form-control" value="${dto.email}" ${mode=="update" ? "readonly='readonly' ":""} placeholder="이메일 형식" style="width: 270px; display: inline-block;">
 						<c:if test="${mode=='member'}">
 							<button type="button" class="duplication btn btn-outline-success" onclick="emailCheck();" style="width: 75px;">중복검사</button>
 						</c:if>
@@ -311,7 +313,7 @@ $(function(){
 				  	<label class="form-label" for="gender">성별</label>
 				  	<div>
 						<label>
-		                    <input type="radio" name="gender" value="남자" id="male" checked="checked"> 남자 
+		                    <input type="radio" name="gender" value="남자" id="male" > 남자 
 		                </label>
 		                <label>
 		                	<input type="radio" name="gender" value="여자" id="female"> 여자

@@ -104,7 +104,7 @@
 							<p>이름</p>
 						</div>
 						<div class="pay-detail-desc-con">
-							<p>이석준</p>
+							<p>${dto.userName}</p>
 						</div>
 					</div>
 				</div>
@@ -114,7 +114,7 @@
 							<p>이메일</p>
 						</div>
 						<div class="pay-detail-desc-con">
-							<p>test@moumi.com</p>
+							<p>${dto.email}</p>
 						</div>
 					</div>
 				</div>
@@ -129,7 +129,7 @@
 							<p>상품명</p>
 						</div>
 						<div class="pay-detail-desc-con">
-							<p>모으미 Basic</p>
+							<p>${dto2.subject}</p>
 						</div>
 					</div>
 				</div>
@@ -149,7 +149,7 @@
 							<p>상품내용</p>
 						</div>
 						<div class="pay-detail-desc-con">
-							<p>환불이 불가능하다</p>
+							<p>${dto2.content}</p>
 						</div>
 					</div>
 				</div>

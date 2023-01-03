@@ -146,7 +146,7 @@ public class MemberServiceImpl implements MemberService {
 			return false;
 		}
 
-		return bcrypt.matches(email, dto.getPwd());
+		return bcrypt.matches(pwd, dto.getPwd());
 	}
 
 //	updatePwd

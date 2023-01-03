@@ -25,7 +25,7 @@ public class PayServiceImpl implements PayService{
 	public Pay readMember(long userCode) {
 		Pay dto = null;
 		try {
-			dto = dao.selectOne("pay.readMember",userCode);
+			dto = dao.selectOne("pay.selectMember",userCode);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -36,7 +36,7 @@ public class PayServiceImpl implements PayService{
 	public Pay readPay(int productNum) {
 		Pay dto = null;
 		try {
-			dto = dao.selectOne("pay.readProduct",productNum);
+			dto = dao.selectOne("pay.selectProduct",productNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
