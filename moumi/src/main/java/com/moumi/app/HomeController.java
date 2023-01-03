@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.moumi.app.common.MyUtil;
-import com.moumi.app.event.Event;
 
 @Controller()
 
@@ -124,8 +123,8 @@ public class HomeController {
 			Report dto = service.readReport(reportNum);
 			if (dto == null) {
 				return "redirect:/report/list";
-			}
-
+			}		
+			
 			Map<String, Object> map = new HashMap<String, Object>();
 //			map.put("condition", condition);
 //			map.put("keyword", keyword);

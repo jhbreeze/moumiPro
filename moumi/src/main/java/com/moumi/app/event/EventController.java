@@ -44,6 +44,8 @@ public class EventController {
 
 			// 이벤트 게시글 가져오기
 			Event dto = service.readEvent(eventNum);
+			
+			service.updateHitCount(eventNum);
 			model.addAttribute("dto", dto);
 
 		} catch (Exception e) {
@@ -58,7 +60,7 @@ public class EventController {
 			@RequestParam(value = "pageNo", defaultValue = "1") int current_page, HttpSession session, Model model)
 			throws Exception {
 
-		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
 
 		int size = 5;
 		int total_page = 0;
@@ -113,8 +115,7 @@ public class EventController {
 
 		try {
 			dto.setUserCode(info.getUserCode());
-			
-			
+
 			service.insertReply(dto);
 		} catch (Exception e) {
 			state = "false";

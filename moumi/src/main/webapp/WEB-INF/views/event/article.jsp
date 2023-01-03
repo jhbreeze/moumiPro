@@ -166,6 +166,10 @@ $(function(){
 
 					</tr>
 					<tr>
+						<td align="right">조회수 | ${dto.hitCount}</td>
+
+					</tr>
+					<tr>
 						<td width="50%">${dto.startDate}~${dto.endDate}</td>
 					</tr>
 

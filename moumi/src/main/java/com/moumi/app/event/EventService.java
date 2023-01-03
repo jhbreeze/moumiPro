@@ -20,6 +20,8 @@ public interface EventService {
 	
 	public void deleteReply(long eventNum) throws Exception;
 
+	public void updateHitCount(long eventNum) throws Exception;
+
 
 
 }

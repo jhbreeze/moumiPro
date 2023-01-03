@@ -11,8 +11,8 @@
 	</select>
 
 	<select id="readEvent" parameterType="Long" resultType="com.moumi.app.event.Event">
-		SELECT eventNum, userCode, subject, content, thumbnail, TO_CHAR(regDate, 'yyyy.mm.dd') AS regDate, TO_CHAR(startDate, 'yyyy.mm.dd') AS startDate, TO_CHAR(endDate, 'yyyy.mm.dd') AS endDate, price
-		FROM event 
+		SELECT eventNum, userCode, subject, content, thumbnail, TO_CHAR(regDate, 'yyyy.mm.dd') AS regDate, TO_CHAR(startDate, 'yyyy.mm.dd') AS startDate, TO_CHAR(endDate, 'yyyy.mm.dd') AS endDate, hitCount, price
+		FROM event
 		WHERE eventNum = #{eventNum}
 	</select>
 	
@@ -42,6 +42,11 @@
 		DELETE FROM eventReply 
 		WHERE replyNum = #{replyNum}
 	</delete>
+	
+	
+	<update id="updateHitCount" parameterType="Long">
+		UPDATE event SET hitCount = hitCount + 1 WHERE eventNum = #{eventNum}
+	</update>
 	
 	
 	
