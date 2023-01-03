@@ -110,17 +110,17 @@ table{
 							<div class="scontent">
 								${dto.nickName} 회원님은 MOUMI의 <span style="color: #FFC107; font-weight: bold;">
 								<c:choose>
-									<c:when test="${userType==0}">
-										관리자
+									<c:when test="${sessionScope.member.userType==3}">
+										기업회원
 									</c:when>
-									<c:when test="${userType==1}">
+									<c:when test="${sessionScope.member.userType==1}">
 										일반회원
 									</c:when>
-									<c:when test="${userType==2}">
+									<c:when test="${sessionScope.member.userType==2}">
 										유료회원
 									</c:when>
 									<c:otherwise>
-										기업회원
+										관리자
 									</c:otherwise>
 								</c:choose>
 								</span>입니다.
