@@ -93,7 +93,6 @@ table{
 		<h5 class="title"> MY PAGE </h5>
 		
 		<div class="body-main">
-			<form name="memberForm" method="post">
 			
 			<div class="container">
 				<div class="row">
@@ -101,9 +100,9 @@ table{
 						<table>
 							<tbody>
 								<tr><td rowspan="5" class="logoimg"><img src="${pageContext.request.contextPath}/resources/moumi/logo/circle1.png"  class="card-img-top"></td><td>&nbsp;</td></tr>
-								<tr><td style="text-align: right;"><button class="shortcutp" onclick="location.href='${pageContext.request.contextPath}/member/login';">회원정보 수정 ></button></td></tr>
+								<tr><td style="text-align: right;"><button type="button"  class="shortcutp" onclick="location.href='${pageContext.request.contextPath}/member/pwd';">회원정보 수정 ></button></td></tr>
 						        <tr><td class="welcome"><span style="color: #198754"> ${dto.nickName}닉네임</span>님 환영합니다.</td></tr>
-						        <tr><td class="id">ID ${email}admin</td></tr>
+						        <tr><td class="id">ID ${dto.email}admin</td></tr>
 								<tr><td>&nbsp;</td></tr>
 							</tbody>
 						</table>	
@@ -153,7 +152,6 @@ table{
 				</div>	
 			</div>	
 			
-			</form>
 		</div>
 	</div>
 </div>

@@ -51,7 +51,7 @@
 		
 
 		<intercept-url pattern="/resources/**" access="permitAll"/>
-		<intercept-url pattern="/uploads/photo/**" access="permitAll"/>
+		<intercept-url pattern="/uploads/**" access="permitAll"/>
 		
 		<!-- 관리자 페이지 -->
 		<intercept-url pattern="/admin" access="hasAnyRole('ROLE_ADMIN', 'ROLE_EMP')"/>

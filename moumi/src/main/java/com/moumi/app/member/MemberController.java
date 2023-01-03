@@ -25,7 +25,7 @@ public class MemberController {
 	@Autowired
 	private MemberService service;
 
-	@RequestMapping(value = "member")
+	@GetMapping(value = "member")
 	public String memberForm(Model model) {
 		model.addAttribute("mode", "member");
 		return ".member.member";
@@ -216,13 +216,13 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "mypage")
-	public String myPageForm(Member dto, HttpSession session, Model model) throws Exception {
+	public String myPageForm(HttpSession session, Model model) throws Exception {
 
 		try {
-//			SessionInfo info = (SessionInfo) session.getAttribute("member");
-
-//			service.readMypage(info.getEmail());
-
+			SessionInfo info = (SessionInfo) session.getAttribute("member");
+			
+			Member dto = service.readMember(info.getEmail());
+			
 			model.addAttribute("dto", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
