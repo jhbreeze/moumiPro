@@ -47,7 +47,7 @@ function sendOk() {
                             <input type="password" name="pwd" class="form-control form-control-lg" placeholder="패스워드">
                         </div>
                         <div class="d-grid">
-                            <button type="button" class="btn btn-lg btn-primary" onclick="sendOk();">확인 <i class="bi bi-check2"></i> </button>
+                            <button type="button" class="btn btn-success" onclick="sendOk();">확인 <i class="bi bi-check2"></i> </button>
                             <input type="hidden" name="mode" value="${mode}">
                         </div>
                     </form>

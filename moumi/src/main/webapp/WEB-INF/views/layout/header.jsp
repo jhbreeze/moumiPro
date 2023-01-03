@@ -50,18 +50,29 @@
 			</div>
 			<div class="d-flex justify-content-end m-0 p-0">
 				<c:choose>
+				
 					<c:when test="${empty sessionScope.member}">
 						<div class="p-2">
 							<a href="${pageContext.request.contextPath}/member/login" title="로그인"><img style ="height:35px; width:30px;"src="${pageContext.request.contextPath}/resources/images/profile.png"/></a>
 						</div>
 					</c:when>
+					
 					<c:otherwise>
-						<div class="p-2">
-							<a href="${pageContext.request.contextPath}/member/logout" title="로그아웃"><img style ="height:35px; width:30px;"src="${pageContext.request.contextPath}/resources/images/profile.png"/></a>
-						</div>
-						<div class="p-2">
-							<a href="${pageContext.request.contextPath}/admin" title="관리자"><i style="height: 35px; width: 35px;" class="bi bi-gear"></i></a>
-						</div>
+						<c:choose>
+							<c:when test="${sessionScope.member.userType == 0}">
+								<div class="p-2">
+									<a href="${pageContext.request.contextPath}/member/logout" title="로그아웃"><img style ="height:35px; width:30px;"src="${pageContext.request.contextPath}/resources/images/profile.png"/></a>
+								</div>
+								<div class="p-2">
+									<a href="${pageContext.request.contextPath}/admin" title="관리자"><i style="height: 35px; width: 35px;" class="bi bi-gear"></i></a>
+								</div>
+							</c:when>
+							<c:otherwise>	
+								<div class="p-2">
+									<a href="${pageContext.request.contextPath}/member/logout" title="로그아웃"><img style ="height:35px; width:30px;"src="${pageContext.request.contextPath}/resources/images/profile.png"/></a>
+								</div>
+							</c:otherwise>	
+						</c:choose>	
 					</c:otherwise>
 					
 				</c:choose>						
@@ -70,5 +81,4 @@
 		</div>
 	</nav>
 	
-<!-- <a class="navbar-brand"-->
 									
