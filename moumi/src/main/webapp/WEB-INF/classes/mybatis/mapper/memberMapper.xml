@@ -19,7 +19,7 @@
 
     <insert id="insertMember" parameterType="com.moumi.app.member.Member">
 		INSERT INTO member(userCode, email, pwd, nickName, userName, enabled, regDate, failureCnt, lastLogin, userType, gender, birth) 
-        VALUES (#{userCode}, #{email}, #{pwd}, #{nickName}, #{userName}, 1, SYSDATE, 0, SYSDATE, 0, #{gender}, #{birth})	
+        VALUES (#{userCode}, #{email}, #{pwd}, #{nickName}, #{userName}, 1, SYSDATE, 0, SYSDATE, ${userType}, #{gender}, #{birth})	
     </insert>
 
 	
@@ -35,7 +35,7 @@
 	
 	<select id="readMember" parameterType="String" resultType="com.moumi.app.member.Member">
 		SELECT userCode, userType, email, userName, nickName, pwd, enabled,
-			regDate, lastLogin,
+			regDate, lastLogin, gender,
 			TO_CHAR(birth, 'YYYY-MM-DD') birth
 		FROM member  
 		WHERE email = #{email}
@@ -66,7 +66,7 @@
     </update>
     
     <update id="updateMember2" parameterType="com.moumi.app.member.Member">
-		UPDATE member SET nickName=#{email, jdbcType=VARCHAR}, 
+		UPDATE member SET nickName=#{nickName, jdbcType=VARCHAR}, 
 			gender=#{gender, jdbcType=VARCHAR}, birth=#{birth, jdbcType=VARCHAR}
 		WHERE email=#{email}
     </update>

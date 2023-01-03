@@ -122,7 +122,7 @@ public class MemberServiceImpl implements MemberService {
 				// 패스워드가 변경된 경우에만 member1 수정
 				String encPassword = bcrypt.encode(dto.getPwd());
 				dto.setPwd(encPassword);
-
+				
 				dao.updateData("member.updateMember1", dto);
 			}
 

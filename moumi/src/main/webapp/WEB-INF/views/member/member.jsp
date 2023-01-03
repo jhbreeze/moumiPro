@@ -131,6 +131,14 @@ function memberOk() {
 		return;
 	}
 	
+	let modes = "${mode}";
+	if(modes === "member" && f.nickNameValid.value === "false") {
+		str = "닉네임 중복 검사가 실행되지 않았습니다.";
+		$("#nickName").parent().find(".help-block").html(str);
+		f.nickName.focus();
+		return;
+	}
+	
 	str = f.nickName.value;
     if( !/^[가-힣a-zA-z0-9]{3,10}$/.test(str) ) {
         alert("닉네임을 다시 입력하세요. ");
@@ -195,7 +203,7 @@ function emailCheck() {
 }
 
 function nickNameCheck() {
-	// 아이디 중복 검사
+	// 닉네임 중복 검사
 	let nickName = $("#nickName").val();
 
 	if(!/^[가-힣a-zA-z0-9]{3,10}$/i.test(nickName)) { 
@@ -263,10 +271,10 @@ $(function(){
 			<form name="memberForm" method="post">
 				
 				<div class="division1" role="group" aria-label="Basic radio toggle button group">
-				  <input type="radio" class="btn-check" name="userType" id="userType1" checked="checked" value="1" ${mode=="update" ? "onclick=return(false);":""}>
+				  <input type="radio" class="btn-check" name="userType" id="userType1" checked="checked" value=1 ${mode=="update" ? "onclick=return(false);":""}>
 				  <label class="userType btn btn-outline-success" for="userType1">개인 회원</label>
 				
-				  <input type="radio" class="btn-check" name="userType" id="userType3" value="3" ${mode=="update" ? "onclick=return(false);":""}>
+				  <input type="radio" class="btn-check" name="userType" id="userType3" value=3 ${mode=="update" ? "onclick=return(false);":""}>
 				  <label class="userType btn btn-outline-success" for="userType3">기업 회원</label>
 				
 				</div>
@@ -300,12 +308,8 @@ $(function(){
 				  	<label class="form-label" for="nickName">닉네임</label>
 				  	<div class="nickName-box" style="width: 400px;">
 				  		<input type="text" name="nickName" id="nickName" class="form-control" value="${dto.nickName}" placeholder="한글/영문/숫자(3~10자)" style="width: 270px; display: inline-block;">
-						<c:if test="${mode=='member'}">
 							<button type="button" class="duplication btn btn-outline-success" onclick="nickNameCheck();" style="width: 75px;">중복검사</button>
-						</c:if>
-						<c:if test="${mode=='member'}">
 							<small class="form-control-plaintext help-block"></small>
-						</c:if>
 					</div>
 				</div>
 				
@@ -313,10 +317,10 @@ $(function(){
 				  	<label class="form-label" for="gender">성별</label>
 				  	<div>
 						<label>
-		                    <input type="radio" name="gender" value="남자" id="male" > 남자 
+		                    <input type="radio" name="gender" value="남자" id="male" checked="checked" > 남자 
 		                </label>
 		                <label>
-		                	<input type="radio" name="gender" value="여자" id="female"> 여자
+		                	<input type="radio" name="gender" value="여자" id="female" > 여자
 		                </label>
 				  	</div>
 				</div>
@@ -330,6 +334,7 @@ $(function(){
 			        <div class="text-center">
 			            <button type="button" name="sendButton" class="signUp btn btn-success" onclick="memberOk();"> ${mode=="member"?"회 원 가 입":"정 보 수 정"} </button>
 						<input type="hidden" name="emailValid" id="emailValid" value="false">
+						<input type="hidden" name="nickNameValid" id="nickNameValid" value="false">
 			        </div>
 			    </div>
 			
