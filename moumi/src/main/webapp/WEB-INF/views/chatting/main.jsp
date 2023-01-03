@@ -236,14 +236,7 @@ function chattingModal() {
 <script type="text/javascript">
 $(function(){
 	var socket = null;
-	
-	// - 채팅창을 실행할 때 다음과 같이 ip로 실행
-	//   http://아이피주소:포트번호/cp/chat/main
-
-	// - 채팅서버
-	//   ws://ip주소:포트번호/cp/chat.msg
 	var host="${wsURL}";
-	// var host='wss://' + window.location.host + '/wchat.msg';  // https
 	
 	if ('WebSocket' in window) {
 		socket = new WebSocket(host);

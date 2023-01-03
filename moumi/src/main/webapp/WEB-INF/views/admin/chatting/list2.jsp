@@ -17,8 +17,56 @@ main {
 	max-width: 1200px;
 	margin: auto;
 	padding: 20px;
-	
 }
+
+.chat-msg-container { display: flex; flex-direction:column; height: 310px; overflow-y: scroll; }
+.chat-connection-list { height: 355px; overflow-y: scroll; }
+.chat-connection-list span { display: block; cursor: pointer; margin-bottom: 3px; }
+.chat-connection-list span:hover { color: #0d6efd }
+
+.user-left {
+	color: #0d6efd;
+	font-weight: 700;
+	font-size: 10px;
+	margin-left: 3px;
+	margin-bottom: 1px;
+}
+
+.chat-info, .msg-left, .msg-right {
+	max-width: 350px;
+	line-height: 1.5;
+	font-size: 13px;
+    padding: 0.35em 0.65em;
+    border: 1px solid #ccc;
+    color: #333;
+    white-space: pre-wrap;
+    vertical-align: baseline;
+    border-radius: 0.5rem;
+}
+
+.msg-box {
+    background-color: #f8f9fa;
+}
+
+.chat-info {
+    background: #f8f9fa;
+    color: #333;
+    margin-right: auto;
+    margin-bottom: 7px;
+
+}
+.msg-left {
+     margin-right: auto;
+    margin-bottom: 7px;
+    background-color: #f8f9fa;
+}
+.msg-right {
+	margin-left: auto;
+    margin-bottom: 7px;
+    background-color: #429F6B;
+    color: white;
+}
+
 
 tr {
 	font-size: 15px;
@@ -64,54 +112,6 @@ tr:hover {
 	color: #eee;
 }
 
-.chat-msg-container { display: flex; flex-direction:column; height: 310px; overflow-y: scroll; }
-/* .chat-connection-list { height: 355px; overflow-y: scroll; } */
-.chat-connection-list span { display: block; cursor: pointer; margin-bottom: 3px; }
-.chat-connection-list span:hover { color: #0d6efd }
-
-.user-left {
-	color: #0d6efd;
-	font-weight: 700;
-	font-size: 10px;
-	margin-left: 3px;
-	margin-bottom: 1px;
-}
-
-.chat-info, .msg-left, .msg-right {
-	max-width: 350px;
-	line-height: 1.5;
-	font-size: 13px;
-    padding: 0.35em 0.65em;
-    border: 1px solid #ccc;
-    color: #333;
-    white-space: pre-wrap;
-    vertical-align: baseline;
-    border-radius: 0.5rem;
-}
-
-.msg-box {
-    background-color: #f8f9fa;
-}
-
-.chat-info {
-    background: #f8f9fa;
-    color: #333;
-    margin-right: auto;
-    margin-bottom: 7px;
-}
-.msg-left {
-    margin-right: auto;
-    margin-bottom: 7px;
-    background-color: #f8f9fa;
-}
-.msg-right {
-	margin-left: auto;
-    margin-bottom: 7px;
-    background-color: #429F6B;
-    color: white;
-}
-
-
 .myDialogList {
     display: flex;
     padding: 16px 0;
@@ -145,6 +145,7 @@ tr:hover {
     text-align: center;
     vertical-align: middle;
 }
+
 </style>
 
 <div class="container">
@@ -152,36 +153,49 @@ tr:hover {
 		<ul class="nav nav-tabs" id="myTab" role="tablist">
 			<li class="nav-item" role="presentation">
 				<button class="nav-link active" id="tab-1" data-bs-toggle="tab" data-bs-target="#panel-1" 
-					type="button" role="tab" data-div="1" aria-controls="panel-1" aria-selected="true">실시간 상담</button>
+					type="button" role="tab" data-div="1" aria-controls="panel-1" aria-selected="true">참여중 채팅</button>
 			</li>
 			<li class="nav-item" role="presentation">
 				<button class="nav-link" id="tab-2" data-bs-toggle="tab" data-bs-target="#panel-2"
-					type="button" role="tab" data-div="2" aria-controls="panel-2" aria-selected="true">상담 완료</button>
+					type="button" role="tab" data-div="2" aria-controls="panel-2" aria-selected="true">완료된 채팅</button>
 			</li>
 		</ul>
 		
 		
 		<div class="tab-content pt-3" id="nav-tabContent">
 			<div class="tab-pane fade show active" id="panel-1" role="tabpanel" aria-labelledby="tab-1">
-				
-					<div class="myDialogList connectUserList">
-						<div class="myDialogImg" style="margin-right: 16px;">
-							<img class="m-1 me-2" style="height: 50px; width: 50px;"
-							src="${pageContext.request.contextPath}/resources/moumi/logo/callcenter.png">
-						</div>
-						<div class="myDialogListInfo "> 
-							<div class="chat-connection-user"></div>
-							<div>유료회원이 되고싶어요</div>  
-						</div>
-						<div class="myDialogListDate align-self-center"> 2022.12.25 16:10 </div>
+				<div class="myDialogList" onclick="location.href='${pageContext.request.contextPath}/admin/chatting/list';">
+					<div class="myDialogImg" style="margin-right: 16px;">
+						<img class="m-1 me-2" style="height: 50px; width: 50px;"
+						src="${pageContext.request.contextPath}/resources/moumi/logo/callcenter.png">
 					</div>
+					<div class="myDialogListInfo"> 
+						<h5 class="fw-bold">닉네임</h5>
+						<div>유료회원이 되고싶어요</div>  
+					</div>
+					<div class="myDialogListDate align-self-center"> 2022.12.25 16:10 </div>
+				</div>
 				
+				<div class="myDialogList">
+					<div class="myDialogImg" style="margin-right: 16px;">
+						<img class="m-1 me-2" style="height: 50px; width: 50px;"
+						src="${pageContext.request.contextPath}/resources/moumi/logo/callcenter.png">
+					</div>
+					<div class="myDialogListInfo"> 
+						<h5 class="fw-bold">닉네임</h5>
+						<div>유료회원이 되고싶어요</div>  
+					</div>
+					<div class="myDialogListDate align-self-center"> 2022.12.25 16:10 </div>
+				</div>
+
 			</div>
 		</div>
 		
 		<div class="tab-content pt-2" id="nav-tabContent2">
 			<div class="tab-pane fade show active" id="panel-2" role="tabpanel" aria-labelledby="tab-2">
 				
+				
+				
 			</div>
 		</div>
 		
@@ -190,43 +204,11 @@ tr:hover {
 </div>
 
 
-
-
-
-
-
-
-
 <!-- 귓속말 Modal -->
-<div class="modal fade" id="myDialogModal" tabindex="-1" aria-labelledby="myDialogModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="myDialogModalLabel">귓속말</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body pt-1">
-				<input type="text" id="chatOneMsg" class="form-control" 
-							placeholder="귓속말을 입력 하세요...">
-			</div>
-		</div>
-	</div>
-</div>
+
 
 <script type="text/javascript">
 $(function(){
-	// $(".connectUserList").clone().appendTo("#panel-1"); // here
-	// $(".chat-connection-list").append(out);
-	let $connList = $(".connectUserList").clone();
-	let here = $connList.children("div").find(".chat-connection-user");
-	
-	// parent("td").children().eq(0).find("span")
-	let out = "<i class='bi bi-person-square'>ddd</i> ";
-	//$(here).appendTo(out);
-	
-	here.append(out); // here
-	console.log(here);
-	
 	var socket = null;
 	
 	// - 채팅창을 실행할 때 다음과 같이 ip로 실행
@@ -253,15 +235,15 @@ $(function(){
 	
 	 // 서버 접속이 성공한 경우 호출되는 콜백함수
 	function onOpen(evt) {
-		 // Login 처리에서 세션에 email 저장 유무 확인
-	    let email = "${sessionScope.member.email}";
-	    let nickName = "${sessionScope.member.userName}";
+
+		let email = "${sessionScope.member.email}";
+	    let nickName = "${sessionScope.member.nickName}";
 	    if( ! email ) {
 	    	location.href="${pageContext.request.contextPath}/member/login";
 	    	return;
 	    }
 	    
-		writeToScreen("<div class='msg-right'>안녕하세요, MOUMI입니다 :) <br> 어떤 점이 궁금하신가요? </div>");
+	    writeToScreen("<div class='msg-right'> 안녕하세요, MOUMI입니다 :) <br> 어떤 점이 궁금하신가요? </div>");
 	    
 	    // 서버 접속이 성공 하면 아이디와 이름을 JSON으로 서버에 전송
 	    let obj = {};
@@ -270,11 +252,9 @@ $(function(){
 	    obj.nickName = nickName;
 	    
 	    let jsonStr = JSON.stringify(obj);  // JSON.stringify() : 자바스크립트 값을 JSON 문자열로 변환
-	    socket.send(jsonStr);
+		socket.send(jsonStr); // {"type":"connect","email":"admin","nickName":"관리자"}
 	    
-	    // 채팅입력창에 메시지를 입력하기 위해 #chatMsg에 keydown 이벤트 등록
 	    $("#chatMsg").on("keydown",function(evt) {
-	    	// 엔터키가 눌린 경우, 서버로 메시지를 전송한다. 맥은 13 으로만 비교해야 함
 	    	let key = evt.key || evt.keyCode;
 	        if (key === "Enter" || key === 13) {
 	            sendMessage();
@@ -303,7 +283,7 @@ $(function(){
     			let email = users[i][0];
     			let nickName = users[i][1];
     			
-    			let out = "<h5 class='fw-bold' id='user-"+email+"' data-email='"+email+"'> "+nickName+"</h5>";
+    			let out = "<span id='user-"+email+"' data-email='"+email+"'><i class='bi bi-person-square'></i> "+nickName+"</span>";
         		$(".chat-connection-list").append(out);
     		}
     		
@@ -311,11 +291,11 @@ $(function(){
     		let email = data.email;
     		let nickName = data.nickName;
     		
-    		// $(".connectUserList").clone().appendTo("#panel-1"); // here
+    		let out = "<div class='chat-info'>"+nickName+"님이 입장하였습니다.</div>";
+    		writeToScreen(out);
     		
-    		let out = "<span id='user-"+email+"' data-email='"+email+"'><i class='bi bi-person-square'></i> "+nickName+"<span>";
+    		out = "<span id='user-"+email+"' data-email='"+email+"'><i class='bi bi-person-square'></i> "+nickName+"<span>";
     		$(".chat-connection-list").append(out);
-    		
     		
     	} else if(cmd === "userDisconnect") { // 접속자가 나갔을 때
     		let email = data.email;
@@ -413,15 +393,16 @@ $(function(){
 		
 		let email = $('#chatOneMsg').attr("data-email");
 		let nickName = $('#chatOneMsg').attr("data-nickName").trim();
-
+		
 		let obj = {};
         obj.type = "whisper";
         obj.chatMsg = msg;
         obj.receiver = email;
+        
         let jsonStr = JSON.stringify(obj);
         socket.send(jsonStr);
         
-        writeToScreen("<div class='msg-right'>"+msg+"(이거는 귓속"+nickName+")</div>");
+        writeToScreen("<div class='msg-right'>"+msg+"("+nickName+")</div>");
         
         $("#chatOneMsg").val("");
         $("#myDialogModal").modal("hide");
