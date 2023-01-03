@@ -1,5 +1,9 @@
 package com.moumi.app.pay;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +37,31 @@ public class PayController {
 		if(dto == null) {
 			return"redirect:/pay/payment?productnum="+productnum+"&price="+ price;
 		}
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String now = sdf.format(date);
+		Calendar cal = Calendar.getInstance();
+		String enddate = null;
+		if (productnum.equals("1")) {
+			cal.setTime(date);
+			cal.add(Calendar.DATE, 30);
+			enddate = sdf.format(cal.getTime());
+		} else if(productnum.equals("2")) {
+			cal.setTime(date);
+			cal.add(Calendar.DATE, 50);
+			enddate = sdf.format(cal.getTime());
+		}
+		
 		int productNum = Integer.parseInt(productnum);
 		Pay dto2 = service.readPay(productNum);
 		
 		model.addAttribute("dto",dto);
 		model.addAttribute("dto2",dto2);
 		model.addAttribute("price",price);
+		model.addAttribute("now",now);
+		model.addAttribute("enddate",enddate);
 		
 		return ".pay.payment";
 	}
+	
 }

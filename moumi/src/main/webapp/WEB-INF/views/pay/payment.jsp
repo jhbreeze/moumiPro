@@ -84,97 +84,102 @@
 	border: none;
 	font-weight: bold;
 }
+.payment input {
+	border: none;
+}
 </style>
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
 <body>
-<div class="payment">
-	<div class="pay-content">
-		<div class="pay-content-head">
-			<h6 class="f-head">결제하기</h6>
-		</div>
-		<div class="pay-content-body">
-			<div class="pay-content-detail">
-				<div class="pay-content-subject">
-					<h6>구매자 정보</h6>
-				</div>
-				<div class="pay-detail-desc">
-					<div class="pay-detail-desc-row">
-						<div class="pay-detail-desc-tit">
-							<p>이름</p>
+<form name="payForm" method="post">
+	<div class="payment">
+		<div class="pay-content">
+			<div class="pay-content-head">
+				<h6 class="f-head">결제하기</h6>
+			</div>
+			<div class="pay-content-body">
+				<div class="pay-content-detail">
+					<div class="pay-content-subject">
+						<h6>구매자 정보</h6>
+					</div>
+					<div class="pay-detail-desc">
+						<div class="pay-detail-desc-row">
+							<div class="pay-detail-desc-tit">
+								<p>이름</p>
+							</div>
+							<div class="pay-detail-desc-con"> 
+								<input type="text" name="userName" value="${dto.userName}">
+							</div>
 						</div>
-						<div class="pay-detail-desc-con">
-							<p>${dto.userName}</p>
+					</div>
+					<div class="pay-detail-desc">
+						<div class="pay-detail-desc-row">
+							<div class="pay-detail-desc-tit">
+								<p>이메일</p>
+							</div>
+							<div class="pay-detail-desc-con">
+								<input type="text" name="email" value="${dto.email}">
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="pay-detail-desc">
-					<div class="pay-detail-desc-row">
-						<div class="pay-detail-desc-tit">
-							<p>이메일</p>
+				<div class="pay-content-detail">
+					<div class="pay-content-subject">
+						<h6>상품 정보</h6>
+					</div>
+					<div class="pay-detail-desc">
+						<div class="pay-detail-desc-row">
+							<div class="pay-detail-desc-tit">
+								<p>상품명</p>
+							</div>
+							<div class="pay-detail-desc-con">
+								<input type="text" name="subject" value="${dto2.subject}">
+							</div>
 						</div>
-						<div class="pay-detail-desc-con">
-							<p>${dto.email}</p>
+					</div>
+					<div class="pay-detail-desc">
+						<div class="pay-detail-desc-row">
+							<div class="pay-detail-desc-tit">
+								<p>이용기간</p>
+							</div>
+							<div class="pay-detail-desc-con">
+								<input type="text" style="width:6rem;" name="payDaate" value="${now}"> ~ <input type="text" style="width:6rem;" name="endDate" value="${enddate}">
+							</div>
+						</div>
+					</div>
+					<div class="pay-detail-desc">
+						<div class="pay-detail-desc-row">
+							<div class="pay-detail-desc-tit">
+								<p>상품내용</p>
+							</div>
+							<div class="pay-detail-desc-con">
+								<input type="text" style="width:20rem;" name="content" value="${dto2.content}">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="pay-content-detail">
+					<div class="pay-content-subject">
+						<h6>가격 정보</h6>
+					</div>
+					<div class="pay-detail-desc">
+						<div class="pay-detail-desc-row">
+							<div class="pay-detail-desc-tit">
+								<p>결제금액</p>
+							</div>
+							<div class="pay-detail-desc-con">
+								<p style="color: #198754; font-weight: bold;"><input type="text" name="price" style="width: 3rem;" value="${price}"><span>원</span></p>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="pay-content-detail">
-				<div class="pay-content-subject">
-					<h6>상품 정보</h6>
-				</div>
-				<div class="pay-detail-desc">
-					<div class="pay-detail-desc-row">
-						<div class="pay-detail-desc-tit">
-							<p>상품명</p>
-						</div>
-						<div class="pay-detail-desc-con">
-							<p>${dto2.subject}</p>
-						</div>
-					</div>
-				</div>
-				<div class="pay-detail-desc">
-					<div class="pay-detail-desc-row">
-						<div class="pay-detail-desc-tit">
-							<p>이용기간</p>
-						</div>
-						<div class="pay-detail-desc-con">
-							<p>2023-01-02 ~ 2023-02-02</p>
-						</div>
-					</div>
-				</div>
-				<div class="pay-detail-desc">
-					<div class="pay-detail-desc-row">
-						<div class="pay-detail-desc-tit">
-							<p>상품내용</p>
-						</div>
-						<div class="pay-detail-desc-con">
-							<p>${dto2.content}</p>
-						</div>
-					</div>
-				</div>
+			<div class="pay-content-footer">
+				<button class="pay">결제하기</button>
+				<button class="back"  onclick="location.href='${pageContext.request.contextPath}/pay/list'">결제취소</button>
 			</div>
-			<div class="pay-content-detail">
-				<div class="pay-content-subject">
-					<h6>가격 정보</h6>
-				</div>
-				<div class="pay-detail-desc">
-					<div class="pay-detail-desc-row">
-						<div class="pay-detail-desc-tit">
-							<p>결제금액</p>
-						</div>
-						<div class="pay-detail-desc-con">
-							<p style="color: #198754; font-weight: bold;">${price}<span>원</span></p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="pay-content-footer">
-			<button class="pay">결제하기</button>
-			<button class="back"  onclick="location.href='${pageContext.request.contextPath}/pay/list'">결제취소</button>
 		</div>
 	</div>
-</div>
+</form>
 </body>
 </html>
