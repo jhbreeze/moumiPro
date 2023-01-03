@@ -216,8 +216,8 @@
 		FROM replyLike WHERE replyNum = #{replyNum}
 	</select>
 	<insert id="insertNotify" parameterType="com.moumi.app.board.Board">
-		INSERT INTO replyStop(stopNum,replyNum,content,userName)
-			VALUES(commentStop_seq.NEXTVAL,#{replyNum},#{content},#{userName})
+		INSERT INTO replyStop(stopNum,replyNum,notifyContent,userCode)
+			VALUES(commentStop_seq.NEXTVAL,#{replyNum},#{notifyContent},#{userCode})
 	</insert>
 	
 	<select id="readReplyNum" parameterType="Long" resultType="Integer">

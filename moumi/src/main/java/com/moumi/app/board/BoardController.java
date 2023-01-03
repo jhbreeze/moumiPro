@@ -432,6 +432,7 @@ public class BoardController {
 		}
 	
 		@PostMapping("notify")
+		@ResponseBody
 		public Map<String,Object> notifyWrite(@RequestParam long parent,
 				@RequestParam long communityNum,Board dto ,HttpSession session) {
 			

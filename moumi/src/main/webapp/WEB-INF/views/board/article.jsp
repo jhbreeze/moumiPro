@@ -528,13 +528,13 @@ $(function(){
 	    }
 	    
 	    let query = $("form[name=notifyForm]").serialize();
-	    url = "${pageContext.request.contextPath}/board/notify";
-	    alert(query);
+	    let url = "${pageContext.request.contextPath}/board/notify";
+	    
 	    const fn = function(data) {
-	    	let state = data.state
+	    	let state = data.state;
 	    	if(state === "true") {
 	    		$("#notifyModal").modal("hide");
-	    		alert("신고가 완료되었습니다.")
+	    		alert("신고가 완료되었습니다.");
 	    	}
 	    };
 	    ajaxFun(url,"post",query,"json",fn);
