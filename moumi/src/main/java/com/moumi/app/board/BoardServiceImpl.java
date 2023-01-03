@@ -306,6 +306,7 @@ public class BoardServiceImpl implements BoardService{
 	public void insertNotify(Board dto) throws Exception {
 		try {
 			dao.insertData("board.insertNotify",dto);
+			dao.insertData("board.insertNotifyStatus");
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

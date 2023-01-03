@@ -38,6 +38,7 @@ public class PayController {
 		
 		model.addAttribute("dto",dto);
 		model.addAttribute("dto2",dto2);
+		model.addAttribute("price",price);
 		
 		return ".pay.payment";
 	}
