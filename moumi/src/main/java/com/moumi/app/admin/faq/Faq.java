@@ -5,7 +5,7 @@ public class Faq {
 	private long userCode;
 	private String subject;
 	private String content;
-	//
+	
 	private long categoryNum;
 	private String categoryName;
 

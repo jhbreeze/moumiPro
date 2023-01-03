@@ -5,31 +5,43 @@
 
 <c:if test="${list.size() > 0}">
 	<div class="accordion accordion-flush mt-2" id="accordionFlush" style="clear: right;">
-		<form name="faqForm" method="post">
+		<form name="commentForm" method="post">
 		<c:forEach var="dto" items="${list}" varStatus="status">
-			<div class="accordion-item" style="border: none; overflow: hidden;">
-				<h2 class="accordion-header mb-1" id="flush-heading-${status.index}" style="float: left; width: 95%;">
-					<button class="accordion-button collapsed  backColor" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-${status.index}" aria-expanded="false" aria-controls="flush-collapse-${status.index}">
-						${dto.subject}
+			<div class="accordion-item" style="overflow: hidden; border-bottom-color: ">
+				<h2 class="accordion-header mb-1" id="flush-heading-${status.index}" style="height: 90px;">
+					<button class="accordion-button collapsed  backColor" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-${status.index}" aria-expanded="false" aria-controls="flush-collapse-${status.index}" style="height: 100%;">
+						<div style="width: 100%;">
+							<div style="font-size: 15px;">
+								${dataCount - (page-1) * size - status.index}. ${dto.writeName}
+							</div>
+							<div style="margin: 10px; font-size: 20px;">
+								${dto.content}
+							</div>
+						</div>
 					</button>
 				</h2>
-				<div style="float: left; width: 5%; height: 54px; display: flex;">
-					<input type="checkbox" class="form-check-input" name="faqNums" value="${dto.stopNum}" style="margin: auto;">
-				</div>
-				<div id="flush-collapse-${status.index}" class="accordion-collapse collapse" aria-labelledby="flush-heading-${status.index}" data-bs-parent="#accordionFlush" style="clear: left;">
-					<div class="accordion-body" style="clear: left; width: 95%;">
-						<div class="row border-bottom pb-1"> <div  style="width: 90%;"> 분류 : ${dto.categoryName}</div><div class="col text-end" style="float: right; width: 10%">
-							<c:if test="${dto.reply == 0}">
-								<a href="#" onclick="javascript:location.href='${pageContext.request.contextPath}/admin/comment/update?stopNum=${dto.stopNum}&reply=1';" class="text-line">댓글 숨김</a>
+				<div id="flush-collapse-${status.index}" class="accordion-collapse collapse pp" aria-labelledby="flush-heading-${status.index}" data-bs-parent="#accordionFlush" style="clear: left;">
+					<div class="accordion-body" style="clear: left;">
+						<div class="row border-bottom pb-1"> 
+							<div> 카테고리 : ${dto.brandName}</div>
+							<div>
+								<a href="${articleUrl}&communityNum=${dto.communityNum}" class="noline">원글 : ${dto.subject}</a>
+							</div>
+						<div class="col text-end" style="float: left;">
+							<c:if test="${dto.status == 0}">
+								<a href="#" onclick="updateReply('${dto.stopNum}', '${pageNo}', 1);" class="text-line">댓글 숨김</a>
 							</c:if>
-							<c:if test="${dto.reply == 1}">
-								<a href="#" onclick="javascript:location.href='${pageContext.request.contextPath}/admin/comment/update?stopNum=${dto.stopNum}&reply=0';" class="text-line">댓글 보임</a>
+							<c:if test="${dto.status == 1}">
+								<a href="#" onclick="updateReply('${dto.stopNum}', '${pageNo}', 0);" class="text-line">댓글 보임</a>
 							</c:if>
 						</div>
 				</div>
 						
 						<div class="row p-2">
-							${dto.content}
+						<div>
+							└신고자 : ${dto.sendName}
+						</div>
+							신고사유 : ${dto.notifyContent}
 						</div>
 					</div>
 				</div>

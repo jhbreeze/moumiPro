@@ -4,11 +4,14 @@ public class Comment {
 	private long stopNum;
 	private String content;
 	private String userName;
-	private int reply;
+	private int status;
 	private long userCode;
 	private String subject;
 	private String brandName;
 	private long communityNum;
+	private String sendName;
+	private String writeName;
+	private String notifyContent;
 	
 	public long getStopNum() {
 		return stopNum;
@@ -28,12 +31,7 @@ public class Comment {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public int getReply() {
-		return reply;
-	}
-	public void setReply(int reply) {
-		this.reply = reply;
-	}
+	
 	public long getUserCode() {
 		return userCode;
 	}
@@ -57,6 +55,30 @@ public class Comment {
 	}
 	public void setCommunityNum(long communityNum) {
 		this.communityNum = communityNum;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	public String getSendName() {
+		return sendName;
+	}
+	public void setSendName(String sendName) {
+		this.sendName = sendName;
+	}
+	public String getWriteName() {
+		return writeName;
+	}
+	public void setWriteName(String writeName) {
+		this.writeName = writeName;
+	}
+	public String getNotifyContent() {
+		return notifyContent;
+	}
+	public void setNotifyContent(String notifyContent) {
+		this.notifyContent = notifyContent;
 	}
 	
 	

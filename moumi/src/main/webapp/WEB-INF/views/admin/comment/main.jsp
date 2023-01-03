@@ -79,6 +79,14 @@ tr:hover {
 	text-decoration : none;
 	color : green;
 }
+
+.noline{
+	text-decoration : none;
+}
+
+.pp{
+	background-color : #ECF4EB;
+}
 </style>
 <script type="text/javascript">
 
@@ -125,10 +133,10 @@ $(function(){
 //글리스트 및 페이징 처리
 function listPage(page) {
 	const $tab = $("button[role='tab'].active");
-	let stopNum = $tab.attr("data-stopNum");
+	let status = $tab.attr("data-status");
 	
 	let url = "${pageContext.request.contextPath}/admin/comment/list";
-	let query = "pageNo="+page+"&stopNum="+stopNum;
+	let query = "pageNo="+page+"&status="+status;
 	
 	let selector = "#nav-content";
 	
@@ -138,13 +146,24 @@ function listPage(page) {
 	ajaxFun(url, "get", query, "html", fn);
 }
 
+function updateReply(stopNum, page, status) {
+	let url = "${pageContext.request.contextPath}/admin/comment/update";
+	let query = "stopNum="+stopNum+"&status="+status;
+	
+	const fn = function(data){
+		listPage(page);
+	};
+	
+	ajaxFun(url, "post", query, "json", fn);
+}
+
 </script>
 	
 <div class="container">
 	<div class="body-container">	
 		<div class="body-title">
 			<h2>
-				<i class="fa-brands fa-perbyte"></i> 신고된 댓글
+				<i class="fa-brands fa-perbyte"></i> 신고 댓글 관리
 			</h2>
 		</div>
 	    		
@@ -152,10 +171,10 @@ function listPage(page) {
 			
 			<ul class="nav nav-tabs" id="myTab" role="tablist">
 				<li class="nav-item" role="presentation">
-					<button class="nav-link active" id="tab-0" data-bs-toggle="tab" data-bs-target="#nav-content" type="button" role="tab" aria-controls="0" aria-selected="true" data-stopNum="0">미처리된 댓글</button>
+					<button class="nav-link active" id="tab-0" data-bs-toggle="tab" data-bs-target="#nav-content" type="button" role="tab" aria-controls="0" aria-selected="true" data-status="0">신고 댓글</button>
 				</li>
 				<li class="nav-item" role="presentation">
-					<button class="nav-link" id="tab-1" data-bs-toggle="tab" data-bs-target="#nav-content" type="button" role="tab" aria-controls="1" aria-selected="true" data-stopNum="1">숨김처리된 댓글</button>
+					<button class="nav-link" id="tab-1" data-bs-toggle="tab" data-bs-target="#nav-content" type="button" role="tab" aria-controls="1" aria-selected="true" data-status="1">숨긴 댓글</button>
 				</li>
 			</ul>
 			
