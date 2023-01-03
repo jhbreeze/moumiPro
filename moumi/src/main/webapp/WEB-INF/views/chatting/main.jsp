@@ -288,7 +288,7 @@ $(function(){
 	function onClose(evt) {
 		// 채팅 입력창 이벤트를 제거 한다.
        	$("#chatMsg").off("keydown");
-       	writeToScreen("<div class='chat-info'> 답변이 없어 5분뒤, 자동으로 상담이 종료됩니다. <br> 감사합니다 :D </div>");
+       	writeToScreen("<div class='chat-info'> 답변이 없어 5분 뒤, 자동으로 상담이 종료됩니다. <br> 감사합니다 :D </div>");
 	}
 
 	// 서버로부터 메시지를 받은 경우에 호출되는 콜백함수
@@ -317,6 +317,16 @@ $(function(){
     		out += "<div class='msg-left'>" + msg + "</div>";
     		writeToScreen(out);
     		
+    	}  else if(cmd === "whisper") { // 위스퍼
+    		let email = data.email;
+    		let nickName = data.nickName;
+    		let msg = data.chatMsg;
+    		
+    		let out = "<div class='user-left'>" + nickName + "(귓속)</div>";
+    		out += "<div class='msg-left'>" + msg + "</div>";
+    		
+    		writeToScreen(out);
+    		
     	}  else if(cmd === "time") {
     		// console.log(evt.data);
     	}
@@ -338,6 +348,7 @@ $(function(){
 	    let obj = {};
         obj.type = "message";
         obj.chatMsg = msg;
+        obj.receiver = "admin";  // 관리자(uid 없고 이메일로 하니까/ 관리자 이메일 = admin) checkhere
         
         let jsonStr = JSON.stringify(obj);
         socket.send(jsonStr);
@@ -345,36 +356,6 @@ $(function(){
         $("#chatMsg").val("");
         writeToScreen("<div class='msg-right'>" + msg +"<div>");
 	}
-	
-	// -----------------------------------------
-	// 채팅 참여자 리스트를 클릭한 경우 위스퍼(귓속말, dm) 대화상자 열기
-	$("body").on("click", ".chat-connection-list span", function(){
-		let email = $(this).attr("data-email");
-		let nickName = $(this).text();
-		
-		$('#chatOneMsg').attr("data-email", email);
-		$('#chatOneMsg').attr("data-nickName", nickName);
-		
-		$("#myDialogModalLabel").html("귓속말-"+nickName);
-		$("#myDialogModal").modal("show");
-	});
-	
-	const modalEl = document.getElementById("myDialogModal");
-	modalEl.addEventListener("show.bs.modal", function(){
-		// 모달 대화상자가 보일때
-		$("#chatOneMsg").on("keydown", function(evt){
-			let key = evt.key || evt.keyCode;
-			if(key === 'Enter' || key === 13) {
-				sendOneMessage();
-			}
-		});
-	});
-	modalEl.addEventListener("hidden.bs.modal", function(){
-		// 모달 대화상자가 사라질때
-		$("#chatOneMsg").off("keydown");
-		$("#chatOneMsg").val("");
-	});
-	
 });
 
 //---------------------------------------------

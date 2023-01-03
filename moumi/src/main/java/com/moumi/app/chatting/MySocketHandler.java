@@ -17,6 +17,7 @@ import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+
 /*
  - type : client -> server
    connect : 처음 접속한 경우 - uid, nickName
@@ -62,25 +63,23 @@ public class MySocketHandler extends TextWebSocketHandler {
 		}
 
 		if (type.equals("connect")) { // 처음 접속한 경우
-			// 접속한 사용자의 아이디를 키로 session과 유저 정보를 저장
 			String email = jsonReceive.getString("email");
 			String nickName = jsonReceive.getString("nickName");
 
 			User user = new User();
 			user.setEmail(email);
-			//user.setUid(uid);
 			user.setNickName(nickName);
 			user.setSession(session);
 
 			sessionMap.put(email, user);
-
+			
 			// 처음 접속 사용자에게 현재 접속 중인 다른 유저를 전송
 			Iterator<String> it = sessionMap.keySet().iterator();
 			
 			JSONArray arrUsers = new JSONArray();
 			while (it.hasNext()) {
 				String key = it.next();
-
+				
 				if ( email.equals(key) ) { // 자기 자신
 					continue;
 				}
@@ -89,7 +88,6 @@ public class MySocketHandler extends TextWebSocketHandler {
 
 				JSONArray arr = new JSONArray();
 				arr.put(vo.getEmail());
-				// arr.put(vo.getUid());
 				arr.put(vo.getNickName());
 				arrUsers.put(arr);
 			}
@@ -98,38 +96,46 @@ public class MySocketHandler extends TextWebSocketHandler {
 			jsonUsers.put("type", "userList");
 			jsonUsers.put("users", arrUsers);
 			
+			
 			sendTextMessageToOne(jsonUsers.toString(), session);
 
-			// 다른 클라이언트에게 접속 사실을 알림
+			// 다른 클라이언트에게 접속 사실을 알림 
 			JSONObject ob = new JSONObject();
 			ob.put("type", "userConnect");
 			ob.put("email", email);
-			// ob.put("uid", uid);
 			ob.put("nickName", nickName);
 
 			sendTextMessageToAll(ob.toString(), email);
 
 		} else if (type.equals("message")) { // 채팅 문자열을 전송 한 경우
-			User vo = getUser(session);
+			User vo = getUser(session); // 보내는 사람 
 			String msg = jsonReceive.getString("chatMsg");
-
+			String admin = jsonReceive.getString("receiver");
+			
+			User adminVo = sessionMap.get(admin);
+			if (adminVo == null) {
+				return;
+			}
+			
 			JSONObject ob = new JSONObject();
 			ob.put("type", "message");
 			ob.put("chatMsg", msg);
 			ob.put("email", vo.getEmail());
-			// ob.put("uid", vo.getUid());
 			ob.put("nickName", vo.getNickName());
 
 			// 다른 사용자에게 전송하기
-			sendTextMessageToAll(ob.toString(), vo.getEmail());
+			//sendTextMessageToAll(ob.toString(), receiverVo.getEmail());
 			
-		} else if (type.equals("whisper")) { // 위스퍼을 전송 한 경우
-			User user = getUser(session);
+			// 관리자에게만 전송
+			sendTextMessageToOne(ob.toString(), adminVo.getSession()); // adminVo.getSession() ? 왜? checkhere
+			
+		} else if (type.equals("whisper")) { // 위스퍼을 전송 한 경우 // 관리자 입장에서 필요하니까
+			User user = getUser(session); // 관리자
 
 			String msg = jsonReceive.getString("chatMsg");
-			String receiver = jsonReceive.getString("receiver");
+			String receiver = jsonReceive.getString("receiver"); // 받을 사람
 
-			User receiverVo = sessionMap.get(receiver);
+			User receiverVo = sessionMap.get(receiver); // 받을 사람
 			if (receiverVo == null) {
 				return;
 			}
@@ -137,8 +143,8 @@ public class MySocketHandler extends TextWebSocketHandler {
 			JSONObject ob = new JSONObject();
 			ob.put("type", "whisper");
 			ob.put("chatMsg", msg);
-			ob.put("email", user.getEmail());
-			ob.put("nickName", user.getNickName());
+			ob.put("email", user.getEmail()); // 보내는 사람의 이메일? = 관리자 이메일
+			ob.put("nickName", user.getNickName()); // 보내는 사람의 닉네임? = 관리자 닉네임
 
 			// 귓속말 대상자에게 메시지 보내기
 			sendTextMessageToOne(ob.toString(), receiverVo.getSession());
@@ -157,9 +163,9 @@ public class MySocketHandler extends TextWebSocketHandler {
 		super.afterConnectionClosed(session, status);
 
 		// WebSocket 연결이 닫혔을 때 호출
-		String uid = removeUser(session);
+		String email = removeUser(session);
 
-		logger.info("remove session : " + uid);
+		logger.info("remove session : " + email);
 	}
 	
 	@Override
@@ -235,7 +241,8 @@ public class MySocketHandler extends TextWebSocketHandler {
 		job.put("email", user.getEmail());
 		job.put("nickName", user.getNickName());
 		sendTextMessageToAll(job.toString(), user.getEmail());
-
+		//sendTextMessageToOne(job.toString(), session); // 관리자하고 접속했던 클라이언트 창에만 나오면 되니까  checkhere
+		
 		try {
 			user.getSession().close();
 		} catch (Exception e) {

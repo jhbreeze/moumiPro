@@ -65,7 +65,7 @@ tr:hover {
 }
 
 .chat-msg-container { display: flex; flex-direction:column; height: 310px; overflow-y: scroll; }
-.chat-connection-list { height: 355px; overflow-y: scroll; }
+/* .chat-connection-list { height: 355px; overflow-y: scroll; } */
 .chat-connection-list span { display: block; cursor: pointer; margin-bottom: 3px; }
 .chat-connection-list span:hover { color: #0d6efd }
 
@@ -110,29 +110,92 @@ tr:hover {
     background-color: #429F6B;
     color: white;
 }
+
+
+.myDialogList {
+    display: flex;
+    padding: 16px 0;
+    align-items: stretch;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border-bottom: 1px solid #f1f3f5;
+}
+
+.myDialogList:hover {
+	cursor: pointer;
+	background-color: #ECF4EB;
+	box-shadow: 2px 2px 2px 0;
+	border-radius: 20px;
+}
+
+.myDialogListInfo {
+	display: flex;
+    flex-direction: column;
+    width: 90%;
+}
+
+.myDialogListDate {
+	font-weight: 400;
+    line-height: 1.43;
+    letter-spacing: -.3px;
+    font-size: 14px;
+    min-width: 150px;
+    text-align: center;
+    vertical-align: middle;
+}
 </style>
 
 <div class="container">
-	<div class="body-container">
+	<div class="body-container">	
+		<ul class="nav nav-tabs" id="myTab" role="tablist">
+			<li class="nav-item" role="presentation">
+				<button class="nav-link active" id="tab-1" data-bs-toggle="tab" data-bs-target="#panel-1" 
+					type="button" role="tab" data-div="1" aria-controls="panel-1" aria-selected="true">실시간 상담</button>
+			</li>
+			<li class="nav-item" role="presentation">
+				<button class="nav-link" id="tab-2" data-bs-toggle="tab" data-bs-target="#panel-2"
+					type="button" role="tab" data-div="2" aria-controls="panel-2" aria-selected="true">상담 완료</button>
+			</li>
+		</ul>
 		
-
-		<div class="body-main content-frame">
-			<div class="row board-list-header">
-				<div class="col-8">
-					<div class="border p-3 chat-msg-container"></div>
-					<div class="mt-2">
-						<input type="text" id="chatMsg" class="form-control msg-box" placeholder="채팅 메시지를 입력 하세요...">
+		
+		<div class="tab-content pt-3" id="nav-tabContent">
+			<div class="tab-pane fade show active" id="panel-1" role="tabpanel" aria-labelledby="tab-1">
+				
+					<div class="myDialogList connectUserList">
+						<div class="myDialogImg" style="margin-right: 16px;">
+							<img class="m-1 me-2" style="height: 50px; width: 50px;"
+							src="${pageContext.request.contextPath}/resources/moumi/logo/callcenter.png">
+						</div>
+						<div class="myDialogListInfo "> 
+							<div class="chat-connection-user"></div>
+							<div>유료회원이 되고싶어요</div>  
+						</div>
+						<div class="myDialogListDate align-self-center"> 2022.12.25 16:10 </div>
 					</div>
-				</div>
-				<div class="col-4">
-					<p class="form-control-plaintext fs-6"><i class="bi bi-chevron-double-right"></i> 접속자 리스트</p>
-					<div class="border p-3 chat-connection-list"></div>
-				</div>
+				
 			</div>
 		</div>
 		
+		<div class="tab-content pt-2" id="nav-tabContent2">
+			<div class="tab-pane fade show active" id="panel-2" role="tabpanel" aria-labelledby="tab-2">
+				
+			</div>
+		</div>
+		
+
 	</div>
 </div>
+
+
+
+
+
+
+
+
 
 <!-- 귓속말 Modal -->
 <div class="modal fade" id="myDialogModal" tabindex="-1" aria-labelledby="myDialogModalLabel" aria-hidden="true">
@@ -152,6 +215,18 @@ tr:hover {
 
 <script type="text/javascript">
 $(function(){
+	// $(".connectUserList").clone().appendTo("#panel-1"); // here
+	// $(".chat-connection-list").append(out);
+	let $connList = $(".connectUserList").clone();
+	let here = $connList.children("div").find(".chat-connection-user");
+	
+	// parent("td").children().eq(0).find("span")
+	let out = "<i class='bi bi-person-square'>ddd</i> ";
+	//$(here).appendTo(out);
+	
+	here.append(out); // here
+	console.log(here);
+	
 	var socket = null;
 	
 	// - 채팅창을 실행할 때 다음과 같이 ip로 실행
@@ -228,7 +303,7 @@ $(function(){
     			let email = users[i][0];
     			let nickName = users[i][1];
     			
-    			let out = "<span id='user-"+email+"' data-email='"+email+"'><i class='bi bi-person-square'></i> "+nickName+"</span>";
+    			let out = "<h5 class='fw-bold' id='user-"+email+"' data-email='"+email+"'> "+nickName+"</h5>";
         		$(".chat-connection-list").append(out);
     		}
     		
@@ -236,11 +311,11 @@ $(function(){
     		let email = data.email;
     		let nickName = data.nickName;
     		
-    		let out = "<div class='chat-info'>"+nickName+"님이 입장하였습니다.</div>";
-    		writeToScreen(out);
+    		// $(".connectUserList").clone().appendTo("#panel-1"); // here
     		
-    		out = "<span id='user-"+email+"' data-email='"+email+"'><i class='bi bi-person-square'></i> "+nickName+"<span>";
+    		let out = "<span id='user-"+email+"' data-email='"+email+"'><i class='bi bi-person-square'></i> "+nickName+"<span>";
     		$(".chat-connection-list").append(out);
+    		
     		
     	} else if(cmd === "userDisconnect") { // 접속자가 나갔을 때
     		let email = data.email;
@@ -338,16 +413,15 @@ $(function(){
 		
 		let email = $('#chatOneMsg').attr("data-email");
 		let nickName = $('#chatOneMsg').attr("data-nickName").trim();
-		
+
 		let obj = {};
         obj.type = "whisper";
         obj.chatMsg = msg;
         obj.receiver = email;
-        
         let jsonStr = JSON.stringify(obj);
         socket.send(jsonStr);
         
-        writeToScreen("<div class='msg-right'>"+msg+"("+nickName+")</div>");
+        writeToScreen("<div class='msg-right'>"+msg+"(이거는 귓속"+nickName+")</div>");
         
         $("#chatOneMsg").val("");
         $("#myDialogModal").modal("hide");
