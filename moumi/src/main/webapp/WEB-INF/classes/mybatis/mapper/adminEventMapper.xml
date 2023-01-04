@@ -46,7 +46,7 @@
 		SELECT event_seq.currval FROM dual
 	</select>
 	
-	<select id="selectPickCount" parameterType="map" resultType="Integer">
+	<select id="selectPickCount" parameterType="Long" resultType="Integer">
 		SELECT pickCount FROM event
         WHERE eventNum = #{eventNum}
 	</select>

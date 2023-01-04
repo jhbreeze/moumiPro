@@ -4,10 +4,10 @@
 <mapper namespace="event">
 	
 	<select id="listEvent" parameterType="map" resultType="com.moumi.app.event.Event">
-		SELECT eventNum, subject, content, thumbnail, TO_CHAR(regDate,'yyyy.mm.dd') AS regDate, TO_CHAR(startDate, 'yyyy.mm.dd') AS startDate,
-		TO_CHAR(endDate,'yyyy.mm.dd') AS endDate, TRUNC(SYSDATE - endDate) AS deadline, ABS(TRUNC(SYSDATE - endDate)) AS deadlineABS
+		SELECT eventNum, subject, content, thumbnail, TO_CHAR(regDate,'yy, yy.mm.dd') AS regDate, TO_CHAR(startDate, 'yyyy.mm.dd') AS startDate,
+		TO_CHAR(endDate,'yyyy.mm.dd') AS endDate, TRUNC(SYSDATE - endDate) AS deadline
 		FROM event
-		ORDER BY eventNum DESC
+		WHERE (TRUNC(endDate-SYSDATE)> 0 AND TRUNC(SYSDATE-startDate)>0)
 	</select>
 
 	<select id="readEvent" parameterType="Long" resultType="com.moumi.app.event.Event">
@@ -34,8 +34,6 @@
         LEFT OUTER JOIN member m 
         ON e.userCode = m.userCode
         WHERE eventNum = #{eventNum}
-        
-        
 	</select>
 	
 	<delete id="deleteReply" parameterType="map">
@@ -47,6 +45,8 @@
 	<update id="updateHitCount" parameterType="Long">
 		UPDATE event SET hitCount = hitCount + 1 WHERE eventNum = #{eventNum}
 	</update>
+	
+	
 	
 	
 	

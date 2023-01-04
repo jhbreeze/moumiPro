@@ -112,10 +112,11 @@ public class EventController {
 		String state = "true";
 
 		try {
+			
 			dto.setUserCode(info.getUserCode());
 
 			service.insertReply(dto);
-		} catch (Exception e) {
+		} catch (Exception e) { 
 			state = "false";
 		}
 
