@@ -22,6 +22,11 @@ public interface EventService {
 	public List<Reply> listReply(Map<String, Object> map);
 	public int replyCount(Map<String, Object> map);
 	
+	
+	public int pickCount(long eventNum);
+
+	
 	public int selectEventCount(Map<String, Object> map);
+	public void updateWinner(Map<String, Object> map);
 	
 }

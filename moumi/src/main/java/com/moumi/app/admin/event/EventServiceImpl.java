@@ -31,7 +31,6 @@ public class EventServiceImpl implements EventService {
 			throw e;
 		}
 	}
-	
 
 	@Override
 	public void insertCoupon(Coupon dto) throws Exception {
@@ -149,12 +148,34 @@ public class EventServiceImpl implements EventService {
 		return result;
 	}
 
-
 	@Override
 	public int selectEventCount(Map<String, Object> map) {
 		int result = 0;
 		try {
 			result = dao.selectOne("adminEvent.selectEventNum", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public void updateWinner(Map<String, Object> map) {
+		try {
+			dao.updateData("adminEvent.insertWinner", map);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+
+	}
+
+	@Override
+	public int pickCount(long eventNum) {
+		int result = 0;
+		try {
+			result = dao.selectOne("adminEvent.selectPickCount", eventNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -300,6 +300,25 @@ public class EventController {
 
 		return "admin/event/listReply";
 	}
-	
+
+	@GetMapping("pick")
+	public String pick(@RequestParam long eventNum, Model model, Event dto) throws Exception {
+
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+
+			int pickCount = service.pickCount(eventNum);
+			model.addAttribute("pickCount", pickCount);
+
+			map.put("pickCount", pickCount);
+			map.put("eventNum", eventNum);
+			service.updateWinner(map);
+			model.addAttribute("dto", dto);
+
+		} catch (Exception e) {
+
+		}
+		return ".admin.event.pick";
+	}
 
 }

@@ -119,7 +119,7 @@
 						<button type="button" class="btn btn btn-outline-success"
 									onclick="deleteEvent()">삭제</button>	
 						<button type="button" class="btn btn-success"
-							onclick="location.href='${pageContext.request.contextPath}/admin/event/pick';">추첨</button>
+							onclick="location.href='${pageContext.request.contextPath}/admin/event/pick?&eventNum=${dto.eventNum}';">추첨</button>
 						</td>
 						
 					<td class="text-end">
