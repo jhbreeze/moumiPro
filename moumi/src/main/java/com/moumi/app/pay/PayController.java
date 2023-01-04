@@ -1,5 +1,7 @@
 package com.moumi.app.pay;
 
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -72,12 +74,27 @@ public class PayController {
 		try {
 			dto.setUserCode(info.getUserCode());
 			dto.setDiscount(1000);
-			
+			System.out.println(dto.getPaymentPrice());
+			System.out.println(dto.getPayDate());
+			System.out.println(dto.getEndDate());
 			service.insertPay(dto);
 		} catch (Exception e) {
 			
 		}
-		return "redirect:/pay/payOk";
+		return "redirect:/pay/success?userName="+URLEncoder.encode(dto.getUserName(),"UTF-8")+"&subject="+URLEncoder.encode(dto.getSubject(),"UTF-8");
+	}
+
+
+	@GetMapping("success")
+	public String paymentSuccess(@RequestParam String userName,
+				@RequestParam String subject,Pay dto,Model model,HttpSession session) throws Exception {
+		
+		userName = URLDecoder.decode(userName,"utf-8");
+		subject = URLDecoder.decode(subject,"utf-8");
+		model.addAttribute("userName",userName);
+		model.addAttribute("subject",subject);
+		
+		return ".pay.success";
 	}
 	
 }
