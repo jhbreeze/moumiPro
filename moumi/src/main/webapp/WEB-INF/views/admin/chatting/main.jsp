@@ -219,12 +219,10 @@ $(function(){
 	    let jsonStr = JSON.stringify(obj);  // JSON.stringify() : 자바스크립트 값을 JSON 문자열로 변환
 	    socket.send(jsonStr);
 	    
-	    // 채팅입력창에 메시지를 입력하기 위해 #chatMsg에 keydown 이벤트 등록
-	    $("#chatMsg").on("keydown",function(evt) {
-	    	// 엔터키가 눌린 경우, 서버로 메시지를 전송한다. 맥은 13 으로만 비교해야 함
+	    $("#adminChatMsg").on("keydown",function(evt) {
 	    	let key = evt.key || evt.keyCode;
 	        if (key === "Enter" || key === 13) {
-	            sendMessage();
+	        	sendOneMessage();
 	        }
 	    });
 	}
@@ -232,14 +230,12 @@ $(function(){
 	// 연결이 끊어진 경우에 호출되는 콜백함수
 	function onClose(evt) {
 		// 채팅 입력창 이벤트를 제거 한다.
-       	$("#chatMsg").off("keydown");
+       	$("#adminChatMsg").off("keydown");
        	writeToScreen("<div class='chat-info'>Info: WebSocket closed.</div>");
 	}
 
 	// 서버로부터 메시지를 받은 경우에 호출되는 콜백함수
 	function onMessage(evt) {
-    	// console.log(evt.data);
-    	
     	// 전송 받은 JSON 문자열을 자바 객체로 변환
     	let data = JSON.parse(evt.data); // JSON 파싱
     	let cmd = data.type;
@@ -250,8 +246,11 @@ $(function(){
     			let email = users[i][0];
     			let nickName = users[i][1];
     			
-    			let out = "<h5 class='fw-bold' id='user-"+email+"' data-email='"+email+"'> "+nickName+"처음접속</h5>";
-        		$(".chat-connection-list").append(out);
+    			let $connList = $(".connectUserList").clone().appendTo("#panel-1");
+        		let here = $connList.children().eq(1).find(".chat-connection-user");
+        		
+        		let out = "<span data-useremail='"+email+"'>"+nickName+"첫등장</span>";
+    			here.append(out);
     		}
     		
     	} else if(cmd === "userConnect") { // 다른 접속자가 접속했을 때
@@ -261,7 +260,7 @@ $(function(){
     		let $connList = $(".connectUserList").clone().appendTo("#panel-1");
     		let here = $connList.children().eq(1).find(".chat-connection-user");
     		
-    		let out = "<span id='user-"+email+"' data-email='"+email+"'>"+nickName+"다른애접속<span>";
+    		let out = "<span data-useremail='"+email+"'>"+nickName+"</span>";
 			here.append(out);
     		
     	} else if(cmd === "userDisconnect") { // 접속자가 나갔을 때
@@ -271,10 +270,10 @@ $(function(){
     		let out = "<div class='chat-info'>"+nickName+"님이 나갔습니다.</div>";
     		writeToScreen(out);
     		
-    		$("#user-"+email).remove();
+    		$("data-userEmail").remove();
 
     	} else if(cmd === "message") { // 메시지를 받은 경우
-    		let email = data.email;
+    		let email = data.email; // 잘돼
     		let nickName = data.nickName;
     		let msg = data.chatMsg;
     		
@@ -301,33 +300,19 @@ $(function(){
 		writeToScreen("<div class='chat-info'>Info: WebSocket error.</div>");
 	}
 	
-	// 채팅 메시지 전송
-	function sendMessage() {
-		let msg = $("#chatMsg").val().trim();
-	    if(! msg ) {
-	    	$("#chatMsg").focus();
-	    	return;
-	    }
-	    
-	    let obj = {};
-        obj.type = "message";
-        obj.chatMsg = msg;
-        
-        let jsonStr = JSON.stringify(obj);
-        socket.send(jsonStr);
-
-        $("#chatMsg").val("");
-        writeToScreen("<div class='msg-right'>" + msg +"<div>");
-	}
-	
 	// -----------------------------------------
 	// 채팅 참여자 리스트를 클릭한 경우 대화상자 열기
-	$("body").on("click", ".chat-connection-user ", function(){
-		let email = $(this).attr("data-email");
-		let nickName = $(this).text();
+	$("body").on("click", ".connectUserList", function(){
+		//let email = $(this).attr("data-useremail"); 
+		let email = $(this).children().eq(1).find('span').attr("data-useremail");  
+		//let nickName = $(this).text();
+		let nickName = $(this).children().eq(1).find(".chat-connection-user").text();
 		
-		$('#chatOneMsg').attr("data-email", email);
-		$('#chatOneMsg').attr("data-nickName", nickName);
+		console.log(email);
+		console.log(nickName);
+
+		$('#adminChatMsg').attr("data-useremail", email);
+		$('#adminChatMsg').attr("data-nickName", nickName);
 		
 		$("#adminchatModalToggleLabel").html("nickName :"+nickName);
 		$("#adminchatModalToggle").modal("show");
@@ -336,7 +321,7 @@ $(function(){
 	const modalEl = document.getElementById("adminchatModalToggle");
 	modalEl.addEventListener("show.bs.modal", function(){
 		// 모달 대화상자가 보일때
-		$("#chatOneMsg").on("keydown", function(evt){
+		$("#adminChatMsg").on("keydown", function(evt){
 			let key = evt.key || evt.keyCode;
 			if(key === 'Enter' || key === 13) {
 				sendOneMessage();
@@ -345,32 +330,33 @@ $(function(){
 	});
 	modalEl.addEventListener("hidden.bs.modal", function(){
 		// 모달 대화상자가 사라질때
-		$("#chatOneMsg").off("keydown");
-		$("#chatOneMsg").val("");
+		$("#adminChatMsg").off("keydown");
+		$("#adminChatMsg").val("");
 	});
 	
 	// -----------------------------------------
-	// 귓속말 전송
+	// 관리자 메시지 전송
 	function sendOneMessage() {
-		let msg = $("#chatOneMsg").val().trim();
+		let msg = $("#adminChatMsg").val().trim();
 		if(! msg) {
-			$("#chatOneMsg").focus();
+			$("#adminChatMsg").focus();
 			return;
 		}
 		
-		let email = $('#chatOneMsg').attr("data-email");
-		let nickName = $('#chatOneMsg').attr("data-nickName").trim();
-
+		let email = $('#adminChatMsg').attr("data-useremail"); // 잘 안돼
+		let nickName = $('#adminChatMsg').attr("data-nickName").trim(); // 잘 되네
+		
 		let obj = {};
         obj.type = "whisper";
         obj.chatMsg = msg;
         obj.receiver = email;
+        
         let jsonStr = JSON.stringify(obj);
         socket.send(jsonStr);
         
-        writeToScreen("<div class='msg-right'>"+msg+"(이거는 귓속"+nickName+")</div>");
+        writeToScreen("<div class='msg-right'>"+msg+"</div>");
         
-        $("#chatOneMsg").val("");
+        $("#adminChatMsg").val("");
 	}
 	
 });

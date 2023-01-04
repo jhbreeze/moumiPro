@@ -1,5 +1,7 @@
 package com.moumi.app.pay;
 
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -69,15 +71,41 @@ public class PayController {
 	public String paymentSubmit(Pay dto,HttpSession session) throws Exception {
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		
+		
+		String query = URLEncoder.encode(dto.getUserName(),"UTF-8")+
+				"&subject="+URLEncoder.encode(dto.getSubject(),"UTF-8");
+		
+		String start = String.join("", dto.getPayDate().split("-"));
+		String[] endSplit = dto.getEndDate().split("-");
+		String end = endSplit[1] + endSplit[2];
+		
+		String pNum = start+Long.toString(info.getUserCode())+end;
 		try {
 			dto.setUserCode(info.getUserCode());
 			dto.setDiscount(1000);
-			
+			dto.setPaymentNum(Long.parseLong(pNum));
+			System.out.println(Long.parseLong(pNum));
+			System.out.println(dto.getPaymentPrice());
+			System.out.println(dto.getPayDate());
+			System.out.println(dto.getEndDate());
 			service.insertPay(dto);
 		} catch (Exception e) {
 			
 		}
-		return "redirect:/pay/payOk";
+		return "redirect:/pay/success?userName="+query;
+	}
+
+
+	@GetMapping("success")
+	public String paymentSuccess(@RequestParam String userName,
+				@RequestParam String subject,Pay dto,Model model,HttpSession session) throws Exception {
+		
+		userName = URLDecoder.decode(userName,"utf-8");
+		subject = URLDecoder.decode(subject,"utf-8");
+		model.addAttribute("userName",userName);
+		model.addAttribute("subject",subject);
+		
+		return ".pay.success";
 	}
 	
 }

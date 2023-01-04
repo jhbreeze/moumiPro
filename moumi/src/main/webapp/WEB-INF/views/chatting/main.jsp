@@ -278,7 +278,7 @@ $(function(){
 	    });
 	}
 
-	function onClose(evt) {
+	function onClose(evt) { // 연결 끊어졌을 때
 		// 채팅 입력창 이벤트를 제거 한다.
        	$("#chatMsg").off("keydown");
        	writeToScreen("<div class='chat-info'> 답변이 없어 5분 뒤, 자동으로 상담이 종료됩니다. <br> 감사합니다 :D </div>");
@@ -291,8 +291,21 @@ $(function(){
     	// 전송 받은 JSON 문자열을 자바 객체로 변환
     	let data = JSON.parse(evt.data); // JSON 파싱
     	let cmd = data.type;
-    	
-    	if(cmd === "userDisconnect") { // 접속자가 나갔을 때
+    	let arr = [];
+    	if(cmd === "userList") { // 처음 접속할때 접속자 리스트를 받는다.(관리자 있는지 체크)
+    		let users = data.users;
+    		for(let i = 0; i < users.length; i++) {
+    			let email = users[i][0];
+    			arr.push(email);
+    		}
+        	
+    		if(! arr.includes("admin")) {
+	    		alert("현재는 상담이 불가합니다.");
+    		}
+    		
+    		console.log(arr);
+    		
+    	} else if(cmd === "userDisconnect") { // 접속자가 나갔을 때
     		let email = data.email;
     		let nickName = data.nickName;
     		
