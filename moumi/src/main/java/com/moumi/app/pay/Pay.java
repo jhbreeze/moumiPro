@@ -11,6 +11,7 @@ public class Pay {
 	
 	private String userName;
 	private String email;
+	private long userCode;
 	
 	private String subject;
 	private String content;
@@ -75,6 +76,12 @@ public class Pay {
 	}
 	public void setContent(String content) {
 		this.content = content;
+	}
+	public long getUserCode() {
+		return userCode;
+	}
+	public void setUserCode(long userCode) {
+		this.userCode = userCode;
 	}
 	
 	

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -24,7 +25,7 @@ public class PayController {
 	
 	
 	@RequestMapping(value = "list")
-	public String list(HttpSession sesion) {
+	public String list(HttpSession sesion) throws Exception {
 		return ".pay.list";
 	}
 	
@@ -62,6 +63,21 @@ public class PayController {
 		model.addAttribute("enddate",enddate);
 		
 		return ".pay.payment";
+	}
+	
+	@PostMapping("payment")
+	public String paymentSubmit(Pay dto,HttpSession session) throws Exception {
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		
+		try {
+			dto.setUserCode(info.getUserCode());
+			dto.setDiscount(1000);
+			
+			service.insertPay(dto);
+		} catch (Exception e) {
+			
+		}
+		return "redirect:/pay/payOk";
 	}
 	
 }
