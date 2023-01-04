@@ -47,7 +47,7 @@
 							<div class='notifyReply reply-menu-item' data-replyNum='${vo.replyNum}'>신고</div>
 						</c:when>
 						<c:otherwise>
-							<div class="notifyReply reply-menu-item">신고</div>
+							<div class="notifyReply reply-menu-item" data-replyNum='${vo.replyNum}'>신고</div>
 						</c:otherwise>
 					</c:choose>
 				</div>

@@ -87,29 +87,30 @@ function check() {
 function compareDate(){
 	let startDate = $("input[name=startDate]").val();
 	let endDate = $("input[name=endDate]").val(); // yyyy-mm-dd 형식으로 반환 
-	
+
 	// 조건 1) 마감일은 모집 시작일 이후
-	if(startDate >= endDate) { // 마감일이 시작일보다 이전의 경우
+	if(startDate > endDate) { // 마감일이 시작일보다 이전의 경우
 		alert("마감일은 모집 시작일 이후로 설정해야 합니다.");
 		document.getElementById("endDate").value = ""; // 값 초기화
 	}
 	
 	// 조건 2) 마감일은 현재 날짜 이후
-	let day = new Date();
-	let today = getToday(day);
-	
-	if(today >= endDate) { // 마감일이 현재 날짜보다 이전의 경우
-		alert("마감일은 오늘 이후로 설정 가능합니다.");
+	let today = getToday();
+	if(today > endDate) { // 마감일이 현재 날짜보다 이전의 경우
+		alert("현재 모집중인 공고만 등록가능합니다.");
 		document.getElementById("endDate").value = ""; // 값 초기화
 	}
 }
 
-function getToday(day){
+function getToday(){
 	// 현재 날짜 구하기 : 'yyyy-mm-dd' 형식으로 변환
-	let today1 = new Date();
+	let today1 = new Date(); // 영어식 날짜 
 	let year = today1.getFullYear();
-	let month = today1.getMonth()+1;
-	let date = today1.getDate();
+	let month = today1.getMonth()+1 ;
+ 	let date = today1.getDate();
+ 	
+ 	month = month >= 10 ? month : '0' + month;
+ 	date = date >= 10 ? date : '0' + date;
 	
 	let today = year + "-" + month + "-" + date; 
 	return today;

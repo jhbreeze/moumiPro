@@ -46,7 +46,6 @@ public class BoardController {
 				, HttpSession session,Board dto) throws Exception {
 		
 		
-		dto.setNickName("관리자");
 		int size = 10;
 		int total_page = 0;
 		int dataCount = 0;

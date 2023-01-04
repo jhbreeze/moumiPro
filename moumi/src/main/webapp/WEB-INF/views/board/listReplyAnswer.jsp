@@ -20,14 +20,12 @@
 					<c:choose>
 						<c:when test="${sessionScope.member.userCode == vo.userCode }">
 							<div class='deleteReplyAnswer reply-menu-item' data-replyNum='${vo.replyNum}' data-answer='${vo.parent}'>삭제</div>
-							<div class='notifyReplyAnswer reply-menu-item' data-replyNum='${vo.replyNum}' data-answer='${vo.parent}'>신고</div>
 						</c:when>
 						<c:when test="${sessionScope.member.userType == 0 }">
 							<div class='deleteReplyAnswer reply-menu-item' data-replyNum='${vo.replyNum}' data-answer='${vo.parent}'>삭제</div>
-							<div class='notifyReplyAnswer reply-menu-item' data-replyNum='${vo.replyNum}' data-answer='${vo.parent}'>신고</div>
 						</c:when>
 						<c:otherwise>
-							<div class='notifyReplyAnswer reply-menu-item'>신고</div>
+							<div class='notifyReplyAnswer reply-menu-item'  data-replyNum='${vo.replyNum}' data-answer='${vo.parent}'>신고</div>
 						</c:otherwise>
 					</c:choose>
 							

@@ -137,6 +137,10 @@ public class RecruitController {
 			HttpSession session, Model model) throws Exception {
 		
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		if( info == null) {
+			return "redirect:/member/login";
+		}
+		
 		keyword = URLDecoder.decode(keyword, "utf-8");
 
 		String query = "pageNo=" + pageNo;

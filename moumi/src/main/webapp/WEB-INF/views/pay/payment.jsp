@@ -88,6 +88,57 @@
 	border: none;
 }
 </style>
+<script type="text/javascript"
+	src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+
+<script type="text/javascript">
+var IMP = window.IMP;
+IMP.init("imp31814638");
+
+var today = new Date();
+var hours = today.getHours(); // 시
+var minutes = today.getMinutes(); // 분
+var seconds = today.getSeconds(); // 초
+var milliseconds = today.getMilliseconds();
+var makeMerchantUid = hours + minutes + seconds + milliseconds;
+
+function requestPay() {
+	const f = document.reservationForm;
+	
+	
+	//결제 
+	let paymentPrice = $("form[name=reservationForm] input[name=paymentPrice]").val();
+	alert(paymentPrice);
+	
+	
+	
+	let subject = "${dto.companyName}(${dto.roomName})";
+	paymentPrice = 100; // 지우면 안 됨.
+	IMP.request_pay({
+		pg : 'html5_inicis.INIpayTest',
+		pay_method : 'card',
+		merchant_uid : "IMP" + makeMerchantUid,
+		name : subject, //클라이언트에게 보여주는 상품 이름 
+		amount : paymentPrice, // 결제 금액 
+		//buyer_email : 'Iamport@chai.finance', // 구매자 이메일 
+		buyer_name : f.realUserName.value, // 구매자 이름 
+		buyer_tel : f.realUserTel.value, // 구매자 전화번호 
+		//buyer_addr : '서울특별시 강남구 삼성동', // 구매자 주소
+		buyer_postcode : '123-456' //구매자 우편번호 
+	},
+	function(rsp) { // callback
+		if (rsp.success) {
+			console.log(rsp);
+			f.action = "${pageContext.request.contextPath}/reservation/reservation_ok.do";
+			f.submit();
+		} else {
+			console.log(rsp);
+			alert("결제를 실패했습니다");
+			}
+	});	
+
+}
+</script>
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
 <body>
@@ -168,14 +219,14 @@
 								<p>결제금액</p>
 							</div>
 							<div class="pay-detail-desc-con">
-								<p style="color: #198754; font-weight: bold;"><input type="text" name="price" style="width: 3rem;" value="${price}"><span>원</span></p>
+								<p style="color: #198754; font-weight: bold;"><input type="text" name="paymentPrice" style="width: 3rem;" value="${price}"><span>원</span></p>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="pay-content-footer">
-				<button class="pay">결제하기</button>
+				<button class="pay" onclick="requestPay();">결제하기</button>
 				<button class="back"  onclick="location.href='${pageContext.request.contextPath}/pay/list'">결제취소</button>
 			</div>
 		</div>

@@ -18,6 +18,7 @@
 	width: 50px; height: 50px; border-radius: 10px;
 	cursor: pointer;
 }
+
 </style>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/boot-board.css" type="text/css">
 
@@ -631,24 +632,24 @@ $(function(){
 					<td width="50%">
 						<c:choose>
 							<c:when test="${sessionScope.member.userCode==dto.userCode}">
-								<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/board/update?communityNum=${dto.communityNum}&page=${page}';">수정</button>
+								<button type="button" class="btn btn-outline-success" onclick="location.href='${pageContext.request.contextPath}/board/update?communityNum=${dto.communityNum}&page=${page}';">수정</button>
 							</c:when>
 							<c:otherwise>
-								<button type="button" class="btn btn-light" disabled="disabled">수정</button>
+								<button type="button" class="btn btn-outline-success" disabled="disabled">수정</button>
 							</c:otherwise>
 						</c:choose>
 				    	
 						<c:choose>
 				    		<c:when test="${sessionScope.member.userCode==dto.userCode || sessionScope.member.userType==0}">
-				    			<button type="button" class="btn btn-light" onclick="deleteBoard();">삭제</button>
+				    			<button type="button" class="btn btn-outline-success" onclick="deleteBoard();">삭제</button>
 				    		</c:when>
 				    		<c:otherwise>
-				    			<button type="button" class="btn btn-light" disabled="disabled">삭제</button>
+				    			<button type="button" class="btn btn-outline-success" disabled="disabled">삭제</button>
 				    		</c:otherwise>
 				    	</c:choose>
 					</td>
 					<td class="text-end">
-						<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/board/list?${query}';">리스트</button>
+						<button type="button" class="btn btn-success" onclick="location.href='${pageContext.request.contextPath}/board/list?${query}';">리스트</button>
 					</td>
 				</tr>
 			</table>
@@ -673,7 +674,7 @@ $(function(){
 								<input type="file" name="selectFile" accept="image/*" class="form-control" style="display: none;">
 							</td>
 						   <td align='right'>
-						        <button type='button' class='btn btn-light btnSendReply' onclick="sendOk();">댓글 등록</button>
+						        <button type='button' class='btn btn-success btnSendReply' onclick="sendOk();">댓글 등록</button>
 						    </td>
 						 </tr>
 					</table>

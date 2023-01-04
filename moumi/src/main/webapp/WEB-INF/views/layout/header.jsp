@@ -19,11 +19,11 @@
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link" style="color:#fff" href="#">자유게시판</a>
+						<a class="nav-link" style="color:#fff" href="${pageContext.request.contextPath}/board/list">자유게시판</a>
 					</li>
-	
+	 
 					<li class="nav-item">
-						<a class="nav-link" style="color:#fff"  href="#">이용권</a>
+						<a class="nav-link" style="color:#fff"  href="${pageContext.request.contextPath}/pay/list">이용권</a>
 					</li>
 
 					<li class="nav-item dropdown">
@@ -31,8 +31,8 @@
 							고객센터
 						</a>
 						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<li><a class="dropdown-item" href="#">공지사항</a></li>
-							<li><a class="dropdown-item" href="#">자주 묻는 질문</a></li>
+							<li><a class="dropdown-item" href="${pageContext.request.contextPath}/notice/main">공지사항</a></li>
+							<li><a class="dropdown-item" href="${pageContext.request.contextPath}/faq/main">자주 묻는 질문</a></li>
 						</ul>
 					</li>
 					
