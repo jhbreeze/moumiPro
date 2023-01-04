@@ -118,8 +118,17 @@
 									onclick="location.href='${pageContext.request.contextPath}/admin/event/update?&eventNum=${dto.eventNum}';">수정</button>
 						<button type="button" class="btn btn btn-outline-success"
 									onclick="deleteEvent()">삭제</button>	
-						<button type="button" class="btn btn-success"
-							onclick="location.href='${pageContext.request.contextPath}/admin/event/pick?&eventNum=${dto.eventNum}';">추첨</button>
+						
+						<c:choose>
+							<c:when test="${dto.status == 0 }">
+								<button type="button" class="btn btn-success"
+								onclick="location.href='${pageContext.request.contextPath}/admin/event/pick?&eventNum=${dto.eventNum}';">추첨</button>
+							</c:when>
+							<c:when test="${dto.status == 1 }">
+								<button type="button" class="btn btn-success"
+								onclick="location.href='${pageContext.request.contextPath}/admin/event/pick?&eventNum=${dto.eventNum}';">당첨 결과</button>
+							</c:when>
+						</c:choose>
 						</td>
 						
 					<td class="text-end">

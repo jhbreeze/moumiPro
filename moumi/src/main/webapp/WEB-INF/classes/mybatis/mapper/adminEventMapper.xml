@@ -17,14 +17,15 @@
 	<select id="listEvent" parameterType="map" resultType="com.moumi.app.admin.event.Event">
 		SELECT eventNum, subject, content, thumbnail, TO_CHAR(regDate,'yyyy.mm.dd') AS regDate,
 		TO_CHAR(startDate, 'yyyy.mm.dd') AS startDate, TO_CHAR(endDate,'yyyy.mm.dd') AS endDate, pickCount,
-		(TRUNC(endDate-SYSDATE)) endCheck, (TRUNC(SYSDATE-startDate)) startCheck
+		(TRUNC(endDate-SYSDATE)) endCheck, (TRUNC(SYSDATE-startDate)) startCheck, status
 		FROM event
 		ORDER BY eventNum DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
 	</select>
+	
 	<select id="readEvent" parameterType="Long" resultType="com.moumi.app.admin.event.Event">
 		SELECT eventNum, userCode, subject, content, thumbnail, TO_CHAR(regDate, 'yyyy.mm.dd') AS regDate,
-				TO_CHAR(startDate, 'yyyy.mm.dd') AS startDate, TO_CHAR(endDate, 'yyyy.mm.dd') AS endDate, price, pickCount
+				TO_CHAR(startDate, 'yyyy.mm.dd') AS startDate, TO_CHAR(endDate, 'yyyy.mm.dd') AS endDate, price, pickCount, status
 		FROM event 
 		WHERE eventNum = #{eventNum}
 	</select>
@@ -63,6 +64,20 @@
                 ORDER BY DBMS_RANDOM.VALUE
        	) tb WHERE ROWNUM &lt;= #{pickCount}))
 	</update>
+	
+	<select id="listWinner" parameterType="map" resultType="com.moumi.app.admin.event.Winner">
+		SELECT w.userCode, couponNum, eventNum, winDate, userName, nickName
+		FROM winner w
+		LEFT OUTER JOIN member m
+		ON m.userCode = w.userCode
+		WHERE eventNum = #{eventNum}
+	</select>
+	
+	
+	<update id="updatePickStatus" parameterType="Long">
+		UPDATE event SET status = 1 WHERE eventNum = #{eventNum}
+	</update>
+	
 	
 
 	

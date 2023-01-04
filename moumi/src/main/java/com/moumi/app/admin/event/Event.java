@@ -16,6 +16,8 @@ public class Event {
 	private String thumbnail;
 	private int endCheck;
 	private int startCheck;
+	private int pickCount;
+	private int status;
 
 	public long getEventNum() {
 		return eventNum;
@@ -119,6 +121,22 @@ public class Event {
 
 	public void setStartCheck(int startCheck) {
 		this.startCheck = startCheck;
+	}
+
+	public int getPickCount() {
+		return pickCount;
+	}
+
+	public void setPickCount(int pickCount) {
+		this.pickCount = pickCount;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 }

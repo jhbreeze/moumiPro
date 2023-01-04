@@ -6,6 +6,7 @@ public class Winner {
 	private long userCode;
 	private String winDate;
 	private int pickCount;
+	private String nickName;
 
 	public long getEventNum() {
 		return eventNum;
@@ -45,6 +46,14 @@ public class Winner {
 
 	public void setPickCount(int pickCount) {
 		this.pickCount = pickCount;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 
 }

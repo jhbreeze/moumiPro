@@ -182,4 +182,31 @@ public class EventServiceImpl implements EventService {
 		return result;
 	}
 
+	
+	@Override
+	public List<Winner> listWinner(Map<String, Object> map) throws Exception {
+		List<Winner> list = null;
+		try {
+
+			list = dao.selectList("adminEvent.listWinner", map);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return list;
+	}
+	
+	@Override
+	public void updatePickStatus(long eventNum) throws Exception {
+		try {
+			
+			dao.updateData("adminEvent.updatePickStatus", eventNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+
+	}
+
 }
