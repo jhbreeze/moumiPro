@@ -21,7 +21,7 @@
 					<li class="nav-item">
 						<a class="nav-link" style="color:#fff" href="${pageContext.request.contextPath}/board/list">자유게시판</a>
 					</li>
-	
+	 
 					<li class="nav-item">
 						<a class="nav-link" style="color:#fff"  href="${pageContext.request.contextPath}/pay/list">이용권</a>
 					</li>
