@@ -16,7 +16,8 @@
 	
 	<select id="listEvent" parameterType="map" resultType="com.moumi.app.admin.event.Event">
 		SELECT eventNum, subject, content, thumbnail, TO_CHAR(regDate,'yyyy.mm.dd') AS regDate,
-			   TO_CHAR(startDate, 'yyyy.mm.dd') AS startDate, TO_CHAR(endDate,'yyyy.mm.dd') AS endDate, pickCount
+		TO_CHAR(startDate, 'yyyy.mm.dd') AS startDate, TO_CHAR(endDate,'yyyy.mm.dd') AS endDate, pickCount,
+		(TRUNC(endDate-SYSDATE)) endCheck, (TRUNC(SYSDATE-startDate)) startCheck
 		FROM event
 		ORDER BY eventNum DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
@@ -63,7 +64,6 @@
        	) tb WHERE ROWNUM &lt;= #{pickCount}))
 	</update>
 	
-	
-	
+
 	
 </mapper>

@@ -15,18 +15,26 @@
 	font-size: 13px;
 }
 
-.deadLine {
+.progressStatus {
 	color: #fb4357;
 	font-size: 13px;
 	font-weight: 600;
 }
 
-.deadLineEnd{
+.deadlineStatus{
 	color: blue;
 	font-size: 13px;
 	font-weight: 600;
 
 }
+
+.waitingStatus{
+	color: green;
+	font-size: 13px;
+	font-weight: 600;
+
+}
+
 </style>
 
 <link rel="stylesheet"
@@ -64,13 +72,14 @@
 										<div class="card-body">
 											<p class="card-text">
 											<p class="eventName">${dto.subject}
-											<c:if test="${dto.deadLine > 0 }">
-												<p class="term">${dto.startDate}
-												~ ${dto.endDate}&nbsp;<em class="deadLineEnd"> 종료된 이벤트</em></c:if>
-											<c:if test="${dto.deadLine < 0 }">
-												<p class="term">${dto.startDate}
-												~ ${dto.endDate}&nbsp;<em class="deadLine">D-${dto.deadLineABS}</em></c:if>
-											</p>
+											<c:if test="${dto.startCheck <= 0 &&  dto.endCheck >= 0 }">
+												<p class="term">${dto.startDate} ~ ${dto.endDate}&nbsp;<em class="progressStatus"> 진행 중 이벤트 D-${dto.endCheck}</em></c:if>
+											<c:if test="${dto.endCheck<0}">
+												<p class="term">${dto.startDate} ~ ${dto.endDate}&nbsp;<em class="deadlineStatus">만료된 이벤트</em></c:if>
+											<c:if test="${dto.startCheck > 0 && dto.endCheck > 0}">
+												<p class="term">${dto.startDate} ~ ${dto.endDate}&nbsp;<em class="waitingStatus">대기 중 이벤트</em></c:if>
+											</p> 
+											
 										</div>
 									</div>
 									<br>

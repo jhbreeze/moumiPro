@@ -14,8 +14,8 @@ public class Event {
 	private int hitCount;
 	private MultipartFile thumbnailFile;
 	private String thumbnail;
-	private int deadLineABS;
-	private int pickCount;
+	private int endCheck;
+	private int startCheck;
 
 	public long getEventNum() {
 		return eventNum;
@@ -105,20 +105,20 @@ public class Event {
 		this.thumbnail = thumbnail;
 	}
 
-	public int getDeadLineABS() {
-		return deadLineABS;
+	public int getEndCheck() {
+		return endCheck;
 	}
 
-	public void setDeadLineABS(int deadLineABS) {
-		this.deadLineABS = deadLineABS;
+	public void setEndCheck(int endCheck) {
+		this.endCheck = endCheck;
 	}
 
-	public int getPickCount() {
-		return pickCount;
+	public int getStartCheck() {
+		return startCheck;
 	}
 
-	public void setPickCount(int pickCount) {
-		this.pickCount = pickCount;
+	public void setStartCheck(int startCheck) {
+		this.startCheck = startCheck;
 	}
 
 }

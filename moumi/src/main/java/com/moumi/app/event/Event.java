@@ -16,8 +16,8 @@ public class Event {
 	private MultipartFile thumbnailFile;
 	private String thumbnail;
 	private int deadLine;
-	private int deadLineABS;
-
+	private int endCheck;
+	private int startCheck;
 
 	public long getEventNum() {
 		return eventNum;
@@ -115,13 +115,20 @@ public class Event {
 		this.deadLine = deadLine;
 	}
 
-	public int getDeadLineABS() {
-		return deadLineABS;
+	public int getEndCheck() {
+		return endCheck;
 	}
 
-	public void setDeadLineABS(int deadLineABS) {
-		this.deadLineABS = deadLineABS;
+	public void setEndCheck(int endCheck) {
+		this.endCheck = endCheck;
 	}
 
-	
+	public int getStartCheck() {
+		return startCheck;
+	}
+
+	public void setStartCheck(int startCheck) {
+		this.startCheck = startCheck;
+	}
+
 }

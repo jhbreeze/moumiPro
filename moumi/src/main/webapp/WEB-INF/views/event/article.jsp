@@ -117,7 +117,7 @@ $(function(){
 //댓글 삭제
 $(function(){
 	$("body").on("click",".deleteReply",function(){
-		if(! confirm("게시글을 삭제하시겠습니까?")) {
+		if(! confirm("댓글을 삭제하시겠습니까?")) {
 			return false;
 		}
 		

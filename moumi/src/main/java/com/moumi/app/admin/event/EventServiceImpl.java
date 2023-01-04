@@ -88,7 +88,7 @@ public class EventServiceImpl implements EventService {
 		List<Event> list = null;
 		try {
 
-			list = dao.selectList("event.listEvent", map);
+			list = dao.selectList("adminEvent.listEvent", map);
 
 		} catch (Exception e) {
 			e.printStackTrace();
