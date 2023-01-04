@@ -86,7 +86,7 @@
 		<div class="pay-success-desc">
 			<div class="pay-success-desc-row">
 				<div class="pay-success-desc-tit">
-					<p>이용기간</p>
+					<p>상품명</p>
 				</div>
 				<div class="pay-success-desc-con">
 					 ${subject}
