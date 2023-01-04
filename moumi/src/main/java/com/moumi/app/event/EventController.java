@@ -41,10 +41,8 @@ public class EventController {
 	public String article(@RequestParam long eventNum, Model model) throws Exception {
 
 		try {
-
-			// 이벤트 게시글 가져오기
 			Event dto = service.readEvent(eventNum);
-			
+
 			service.updateHitCount(eventNum);
 			model.addAttribute("dto", dto);
 

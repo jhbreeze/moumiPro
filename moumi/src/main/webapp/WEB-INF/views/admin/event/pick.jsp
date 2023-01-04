@@ -42,9 +42,9 @@
 			<img src="${pageContext.request.contextPath}/resources/images/complete.png" style="width: 300px; margin-top: 20px;" class="card-img-top">
 		</div>	
         <div class="cong">
-        	<h4 class="welcome">{title}</h4>
+        	<h4 class="welcome">${title}</h4>
             
-			<p class="ment">{message}</p>
+			<p class="ment">${message}</p>
                    
 	        <div class="button">
 	            <button type="button" class="main btn btn-outline-success" onclick="location.href='${pageContext.request.contextPath}/';">메인화면</button>

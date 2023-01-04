@@ -46,5 +46,26 @@
 		SELECT event_seq.currval FROM dual
 	</select>
 	
+	<select id="selectPickCount" parameterType="map" resultType="Integer">
+		SELECT pickCount FROM event
+        WHERE eventNum = #{eventNum}
+	</select>
+	
+	<update id="insertWinner" parameterType="com.moumi.app.admin.event.Winner">
+		INSERT INTO winner (eventNum, userCode, couponNum) 
+      	( ( SELECT eventNum, userCode, couponNum  FROM (
+                SELECT e.eventNum, userCode, couponNum
+                FROM eventReply e 
+                LEFT OUTER JOIN coupon c
+                ON e.eventNum = c.eventNum
+                WHERE e.eventNum = #{eventNum}
+                ORDER BY DBMS_RANDOM.VALUE
+       	) tb WHERE ROWNUM &lt;= #{pickCount}))
+        
+     
+	</update>
+	
+	
+	
 	
 </mapper>
