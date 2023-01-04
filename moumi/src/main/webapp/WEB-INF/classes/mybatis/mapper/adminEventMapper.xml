@@ -61,8 +61,6 @@
                 WHERE e.eventNum = #{eventNum}
                 ORDER BY DBMS_RANDOM.VALUE
        	) tb WHERE ROWNUM &lt;= #{pickCount}))
-        
-     
 	</update>
 	
 	
