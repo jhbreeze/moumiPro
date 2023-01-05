@@ -12,6 +12,9 @@ public class Comment {
 	private String sendName;
 	private String writeName;
 	private String notifyContent;
+	private String regDate;
+	private String bigBrandName;
+	private String smallBrandName;
 	
 	public long getStopNum() {
 		return stopNum;
@@ -79,6 +82,24 @@ public class Comment {
 	}
 	public void setNotifyContent(String notifyContent) {
 		this.notifyContent = notifyContent;
+	}
+	public String getRegDate() {
+		return regDate;
+	}
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
+	}
+	public String getBigBrandName() {
+		return bigBrandName;
+	}
+	public void setBigBrandName(String bigBrandName) {
+		this.bigBrandName = bigBrandName;
+	}
+	public String getSmallBrandName() {
+		return smallBrandName;
+	}
+	public void setSmallBrandName(String smallBrandName) {
+		this.smallBrandName = smallBrandName;
 	}
 	
 	

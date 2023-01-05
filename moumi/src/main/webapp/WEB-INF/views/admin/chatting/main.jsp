@@ -58,7 +58,6 @@ main {
     margin-right: auto;
     margin-bottom: 7px;
     background-color: #f8f9fa;
-    width: 300px;
     font-size: 14px;
 }
 
@@ -67,7 +66,6 @@ main {
     margin-bottom: 7px;
     background-color: #429F6B;
     color: white;
-    width: 300px;
     font-size: 14px;
 }
 

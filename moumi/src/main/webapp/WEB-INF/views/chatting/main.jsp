@@ -189,7 +189,7 @@ function chattingModal() {
 					</div>
 					<div class="pb-2">
 						<button class="btn btn-success btn-lg shadow chatBtn2"
-							data-bs-target="#chatModalToggle2" data-bs-toggle="modal">
+							data-bs-target="#chatModalToggle2" data-bs-toggle="modal" onclick="check();">
 							<img class="me-1" style="height: 40px; width: 50px;"
 								src="${pageContext.request.contextPath}/resources/moumi/logo/circle1.png"> 문의하기&nbsp;&nbsp;>>>
 						</button>
@@ -291,16 +291,16 @@ $(function(){
     	// 전송 받은 JSON 문자열을 자바 객체로 변환
     	let data = JSON.parse(evt.data); // JSON 파싱
     	let cmd = data.type;
-    	let arr = [];
+    	var arr = [];
     	if(cmd === "userList") { // 처음 접속할때 접속자 리스트를 받는다.(관리자 있는지 체크)
     		let users = data.users;
     		for(let i = 0; i < users.length; i++) {
     			let email = users[i][0];
     			arr.push(email);
     		}
-        	
+    		
     		if(! arr.includes("admin")) {
-	    		alert("현재는 상담이 불가합니다.");
+    			alert("현재는 상담이 불가합니다.");
     		}
     		
     		console.log(arr);
@@ -350,7 +350,6 @@ $(function(){
 	    	$("#chatMsg").focus();
 	    	return;
 	    }
-	    
 	    let obj = {};
         obj.type = "message";
         obj.chatMsg = msg;
@@ -374,4 +373,10 @@ function writeToScreen(message) {
     $msgContainer.scrollTop($msgContainer.prop("scrollHeight"));
 }
 </script>
+<script type="text/javascript">
+function check() {
+	alert("check");
+	
+}
 
+</script>

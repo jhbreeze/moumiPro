@@ -1,5 +1,6 @@
 package com.moumi.app.admin.sales;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,18 @@ public class SalesServiceImpl implements SalesService{
 			e.printStackTrace();
 		}
 		return resultMap;
+	}
+
+	@Override
+	public List<Map<String, Object>> dayTotalMoney(String date) {
+		List<Map<String, Object>> list = null;
+		
+		try {
+			list = dao.selectList("sales.dayTotalMoneyG", date);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 }
