@@ -308,13 +308,17 @@ public class EventController {
 
 			int pickCount = service.pickCount(eventNum);
 			model.addAttribute("pickCount", pickCount);
-
 			map.put("pickCount", pickCount);
 			map.put("eventNum", eventNum);
-			service.updateWinner(map);
-			service.updatePickStatus(eventNum);
+
+			int winnerCount = service.winnerCount(map);
+			if (winnerCount == 0) {
+				service.updateWinner(map);
+				service.updatePickStatus(eventNum);
+			}
+
 			List<Winner> listWinner = service.listWinner(map);
-			
+
 			model.addAttribute("dto", dto);
 
 			model.addAttribute("listWinner", listWinner);

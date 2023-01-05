@@ -8,7 +8,7 @@
 		TO_CHAR(startDate, 'yyyy.mm.dd') AS startDate, TO_CHAR(endDate,'yyyy.mm.dd') AS endDate, pickCount, status, 
 		TRUNC(endDate - SYSDATE) deadLine
 		FROM event
-		WHERE (TRUNC(SYSDATE-startDate)) &lt;= 0  AND (TRUNC(endDate-SYSDATE)) &gt;=0
+		WHERE (TRUNC(startDate-SYSDATE)) &lt;= 0  AND (TRUNC(endDate-SYSDATE)) &gt;=0
 		ORDER BY eventNum DESC
 
 	</select>

@@ -41,7 +41,7 @@
 	<div class="body-container">
 		<div>
 			<img
-				src="${pageContext.request.contextPath}/resources/images/complete.png"
+				src="${pageContext.request.contextPath}/resources/images/moumi/pick.png"
 				style="width: 300px; margin-top: 20px;" class="card-img-top">
 		</div>
 		<div class="cong">
@@ -55,9 +55,9 @@
 
 			<div class="button">
 				<button type="button" class="main btn btn-outline-success"
-					onclick="location.href='${pageContext.request.contextPath}/';">메인화면</button>
+					onclick="location.href='${pageContext.request.contextPath}/admin/event/article?&eventNum=${dto.eventNum}';">이벤트로 돌아가기</button>
 				<button type="button" class="btn btn-success"
-					onclick="location.href='${pageContext.request.contextPath}/member/login';">&nbsp;&nbsp;로그인&nbsp;&nbsp;</button>
+					onclick="location.href='${pageContext.request.contextPath}/admin/event/list';">&nbsp;&nbsp;이벤트 목록&nbsp;&nbsp;</button>
 			</div>
 		</div>
 

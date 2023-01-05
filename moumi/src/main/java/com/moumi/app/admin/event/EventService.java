@@ -39,5 +39,9 @@ public interface EventService {
 	public List<Winner> listWinner(Map<String, Object> map) throws Exception;
 	
 	public void updatePickStatus(long eventNum) throws Exception ;
+	
+	
+	public int winnerCount(Map<String, Object> map);
+
 
 }

@@ -182,7 +182,6 @@ public class EventServiceImpl implements EventService {
 		return result;
 	}
 
-	
 	@Override
 	public List<Winner> listWinner(Map<String, Object> map) throws Exception {
 		List<Winner> list = null;
@@ -196,17 +195,28 @@ public class EventServiceImpl implements EventService {
 		}
 		return list;
 	}
-	
+
 	@Override
 	public void updatePickStatus(long eventNum) throws Exception {
 		try {
-			
+
 			dao.updateData("adminEvent.updatePickStatus", eventNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
 
+	}
+
+	@Override
+	public int winnerCount(Map<String, Object> map) {
+		int result = 0;
+		try {
+			result = dao.selectOne("adminEvent.winnerCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 }
