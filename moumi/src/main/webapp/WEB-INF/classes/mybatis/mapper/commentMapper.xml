@@ -3,7 +3,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="comment">
 	<select id="listComment" parameterType="map" resultType="com.moumi.app.admin.comment.Comment">
-		SELECT brandName, subject, m1.userName writeName, s.stopNum,
+		SELECT  c.brandName smallBrandName, b.brandName bigBrandName, subject, m1.userName writeName, s.stopNum, r.regDate, r.communityNum,
 			r.content, m2.userName sendName, notifyContent, p.status
         FROM reply r
         JOIN replyStop s ON r.replyNum = s.replyNum
@@ -11,6 +11,7 @@
         JOIN member m2 ON s.userCode = m2.userCode
         JOIN community c ON r.communityNum = c.communityNum
         JOIN replyStatus p ON s.stopNum = p.stopNum
+        JOIN brandCategory b ON c.brandNum = b.brandNum
         WHERE p.status = #{status}
 		ORDER BY s.stopNum DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY

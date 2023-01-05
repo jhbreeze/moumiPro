@@ -38,46 +38,128 @@
 	</select>
 	
 	<select id="dayTotalSales"  parameterType="String" resultType="map">
-		SELECT TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-6, 'YYYY-MM-DD') payDate, 
-				NVL(SUM(paymentPrice), 0) paymentPrice 
+		SELECT TO_CHAR(payDate, 'YYYY-MM-DD') payDate, NVL(SUM(paymentPrice), 0) paymentPrice 
 		FROM payment 
-		WHERE TO_CHAR(payDate, 'YYYY-MM-DD') = TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-6, 'YYYY-MM-DD') 
+		WHERE TO_CHAR(payDate, 'YYYY-MM-DD') &gt;= TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-6, 'YYYY-MM-DD') 
+			AND TO_CHAR(payDate, 'YYYY-MM-DD') &lt;= TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD'), 'YYYY-MM-DD') 
+		GROUP BY TO_CHAR(payDate, 'YYYY-MM-DD')
+		ORDER BY payDate
+	</select>
+	
+	<!-- 7주일간 매출 여성 -->
+	<select id="dayTotalSalesW"  parameterType="String" resultType="map">
+		SELECT TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-6, 'YYYY-MM-DD') payDate, 
+				NVL(SUM(totalMoney), 0) totalMoney 
+		FROM payment p
+		JOIN member m ON p.userCode = m.userCode
+		WHERE gender = '여자' AND
+		TO_CHAR(payDate, 'YYYY-MM-DD') = TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-6, 'YYYY-MM-DD') 
 		  UNION ALL
 		  
 		SELECT TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-5, 'YYYY-MM-DD') payDate, 
-				NVL(SUM(paymentPrice), 0) paymentPrice 
-		FROM payment 
-		WHERE TO_CHAR(payDate, 'YYYY-MM-DD') = TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-5, 'YYYY-MM-DD') 
+				NVL(SUM(totalMoney), 0) totalMoney 
+		FROM payment p
+		JOIN member m ON p.userCode = m.userCode
+		WHERE gender = '여자' AND
+		TO_CHAR(payDate, 'YYYY-MM-DD') = TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-6, 'YYYY-MM-DD') 
 		  UNION ALL
 		  
 		SELECT TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-4, 'YYYY-MM-DD') payDate, 
-				NVL(SUM(paymentPrice), 0) paymentPrice 
-		FROM payment 
-		WHERE TO_CHAR(payDate, 'YYYY-MM-DD') = TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-4, 'YYYY-MM-DD') 
+				NVL(SUM(totalMoney), 0) totalMoney 
+		FROM payment p
+		JOIN member m ON p.userCode = m.userCode
+		WHERE gender = '여자' AND
+		TO_CHAR(payDate, 'YYYY-MM-DD') = TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-6, 'YYYY-MM-DD') 
 		  UNION ALL
 		  
 		SELECT TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-3, 'YYYY-MM-DD') payDate, 
-				NVL(SUM(paymentPrice), 0) paymentPrice 
-		FROM payment 
-		WHERE TO_CHAR(payDate, 'YYYY-MM-DD') = TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-3, 'YYYY-MM-DD') 
+				NVL(SUM(totalMoney), 0) totalMoney 
+		FROM payment p
+		JOIN member m ON p.userCode = m.userCode
+		WHERE gender = '여자' AND
+		TO_CHAR(payDate, 'YYYY-MM-DD') = TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-6, 'YYYY-MM-DD') 
 		  UNION ALL
 		  
 		SELECT TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-2, 'YYYY-MM-DD') payDate, 
-				NVL(SUM(paymentPrice), 0) paymentPrice 
-		FROM payment 
-		WHERE TO_CHAR(payDate, 'YYYY-MM-DD') = TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-2, 'YYYY-MM-DD') 
+				NVL(SUM(totalMoney), 0) totalMoney 
+		FROM payment p
+		JOIN member m ON p.userCode = m.userCode
+		WHERE gender = '여자' AND
+		TO_CHAR(payDate, 'YYYY-MM-DD') = TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-6, 'YYYY-MM-DD') 
 		  UNION ALL
 		  
 		SELECT TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-1, 'YYYY-MM-DD') payDate, 
-				NVL(SUM(paymentPrice), 0) paymentPrice 
-		FROM payment 
-		WHERE TO_CHAR(payDate, 'YYYY-MM-DD') = TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-1, 'YYYY-MM-DD') 
+				NVL(SUM(totalMoney), 0) totalMoney 
+		FROM payment p
+		JOIN member m ON p.userCode = m.userCode
+		WHERE gender = '여자' AND
+		TO_CHAR(payDate, 'YYYY-MM-DD') = TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-6, 'YYYY-MM-DD') 
 		  UNION ALL
 		  
-		SELECT #{date} payDate, 
-				NVL(SUM(paymentPrice), 0) paymentPrice 
-		FROM payment 
-		WHERE TO_CHAR(payDate, 'YYYY-MM-DD') = #{date} 
+		SELECT TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD'), 'YYYY-MM-DD') payDate, 
+				NVL(SUM(totalMoney), 0) totalMoney 
+		FROM payment p
+		JOIN member m ON p.userCode = m.userCode
+		WHERE gender = '여자' AND
+		TO_CHAR(payDate, 'YYYY-MM-DD') = TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD'), 'YYYY-MM-DD') 
+	</select>
+	
+	<!-- 7주일간 매출 남성 -->
+	<select id="dayTotalSalesM"  parameterType="String" resultType="map">
+		SELECT TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-6, 'YYYY-MM-DD') payDate, 
+				NVL(SUM(totalMoney), 0) totalMoney 
+		FROM payment p
+		JOIN member m ON p.userCode = m.userCode
+		WHERE gender = '남자' AND
+		TO_CHAR(payDate, 'YYYY-MM-DD') = TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-6, 'YYYY-MM-DD') 
+		  UNION ALL
+		  
+		SELECT TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-5, 'YYYY-MM-DD') payDate, 
+				NVL(SUM(totalMoney), 0) totalMoney 
+		FROM payment p
+		JOIN member m ON p.userCode = m.userCode
+		WHERE gender = '남자' AND
+		TO_CHAR(payDate, 'YYYY-MM-DD') = TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-6, 'YYYY-MM-DD') 
+		  UNION ALL
+		  
+		SELECT TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-4, 'YYYY-MM-DD') payDate, 
+				NVL(SUM(totalMoney), 0) totalMoney 
+		FROM payment p
+		JOIN member m ON p.userCode = m.userCode
+		WHERE gender = '남자' AND
+		TO_CHAR(payDate, 'YYYY-MM-DD') = TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-6, 'YYYY-MM-DD') 
+		  UNION ALL
+		  
+		SELECT TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-3, 'YYYY-MM-DD') payDate, 
+				NVL(SUM(totalMoney), 0) totalMoney 
+		FROM payment p
+		JOIN member m ON p.userCode = m.userCode
+		WHERE gender = '남자' AND
+		TO_CHAR(payDate, 'YYYY-MM-DD') = TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-6, 'YYYY-MM-DD') 
+		  UNION ALL
+		  
+		SELECT TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-2, 'YYYY-MM-DD') payDate, 
+				NVL(SUM(totalMoney), 0) totalMoney 
+		FROM payment p
+		JOIN member m ON p.userCode = m.userCode
+		WHERE gender = '남자' AND
+		TO_CHAR(payDate, 'YYYY-MM-DD') = TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-6, 'YYYY-MM-DD') 
+		  UNION ALL
+		  
+		SELECT TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-1, 'YYYY-MM-DD') payDate, 
+				NVL(SUM(totalMoney), 0) totalMoney 
+		FROM payment p
+		JOIN member m ON p.userCode = m.userCode
+		WHERE gender = '남자' AND
+		TO_CHAR(payDate, 'YYYY-MM-DD') = TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD')-6, 'YYYY-MM-DD') 
+		  UNION ALL
+		  
+		SELECT TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD'), 'YYYY-MM-DD') payDate, 
+				NVL(SUM(totalMoney), 0) totalMoney 
+		FROM payment p
+		JOIN member m ON p.userCode = m.userCode
+		WHERE gender = '남자' AND
+		TO_CHAR(payDate, 'YYYY-MM-DD') = TO_CHAR(TO_DATE(#{date}, 'YYYY-MM-DD'), 'YYYY-MM-DD') 
 	</select>
 	
 	<select id="dayOfWeekTotalCount" parameterType="String" resultType="map">

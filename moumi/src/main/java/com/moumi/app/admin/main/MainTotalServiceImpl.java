@@ -1,5 +1,6 @@
 package com.moumi.app.admin.main;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,11 +79,23 @@ public class MainTotalServiceImpl implements MainTotalService{
 		Map<String, Object> resultMap = null;
 		
 		try {
-			resultMap = dao.selectOne("sales.todaySalesW");
+			resultMap = dao.selectOne("sales.todaySalesM");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return resultMap;
+	}
+
+	@Override
+	public List<Map<String, Object>> dayTotalMoney(String date) {
+		List<Map<String, Object>> list = null;
+		
+		try {
+			list = dao.selectList("sales.dayTotalMoneyG", date);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 }

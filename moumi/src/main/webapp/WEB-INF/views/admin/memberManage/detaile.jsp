@@ -45,33 +45,23 @@
 				구독
 			</c:otherwise>
 		</c:choose>
+		&nbsp;<span class="btn" onclick="memberStateDetaileView2();" style="cursor: pointer;">자세히</span>
 		</td>
 	</tr>
 	<tr>
 		<td class="text-center ">회원가입일</td>
 		<td class="ps-5">${dto.regDate}</td>
-		<td class="text-center">구독기간</td>
-		<td class="ps-5">
-			<c:choose>
-			<c:when test="${dto.endDate == null || dto.endDate < today}">
-				미구독
-			</c:when>
-			<c:otherwise>
-				${dto.startDate} ~ ${dto.endDate}
-			</c:otherwise>
-		</c:choose>
-		</td>
+		<td class="text-center">성별</td>
+		<td class="ps-5">${dto.gender}</td>
 	</tr>
 	
 	<tr>
 		<td class="text-center ">계정상태</td>
-		<td class="ps-5">
+		<td colspan="3" class="ps-5">
 			${dto.enabled==1?"활성":"잠금"}
 			<c:if test="${dto.enabled==0 && not empty memberState}">, ${memberState.memo}</c:if>
 			&nbsp;<span class="btn" onclick="memberStateDetaileView();" style="cursor: pointer;" id="btn">자세히</span>
 		</td>
-		<td class="text-center ">구독기록</td>
-		<td class="ps-5"><span class="btn" onclick="memberStateDetaileView2();" style="cursor: pointer;">자세히</span></td>
 	</tr>
 </table>
 

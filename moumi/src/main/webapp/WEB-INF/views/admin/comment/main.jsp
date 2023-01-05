@@ -89,7 +89,6 @@ tr:hover {
 }
 </style>
 <script type="text/javascript">
-
 function login() {
 	location.href="${pageContext.request.contextPath}/member/login";
 }

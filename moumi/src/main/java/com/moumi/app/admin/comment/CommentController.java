@@ -76,6 +76,7 @@ public class CommentController {
 		
 		model.addAttribute("list", list);
 		model.addAttribute("pageNo", current_page);
+		model.addAttribute("page", current_page);
 		model.addAttribute("size", size);
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("paging", paging);
