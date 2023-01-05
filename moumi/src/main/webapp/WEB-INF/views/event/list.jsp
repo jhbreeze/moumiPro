@@ -41,7 +41,6 @@
 					<div class="row board-list-header"></div>
 					<div class="row">
 						<c:forEach var="dto" items="${list}" varStatus="status">
-							<c:if test="${dto.deadLine <= 0 }">
 								<div class="col-lg-4 col-sm-3">
 									<div class="card" style="width: 20rem; overflow: hidden;"
 										onclick="location.href='${pageContext.request.contextPath}/event/article?&eventNum=${dto.eventNum}'">
@@ -51,13 +50,12 @@
 											<p class="card-text">
 											<p class="eventName">${dto.subject}
 											<p class="term">${dto.startDate}
-												~ ${dto.endDate}&nbsp;<em class="deadLine">D${dto.deadLine}</em>
+												~ ${dto.endDate}&nbsp;<em class="deadLine">D-${dto.deadLine}</em>
 											</p>
 										</div>
 									</div>
 									<br>
 								</div>
-							</c:if>
 						</c:forEach>
 					</div>
 				</form>
