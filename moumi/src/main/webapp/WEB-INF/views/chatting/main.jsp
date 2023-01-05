@@ -328,7 +328,7 @@ $(function(){
     		let nickName = data.nickName;
     		let msg = data.chatMsg;
     		
-    		let out = "<div class='user-left'>" + nickName + "(귓속)</div>";
+    		let out = "<div class='user-left'>" + nickName + "</div>";
     		out += "<div class='msg-left'>" + msg + "</div>";
     		
     		writeToScreen(out);
