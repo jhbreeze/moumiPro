@@ -20,16 +20,16 @@ public class SalesController {
 	@Autowired
 	private SalesService service;
 	
-	
 	@RequestMapping(value = "list")
-	public String main(@RequestParam(value = "pageNo", defaultValue = "1") int current_page, 
+	public String main(@RequestParam(defaultValue = "") String gender, 
+			@RequestParam(defaultValue = "") String birth,
 			Model model) throws Exception {
 		
 		return ".admin.sales.list";
 	}
 	
 	
-	@GetMapping(value = "/admin/charts")
+	@GetMapping(value = "charts")
 	@ResponseBody
 	public Map<String, Object> total(){
 		Calendar cal = Calendar.getInstance();
@@ -40,8 +40,27 @@ public class SalesController {
 		String date = String.format("%04d-%02d-%02d", y, m ,d);
 		String month = String.format("%04d%02d", y, m);
 		
-		List<Map<String, Object>> days = service.dayTotalMoney(date);
+		// 1주간
+		List<Map<String, Object>> days = service.dayTotalSales(date);
 		
+		List<Map<String, Object>> Wdays = service.dayTotalSalesW(date);
+		List<Map<String, Object>> Mdays = service.dayTotalSalesM(date);
+		
+		List<Map<String, Object>> Tdays = service.dayTotalSalesT(date);
+		List<Map<String, Object>> Edays = service.dayTotalSalesE(date);
+		List<Map<String, Object>> Sdays = service.dayTotalSalesS(date);
+		List<Map<String, Object>> Fdays = service.dayTotalSalesF(date);
+		
+		// 6개월간
+		List<Map<String, Object>> months = service.monthTotalSales(month);
+		
+		List<Map<String, Object>> Wmonths = service.monthTotalSalesW(month);
+		List<Map<String, Object>> Mmonths = service.monthTotalSalesM(month);
+		
+		List<Map<String, Object>> Tmonths = service.monthTotalSalesT(month);
+		List<Map<String, Object>> Emonths = service.monthTotalSalesE(month);
+		List<Map<String, Object>> Smonths = service.monthTotalSalesS(month);
+		List<Map<String, Object>> Fmonths = service.monthTotalSalesF(month);
 		if(d < 20) {
 			cal.add(Calendar.MONTH, -1);
 			m = cal.get(Calendar.MONTH) + 1;
@@ -51,6 +70,24 @@ public class SalesController {
 		Map<String, Object> model = new HashMap<String, Object>();
 		
 		model.put("days", days);
+		
+		model.put("Wdays", Wdays);
+		model.put("Mdays", Mdays);
+		
+		model.put("Tdays", Tdays);
+		model.put("Edays", Edays);
+		model.put("Sdays", Sdays);
+		model.put("Fdays", Fdays);
+		
+		model.put("months", months);
+		
+		model.put("Wmonths", Wmonths);
+		model.put("Mmonths", Mmonths);
+		
+		model.put("Tmonths", Tmonths);
+		model.put("Emonths", Emonths);
+		model.put("Smonths", Smonths);
+		model.put("Fmonths", Fmonths);
 		
 		return model;
 	}

@@ -33,14 +33,14 @@
 										<c:param name="keyword" value="${keyword}"/>
 									</c:if>
 								</c:url>
-								<a href="${url}" class="noline">원글 : ${dto.subject}</a>
+								<a href="${url}" class="noline">본문 : ${dto.subject}</a>
 							</div>
 						<div class="col text-end" style="float: left;">
 							<c:if test="${dto.status == 0}">
-								<a href="#" onclick="updateReply('${dto.stopNum}', '${pageNo}', 1);" class="text-line">댓글 숨김</a>
+								<a href="#" onclick="updateReply('${dto.replyNum}', '${pageNo}', 1);" class="text-line">댓글 숨김</a>
 							</c:if>
 							<c:if test="${dto.status == 1}">
-								<a href="#" onclick="updateReply('${dto.stopNum}', '${pageNo}', 0);" class="text-line">댓글 보임</a>
+								<a href="#" onclick="updateReply('${dto.replyNum}', '${pageNo}', 0);" class="text-line">댓글 보임</a>
 							</c:if>
 						</div>
 				</div>

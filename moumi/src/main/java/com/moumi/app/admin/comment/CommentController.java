@@ -89,13 +89,13 @@ public class CommentController {
 	
 	@PostMapping("update")
 	@ResponseBody
-	public Map<String, Object> update(@RequestParam long stopNum, 
+	public Map<String, Object> update(@RequestParam long replyNum, 
 			 @RequestParam int status) throws Exception {
 		
 		String state = "false";
 		try {
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("stopNum", stopNum);
+			map.put("replyNum", replyNum);
 			map.put("status", status);
 			
 			service.updateComment(map);

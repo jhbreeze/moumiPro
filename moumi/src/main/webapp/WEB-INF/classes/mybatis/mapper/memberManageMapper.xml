@@ -91,7 +91,7 @@
 	</select>
 	
 	<select id="listMemberSub" parameterType="long" resultType="com.moumi.app.admin.memberManage.Member">
-		SELECT paymentNum, endDate, TO_CHAR(payDate, 'YYYY-MM-DD') startDate, payDate
+		SELECT paymentNum, endDate, TO_CHAR(payDate, 'YYYY-MM-DD') startDate, TO_CHAR(payDate, 'YYYY-MM-DD') payDate
 		FROM payment
 		WHERE userCode = #{userCode}
 		ORDER BY paymentNum DESC

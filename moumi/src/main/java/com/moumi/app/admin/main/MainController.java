@@ -50,6 +50,9 @@ public class MainController {
 		
 		List<Map<String, Object>> days = service.dayTotalMoney(date);
 		
+		List<Map<String, Object>> Wdays = service.dayTotalSalesW(date);
+		List<Map<String, Object>> Mdays = service.dayTotalSalesM(date);
+		
 		if(d < 20) {
 			cal.add(Calendar.MONTH, -1);
 			m = cal.get(Calendar.MONTH) + 1;
@@ -61,6 +64,8 @@ public class MainController {
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("dayOfWeek", dayOfWeek);
 		model.put("days", days);
+		model.put("Wdays", Wdays);
+		model.put("Mdays", Mdays);
 		
 		return model;
 	}

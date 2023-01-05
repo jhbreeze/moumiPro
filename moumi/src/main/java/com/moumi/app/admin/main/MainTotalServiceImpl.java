@@ -91,7 +91,31 @@ public class MainTotalServiceImpl implements MainTotalService{
 		List<Map<String, Object>> list = null;
 		
 		try {
-			list = dao.selectList("sales.dayTotalMoneyG", date);
+			list = dao.selectList("sales.dayTotalSales", date);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<Map<String, Object>> dayTotalSalesW(String date) {
+		List<Map<String, Object>> list = null;
+		
+		try {
+			list = dao.selectList("sales.dayTotalSalesW", date);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<Map<String, Object>> dayTotalSalesM(String date) {
+		List<Map<String, Object>> list = null;
+		
+		try {
+			list = dao.selectList("sales.dayTotalSalesM", date);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

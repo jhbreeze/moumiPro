@@ -15,6 +15,7 @@ public class Comment {
 	private String regDate;
 	private String bigBrandName;
 	private String smallBrandName;
+	private long replyNum;
 	
 	public long getStopNum() {
 		return stopNum;
@@ -100,6 +101,12 @@ public class Comment {
 	}
 	public void setSmallBrandName(String smallBrandName) {
 		this.smallBrandName = smallBrandName;
+	}
+	public long getReplyNum() {
+		return replyNum;
+	}
+	public void setReplyNum(long replyNum) {
+		this.replyNum = replyNum;
 	}
 	
 	

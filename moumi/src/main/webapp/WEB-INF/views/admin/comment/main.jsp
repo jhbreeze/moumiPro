@@ -145,9 +145,9 @@ function listPage(page) {
 	ajaxFun(url, "get", query, "html", fn);
 }
 
-function updateReply(stopNum, page, status) {
+function updateReply(replyNum, page, status) {
 	let url = "${pageContext.request.contextPath}/admin/comment/update";
-	let query = "stopNum="+stopNum+"&status="+status;
+	let query = "replyNum="+replyNum+"&status="+status;
 	
 	const fn = function(data){
 		listPage(page);

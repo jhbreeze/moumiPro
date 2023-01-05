@@ -92,7 +92,7 @@ color: #198754;
 		<div class="header-right">
 			<span class="img" style="background-image: url('${pageContext.request.contextPath}/resources/images/person.png');"></span>
 			<span class="roll-user">
-				<label class="roll">관리자</label>
+				<label class="roll">${sessionScope.member.userName}</label>
 				<label class="user">
 					<span class="name">관리자 님</span>
 					<a href="${pageContext.request.contextPath}/"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>

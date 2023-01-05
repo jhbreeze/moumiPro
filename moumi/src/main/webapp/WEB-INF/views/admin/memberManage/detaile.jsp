@@ -42,7 +42,7 @@
 				미구독
 			</c:when>
 			<c:otherwise>
-				구독
+				구독중
 			</c:otherwise>
 		</c:choose>
 		&nbsp;<span class="btn" onclick="memberStateDetaileView2();" style="cursor: pointer;">자세히</span>
@@ -130,8 +130,7 @@
 	<table class="table table-border mx-auto my-10">
 		<thead>
 			<tr style="background-color: #ECF4EB;">
-				<th>내용</th>
-				<th width="130">담당자</th>
+				<th>구독기간</th>
 				<th width="200">등록일</th>
 			</tr>
 		</thead>
