@@ -7,6 +7,8 @@ public class Winner {
 	private String winDate;
 	private int pickCount;
 	private String nickName;
+	private String userName;
+	private String email;
 
 	public long getEventNum() {
 		return eventNum;
@@ -54,6 +56,22 @@ public class Winner {
 
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

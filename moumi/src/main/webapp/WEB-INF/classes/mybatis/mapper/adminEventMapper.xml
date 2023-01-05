@@ -66,7 +66,7 @@
 	</update>
 	
 	<select id="listWinner" parameterType="map" resultType="com.moumi.app.admin.event.Winner">
-		SELECT w.userCode, couponNum, eventNum, winDate, userName, nickName
+		SELECT w.userCode, couponNum, eventNum, winDate, userName, nickName, email
 		FROM winner w
 		LEFT OUTER JOIN member m
 		ON m.userCode = w.userCode
