@@ -219,4 +219,27 @@ public class EventServiceImpl implements EventService {
 		return result;
 	}
 
+	@Override
+	public void updateCoupon(Coupon cdto) {
+		try {
+
+			dao.updateData("adminEvent.updateCoupon", cdto);
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+
+	}
+
+	@Override
+	public Coupon readCoupon(long eventNum) {
+		Coupon cdto = null;
+		try {
+			cdto = dao.selectOne("adminEvent.readCoupon", eventNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return cdto;
+	}
+
 }

@@ -171,6 +171,7 @@ public class EventController {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 			Event dto = service.readEvent(eventNum);
+			Coupon cdto = service.readCoupon(eventNum);
 			String s = dto.getStartDate().replaceAll("\\-|\\.|/", "");
 			String e = dto.getEndDate().replaceAll("\\-|\\.|/", "");
 
@@ -182,6 +183,7 @@ public class EventController {
 			cal.add(Calendar.DATE, -1);
 
 			dto.setStartDate(sdf.format(cal.getTime()));
+			cdto.setStartDate(sdf.format(cal.getTime()));
 
 			int ey = Integer.parseInt(e.substring(0, 4));
 			int em = Integer.parseInt(e.substring(4, 6));
@@ -192,7 +194,9 @@ public class EventController {
 			cal.add(Calendar.DATE, -1);
 
 			dto.setEndDate(sdf.format(cal.getTime()));
+			cdto.setEndDate(sdf.format(cal.getTime()));
 			model.addAttribute("dto", dto);
+			model.addAttribute("cdto", cdto);
 			model.addAttribute("mode", "update");
 
 		} catch (Exception e) {
@@ -204,7 +208,7 @@ public class EventController {
 	}
 
 	@PostMapping("update")
-	public String updateSubmit(Event dto, HttpSession session) throws Exception {
+	public String updateSubmit(Coupon cdto, Event dto, HttpSession session) throws Exception {
 		// SessionInfo info = (SessionInfo) session.getAttribute("member");
 		try {
 
@@ -212,6 +216,7 @@ public class EventController {
 			String path = root + "uploads" + File.separator + "event";
 
 			service.updateEvent(dto, path);
+			service.updateCoupon(cdto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

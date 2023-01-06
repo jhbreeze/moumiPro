@@ -43,5 +43,9 @@ public interface EventService {
 	
 	public int winnerCount(Map<String, Object> map);
 
+	public void updateCoupon(Coupon cdto);
+
+	public Coupon readCoupon(long eventNum);
+
 
 }
