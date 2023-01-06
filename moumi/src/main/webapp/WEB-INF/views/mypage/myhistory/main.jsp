@@ -92,43 +92,56 @@ function ajaxFun(url, method, query, dataType, fn) {
 }
 
 $(function(){
-	listPage(1);
-	
-/*     $("button[role='tab']").on("click", function(e){
-    	listPage(1);
-    }); */
-    
+	post();
+
+
+     $("button[role='tab']").on("click", function(e){
+ 		let tab = $(this).attr("aria-controls");
+ 		
+ 		if(tab === "1") { // 내가 쓴 글
+ 			post();
+ 		} else if(tab === "2"){ // 내가 쓴 댓글
+ 			reply()
+ 		}
+     });     
 });
 
-//글리스트 및 페이징 처리
-function listPage(page) {
+
+// 글리스트 및 페이징 처리
+function post() {
 	const $tab = $("button[role='tab'].active");
 	
 	div = $tab.attr("data-div");
-	alert(div);
 	
-	let url = "${pageContext.request.contextPath}/mypage/myhistory/list";
+	let url = "${pageContext.request.contextPath}/mypage/myhistory/post";
 	let query = "div="+div;
 	
 	let selector = "#panel-"+div;
 	
 	const fn = function(data){
-		console.log(data);
 		$(selector).html(data);
 	};
 	ajaxFun(url, "get", query, "html", fn);
 }
 
-// 검색
-
-// 새로고침
-function reloadMyHistory() {
-	const f = document.myhistorySearchForm;
+function reply() {
+	const $tab = $("button[role='tab'].active");
 	
-	listPage(1);
+	div = $tab.attr("data-div");
+	
+	let url = "${pageContext.request.contextPath}/mypage/myhistory/reply";
+	let query = "div="+div;
+	
+	let selector = "#panel-"+div;
+	
+	const fn = function(data){
+		$(selector).html(data);
+	};
+	ajaxFun(url, "get", query, "html", fn);
 }
 
 </script>
+<!-- 
 <nav>
 	<ul class="side">
 		<li class="side-menu1">
@@ -142,7 +155,7 @@ function reloadMyHistory() {
 		</li>
 	</ul>
 </nav>
-
+ -->
 
 
 
@@ -151,11 +164,11 @@ function reloadMyHistory() {
 		<ul class="nav nav-tabs" id="myTab" role="tablist">
 			<li class="nav-item" role="presentation">
 				<button class="nav-link active" id="tab-1" data-bs-toggle="tab" data-bs-target="#panel-1" 
-					type="button" role="tab" data-div="1" aria-controls="panel-1" aria-selected="true">내가 쓴 글</button>
+					type="button" role="tab" data-div="1" aria-controls="1" aria-selected="true">내가 쓴 글</button>
 			</li>
 			<li class="nav-item" role="presentation">
 				<button class="nav-link" id="tab-2" data-bs-toggle="tab" data-bs-target="#panel-2"
-					type="button" role="tab" data-div="2" aria-controls="panel-2" aria-selected="true">댓글 단 글</button>
+					type="button" role="tab" data-div="2" aria-controls="2" aria-selected="true">댓글 단 글</button>
 			</li>
 		</ul>
 		
@@ -166,7 +179,7 @@ function reloadMyHistory() {
 		</div>
 		
 		<div class="tab-content pt-2" id="nav-tabContent2">
-			<div class="tab-pane fade show active" id="panel-2" role="tabpanel" aria-labelledby="tab-2">
+			<div class="tab-pane fade show" id="panel-2" role="tabpanel" aria-labelledby="tab-2">
 
 			</div>
 		</div>
@@ -174,8 +187,3 @@ function reloadMyHistory() {
 
 	</div>
 </div>
-
-<form name="myhistorySearchForm" method="post">
-	<input type="hidden" name="condition" value="all">
-    <input type="hidden" name="keyword" value="">
-</form>

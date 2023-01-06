@@ -26,16 +26,13 @@ public class MyhistoryController {
 	private MyUtil myUtil;
 	
 	@RequestMapping(value = "main")
-	public String Main(@RequestParam(value = "pageNo", defaultValue = "1") int current_page,
-			HttpServletRequest req, Model model) throws Exception {
-		
-		model.addAttribute("pageNo", current_page);
+	public String main(Model model) throws Exception {
 		
 		return ".mypage.myhistory.main";
 	}
 
-	@RequestMapping(value = "list")
-	public String list(@RequestParam(value = "pageNo", defaultValue = "1") int current_page,
+	@RequestMapping(value = "post")
+	public String post(@RequestParam(value = "pageNo", defaultValue = "1") int current_page,
 			@RequestParam(defaultValue = "1") int div,
 			HttpSession session,
 			HttpServletRequest req, 
@@ -66,16 +63,11 @@ public class MyhistoryController {
 		map.put("offset", offset);
 		map.put("size", size);
 		
-		
-		
-		List<Myhistory> list = service.listMyhistoryPost(map);
-		for(Myhistory dto : list) {
-			dto.setSubject(myUtil.htmlSymbols(dto.getSubject()));
-		}
+		List<Myhistory> post = service.listMyhistoryPost(map);
 		
 		String paging = myUtil.pagingMethod(current_page, total_page, "listPage");
 		
-		model.addAttribute("list", list);
+		model.addAttribute("post", post);
 		model.addAttribute("pageNo", current_page);
 		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("size", size);
@@ -83,6 +75,53 @@ public class MyhistoryController {
 		model.addAttribute("paging", paging);
 		
 		
-		return ".mypage.myhistory.list";
+		return "mypage/myhistory/post";
+	}
+	
+	@RequestMapping(value = "reply")
+	public String reply(@RequestParam(value = "pageNo", defaultValue = "1") int current_page,
+			@RequestParam(defaultValue = "1") int div,
+			HttpSession session,
+			HttpServletRequest req, 
+			Model model) throws Exception {
+		
+		int size = 10;
+		int total_page = 0;
+		int dataCountR = 0;
+		
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userCode", info.getUserCode());
+		map.put("div", div);
+		
+		dataCountR = service.dataCountR(map);
+		if (dataCountR != 0) {
+			total_page = myUtil.pageCount(dataCountR, size);
+		}
+		
+		if(total_page < current_page) {
+			current_page = total_page;
+		}
+		
+		int offset = (current_page - 1) * size;
+		if (offset < 0) offset = 0;
+		
+		map.put("offset", offset);
+		map.put("size", size);
+		
+		List<Myhistory> reply = service.listMyhistoryReply(map);
+		
+		String paging = myUtil.pagingMethod(current_page, total_page, "listPage");
+		
+		model.addAttribute("reply", reply);
+		model.addAttribute("pageNo", current_page);
+		model.addAttribute("dataCountR", dataCountR);
+		model.addAttribute("size", size);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("paging", paging);
+		
+		
+		return "mypage/myhistory/reply";
 	}
 }
