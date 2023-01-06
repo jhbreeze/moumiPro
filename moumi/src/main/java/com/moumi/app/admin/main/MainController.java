@@ -45,17 +45,15 @@ public class MainController {
 		int m = cal.get(Calendar.MONTH)+1;
 		int d = cal.get(Calendar.DATE);
 		
-		String date = String.format("%04d-%02d-%02d", y, m ,d);
 		String month = String.format("%04d%02d", y, m);
 		
-		List<Map<String, Object>> days = service.dayTotalMoney(date);
-		
-		List<Map<String, Object>> Wdays = service.dayTotalSalesW(date);
-		List<Map<String, Object>> Mdays = service.dayTotalSalesM(date);
 		
 		if(d < 20) {
 			cal.add(Calendar.MONTH, -1);
 			m = cal.get(Calendar.MONTH) + 1;
+			if(m == 12) {
+				y = cal.get(Calendar.YEAR);
+			}
 			month = String.format("%04d%02d", y, m);
 		}
 		Map<String, Object> dayOfWeek = service.dayOfWeekTotalCount(month);
@@ -63,9 +61,6 @@ public class MainController {
 		
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("dayOfWeek", dayOfWeek);
-		model.put("days", days);
-		model.put("Wdays", Wdays);
-		model.put("Mdays", Mdays);
 		
 		return model;
 	}

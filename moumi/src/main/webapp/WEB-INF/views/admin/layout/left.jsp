@@ -103,7 +103,7 @@ color: #198754;
 
 </header>
 
-<nav class="vertical_nav navbar-green">
+<nav class="vertical_nav navbar-green" style="height: 1300px;">
 	<ul id="js-menu" class="menu menu-side navbar-green">
 	
 		<li class="menu--item">

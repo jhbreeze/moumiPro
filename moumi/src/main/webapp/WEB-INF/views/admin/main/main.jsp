@@ -10,74 +10,10 @@ $(function(){
 	let url = "${pageContext.request.contextPath}/admin/charts";
 	
 	$.getJSON(url, function(data){
-		// console.log(data);
-		chartsDay(data);
-		//chartsDayOfWeek(data);
+		chartsDayOfWeek(data);
 			
 	});
 	
-	function chartsDay(data) {
-		let chartData = [];
-		let dateData = [];
-		
-		for(let item of data.Wdays){
-			let s = parseInt(item.PAYDATE.substring(5, 7))+'월 ';
-			s += parseInt(item.PAYDATE.substring(8))+'일';
-			dateData.push(s);
-
-			let obj = parseInt(item.PAYMENTPRICE);
-			chartData.push(obj);
-			console.log(chartData);
-		}
-		
-		const chartDom = document.querySelector(".charts-day");
-		let myChart = echarts.init(chartDom);
-		let option;
-		
-		option = {
-				  tooltip: {
-				    trigger: 'axis'
-				  },
-				  legend: {
-				    data: ['여자', '남자']
-				  },
-				  grid: {
-				    left: '3%',
-				    right: '4%',
-				    bottom: '3%',
-				    containLabel: true
-				  },
-				  toolbox: {
-				    feature: {
-				      saveAsImage: {}
-				    }
-				  },
-				  xAxis: {
-				    type: 'category',
-				    boundaryGap: false,
-				    data: dateData
-				  },
-				  yAxis: {
-				    type: 'value'
-				  },
-				  series: [
-				    {
-				      name: '여자',
-				      type: 'line',
-				      stack: 'Total',
-				      data: chartData
-				    },
-				    {
-				      name: '남자',
-				      type: 'line',
-				      stack: 'Total',
-				      data: chartData
-				    }
-				  ]
-				};
-	
-				option && myChart.setOption(option);
-	}
 	
 	function chartsDayOfWeek(data) {
 		let chartData = [];
@@ -85,7 +21,9 @@ $(function(){
 		let m = new Date().getMonth()+1;
 		let m2 = data.dayOfWeek.month.substring(4);
 
-		let title = m !== 1 && m > m2 ? "전월 요일별 매출건수" : "이번달 요일별 매출건수"
+		let title = m !== 1 && m > m2 ? "이번달 요일별 신규구독자 수" : "전월 요일별 신규구독자 수"
+				
+		console.log(title);
 		
 		document.querySelector(".charts-dayOfWeek-title").innerHTML = title;
 		
@@ -100,27 +38,45 @@ $(function(){
 		const chartDom = document.querySelector(".charts-dayOfWeek");
 		let myChart = echarts.init(chartDom);
 		let option;
-		
-		option = {
-		  tooltip: {
-		    trigger: 'item'
-		  },
-		  xAxis: {
-		    type: 'category',
-		    data: ['일', '월', '화', '수', '목', '금', '토']
-		  },
-		  yAxis: {
-		    type: 'value'
-		  },
-		  series: [
-		    {
-		      data: chartData,
-		      type: 'bar'
-		    }
-		  ]
-		};
-		
-		option && myChart.setOption(option);
+				
+				option = {
+						  tooltip: {
+						    trigger: 'axis',
+						    axisPointer: {
+						      type: 'shadow'
+						    }
+						  },
+						  grid: {
+						    left: '3%',
+						    right: '4%',
+						    bottom: '3%',
+						    containLabel: true
+						  },
+						  xAxis: [
+						    {
+						      type: 'category',
+						      data: ['일', '월', '화', '수', '목', '금', '토'],
+						      axisTick: {
+						        alignWithLabel: true
+						      }
+						    }
+						  ],
+						  yAxis: [
+						    {
+						      type: 'value'
+						    }
+						  ],
+						  series: [
+						    {
+						      name: '신규구독자 수',
+						      type: 'bar',
+						      barWidth: '60%',
+						      data: chartData
+						    }
+						  ]
+						};
+
+						option && myChart.setOption(option);
 	}
 	
 });
@@ -177,6 +133,7 @@ tr:hover {
 
 .container{
 	min-height: 1000px;
+	min-width: 1200px;
 }
 
 #container2{
@@ -254,7 +211,7 @@ tr:hover {
 }
 
 .line{
-	padding: 10px 60px;
+	padding: 10px 45px;
 }
 </style>
 <div class="body-container">
@@ -262,10 +219,10 @@ tr:hover {
     <div class="container">
     	<div id="container2">
     		<div id="inner">
-	    		<div style="float: left;" class="line">현재 접속자수 : ${currentCount}</div>
-				<div style="float: left;" class="line">오늘 접속자수 : ${toDayCount}</div>
-				<div style="float: left;" class="line">어제 접속자수 : ${yesterDayCount}</div>
-				<div style="float: left;" class="line">전체 접속자수 : ${totalCount}</div>
+	    		<div style="float: left;" class="line fs-5">현재 접속자수 : ${currentCount}</div>
+				<div style="float: left;" class="line fs-5">오늘 접속자수 : ${toDayCount}</div>
+				<div style="float: left;" class="line fs-5">어제 접속자수 : ${yesterDayCount}</div>
+				<div style="float: left;" class="line fs-5">전체 접속자수 : ${totalCount}</div>
 			</div>
     	</div>
     	<div id="container3">
@@ -344,36 +301,10 @@ tr:hover {
 		</div>
 		
 		<div id="container4">
-			<div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false" data-bs-interval="false">
-			  <div class="carousel-inner">
-			    <div class="carousel-item active">
-			      <div class="x1">
-					<div class="fs-6 fw-semibold mb-2"><i class="bi bi-chevron-right"></i> 최근 1주일 매출 현황</div>
-					<div class="charts-day border rounded" style="height: 350px;"></div>
+		<div class="x1">
+					<div class="fs-6 fw-semibold mb-2 "><i class="bi bi-chevron-right"></i> <label class="charts-dayOfWeek-title">전월 요일별 판매건수</label></div>
+				<div class="charts-dayOfWeek border rounded" style="height: 350px;"></div>
 				</div>
-			    </div>
-			    <div class="carousel-item">
-			     <div class="x1">
-					<div class="fs-6 fw-semibold mb-2"><i class="bi bi-chevron-right"></i> 최근 1주일 매출 현황</div>
-					<div class="charts-day border rounded" style="height: 350px;"></div>
-				</div>
-			    </div>
-			    <div class="carousel-item">
-			      <div class="x1">
-					<div class="fs-6 fw-semibold mb-2"><i class="bi bi-chevron-right"></i> 최근 1주일 매출 현황</div>
-					<div class="charts-day border rounded" style="height: 350px;"></div>
-				</div>
-			    </div>
-			  </div>
-			  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
-			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Previous</span>
-			  </button>
-			  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="next">
-			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Next</span>
-			  </button>
-			</div>
 		</div>
 		
 		<div id="container5">

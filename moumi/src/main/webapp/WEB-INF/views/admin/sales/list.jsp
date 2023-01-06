@@ -12,11 +12,18 @@ $(function() {
 	$(".tab-pane").addClass("active");
 	
 	$.getJSON(url, function(data){
-		console.log(data);
+		// console.log(data);
 		chartsDay(data);
 		chartsDay1(data);
 		chartsDay2(data);
-		//chartsDayOfWeek(data);
+		
+		chartsMonth(data);
+		chartsMonth1(data);
+		chartsMonth2(data);
+		
+		chartspie(data);
+		chartspie1(data);
+		chartspie2(data);
 		
 		$("#nav-1").removeClass("active");
 		$("#nav-2").removeClass("active");
@@ -27,10 +34,23 @@ $(function() {
 	    firstTab.show()
 	});
 	
+	// 1주일간 매출
 	function chartsDay(data) {
-		var chartDom = document.querySelector("#charts-day");
-		var myChart = echarts.init(chartDom);
-		var option;
+		let chartData = [];
+		let dateData = [];
+		
+		for(let item of data.days){
+			let s = parseInt(item.PAYDATE.substring(5, 7))+'월 ';
+			s += parseInt(item.PAYDATE.substring(8))+'일';
+			dateData.push(s);
+			
+			let obj = item.PAYMENTPRICE;
+			chartData.push(obj);
+			
+		}
+		const chartDom = document.querySelector("#charts-day");
+		let myChart = echarts.init(chartDom);
+		let option;
 
 		option = {
 		  tooltip: {
@@ -50,48 +70,131 @@ $(function() {
 		  xAxis: {
 		    type: 'category',
 		    boundaryGap: false,
-		    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+		    data: dateData
 		  },
 		  yAxis: {
 		    type: 'value'
 		  },
 		  series: [
 		    {
-		      name: 'Email',
 		      type: 'line',
 		      stack: 'Total',
-		      data: [120, 132, 101, 134, 90, 230, 210]
-		    },
-		    {
-		      name: 'Union Ads',
-		      type: 'line',
-		      stack: 'Total',
-		      data: [220, 182, 191, 234, 290, 330, 310]
-		    },
-		    {
-		      name: 'Video Ads',
-		      type: 'line',
-		      stack: 'Total',
-		      data: [150, 232, 201, 154, 190, 330, 410]
-		    },
-		    {
-		      name: 'Direct',
-		      type: 'line',
-		      stack: 'Total',
-		      data: [320, 332, 301, 334, 390, 330, 320]
-		    },
-		    {
-		      name: 'Search Engine',
-		      type: 'line',
-		      stack: 'Total',
-		      data: [820, 932, 901, 934, 1290, 1330, 1320]
+		      data: chartData
 		    }
 		  ]
 		};
 
 		option && myChart.setOption(option);
-	}
+	};
 	
+	// 6개월간 매출
+	function chartsMonth(data) {
+		let chartData = [];
+		let dateData = [];
+		
+		for(let item of data.months){
+			let s = parseInt(item.PAYDATE.substring(4, 7))+'월';
+			dateData.push(s);
+			
+			let obj = parseInt(item.PAYMENTPRICE);
+			chartData.push(obj);
+			
+		}
+		const chartDom = document.querySelector("#charts-month");
+		let myChart = echarts.init(chartDom);
+		let option;
+
+		option = {
+		  tooltip: {
+		    trigger: 'axis'
+		  },
+		  grid: {
+		    left: '3%',
+		    right: '4%',
+		    bottom: '3%',
+		    containLabel: true
+		  },
+		  toolbox: {
+		    feature: {
+		      saveAsImage: {}
+		    }
+		  },
+		  xAxis: {
+		    type: 'category',
+		    boundaryGap: false,
+		    data: dateData
+		  },
+		  yAxis: {
+		    type: 'value'
+		  },
+		  series: [
+		    {
+		      type: 'line',
+		      stack: 'Total',
+		      data: chartData
+		    }
+		  ]
+		};
+
+		option && myChart.setOption(option);
+	};
+	
+	function chartspie(data) {
+		let chartData = [];
+		
+		for(let item of data.pies){
+			let s = parseInt(item.PAYDATE.substring(0, 4))+'년 ';
+			s += parseInt(item.PAYDATE.substring(4,7))+'월';
+			
+			let obj = {value:item.COUNT, name:s};
+			chartData.push(obj);
+		}
+		const chartDom = document.querySelector(".charts-pie");
+		let myChart = echarts.init(chartDom);
+		let option;
+
+		option = {
+				  tooltip: {
+				    trigger: 'item'
+				  },
+				  legend: {
+				    top: '5%',
+				    left: 'center'
+				  },
+				  series: [
+				    {
+				      name: '월별 구독건수',
+				      type: 'pie',
+				      radius: ['40%', '70%'],
+				      avoidLabelOverlap: false,
+				      itemStyle: {
+				        borderRadius: 10,
+				        borderColor: '#fff',
+				        borderWidth: 2
+				      },
+				      label: {
+				        show: false,
+				        position: 'center'
+				      },
+				      emphasis: {
+				        label: {
+				          show: true,
+				          fontSize: 40,
+				          fontWeight: 'bold'
+				        }
+				      },
+				      labelLine: {
+				        show: false
+				      },
+				      data: chartData
+				    }
+				  ]
+				};
+
+				option && myChart.setOption(option);
+	};
+	
+	// 1주일간 매출(성별)
 	function chartsDay1(data) {
 		let chartData = [];
 		let chartData2 = [];
@@ -158,19 +261,179 @@ $(function() {
 		};
 
 		option && myChart.setOption(option);
-	}
+	};
 	
+	// 6개월간 매출
+	function chartsMonth1(data) {
+		let chartData = [];
+		let chartData2 = [];
+		let dateData = [];
+		
+		for(let item of data.Wmonths){
+			let s = parseInt(item.PAYDATE.substring(4, 7))+'월';
+			dateData.push(s);
+			
+			let obj = parseInt(item.PAYMENTPRICE);
+			chartData.push(obj);
+			
+		}
+		
+		for(let item of data.Mmonths){
+			let obj = parseInt(item.PAYMENTPRICE);
+			chartData2.push(obj);
+		}
+		
+		const chartDom = document.querySelector(".charts-month1");
+		let myChart = echarts.init(chartDom);
+		let option;
+
+		option = {
+				  tooltip: {
+				    trigger: 'axis'
+				  },
+				  legend: {
+				    data: ['여자', '남자']
+				  },
+				  grid: {
+				    left: '3%',
+				    right: '4%',
+				    bottom: '3%',
+				    containLabel: true
+				  },
+				  toolbox: {
+				    feature: {
+				      saveAsImage: {}
+				    }
+				  },
+				  xAxis: {
+				    type: 'category',
+				    boundaryGap: false,
+				    data: dateData
+				  },
+				  yAxis: {
+				    type: 'value'
+				  },
+				  series: [
+				    {
+				      name: '여자',
+				      type: 'line',
+				      stack: 'Total',
+				      data: chartData
+				    },
+				    {
+				      name: '남자',
+				      type: 'line',
+				      stack: 'Total',
+				      data: chartData2
+				    }
+				  ]
+				};
+
+		option && myChart.setOption(option);
+	};
+	
+	function chartspie1(data) {
+		let obj;
+		let name;
+		
+		for(let item of data.Wpies){
+			name =  parseInt(item.STARTMONTH.substring(0, 4))+'년 ';
+			name += parseInt(item.STARTMONTH.substring(4,7))+'월';
+			name += ~ parseInt(item.ENDMONTH.substring(0, 4))+'년 ';
+			name += parseInt(item.ENDMONTH.substring(5,7))+'월';
+			obj = parseInt(item.WOMAN);
+		}
+		let obj2;
+		for(let item of data.Mpies){
+			obj2 = item.MAN;
+		}
+		
+		const chartDom = document.querySelector(".charts-pie1");
+		let myChart = echarts.init(chartDom);
+		let option;
+
+		option = {
+				  tooltip: {
+				    trigger: 'item'
+				  },
+				  legend: {
+				    top: '5%',
+				    left: 'center'
+				  },
+				  series: [
+				    {
+				      name: name +'간 구독 건수',
+				      type: 'pie',
+				      radius: ['40%', '70%'],
+				      avoidLabelOverlap: false,
+				      itemStyle: {
+				        borderRadius: 10,
+				        borderColor: '#fff',
+				        borderWidth: 2
+				      },
+				      label: {
+				        show: false,
+				        position: 'center'
+				      },
+				      emphasis: {
+				        label: {
+				          show: true,
+				          fontSize: 40,
+				          fontWeight: 'bold'
+				        }
+				      },
+				      labelLine: {
+				        show: false
+				      },
+				      data: [
+				    	  { value: obj, name: '여자' }, 
+				    	  { value: obj2, name: '남자' }
+				      ]
+				    }
+				  ]
+				};
+
+				option && myChart.setOption(option);
+	};
+	
+	// 1주일 간 매출(연령별)
 	function chartsDay2(data) {
-		var chartDom = document.querySelector("#charts-day2");
-		var myChart = echarts.init(chartDom);
-		var option;
+		let chartData = [];
+		let chartData1 = [];
+		let chartData2 = [];
+		let chartData3 = [];
+		
+		let dateData = [];
+		for(let item of data.Tdays){
+			let s = parseInt(item.PAYDATE.substring(5, 7))+'월 ';
+			s += parseInt(item.PAYDATE.substring(8))+'일';
+			dateData.push(s);
+			
+			let obj = item.PAYMENTPRICE;
+			chartData.push(obj);
+		}
+		for(let item of data.Edays){
+			let obj = item.PAYMENTPRICE;
+			chartData1.push(obj);
+		}
+		for(let item of data.Sdays){
+			let obj = item.PAYMENTPRICE;
+			chartData2.push(obj);
+		}
+		for(let item of data.Fdays){
+			let obj = item.PAYMENTPRICE;
+			chartData3.push(obj);
+		}
+		const chartDom = document.querySelector("#charts-day2");
+		let myChart = echarts.init(chartDom);
+		let option;
 
 		option = {
 		  tooltip: {
 		    trigger: 'axis'
 		  },
 		  legend: {
-		    data: ['Email', 'Union Ads', 'Video Ads', 'Direct', 'Search Engine']
+		    data: ['20대 미만', '20대', '30대', '40대 이상']
 		  },
 		  grid: {
 		    left: '3%',
@@ -186,47 +449,211 @@ $(function() {
 		  xAxis: {
 		    type: 'category',
 		    boundaryGap: false,
-		    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+		    data: dateData
 		  },
 		  yAxis: {
 		    type: 'value'
 		  },
 		  series: [
 		    {
-		      name: 'Email',
+		      name: '20대 미만',
 		      type: 'line',
 		      stack: 'Total',
-		      data: [120, 132, 101, 134, 90, 230, 210]
+		      data: chartData
 		    },
 		    {
-		      name: 'Union Ads',
+		      name: '20대',
 		      type: 'line',
 		      stack: 'Total',
-		      data: [220, 182, 191, 234, 290, 330, 310]
+		      data: chartData1
 		    },
 		    {
-		      name: 'Video Ads',
+		      name: '30대',
 		      type: 'line',
 		      stack: 'Total',
-		      data: [150, 232, 201, 154, 190, 330, 410]
+		      data: chartData2
 		    },
 		    {
-		      name: 'Direct',
+		      name: '40대 이상',
 		      type: 'line',
 		      stack: 'Total',
-		      data: [320, 332, 301, 334, 390, 330, 320]
-		    },
-		    {
-		      name: 'Search Engine',
-		      type: 'line',
-		      stack: 'Total',
-		      data: [820, 932, 901, 934, 1290, 1330, 1320]
+		      data: chartData3
 		    }
 		  ]
 		};
 
 		option && myChart.setOption(option);
 	}
+	
+	// 6개월간 매출
+	function chartsMonth2(data) {
+		let chartData = [];
+		let chartData1 = [];
+		let chartData2 = [];
+		let chartData3 = [];
+		let dateData = [];
+		
+		for(let item of data.Tmonths){
+			let s = parseInt(item.PAYDATE.substring(4, 7))+'월';
+			dateData.push(s);
+			
+			let obj = parseInt(item.PAYMENTPRICE);
+			chartData.push(obj);
+			
+		}
+		
+		for(let item of data.Emonths){
+			let obj = parseInt(item.PAYMENTPRICE);
+			chartData1.push(obj);
+		}
+		
+		for(let item of data.Smonths){
+			let obj = parseInt(item.PAYMENTPRICE);
+			chartData2.push(obj);
+		}
+		
+		for(let item of data.Fmonths){
+			let obj = parseInt(item.PAYMENTPRICE);
+			chartData3.push(obj);
+		}
+		
+		const chartDom = document.querySelector(".charts-month2");
+		let myChart = echarts.init(chartDom);
+		let option;
+
+		option = {
+				  tooltip: {
+				    trigger: 'axis'
+				  },
+				  legend: {
+				    data: ['20대 미만', '20대', '30대', '40대 이상']
+				  },
+				  grid: {
+				    left: '3%',
+				    right: '4%',
+				    bottom: '3%',
+				    containLabel: true
+				  },
+				  toolbox: {
+				    feature: {
+				      saveAsImage: {}
+				    }
+				  },
+				  xAxis: {
+				    type: 'category',
+				    boundaryGap: false,
+				    data: dateData
+				  },
+				  yAxis: {
+				    type: 'value'
+				  },
+				  series: [
+					  {
+					      name: '20대 미만',
+					      type: 'line',
+					      stack: 'Total',
+					      data: chartData
+					    },
+					    {
+					      name: '20대',
+					      type: 'line',
+					      stack: 'Total',
+					      data: chartData1
+					    },
+					    {
+					      name: '30대',
+					      type: 'line',
+					      stack: 'Total',
+					      data: chartData2
+					    },
+					    {
+					      name: '40대 이상',
+					      type: 'line',
+					      stack: 'Total',
+					      data: chartData3
+					    }
+				  ]
+				};
+
+		option && myChart.setOption(option);
+	};
+	
+	function chartspie2(data) {
+		let obj;
+		let name;
+		
+		for(let item of data.Tpies){
+			name =  parseInt(item.STARTMONTH.substring(0, 4))+'년 ';
+			name += parseInt(item.STARTMONTH.substring(4,7))+'월';
+			name += ~ parseInt(item.ENDMONTH.substring(0, 4))+'년 ';
+			name += parseInt(item.ENDMONTH.substring(5,7))+'월';
+			obj = parseInt(item.TEEN);
+		}
+		
+		let obj1;
+		for(let item of data.Epies){
+			obj1 = item.TEEN;
+		}
+		
+		let obj2;
+		for(let item of data.Spies){
+			obj2 = item.TEEN;
+		}
+		
+		let obj3;
+		for(let item of data.Fpies){
+			obj3 = item.TEEN;
+		}
+		
+		const chartDom = document.querySelector(".charts-pie2");
+		let myChart = echarts.init(chartDom);
+		let option;
+
+		option = {
+				  tooltip: {
+				    trigger: 'item'
+				  },
+				  legend: {
+				    top: '5%',
+				    left: 'center'
+				  },
+				  series: [
+				    {
+				      name: name +'간 구독 건수',
+				      type: 'pie',
+				      radius: ['40%', '70%'],
+				      avoidLabelOverlap: false,
+				      itemStyle: {
+				        borderRadius: 10,
+				        borderColor: '#fff',
+				        borderWidth: 2
+				      },
+				      label: {
+				        show: false,
+				        position: 'center'
+				      },
+				      emphasis: {
+				        label: {
+				          show: true,
+				          fontSize: 40,
+				          fontWeight: 'bold'
+				        }
+				      },
+				      labelLine: {
+				        show: false
+				      },
+				      data: [
+				    	  { value: obj, name: '20대 미만' }, 
+				    	  { value: obj1, name: '20대' },
+				    	  { value: obj2, name: '30대' },
+				    	  { value: obj3, name: '40대 이상' }
+				      ]
+				    }
+				  ]
+				};
+
+				option && myChart.setOption(option);
+	};
 	
 });
 
@@ -331,9 +758,7 @@ td{
 				<i class="fa-brands fa-perbyte"></i> 매출 관리
 			</h2>
 		</div>
-
 		
-
 		<ul class="nav nav-tabs" id="myTab" role="tablist">
 			<li class="nav-item" role="presentation">
 				<button class="nav-link" id="tab-1" data-bs-toggle="tab" data-bs-target="#nav-1" type="button" role="tab" aria-controls="1" aria-selected="true">모두</button>
@@ -349,15 +774,36 @@ td{
 		<div class="tab-content pt-2" id="nav-tabContent">
 			<div class="tab-pane fade" id="nav-1" role="tabpanel" aria-labelledby="nav-tab-1">
 				<div class="fs-6 fw-semibold mb-2"><i class="bi bi-chevron-right"></i> 최근 1주일 매출 현황</div>
-				<div class="charts-day border rounded" style="height: 500px;" id="charts-day"></div>
+				<div class="charts-day border rounded" style="height: 400px; " id="charts-day"></div>
+				<div class="fs-6 fw-semibold mb-2"> &nbsp;</div>
+				<div class="fs-6 fw-semibold mb-2"><i class="bi bi-chevron-right"></i> 최근 6개월간 매출 현황</div>
+				<div class="charts border rounded" style="width: 100%">
+					<div class="charts-month" style="height: 400px; float: left; width: 70%" id="charts-month"></div>
+					<div class="charts-pie" style="height: 400px; float: left; width: 30%" id="charts-pie"></div>
+				</div>
+				<div class="fs-6 fw-semibold mb-2"> &nbsp;</div>
 			</div>
 			<div class="tab-pane fade" id="nav-2" role="tabpanel" aria-labelledby="nav-tab-2">
 				<div class="fs-6 fw-semibold mb-2"><i class="bi bi-chevron-right"></i> 최근 1주일 매출 현황</div>
-				<div class="charts-day1 border rounded" style="height: 500px;" id="charts-day1"></div>
+				<div class="charts-day1 border rounded" style="height: 400px;" id="charts-day1"></div>
+				<div class="fs-6 fw-semibold mb-2"> &nbsp;</div>
+				<div class="fs-6 fw-semibold mb-2"><i class="bi bi-chevron-right"></i> 최근 6개월간 매출 현황</div>
+				<div class="charts border rounded" style="width: 100%">
+					<div class="charts-month1" style="height: 400px; float: left; width: 70%"></div>
+					<div class="charts-pie1" style="height: 400px; float: left; width: 30%"></div>
+				</div>
+				<div class="fs-6 fw-semibold mb-2"> &nbsp;</div>
 			</div>
 			<div class="tab-pane fade" id="nav-3" role="tabpanel" aria-labelledby="nav-tab-2">
 				<div class="fs-6 fw-semibold mb-2"><i class="bi bi-chevron-right"></i> 최근 1주일 매출 현황</div>
-				<div class="charts-day2 border rounded" style="height: 500px;" id="charts-day2"></div>
+				<div class="charts-day2 border rounded" style="height: 400px;" id="charts-day2"></div>
+				<div class="fs-6 fw-semibold mb-2"> &nbsp;</div>
+				<div class="fs-6 fw-semibold mb-2"><i class="bi bi-chevron-right"></i> 최근 6개월간 매출 현황</div>
+				<div class="charts border rounded" style="width: 100%">
+					<div class="charts-month2" style="height: 400px; float: left; width: 70%"></div>
+					<div class="charts-pie2" style="height: 400px; float: left; width: 30%"></div>
+				</div>
+				<div class="fs-6 fw-semibold mb-2"> &nbsp;</div>
 			</div>
 		</div>
 

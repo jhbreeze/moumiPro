@@ -217,4 +217,88 @@ public class SalesServiceImpl implements SalesService{
 		return list;
 	}
 
+	@Override
+	public List<Map<String, Object>> monthTotalPie(String month) {
+		List<Map<String, Object>> list = null;
+		
+		try {
+			list = dao.selectList("sales.monthTotalPie", month);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<Map<String, Object>> monthTotalPieW(String month) {
+		List<Map<String, Object>> list = null;
+		
+		try {
+			list = dao.selectList("sales.monthTotalPieW", month);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<Map<String, Object>> monthTotalPieM(String month) {
+		List<Map<String, Object>> list = null;
+		
+		try {
+			list = dao.selectList("sales.monthTotalPieM", month);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<Map<String, Object>> monthTotalPieT(String month) {
+		List<Map<String, Object>> list = null;
+		
+		try {
+			list = dao.selectList("sales.monthTotalPieT", month);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<Map<String, Object>> monthTotalPieE(String month) {
+		List<Map<String, Object>> list = null;
+		
+		try {
+			list = dao.selectList("sales.monthTotalPieE", month);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<Map<String, Object>> monthTotalPieS(String month) {
+		List<Map<String, Object>> list = null;
+		
+		try {
+			list = dao.selectList("sales.monthTotalPieS", month);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<Map<String, Object>> monthTotalPieF(String month) {
+		List<Map<String, Object>> list = null;
+		
+		try {
+			list = dao.selectList("sales.monthTotalPieF", month);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 }

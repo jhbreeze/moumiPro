@@ -27,5 +27,15 @@ public interface SalesService {
 	public List<Map<String, Object>> monthTotalSalesE(String month);
 	public List<Map<String, Object>> monthTotalSalesS(String month);
 	public List<Map<String, Object>> monthTotalSalesF(String month);
+	
+	public List<Map<String, Object>> monthTotalPie(String month);
+	
+	public List<Map<String, Object>> monthTotalPieW(String month);
+	public List<Map<String, Object>> monthTotalPieM(String month);
+	
+	public List<Map<String, Object>> monthTotalPieT(String month);
+	public List<Map<String, Object>> monthTotalPieE(String month);
+	public List<Map<String, Object>> monthTotalPieS(String month);
+	public List<Map<String, Object>> monthTotalPieF(String month);
 
 }

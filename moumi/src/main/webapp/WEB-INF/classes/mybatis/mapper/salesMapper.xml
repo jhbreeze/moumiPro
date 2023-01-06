@@ -748,6 +748,75 @@
 		WHERE TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY') - TO_CHAR(birth, 'YYYY')) &gt;= 40 AND TO_CHAR(payDate, 'YYYYMM') = #{month}
 	</select>
 	
+	<!-- 6개월 간 월별 구독자 수 -->
+	<select id="monthTotalPie" parameterType="String" resultType="map">
+		SELECT TO_CHAR(payDate, 'YYYYMM') payDate, COUNT(*) COUNT, TO_CHAR(ADD_MONTHS(TO_DATE(#{month}, 'YYYYMM'), -5), 'YYYYMM') startMonth, #{month} endMonth
+		FROM payment 
+		WHERE TO_CHAR(payDate, 'YYYYMM') &gt;= TO_CHAR(ADD_MONTHS(TO_DATE(#{month}, 'YYYYMM'), -5), 'YYYYMM') 
+        	AND TO_CHAR(payDate, 'YYYYMM') &lt;= #{month}
+		GROUP BY TO_CHAR(payDate, 'YYYYMM')
+		ORDER BY payDate
+	</select>
+	
+	<!-- 6개월 간 여성 구독자수  -->
+	<select id="monthTotalPieW" parameterType="String" resultType="map">
+		SELECT COUNT(gender) woman, TO_CHAR(ADD_MONTHS(TO_DATE(#{month}, 'YYYYMM'), -5), 'YYYYMM') startMonth, #{month} endMonth
+		FROM payment p
+		JOIN member m ON p.userCode = m.userCode
+		WHERE gender = '여자' 
+			AND TO_CHAR(payDate, 'YYYYMM') &gt;= TO_CHAR(ADD_MONTHS(TO_DATE(#{month}, 'YYYYMM'), -5), 'YYYYMM') 
+        	AND TO_CHAR(payDate, 'YYYYMM') &lt;= #{month}
+	</select>
+	
+	<!-- 6개월 간 남성 구독자수  -->
+	<select id="monthTotalPieM" parameterType="String" resultType="map">
+		SELECT COUNT(gender) man, TO_CHAR(ADD_MONTHS(TO_DATE(#{month}, 'YYYYMM'), -5), 'YYYYMM') startMonth, #{month} endMonth
+		FROM payment p
+		JOIN member m ON p.userCode = m.userCode
+		WHERE gender = '남자' 
+			AND TO_CHAR(payDate, 'YYYYMM') &gt;= TO_CHAR(ADD_MONTHS(TO_DATE(#{month}, 'YYYYMM'), -5), 'YYYYMM') 
+        	AND TO_CHAR(payDate, 'YYYYMM') &lt;= #{month}
+	</select>
+	
+	<!-- 6개월 간 20대 미만 구독자수  -->
+	<select id="monthTotalPieT" parameterType="String" resultType="map">
+		SELECT NVL(COUNT(*),0) teen, TO_CHAR(ADD_MONTHS(TO_DATE(#{month}, 'YYYYMM'), -5), 'YYYYMM') startMonth, #{month} endMonth
+		FROM payment p
+		JOIN member m ON p.userCode = m.userCode
+		WHERE TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY') - TO_CHAR(birth, 'YYYY')) &lt; 20 
+			AND TO_CHAR(payDate, 'YYYYMM') &gt;= TO_CHAR(ADD_MONTHS(TO_DATE(#{month}, 'YYYYMM'), -5), 'YYYYMM') 
+        	AND TO_CHAR(payDate, 'YYYYMM') &lt;= #{month}
+	</select>
+	
+	<!-- 6개월 간 20대 구독자수  -->
+	<select id="monthTotalPieE" parameterType="String" resultType="map">
+		SELECT NVL(COUNT(*),0) teen, TO_CHAR(ADD_MONTHS(TO_DATE(#{month}, 'YYYYMM'), -5), 'YYYYMM') startMonth, #{month} endMonth
+		FROM payment p
+		JOIN member m ON p.userCode = m.userCode
+		WHERE TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY') - TO_CHAR(birth, 'YYYY')) &gt;= 20 AND TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY') - TO_CHAR(birth, 'YYYY')) &lt; 30 
+			AND TO_CHAR(payDate, 'YYYYMM') &gt;= TO_CHAR(ADD_MONTHS(TO_DATE(#{month}, 'YYYYMM'), -5), 'YYYYMM') 
+        	AND TO_CHAR(payDate, 'YYYYMM') &lt;= #{month}
+	</select>
+	
+	<!-- 6개월 간 30대 구독자수  -->
+	<select id="monthTotalPieS" parameterType="String" resultType="map">
+		SELECT NVL(COUNT(*),0) teen, TO_CHAR(ADD_MONTHS(TO_DATE(#{month}, 'YYYYMM'), -5), 'YYYYMM') startMonth, #{month} endMonth
+		FROM payment p
+		JOIN member m ON p.userCode = m.userCode
+		WHERE TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY') - TO_CHAR(birth, 'YYYY')) &gt;= 30 AND TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY') - TO_CHAR(birth, 'YYYY')) &lt; 40 
+			AND TO_CHAR(payDate, 'YYYYMM') &gt;= TO_CHAR(ADD_MONTHS(TO_DATE(#{month}, 'YYYYMM'), -5), 'YYYYMM') 
+        	AND TO_CHAR(payDate, 'YYYYMM') &lt;= #{month}
+	</select>
+	
+	<!-- 6개월 간 40대 이상 구독자수  -->
+	<select id="monthTotalPieF" parameterType="String" resultType="map">
+		SELECT NVL(COUNT(*),0) teen, TO_CHAR(ADD_MONTHS(TO_DATE(#{month}, 'YYYYMM'), -5), 'YYYYMM') startMonth, #{month} endMonth
+		FROM payment p
+		JOIN member m ON p.userCode = m.userCode
+		WHERE TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY') - TO_CHAR(birth, 'YYYY')) &gt;= 40 
+			AND TO_CHAR(payDate, 'YYYYMM') &gt;= TO_CHAR(ADD_MONTHS(TO_DATE(#{month}, 'YYYYMM'), -5), 'YYYYMM') 
+        	AND TO_CHAR(payDate, 'YYYYMM') &lt;= #{month}
+	</select>
 	
 	<!-- 요일별 매출 -->
 	<select id="dayOfWeekTotalCount" parameterType="String" resultType="map">

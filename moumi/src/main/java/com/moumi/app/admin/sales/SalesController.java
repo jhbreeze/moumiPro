@@ -61,6 +61,17 @@ public class SalesController {
 		List<Map<String, Object>> Emonths = service.monthTotalSalesE(month);
 		List<Map<String, Object>> Smonths = service.monthTotalSalesS(month);
 		List<Map<String, Object>> Fmonths = service.monthTotalSalesF(month);
+		
+		// 6개월간(파이)
+		List<Map<String, Object>> pies = service.monthTotalPie(month);
+		
+		List<Map<String, Object>> Wpies = service.monthTotalPieW(month);
+		List<Map<String, Object>> Mpies = service.monthTotalPieM(month);
+		
+		List<Map<String, Object>> Tpies = service.monthTotalPieT(month);
+		List<Map<String, Object>> Epies = service.monthTotalPieE(month);
+		List<Map<String, Object>> Spies = service.monthTotalPieS(month);
+		List<Map<String, Object>> Fpies = service.monthTotalPieF(month);
 		if(d < 20) {
 			cal.add(Calendar.MONTH, -1);
 			m = cal.get(Calendar.MONTH) + 1;
@@ -88,6 +99,16 @@ public class SalesController {
 		model.put("Emonths", Emonths);
 		model.put("Smonths", Smonths);
 		model.put("Fmonths", Fmonths);
+		
+		model.put("pies", pies);
+		
+		model.put("Wpies", Wpies);
+		model.put("Mpies", Mpies);
+		
+		model.put("Tpies", Tpies);
+		model.put("Epies", Epies);
+		model.put("Spies", Spies);
+		model.put("Fpies", Fpies);
 		
 		return model;
 	}
