@@ -133,10 +133,143 @@ $(function(){
     color: white;
 }
 </style>
+
+<style type="text/css">
+
+main {
+	position: relative;
+	top: -55px;
+	background: white;
+}
+
+tr {
+	font-size: 15px;
+	
+}
+
+tr:hover {
+	background: #fff;
+	box-shadow: 0px 0px 4px rgb(72, 92, 161, 0.4);
+}
+
+.sort {
+	font-size: 10px;
+	border: 1px solid #e2e2e2;
+	width: 50px;
+	height: 20px;
+	border-radius: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.sort-td {
+	width: 80px;
+}
+
+.date-th {
+	width: 100px;
+}
+
+.date-div {
+	text-align: center;
+}
+
+.container{
+	min-height: 1000px;
+}
+
+#container2{
+	box-shadow: 4px 4px 4px rgb(72, 92, 161, 0.2);
+	border: none;
+	border-radius: 30px;
+	background-color: white;
+	height: 50px;
+	width: 100%;
+	margin: 100px auto 20px;
+}
+#container3{
+	box-shadow: 4px 4px 4px rgb(72, 92, 161, 0.2);
+	border: none;
+	border-radius: 30px;
+	background-color: white;
+	height: 950px;
+	width: 40%;
+	float: left;
+}
+
+#container4{
+	box-shadow: 4px 4px 4px rgb(72, 92, 161, 0.2);
+	border: none;
+	border-radius: 30px;
+	background-color: white;
+	width: 58%;
+	float: left;
+	margin-left: 20px;
+}
+
+#container5{
+	box-shadow: 4px 4px 4px rgb(72, 92, 161, 0.2);
+	border: none;
+	border-radius: 30px;
+	background-color: white;
+	width: 58%;
+	float: left;
+	margin-left: 20px;
+	margin-top: 20px;
+	min-height: 510px;
+}
+
+.body-container{
+	padding: 0;
+}
+#inner{
+	margin: 140px;
+	height: 24px;
+}
+
+.btn:active, .btn:focus, .btn:hover {
+	color: #ECF4EB;
+}
+
+#accordion {
+	background: #fff;
+}
+
+.backColor{
+	background: #fff;
+}
+
+.text-line{
+	text-decoration : none;
+	color : green;
+}
+
+.dtab{
+	margin: 50px 0;
+}
+
+.x1{
+	padding: 20px;
+}
+
+.line{
+	padding: 10px 60px;
+}
+</style>
 <div class="body-container">
     <div class="body-main">
-    	<div class="row g-1 mt-4 p-1">
-			<div class="col p-2">
+    <div class="container">
+    	<div id="container2">
+    		<div id="inner">
+	    		<div style="float: left;" class="line">현재 접속자수 : ${currentCount}</div>
+				<div style="float: left;" class="line">오늘 접속자수 : ${toDayCount}</div>
+				<div style="float: left;" class="line">어제 접속자수 : ${yesterDayCount}</div>
+				<div style="float: left;" class="line">전체 접속자수 : ${totalCount}</div>
+			</div>
+    	</div>
+    	<div id="container3">
+			<div class="dtab col p-2">
 				<div class="fs-6 fw-semibold mb-2"><i class="bi bi-chevron-right"></i> 오늘 매출 현황</div>
 				
 				<ul class="nav nav-tabs" id="myTab" role="tablist" onchange="searchChart();">
@@ -185,7 +318,7 @@ $(function(){
 				</div>	
 			</div>
 			
-			<div class="col p-2">
+			<div class="dtab p-2" >
 				<div class="fs-6 fw-semibold mb-2"><i class="bi bi-chevron-right"></i> 이번달 매출 현황</div>
 				<div class="border rounded p-5 text-center">
 					<div class="fs-5 mb-2">총 매출 건수 : 
@@ -197,7 +330,7 @@ $(function(){
 				</div>
 			</div>
 			
-			<div class="col p-2">
+			<div class="dtab p-2">
 				<div class="fs-6 fw-semibold mb-2"><i class="bi bi-chevron-right"></i> 이전달 매출 현황</div>
 				<div class="border rounded p-5 text-center">
 					<div class="fs-5 mb-2">총 매출 건수 : 
@@ -210,19 +343,42 @@ $(function(){
 			</div>
 		</div>
 		
-		<div class="row g-1 mt-4 p-1">
-			<div class="col p-2">
-				<div class="fs-6 fw-semibold mb-2"><i class="bi bi-chevron-right"></i> 최근 1주일 매출 현황</div>
-				<div class="charts-day border rounded" style="height: 500px;"></div>
+		<div id="container4">
+			<div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false" data-bs-interval="false">
+			  <div class="carousel-inner">
+			    <div class="carousel-item active">
+			      <div class="x1">
+					<div class="fs-6 fw-semibold mb-2"><i class="bi bi-chevron-right"></i> 최근 1주일 매출 현황</div>
+					<div class="charts-day border rounded" style="height: 350px;"></div>
+				</div>
+			    </div>
+			    <div class="carousel-item">
+			     <div class="x1">
+					<div class="fs-6 fw-semibold mb-2"><i class="bi bi-chevron-right"></i> 최근 1주일 매출 현황</div>
+					<div class="charts-day border rounded" style="height: 350px;"></div>
+				</div>
+			    </div>
+			    <div class="carousel-item">
+			      <div class="x1">
+					<div class="fs-6 fw-semibold mb-2"><i class="bi bi-chevron-right"></i> 최근 1주일 매출 현황</div>
+					<div class="charts-day border rounded" style="height: 350px;"></div>
+				</div>
+			    </div>
+			  </div>
+			  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
+			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			    <span class="visually-hidden">Previous</span>
+			  </button>
+			  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="next">
+			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+			    <span class="visually-hidden">Next</span>
+			  </button>
 			</div>
-			<div class="col p-2">
-				<div class="fs-6 fw-semibold mb-2 "><i class="bi bi-chevron-right"></i> <label class="charts-dayOfWeek-title">전월 요일별 매출건수</label></div>
-				<div class="charts-dayOfWeek border rounded" style="height: 500px;"></div>
-			</div>
-			<div class="col p-2">
-				<div class="fs-6 fw-semibold mb-2"><i class="bi bi-chevron-right"></i> 최근 6개월 매출 현황</div>
-				<div class="charts-month border rounded" style="height: 500px;"></div>
-			</div>
+		</div>
+		
+		<div id="container5">
+			<div class="dtab p-2 fs-6 fw-semibold mb-2"><i class="bi bi-chevron-right"></i> 채팅</div>
+		</div>
 		</div>
 	</div>
 </div>

@@ -5,62 +5,59 @@
 
 
 	<select id="myhistoryPost" parameterType="map" resultType="com.moumi.app.mypage.myhistory.Myhistory">
-		<choose>
-			<when test="div==1">
-				SELECT c.communityNum, c.subject, c.regDate
-				FROM community c
-				JOIN member m ON m.userCode = c.userCode
-				WHERE c.userCode = #{userCode}
-				
-				UNION ALL
+		SELECT 'community' tableName, c.communityNum, c.subject, c.regDate
+		FROM community c
+		JOIN member m ON m.userCode = c.userCode
+		WHERE c.userCode = #{userCode}
 		
-				SELECT r.recruitNum, r.subject, r.regDate
-				FROM recruit r
-				JOIN member m ON m.userCode = r.userCode
-				WHERE r.userCode = #{userCode}
-				
-				ORDER BY regDate DESC
-			</when>
-			<otherwise>
-				SELECT r.content, r.regDate, c.subject
-				FROM reply r
-				JOIN community c ON c.communityNum = r.communityNum
-				WHERE r.userCode= #{userCode}
-			</otherwise>
-		</choose>
+		UNION ALL
+	
+		SELECT 'recruit' tableName, r.recruitNum, r.subject, r.regDate
+		FROM recruit r
+		JOIN member m ON m.userCode = r.userCode
+		WHERE r.userCode = #{userCode}
+		
+		ORDER BY regDate DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
 	</select>
 
+	<select id="myhistoryReply" parameterType="map" resultType="com.moumi.app.mypage.myhistory.Myhistory">
+		SELECT r.content, r.regDate, c.subject
+		FROM reply r
+		JOIN community c ON c.communityNum = r.communityNum
+		WHERE r.userCode= #{userCode}
+		ORDER BY regDate DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
+	</select>
+
+
+
 	<select id="dataCount" parameterType="map" resultType="Integer">
-		<choose>
-			<when test="div==1">
-				SELECT NVL(COUNT(*), 0) 
-				FROM (
-				    SELECT '자유게시판' tablename, c.communityNum, c.subject, c.regDate
-				            FROM community c
-				            JOIN member m ON m.userCode = c.userCode
-				            WHERE c.userCode = #{userCode}
-				            
-				            UNION ALL
-				    
-				    SELECT '채용' tablename, r.recruitNum, r.subject, r.regDate
-				            FROM recruit r
-				            JOIN member m ON m.userCode = r.userCode
-				            WHERE r.userCode = #{userCode}
-				)
-			</when>
-			<otherwise>
-				SELECT NVL(COUNT(*), 0) 
-		        FROM (
-			        SELECT r.content, r.regDate, c.subject
-					FROM reply r
-					JOIN community c ON c.communityNum = r.communityNum
-					WHERE r.userCode= 30
-		        )
-        	</otherwise>
-		</choose>
+		SELECT NVL(COUNT(*), 0) 
+		FROM (
+		    SELECT 'community' tableName, c.communityNum, c.subject, c.regDate
+		            FROM community c
+		            JOIN member m ON m.userCode = c.userCode
+		            WHERE c.userCode = #{userCode}
+		            
+		            UNION ALL
+		    
+		    SELECT 'recruit' tableName, r.recruitNum, r.subject, r.regDate
+		            FROM recruit r
+		            JOIN member m ON m.userCode = r.userCode
+		            WHERE r.userCode = #{userCode}
+		)
 	</select>
 	
+	<select id="dataCountR" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) 
+        FROM (
+	        SELECT r.content, r.regDate, c.subject
+			FROM reply r
+			JOIN community c ON c.communityNum = r.communityNum
+			WHERE r.userCode= #{userCode}
+        )
+	</select>
 
 
 </mapper>

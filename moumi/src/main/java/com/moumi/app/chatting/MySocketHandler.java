@@ -20,7 +20,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 /*
  - type : client -> server
-   connect : 처음 접속한 경우 - uid, nickName
+   connect : 처음 접속한 경우 
    message : 채팅 메시지 전송 - chatMsg
    whisper : 귓속말 - receiver, chatMsg
    
@@ -72,18 +72,21 @@ public class MySocketHandler extends TextWebSocketHandler {
 			user.setSession(session);
 			user.setUserType(1); // 일반유저
 
-			sessionMap.put(email, user);
+			sessionMap.put(email, user); // 세션 맵에 유저 정보 저장 
 			
-			// 관리자 접속 여부를 접속자에게 전송 
-			User admin = getAdmin();
-			JSONObject jsonUsers = new JSONObject();
-			jsonUsers.put("type", "isAdminConn");
+			// 관리자 접속 여부를 접속자(일반유저)에게 전송 
+			User admin = getAdmin(); // 세션 맵에 저장된거 갖고옴 
+			JSONObject jsonAdmin = new JSONObject();
+			
+			jsonAdmin.put("type", "isAdminConn");
 			if(admin == null) {
-				jsonUsers.put("conn", "0");
+				jsonAdmin.put("conn", "0"); // 상담 불가
+				sessionMap.remove(email, nickName);
 			} else {
-				jsonUsers.put("conn", "1");
+				jsonAdmin.put("conn", "1"); // 상담 가능
 			}
-			sendTextMessageToOne(jsonUsers.toString(), session);
+			
+			sendTextMessageToOne(jsonAdmin.toString(), session);
 			
 			// 관리자에게 현재 접속자를 전송
 			if(admin != null) {
@@ -99,12 +102,12 @@ public class MySocketHandler extends TextWebSocketHandler {
 			String email = jsonReceive.getString("email");
 			String nickName = jsonReceive.getString("nickName");
 			
-			User admin = getAdmin();
+			User admin = getAdmin(); // 세션맵에 저장된거를 가져옴. 
 			if(admin != null) {
 				// 이미 접속된 상태를 전송
 				JSONObject ob = new JSONObject();
 				ob.put("type", "connectFail");
-				ob.put("email", email);
+				//ob.put("email", email); // 필요없다고 하셨는데 추가하심 
 				sendTextMessageToOne(ob.toString(), session);
 				
 				// close
@@ -142,14 +145,14 @@ public class MySocketHandler extends TextWebSocketHandler {
 
 			JSONObject jsonUsers = new JSONObject();
 			jsonUsers.put("type", "userList");
-			jsonUsers.put("users", arrUsers);
+			jsonUsers.put("users", arrUsers); // 2차원 배열 
 
-			sendTextMessageToOne(jsonUsers.toString(), session);
+			sendTextMessageToOne(jsonUsers.toString(), session); // 관리자한테 전송 
 
-			// 다른 클라이언트에게 관리자 접솝 여부 전송
+			// 다른 클라이언트에게 관리자 접속 여부 전송 // 왜 또 해야하는지 모르겠음 
 			JSONObject jsonAdmin = new JSONObject();
-			jsonUsers.put("type", "adminConn");
-			jsonUsers.put("conn", "1");
+			jsonAdmin.put("type", "adminConn");
+			jsonAdmin.put("conn", "1");
 			
 			sendTextMessageToAll(jsonAdmin.toString(), email);
 

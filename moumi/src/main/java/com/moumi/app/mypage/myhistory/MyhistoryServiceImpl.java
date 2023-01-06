@@ -15,15 +15,15 @@ public class MyhistoryServiceImpl implements MyhistoryService {
 
 	@Override
 	public List<Myhistory> listMyhistoryPost(Map<String, Object> map) {
-		List<Myhistory> list = null;
+		List<Myhistory> post = null;
 		
 		try {
-			list = dao.selectList("myhistory.myhistoryPost", map);
+			post = dao.selectList("myhistory.myhistoryPost", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		return list;
+		return post;
 	}
 
 	@Override
@@ -39,6 +39,31 @@ public class MyhistoryServiceImpl implements MyhistoryService {
 		return result;
 	}
 
+	@Override
+	public List<Myhistory> listMyhistoryReply(Map<String, Object> map) {
+		List<Myhistory> reply = null;
+		
+		try {
+			reply = dao.selectList("myhistory.myhistoryReply", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return reply;
+	}
+
+	@Override
+	public int dataCountR(Map<String, Object> map) {
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("myhistory.dataCountR", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 	
 	
 	

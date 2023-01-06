@@ -9,26 +9,32 @@
 $(function() {
 	let url = "${pageContext.request.contextPath}/admin/sales/charts";
 	
+	$(".tab-pane").addClass("active");
+	
 	$.getJSON(url, function(data){
 		console.log(data);
 		chartsDay(data);
 		chartsDay1(data);
 		chartsDay2(data);
 		//chartsDayOfWeek(data);
-			
+		
+		$("#nav-1").removeClass("active");
+		$("#nav-2").removeClass("active");
+		//$("#nav-3").removeClass("active");
+		
+		var firstTabEl = document.querySelector('#myTab li:first-child button')
+		var firstTab = new bootstrap.Tab(firstTabEl)
+	    firstTab.show()
 	});
 	
-	function chartsDay1(data) {
-		var chartDom = document.querySelector("#charts-day1");
+	function chartsDay(data) {
+		var chartDom = document.querySelector("#charts-day");
 		var myChart = echarts.init(chartDom);
 		var option;
 
 		option = {
 		  tooltip: {
 		    trigger: 'axis'
-		  },
-		  legend: {
-		    data: ['Email', 'Union Ads', 'Video Ads', 'Direct', 'Search Engine']
 		  },
 		  grid: {
 		    left: '3%',
@@ -86,7 +92,7 @@ $(function() {
 		option && myChart.setOption(option);
 	}
 	
-	function chartsDay(data) {
+	function chartsDay1(data) {
 		let chartData = [];
 		let chartData2 = [];
 		let dateData = [];
@@ -105,7 +111,7 @@ $(function() {
 			chartData2.push(obj);
 		}
 		
-		const chartDom = document.querySelector("#charts-day");
+		const chartDom = document.querySelector("#charts-day1");
 		let myChart = echarts.init(chartDom);
 		let option;
 
@@ -330,18 +336,18 @@ td{
 
 		<ul class="nav nav-tabs" id="myTab" role="tablist">
 			<li class="nav-item" role="presentation">
-				<button class="nav-link active" id="tab-1" data-bs-toggle="tab" data-bs-target="#nav-1" type="button" role="tab" aria-controls="1" aria-selected="true">모두</button>
+				<button class="nav-link" id="tab-1" data-bs-toggle="tab" data-bs-target="#nav-1" type="button" role="tab" aria-controls="1" aria-selected="true">모두</button>
 			</li>
 			<li class="nav-item" role="presentation">
 				<button class="nav-link" id="tab-2" data-bs-toggle="tab" data-bs-target="#nav-2" type="button" role="tab" aria-controls="2" aria-selected="true">성별</button>
 			</li>
 			<li class="nav-item" role="presentation">
-				<button class="nav-link" id="tab-3" data-bs-toggle="tab" data-bs-target="#nav-3" type="button" role="tab" aria-controls="3" aria-selected="true">연령별</button>
+				<button class="nav-link active" id="tab-3" data-bs-toggle="tab" data-bs-target="#nav-3" type="button" role="tab" aria-controls="3" aria-selected="true">연령별</button>
 			</li>
 		</ul>
 
 		<div class="tab-content pt-2" id="nav-tabContent">
-			<div class="tab-pane fade show active" id="nav-1" role="tabpanel" aria-labelledby="nav-tab-1">
+			<div class="tab-pane fade" id="nav-1" role="tabpanel" aria-labelledby="nav-tab-1">
 				<div class="fs-6 fw-semibold mb-2"><i class="bi bi-chevron-right"></i> 최근 1주일 매출 현황</div>
 				<div class="charts-day border rounded" style="height: 500px;" id="charts-day"></div>
 			</div>
