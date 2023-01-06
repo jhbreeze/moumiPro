@@ -81,7 +81,7 @@ public class MySocketHandler extends TextWebSocketHandler {
 			jsonAdmin.put("type", "isAdminConn");
 			if(admin == null) {
 				jsonAdmin.put("conn", "0"); // 상담 불가
-				sessionMap.remove(email, nickName);
+				sessionMap.remove(email, nickName); // checkhere
 			} else {
 				jsonAdmin.put("conn", "1"); // 상담 가능
 			}
@@ -115,7 +115,7 @@ public class MySocketHandler extends TextWebSocketHandler {
 				
 				return;
 			}
-
+			logger.info("첫번째 로그 = " + admin);
 			// 관리자 정보 저장
 			User user = new User();
 			user.setEmail(email);
@@ -123,7 +123,7 @@ public class MySocketHandler extends TextWebSocketHandler {
 			user.setSession(session);
 			user.setUserType(0);
 			sessionMap.put(email, user);
-
+			
 			// 처음 접속 했으므로 현재 접속한 사용자리스트를 전송
 			Iterator<String> it = sessionMap.keySet().iterator();
 
@@ -196,6 +196,7 @@ public class MySocketHandler extends TextWebSocketHandler {
 			sendTextMessageToOne(ob.toString(), receiverVo.getSession());
 		}
 	}
+	
 
 	/*
 	@Override
@@ -292,7 +293,8 @@ public class MySocketHandler extends TextWebSocketHandler {
 	// 유저가 채팅 방을 나간 경우 호출하는 메소드
 	protected String removeUser(WebSocketSession session) {
 		User user = getUser(session);
-
+		User admin = getAdmin();
+		
 		if (user == null) {
 			return null;
 		}
@@ -302,8 +304,8 @@ public class MySocketHandler extends TextWebSocketHandler {
 		job.put("type", "userDisconnect");
 		job.put("email", user.getEmail());
 		job.put("nickName", user.getNickName());
-		sendTextMessageToAll(job.toString(), user.getEmail());
-		//sendTextMessageToOne(job.toString(), session); // 관리자하고 접속했던 클라이언트 창에만 나오면 되니까  checkhere
+		//sendTextMessageToAll(job.toString(), user.getEmail());
+		sendTextMessageToOne(job.toString(), admin.getSession()); // 관리자에게 접속 해제 사실을 전송
 		
 		try {
 			user.getSession().close();

@@ -131,17 +131,7 @@ main {
 		<div class="tab-content pt-3" id="nav-tabContent">
 			<div class="tab-pane fade show active" id="panel-1" role="tabpanel" aria-labelledby="tab-1">
 				
-					<div class="myDialogList connectUserList">
-						<div class="myDialogImg" style="margin-right: 16px;">
-							<img class="m-1 me-2" style="height: 50px; width: 50px;"
-							src="${pageContext.request.contextPath}/resources/moumi/logo/callcenter.png">
-						</div>
-						<div class="myDialogListInfo "> 
-							<div class="chat-connection-user fw-bold"></div>
-							<div>유료회원이 되고싶어요</div>  
-						</div>
-						<div class="myDialogListDate align-self-center"> 2022.12.25 16:10 </div>
-					</div>
+						
 				
 			</div>
 		</div>
@@ -248,29 +238,21 @@ $(function(){
     	let data = JSON.parse(evt.data); // JSON 파싱
     	let cmd = data.type;
     	
-    	if(cmd === "userConnect") { // 관리자에게 현재 접속자를 전송 
-    		let email = data.email;
-    		let nickName = data.nickName;
-    			
-   			let $connList = $(".connectUserList").clone().appendTo("#panel-1");
-       		let here = $connList.children().eq(1).find(".chat-connection-user");
-       		
-       		let out = "<span data-useremail='"+email+"'>"+nickName+" 현재 접속자</span>";
-   			here.append(out);
-    		
-    	} else if(cmd === "userList") { // 관리자가 처음 접속했을 때, 세션맵에 저장된 유저 정보들 보여주기 
+    	if(cmd === "userList") { // 관리자가 처음 접속했을 때, 세션맵에 저장된 유저 정보(채팅에 들어온)들 보여주기 
     		let users = data.users;
 
     		for(let i = 0; i < users.length; i++) {
-    			let uid = users[i][0];
+    			let email = users[i][0];
     			let nickName = users[i][1];
-    		
-    			let $connList = $(".connectUserList").clone().appendTo("#panel-1");
-        		let here = $connList.children().eq(1).find(".chat-connection-user");
-        		
-        		let out = "<span data-useremail='"+email+"'data-userCode='"+userCode+"'>"+nickName+" 처음 접속</span>";
-    			here.append(out);
+    			
+    			myTemplate(email, nickName);
     		}
+    		
+    	} else if(cmd === "userConnect") { // 관리자에게 현재 접속자를 전송 
+    		let email = data.email;
+    		let nickName = data.nickName;
+			
+    		myTemplate(email, nickName);
     	
     	} else if(cmd === "userDisconnect") { // 접속자가 나갔을 때
     		let email = data.email;
@@ -428,5 +410,25 @@ function myfunc(email) {
 
 }
 
+function myTemplate(email, nickName) {
+	
+	var out = "";
+	
+	out += "<div class='myDialogList connectUserList'>";
+	out += "  <div class='myDialogImg' style='margin-right: 16px;'>";
+	out += "    <img class='m-1 me-2' style='height: 50px; width: 50px;' src='${pageContext.request.contextPath}/resources/moumi/logo/callcenter.png'>";
+	out += "  </div>";
+	out += "  <div class='myDialogListInfo'>";
+	out += " 	<div class='chat-connection-user fw-bold'>";
+	out += "    	<span data-useremail='"+email+"'>"+nickName+"</span>";
+	out += "    </div>";
+	out += "    <div>유료회원이 되고싶어요</div>";
+	out += "  </div>";
+	out += "  <div class='myDialogListDate align-self-center'> 2022.12.25 16:10 </div>";
+	out += "</div>";
+	
+	$("#panel-1").append(out);
+
+}
 </script>
 
