@@ -150,7 +150,7 @@ function chattingModal() {
 			<div class="modal-body pt-1">
 				<p class="modal-body-text m-1 fw-semibold">MOUMI 실시간 1:1 문의 채널입니다.</p>
 				<section class="modal-body-1 mt-2 mb-4 pt-1 ps-2 pe-2 pb-2">
-					<div class="modal-body-text fw-semibold ms-2 mt-1">문의 내역 &nbsp; >>></div>
+					<div class="modal-body-text fw-semibold ms-2 mt-1">문의 내역 &nbsp; >>>${dataCount}</div>
 					<div class="d-flex mb-1">
 						<div class="align-middle">
 							<!-- <a href="https://www.flaticon.com/kr/free-icons/" title="보조 아이콘">보조 아이콘  제작자: Freepik - Flaticon</a>  -->
@@ -266,6 +266,7 @@ $(function(){
 	    obj.type = "connect";
 	    obj.email = email;
 	    obj.nickName = nickName;
+	    obj.receiver = "admin";
 	    
 	    let jsonStr = JSON.stringify(obj);  // JSON.stringify() : 자바스크립트 값을 JSON 문자열로 변환
 	    socket.send(jsonStr);
@@ -305,15 +306,6 @@ $(function(){
     		
     		console.log(arr);
     		
-    	} else if(cmd === "userDisconnect") { // 접속자가 나갔을 때
-    		let email = data.email;
-    		let nickName = data.nickName;
-    		
-    		let out = "<div class='chat-info'>"+nickName+"님이 나갔습니다.</div>";
-    		writeToScreen(out);
-    		
-    		$("#user-"+email).remove();
-
     	} else if(cmd === "message") { // 메시지를 받은 경우
     		let email = data.email;
     		let nickName = data.nickName;

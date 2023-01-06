@@ -62,7 +62,7 @@ public class MySocketHandler extends TextWebSocketHandler {
 			return;
 		}
 
-		if (type.equals("connect")) { // 처음 접속한 경우
+		if (type.equals("connect")) { // 일반 유저가 접속한 경우
 			String email = jsonReceive.getString("email");
 			String nickName = jsonReceive.getString("nickName");
 
@@ -70,20 +70,68 @@ public class MySocketHandler extends TextWebSocketHandler {
 			user.setEmail(email);
 			user.setNickName(nickName);
 			user.setSession(session);
+			user.setUserType(1); // 일반유저
 
 			sessionMap.put(email, user);
 			
-			// 처음 접속 사용자에게 현재 접속 중인 다른 유저를 전송
-			Iterator<String> it = sessionMap.keySet().iterator();
+			// 관리자 접속 여부를 접속자에게 전송 
+			User admin = getAdmin();
+			JSONObject jsonUsers = new JSONObject();
+			jsonUsers.put("type", "isAdminConn");
+			if(admin == null) {
+				jsonUsers.put("conn", "0");
+			} else {
+				jsonUsers.put("conn", "1");
+			}
+			sendTextMessageToOne(jsonUsers.toString(), session);
 			
+			// 관리자에게 현재 접속자를 전송
+			if(admin != null) {
+				JSONObject ob = new JSONObject();
+				ob.put("type", "userConnect");
+				ob.put("email", email);
+				ob.put("nickName", nickName);
+
+				sendTextMessageToOne(ob.toString(),admin.getSession());
+			}
+
+		} else if (type.equals("adminconnect")) { // 관리자 처음 접속한 경우
+			String email = jsonReceive.getString("email");
+			String nickName = jsonReceive.getString("nickName");
+			
+			User admin = getAdmin();
+			if(admin != null) {
+				// 이미 접속된 상태를 전송
+				JSONObject ob = new JSONObject();
+				ob.put("type", "connectFail");
+				ob.put("email", email);
+				sendTextMessageToOne(ob.toString(), session);
+				
+				// close
+				session.close();
+				
+				return;
+			}
+
+			// 관리자 정보 저장
+			User user = new User();
+			user.setEmail(email);
+			user.setNickName(nickName);
+			user.setSession(session);
+			user.setUserType(0);
+			sessionMap.put(email, user);
+
+			// 처음 접속 했으므로 현재 접속한 사용자리스트를 전송
+			Iterator<String> it = sessionMap.keySet().iterator();
+
 			JSONArray arrUsers = new JSONArray();
 			while (it.hasNext()) {
 				String key = it.next();
-				
-				if ( email.equals(key) ) { // 자기 자신
+
+				if (email.equals(key)) { // 자기 자신
 					continue;
 				}
-				
+
 				User vo = sessionMap.get(key);
 
 				JSONArray arr = new JSONArray();
@@ -91,21 +139,19 @@ public class MySocketHandler extends TextWebSocketHandler {
 				arr.put(vo.getNickName());
 				arrUsers.put(arr);
 			}
-			
+
 			JSONObject jsonUsers = new JSONObject();
 			jsonUsers.put("type", "userList");
 			jsonUsers.put("users", arrUsers);
-			
-			
+
 			sendTextMessageToOne(jsonUsers.toString(), session);
 
-			// 다른 클라이언트에게 접속 사실을 알림 
-			JSONObject ob = new JSONObject();
-			ob.put("type", "userConnect");
-			ob.put("email", email);
-			ob.put("nickName", nickName);
-
-			sendTextMessageToAll(ob.toString(), email);
+			// 다른 클라이언트에게 관리자 접솝 여부 전송
+			JSONObject jsonAdmin = new JSONObject();
+			jsonUsers.put("type", "adminConn");
+			jsonUsers.put("conn", "1");
+			
+			sendTextMessageToAll(jsonAdmin.toString(), email);
 
 		} else if (type.equals("message")) { // 채팅 문자열을 전송 한 경우
 			User vo = getUser(session); // 보내는 사람 
@@ -224,6 +270,22 @@ public class MySocketHandler extends TextWebSocketHandler {
 		return null;
 	}
 
+	// 관리자 정보
+	protected User getAdmin() {
+		Iterator<String> it = sessionMap.keySet().iterator();
+
+		while (it.hasNext()) {
+			String key = it.next();
+
+			User dto = sessionMap.get(key);
+			if (dto.getUserType() == 0) {
+				return dto;
+			}
+		}
+
+		return null;
+	}
+	
 	// 유저가 채팅 방을 나간 경우 호출하는 메소드
 	protected String removeUser(WebSocketSession session) {
 		User user = getUser(session);
