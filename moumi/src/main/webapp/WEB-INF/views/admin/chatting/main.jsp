@@ -102,6 +102,15 @@ main {
     text-align: center;
     vertical-align: middle;
 }
+
+.chatBtn3 { 	
+	font-weight: 600;
+	border: none;
+	border-radius: 15px;
+	margin-left: auto;
+	width: 400px;
+}
+
 </style>
 
 
@@ -255,6 +264,7 @@ $(function(){
     	} else if(cmd === "userConnect") { // 다른 접속자가 접속했을 때
     		let email = data.email;
     		let nickName = data.nickName;
+    		let userCode = data.userCode;
     		
     		let $connList = $(".connectUserList").clone().appendTo("#panel-1");
     		let here = $connList.children().eq(1).find(".chat-connection-user");
@@ -299,6 +309,7 @@ $(function(){
     	}
 	}
 
+
 	// 에러가 발생시 호출되는 콜백함수
 	function onError(evt) {
 		writeToScreen("<div class='chat-info'>Info: WebSocket error.</div>");
@@ -340,10 +351,12 @@ $(function(){
 		if(! msg) {
 			$("#adminChatMsg").focus();
 			return;
+		} else if (msg == "exit") {
+			closechat();
 		}
 		
-		let email = $('#adminChatMsg').attr("data-useremail"); // 잘 안돼
-		let nickName = $('#adminChatMsg').attr("data-nickName").trim(); // 잘 되네
+		let email = $('#adminChatMsg').attr("data-useremail"); 
+		let nickName = $('#adminChatMsg').attr("data-nickName").trim(); 
 		
 		let obj = {};
         obj.type = "whisper";
@@ -354,6 +367,28 @@ $(function(){
         socket.send(jsonStr);
         
         writeToScreen("<div class='msg-right'>"+msg+"</div>");
+        
+        
+        // 채팅 종료
+        function closechat() {
+	        const close = "exit";
+
+	        if(close === msg) {
+	        	let obj = {};
+	            obj.type = "exit";
+	            obj.chatMsg = msg;
+	            obj.receiver = email;
+	            
+	            let jsonStr = JSON.stringify(obj);
+	            socket.send(jsonStr);
+	            
+	        	let out = "<div class='text-center'>";
+	        		out += "	<button class='btn btn-success btn-lg shadow chatBtn3'>채팅종료</button>";
+	        		out += "</div>";
+	        		
+	            writeToScreen(out);
+	        }
+        }
         
         $("#adminChatMsg").val("");
 	}
@@ -369,5 +404,29 @@ function writeToScreen(message) {
     // 스크롤을 최상단에 있도록 설정함
     $msgContainer.scrollTop($msgContainer.prop("scrollHeight"));
 }
+
+function myfunc(email) {
+	let arr = [];
+
+	$(".connectUserList").each(function() {
+		$(this).click(function() {
+			let connUser = $("#adminChatMsg").attr("data-useremail");
+			arr.push(connUser);
+
+			console.log("2 = " + connUser);
+		});
+	});
+
+	for (let i = 0; i < arr.length; i++) {
+		if (arr[i] === email) {
+			let out = "<div class='user-left'>" + nickName + "</div>";
+			out += "<div class='msg-left'>" + msg + "</div>";
+			writeToScreen(out);
+			console.log("arr[] " + arr[i]);
+		}
+	}
+
+}
+
 </script>
-	
+
