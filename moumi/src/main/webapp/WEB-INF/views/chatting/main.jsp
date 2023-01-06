@@ -266,7 +266,6 @@ $(function(){
 	    obj.type = "connect";
 	    obj.email = email;
 	    obj.nickName = nickName;
-	    obj.receiver = "admin";
 	    
 	    let jsonStr = JSON.stringify(obj);  // JSON.stringify() : 자바스크립트 값을 JSON 문자열로 변환
 	    socket.send(jsonStr);
@@ -293,19 +292,15 @@ $(function(){
     	let data = JSON.parse(evt.data); // JSON 파싱
     	let cmd = data.type;
     	var arr = [];
-    	if(cmd === "userList") { // 처음 접속할때 접속자 리스트를 받는다.(관리자 있는지 체크)
-    		let users = data.users;
-    		for(let i = 0; i < users.length; i++) {
-    			let email = users[i][0];
-    			arr.push(email);
-    		}
-    		
-    		if(! arr.includes("admin")) {
-    			alert("현재는 상담이 불가합니다.");
-    		}
-    		
-    		console.log(arr);
-    		
+    	if(cmd === "isAdminConn") { // 처음 접속할때 접속자 리스트를 받는다.(관리자 있는지 체크)
+       		let isAdminconn = data.conn;
+       		
+       		if (isAdminconn !== "1") {
+       			alert("현재는 상담이 불가합니다.");
+       		} 
+       		
+       		console.log("isAdminconn = " + isAdminconn);
+
     	} else if(cmd === "message") { // 메시지를 받은 경우
     		let email = data.email;
     		let nickName = data.nickName;
