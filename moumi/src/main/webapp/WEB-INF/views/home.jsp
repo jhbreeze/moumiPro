@@ -65,9 +65,9 @@ li {
 }
 
 .regionText {
-	color: #198754;
-	font-size: 70px;
-	font-weigth: 900;
+	
+	font-size: 40px;
+	font-weight: 600;
 	margin-top: 130px;
 	text-align: center;
 	font-family: 'GmarketSansMedium';
@@ -75,18 +75,10 @@ li {
 
 .regionTextDetail {
 	color: #363634;
-	font-size: 17px;
+	font-size: 15px;
 	font-weigth: 100;
 }
 
-.farmText {
-	color: #198754;
-	font-size: 70px;
-	font-weigth: 900;
-	margin-top: 50px;
-	font-family: 'GmarketSansMedium';
-	padding-left: 160px;
-}
 
 
 .mainText {
@@ -157,7 +149,7 @@ li {
 .customSelect {
 	width: 280px;
 	height: 34px;
-	font-size: 25px;
+	font-size: 20px;
 	background-color: transparent;
 	margin-right: 30px;
 	border: 0;
@@ -222,12 +214,50 @@ li {
 	border: 0;
 }
 
-.menuLayout {
-	width: 230px;
-	height: 50px;
-	background: red;
+.menuImg {
+	height: 290px;
+	width: 290px;
 }
 
+.menuLayout {
+	width: 290px;
+	height: 400px;
+	border: 1px solid #eee;
+}
+
+.menuButton {
+	margin-top: 20px;
+	width: 280px;
+}
+
+.menuMainText {
+	margin-top: 17px;
+	font-size: 18px;
+	font-weight: 500;
+	text-align:left;
+	padding-left:15px;
+	
+}
+
+.sideText {
+	width: 300px;
+	height: 400px;
+	margin-top: 50px;
+	font-size: 40px;
+	font-weight: 600;
+	padding: 40px;
+}
+
+.sideSpanText {
+	font-size: 14px;
+	color: #808080;
+}
+
+.menuSpanText{
+font-size: 13px;
+text-align:left;
+
+}
 </style>
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fa6aaed44dd9e24c37efe3f15fd439e7&libraries=services"></script>
@@ -396,15 +426,14 @@ li {
 	</div>
 </div>
 
+
 <div class="container body-container">
 	<div class="inner-page">
 		<div class="row" style="height: 700px; margin-top: 50px;">
 			<div class="col-3">
-				<div class="col-1 col-sm-2"
-					style="width: 300px; height: 400px; margin-top: 150px; font-size: 40px; font-weight: 600; padding: 40px;">
-					<i>#</i>&nbsp;오늘의 MOUMI<br> <span style="font-size: 14px;">MOUMI가
+				<div class="col-1 col-sm-2 sideText">
+					<i>#</i>&nbsp;오늘의 MOUMI<br> <span class="sideSpanText">MOUMI가
 						제공하는 분석 리포트</span><br>
-
 					<button class="moreButton" type="button"
 						onclick="location.href='${pageContext.request.contextPath}/reportList'">더보기</button>
 				</div>
@@ -431,48 +460,47 @@ li {
 			</div>
 		</div>
 
+
 		<div class="row" style="height: 500px; margin-top: 50px;">
 			<div class="col-3">
-				<div class="col-1 col-sm-2"
-					style="width: 300px; height: 400px; margin-top: 50px; font-size: 40px; font-weight: 600; padding: 40px;">
-					<i>#</i>&nbsp;머라고 하지 ㅜㅜㅜㅜ <br> <span style="font-size: 14px;"></span><br>
+				<div class="col-1 col-sm-2 sideText" style ="color:#198754">
+					<i>#</i>&nbsp;머라고 하지 ㅜㅜㅜㅜ <br> <span class="sideSpanText">MOUMI를
+						알차게 즐기는 방법</span><br>
 				</div>
 			</div>
 			<div class="col-9">
 				<div class="container text-center">
 					<div class="row  row-cols-lg-3">
-					<div class="M1">
-						<div class="col"
-							style="width: 290px; height: 400px;  background: yellow; ">
-							<img style="height: 290px; width: 290px;"
-								src="${pageContext.request.contextPath}/resources/images/add_photo.png" />
-							<p style ="margin-top:20px; font-size:16px;">처음 이용</p>
+						<div class="M1">
+							<div class="col menuLayout">
+								<img class="menuImg"
+									src="${pageContext.request.contextPath}/resources/images/add_photo.png" />
+								<p class="menuMainText">MOUMI가 처음이라면?
+								<br><span class="menuSpanText">아직 구현이 안 돼서<br>연결 안 됐습니당</span></p>
+							</div>
+							<button class="btn btn-outline-success menuButton " type="button"
+								onclick="location.href='${pageContext.request.contextPath}/farm'">확인하기</button>
+
 						</div>
-						<button class="btn btn-outline-success" style ="margin-top:20px; width: 280px; " type="button"
-						onclick="location.href='${pageContext.request.contextPath}/farm'">확인하기</button>
-						
-					</div>
-					<div class="M1">
-						<div class="col"
-							style="width: 290px; height: 400px; background: yellow;">
-							<img style="height: 290px; width: 290px;"
-								src="${pageContext.request.contextPath}/resources/images/moumi/manual.png" />
-							<p style ="margin-top:20px; font-size:16px;">처음 이용</p>
+						<div class="M1">
+							<div class="col menuLayout">
+								<img class="menuImg"
+									src="${pageContext.request.contextPath}/resources/images/moumi/manual.png" />
+								<p class="menuMainText">MOUMI 일정 관리<br><span class="menuSpanText">간편하게 분석 일정을 관리하자</span></p>
+							</div>
+							<button class="btn btn-outline-success menuButton" type="button"
+								onclick="location.href='${pageContext.request.contextPath}/schedule/main'">관리하기</button>
 						</div>
-						<button class="btn btn-outline-success" style ="margin-top:20px; width: 280px; " type="button"
-						onclick="location.href='${pageContext.request.contextPath}/farm'">확인하기</button>
-					</div>
-					<div class="M1">
-						<div class="col"
-							style="width: 290px; height: 400px; background: yellow;">
-							<img style="height: 290px; width: 290px;"
-								src="${pageContext.request.contextPath}/resources/images/moumi/farm.jpeg" />
-							<p>우리 농가 살리기 </p>
+						<div class="M1">
+							<div class="col menuLayout">
+								<img class="menuImg"
+									src="${pageContext.request.contextPath}/resources/images/moumi/farm.jpeg" />
+								<p class="menuMainText">우리 농가 살리기<br><span class="menuSpanText">농촌 진흥청에서 선별한 농촌 브랜드</span></p>
+							</div>
+							<button class="btn btn-outline-success menuButton" type="button"
+								onclick="location.href='${pageContext.request.contextPath}/farm'">확인하기</button>
 						</div>
-						<button class="btn btn-outline-success" style ="margin-top:20px; width: 280px; " type="button"
-						onclick="location.href='${pageContext.request.contextPath}/farm'">확인하기</button>
-					</div>
-				
+
 					</div>
 
 				</div>
@@ -513,7 +541,7 @@ li {
 			<div class="col">
 				<div class="search-container">
 					<p class="regionText">
-					<i>#</i>&nbsp;우리 지역 <br>&nbsp;&nbsp;&nbsp; 살리기<br> <span
+						<i>#</i>&nbsp;우리 지역 <br>&nbsp;&nbsp;&nbsp; 살리기<br> <span
 							class="regionTextDetail">지역 별 우수 프랜차이즈를 확인해보세요!</span>
 					</p>
 					<div class="col-auto p-1">
@@ -535,26 +563,3 @@ li {
 		</div>
 	</div>
 </div>
-
-
-<%-- <div class="container body-container">
-	<div class="farmLayout">
-		<div class="inner-page">
-			<div class="row">
-
-				<div class="col">
-					<p class="farmText">
-						<i>#</i>&nbsp;우리 농가 <br>살리기<br> <span class="regionTextDetail">농촌진흥청에서
-							선별한 우리 지역의 농가 브랜드를 확인해보세요</span>
-					</p>
-				</div>
-
-				<div class="col">
-					<button class="farmButton" type="button"
-						onclick="location.href='${pageContext.request.contextPath}/farm'">확인하기</button>
-				</div>
-			</div>
-
-		</div>
-	</div>
-</div> --%>
