@@ -64,12 +64,6 @@ li {
 	margin: 1px;
 }
 
-.more {
-	font-size: 18px;
-	float: right;
-	margin-right: 30px;
-}
-
 .regionText {
 	color: #198754;
 	font-size: 70px;
@@ -85,7 +79,6 @@ li {
 	font-weigth: 100;
 }
 
-
 .farmText {
 	color: #198754;
 	font-size: 70px;
@@ -93,14 +86,8 @@ li {
 	margin-top: 50px;
 	font-family: 'GmarketSansMedium';
 	padding-left: 160px;
-	
 }
 
-
-.title {
-	color: #198754;
-	font-size: 20px;
-}
 
 .mainText {
 	font-size: 40px;
@@ -150,21 +137,6 @@ li {
 	border-radius: 12px;
 }
 
-.recFont {
-	font-family: 'GmarketSansMedium';
-	color: #363634;
-}
-
-.recTitle {
-	font-size: 28px;
-	color: #363634;
-}
-
-.recEmTitle {
-	font-size: 15px;
-	color: #363634;
-}
-
 .map {
 	width: 700px;
 	height: 500px;
@@ -200,7 +172,7 @@ li {
 .farmLayout {
 	width: 100%;
 	height: 500px;
-	background: #fff;
+	background: #FAFABE;
 }
 
 .mapLayout {
@@ -210,7 +182,7 @@ li {
 
 .emptyLayout {
 	width: 100%;
-	height: 30px;
+	height: 200px;
 }
 
 .eventText {
@@ -236,9 +208,26 @@ li {
 	border: 0;
 	font-size: 20px;
 	border: 0;
-	margin:150px;
-	
+	margin: 150px;
 }
+
+.moreButton {
+	width: 230px;
+	height: 50px;
+	background: #198754;
+	border-radius: 35px;
+	color: white;
+	border: 0;
+	font-size: 20px;
+	border: 0;
+}
+
+.menuLayout {
+	width: 230px;
+	height: 50px;
+	background: red;
+}
+
 </style>
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fa6aaed44dd9e24c37efe3f15fd439e7&libraries=services"></script>
@@ -407,100 +396,89 @@ li {
 	</div>
 </div>
 
-
-
 <div class="container body-container">
 	<div class="inner-page">
-		<br> <br> <br>
-		<p class="title">분석 리포트</p>
-		<a href="${pageContext.request.contextPath}/reportList" class="more">더보기</a>
-		<br> <br>
-		<div class="container text-center">
-			<div class="row">
-				<c:forEach var="dto" items="${listMainReport}" varStatus="status">
-					<div class="col-md-4 col-lg-3 mt-4"
-						style="width: 350px; margin: 25px;">
-						<div class="card" style="width: 18rem;"
-							data-reportNum="${dto.reportNum}"
-							onclick="location.href='${pageContext.request.contextPath}/article?&reportNum=${dto.reportNum}'">
-							<img style="height: 280px; width: 285px;"
-								src="${pageContext.request.contextPath}/uploads/report/${dto.thumbnail}"
-								style="width: -webkit-fill-available;">
-							<div class="p-2">
-								<div class="card-body">${dto.subject}</div>
-							</div>
-						</div>
-					</div>
-				</c:forEach>
+		<div class="row" style="height: 700px; margin-top: 50px;">
+			<div class="col-3">
+				<div class="col-1 col-sm-2"
+					style="width: 300px; height: 400px; margin-top: 150px; font-size: 40px; font-weight: 600; padding: 40px;">
+					<i>#</i>&nbsp;오늘의 MOUMI<br> <span style="font-size: 14px;">MOUMI가
+						제공하는 분석 리포트</span><br>
 
+					<button class="moreButton" type="button"
+						onclick="location.href='${pageContext.request.contextPath}/reportList'">더보기</button>
+				</div>
 			</div>
-		</div>
-		<br> <br> <br> <br>
+			<div class="col-9">
+				<div class="container text-center">
+					<div class="row  row-cols-lg-3">
+						<c:forEach var="dto" items="${listMainReport}" varStatus="status">
+							<div style="width: 18rem; margin: 10px;"
+								data-reportNum="${dto.reportNum}"
+								onclick="location.href='${pageContext.request.contextPath}/article?&reportNum=${dto.reportNum}'">
+								<img style="height: 280px; width: 285px;"
+									src="${pageContext.request.contextPath}/uploads/report/${dto.thumbnail}"
+									style="width: -webkit-fill-available;">
+								<div class="p-2">
+									<div class="card-body">${dto.subject}</div>
+								</div>
+							</div>
+						</c:forEach>
 
-		<div class="imageLayout">
-			<div class="banConWrap">
-				<ul>
-					<li class="imageContent" style="background: #faaaaa"><a
-						href="${pageContext.request.contextPath}/admin/event/list"> <span
-							class="recFont"> <strong class="recTitle">어서와!</strong><br>
-								MOUMI는 처음이지?<br> <em class="recEmTitle">초보 MOUMI 유저를
-									위한 이용방법</em>
-						</span> <img style="height: 130px; width: 160px; float: right"
-							src="${pageContext.request.contextPath}/resources/images/moumi/manual.png" />
-
-					</a></li>
-
-					<li class="imageContent" style="background: #7bc7e3"><a
-						href="${pageContext.request.contextPath}/schedule/main"> <span
-							class="recFont"> <strong class="recTitle">일정 관리!</strong><br>
-								MOUMI는 처음이지?<br> <em class="recEmTitle">초보 MOUMI 유저를
-									위한 이용방법</em>
-						</span> <img style="height: 130px; width: 150px; float: right"
-							src="${pageContext.request.contextPath}/resources/images/moumi/schedual.png" />
-					</a></li>
-
-				</ul>
-
+					</div>
+				</div>
+				<br> <br> <br> <br>
 			</div>
 		</div>
 
-		<div class="emptyLayout"></div>
-		<div class="container text-center">
-			<div class="container">
-
-
-				<div class="row">
-					<div class="col">
-						<div id="map" class="map"></div>
-					</div>
-
-					<div class="col">
-						<div class="search-container">
-							<p class="regionText">
-								우리 지역 <br>&nbsp;&nbsp;&nbsp; 살리기<br> <span
-									class="regionTextDetail">지역 별 우수 프랜차이즈를 확인해보세요!</span>
-							</p>
-							<div class="col-auto p-1">
-								<c:if test="${!empty listRegion}">
-									<div class="selectBox">
-										<select name="regionCode" id="regionCode" class="customSelect"
-											onchange="javascript:myListener(this);">
-											<c:forEach var="region" items="${listRegion}" varStatus="i">
-												<option value="${region.regionCode}">${region.regionName}</option>
-											</c:forEach>
-										</select>
-									</div>
-								</c:if>
-
-							</div>
+		<div class="row" style="height: 500px; margin-top: 50px;">
+			<div class="col-3">
+				<div class="col-1 col-sm-2"
+					style="width: 300px; height: 400px; margin-top: 50px; font-size: 40px; font-weight: 600; padding: 40px;">
+					<i>#</i>&nbsp;머라고 하지 ㅜㅜㅜㅜ <br> <span style="font-size: 14px;"></span><br>
+				</div>
+			</div>
+			<div class="col-9">
+				<div class="container text-center">
+					<div class="row  row-cols-lg-3">
+					<div class="M1">
+						<div class="col"
+							style="width: 290px; height: 400px;  background: yellow; ">
+							<img style="height: 290px; width: 290px;"
+								src="${pageContext.request.contextPath}/resources/images/add_photo.png" />
+							<p style ="margin-top:20px; font-size:16px;">처음 이용</p>
 						</div>
+						<button class="btn btn-outline-success" style ="margin-top:20px; width: 280px; " type="button"
+						onclick="location.href='${pageContext.request.contextPath}/farm'">확인하기</button>
+						
+					</div>
+					<div class="M1">
+						<div class="col"
+							style="width: 290px; height: 400px; background: yellow;">
+							<img style="height: 290px; width: 290px;"
+								src="${pageContext.request.contextPath}/resources/images/moumi/manual.png" />
+							<p style ="margin-top:20px; font-size:16px;">처음 이용</p>
+						</div>
+						<button class="btn btn-outline-success" style ="margin-top:20px; width: 280px; " type="button"
+						onclick="location.href='${pageContext.request.contextPath}/farm'">확인하기</button>
+					</div>
+					<div class="M1">
+						<div class="col"
+							style="width: 290px; height: 400px; background: yellow;">
+							<img style="height: 290px; width: 290px;"
+								src="${pageContext.request.contextPath}/resources/images/moumi/farm.jpeg" />
+							<p>우리 농가 살리기 </p>
+						</div>
+						<button class="btn btn-outline-success" style ="margin-top:20px; width: 280px; " type="button"
+						onclick="location.href='${pageContext.request.contextPath}/farm'">확인하기</button>
+					</div>
+				
 					</div>
 
 				</div>
 			</div>
 		</div>
-
-
+		<br> <br> <br> <br>
 	</div>
 </div>
 
@@ -524,15 +502,50 @@ li {
 	</div>
 
 </div>
-<div class="container body-container">
+
+<div class="container text-center">
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<div id="map" class="map"></div>
+			</div>
+
+			<div class="col">
+				<div class="search-container">
+					<p class="regionText">
+					<i>#</i>&nbsp;우리 지역 <br>&nbsp;&nbsp;&nbsp; 살리기<br> <span
+							class="regionTextDetail">지역 별 우수 프랜차이즈를 확인해보세요!</span>
+					</p>
+					<div class="col-auto p-1">
+						<c:if test="${!empty listRegion}">
+							<div class="selectBox">
+								<select name="regionCode" id="regionCode" class="customSelect"
+									onchange="javascript:myListener(this);">
+									<c:forEach var="region" items="${listRegion}" varStatus="i">
+										<option value="${region.regionCode}">${region.regionName}</option>
+									</c:forEach>
+								</select>
+							</div>
+						</c:if>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+<%-- <div class="container body-container">
 	<div class="farmLayout">
 		<div class="inner-page">
 			<div class="row">
 
 				<div class="col">
 					<p class="farmText">
-						우리 농가 <br>살리기<br> <span
-							class="regionTextDetail">농촌진흥청에서 선별한 우리 지역의 농가 브랜드를 확인해보세요</span>
+						<i>#</i>&nbsp;우리 농가 <br>살리기<br> <span class="regionTextDetail">농촌진흥청에서
+							선별한 우리 지역의 농가 브랜드를 확인해보세요</span>
 					</p>
 				</div>
 
@@ -540,9 +553,8 @@ li {
 					<button class="farmButton" type="button"
 						onclick="location.href='${pageContext.request.contextPath}/farm'">확인하기</button>
 				</div>
-
 			</div>
 
 		</div>
 	</div>
-</div>
+</div> --%>

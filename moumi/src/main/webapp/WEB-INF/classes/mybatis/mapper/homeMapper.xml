@@ -18,7 +18,7 @@
 			SELECT reportNum, COUNT(*) fileCount FROM reportFile
 			GROUP BY reportNum
 		) f ON r.reportNum = f.reportNum
-        WHERE ROWNUM &lt;= 8
+        WHERE ROWNUM &lt;= 6
         ORDER BY regDate ASC
 	</select>
 	
