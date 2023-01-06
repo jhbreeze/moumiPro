@@ -66,7 +66,7 @@ function listPage(page) {
 	
 	div = $tab.attr("data-div");
 	
-	let url = "${pageContext.request.contextPath}/recruit/list";
+	let url = "${pageContext.request.contextPath}/mypage/mypick/list";
 	let query = "pageNo="+page+"&div="+div;
 	let search = $('form[name=recruitSearchForm]').serialize();
 	query = query+"&"+search;

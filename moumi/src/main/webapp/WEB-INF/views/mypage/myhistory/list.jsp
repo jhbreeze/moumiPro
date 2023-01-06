@@ -6,12 +6,12 @@
 	<span style="color: green" >${dataCount}</span>건
 </p>
     
-<table class="table recruit-table">
+<table class="table myhistory-table">
 	<thead class="fw-bold">
 		<tr>
 			<th>NO</th>
+			<th>게시판</th>
 			<th colspan="4">제목</th>
-			<th>작성자</th>
 			<th>작성일</th>
 		</tr>
 	</thead>
@@ -19,23 +19,15 @@
 	<c:if test="${list.size() > 0}">
 	<tbody class="text-center">
 		<c:forEach var="dto" items="${list}" varStatus="status">
-			<tr class="recruit-table-tr" data-rNum="${dto.num}">
-				<td>${dataCount - (pageNo-1) * size - status.index}</td>
-				<td colspan="4"><c:url var="url" value="/recruit/article">
-						<c:param name="recruitNum" value="${dto.recruitNum}"/>
-						<c:param name="pageNo" value="${pageNo}"/>
-						<c:if test="${not empty keyword}">
-							<c:param name="condition" value="${condition}"></c:param>
-							<c:param name="keyword" value="${keyword}"></c:param>
-						</c:if>
-					</c:url>
-					<a href="${url}">${dto.subject}</a></td>
-				<td>${dto.corporation}</td>
-				<td>${dto.startDate}</td>
-			</tr>
+			<tr class="historyPost-table-tr" data-rNum="${dto.communityNum}">
+			<td colspan="1">${dto.tableName}</td>		
+			<td colspan="4">${dto.subject}</td>		
+			<td colspan="1">${dto.regDate}</td>		
 		</c:forEach>
 	</tbody>
 	</c:if>
+	
+			
 </table>
 
 
@@ -47,40 +39,12 @@
 <div class="row py-3">
 	<div class="col">
 		<button type="button" class="btn btn-success"
-			onclick="reloadRecruit();">새로고침</button>
+			onclick="reloadMyhistory();">새로고침</button>
 	</div>
 
 
-	<div class="col-6 text-center" >
-		<form class="row" name="searchForm" method="post">
-			<div class="col-auto p-1">
-				<select name="condition" id="condition" class="form-select">
-					<option value="subject"
-						${condition=="subject"?"selected='selected'":""}>제목</option>
-					<option value="career"
-						${condition=="career"?"selected='selected'":""}>내용</option>
-					<option value="corporation"
-						${condition=="corporation"?"selected='selected'":""}>글쓴이</option>
-				</select>
-			</div>
-
-			<div class="col-auto p-1">
-				<input type="text" name="keyword" id="keyword" value="${keyword}"
-					class="form-control">
-			</div>
-			<div class="col-auto p-1">
-				<button type="button" class="btn btn-success" onclick="searchList()">
-					<i class="bi bi-search"></i>
-				</button>
-			</div>
-		</form>
-	</div>
 
 
 	<div class="col text-end">
-		<c:if test="${sessionScope.member.userType==0 || sessionScope.member.userType==3}">
-			<button type="button" class="btn btn-success"
-				onclick="location.href='${pageContext.request.contextPath}/recruit/write';">글올리기</button>
-		</c:if>
 	</div>
 </div>

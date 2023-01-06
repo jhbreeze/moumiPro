@@ -104,6 +104,7 @@ main {
 }
 </style>
 
+
 <div class="container">
 	<div class="body-container">	
 		<ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -258,27 +259,32 @@ $(function(){
     		let $connList = $(".connectUserList").clone().appendTo("#panel-1");
     		let here = $connList.children().eq(1).find(".chat-connection-user");
     		
-    		let out = "<span data-useremail='"+email+"'>"+nickName+"</span>";
+    		let out = "<span data-useremail='"+email+"'data-userCode='"+userCode+"'>"+nickName+"</span>";
 			here.append(out);
     		
     	} else if(cmd === "userDisconnect") { // 접속자가 나갔을 때
     		let email = data.email;
     		let nickName = data.nickName;
     		
-    		let out = "<div class='chat-info'>"+nickName+"님이 나갔습니다.</div>";
-    		writeToScreen(out);
+    		$(".connectUserList").each(function(){
+    			let $user = $(this);
+    			let connUser = $user.children().eq(1).find('span').attr("data-useremail");
+    			if(email === connUser) {
+    				$user.remove();
+    				return false;
+    			}
+    		});
     		
-    		$("data-userEmail").remove();
-
     	} else if(cmd === "message") { // 메시지를 받은 경우
-    		let email = data.email; // 잘돼
+    		let email = data.email; 
     		let nickName = data.nickName;
     		let msg = data.chatMsg;
     		
-    		let out = "<div class='user-left'>" + nickName + "</div>";
+			let out = "<div class='user-left'>" + nickName + "</div>";
     		out += "<div class='msg-left'>" + msg + "</div>";
     		writeToScreen(out);
-    		
+  		
+ 		
     	} else if(cmd === "whisper") { // 위스퍼
     		let email = data.email;
     		let nickName = data.nickName;
@@ -301,13 +307,8 @@ $(function(){
 	// -----------------------------------------
 	// 채팅 참여자 리스트를 클릭한 경우 대화상자 열기
 	$("body").on("click", ".connectUserList", function(){
-		//let email = $(this).attr("data-useremail"); 
 		let email = $(this).children().eq(1).find('span').attr("data-useremail");  
-		//let nickName = $(this).text();
 		let nickName = $(this).children().eq(1).find(".chat-connection-user").text();
-		
-		console.log(email);
-		console.log(nickName);
 
 		$('#adminChatMsg').attr("data-useremail", email);
 		$('#adminChatMsg').attr("data-nickName", nickName);
@@ -369,3 +370,4 @@ function writeToScreen(message) {
     $msgContainer.scrollTop($msgContainer.prop("scrollHeight"));
 }
 </script>
+	

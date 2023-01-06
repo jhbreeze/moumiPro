@@ -6,12 +6,12 @@
 	<span style="color: green" >${dataCount}</span>건
 </p>
     
-<table class="table recruit-table">
+<table class="table myhistory-table">
 	<thead class="fw-bold">
 		<tr>
 			<th>NO</th>
+			<th>게시판</th>
 			<th colspan="4">제목</th>
-			<th>작성자</th>
 			<th>작성일</th>
 		</tr>
 	</thead>
@@ -19,23 +19,15 @@
 	<c:if test="${list.size() > 0}">
 	<tbody class="text-center">
 		<c:forEach var="dto" items="${list}" varStatus="status">
-			<tr class="recruit-table-tr" data-rNum="${dto.recruitNum}">
-				<td>${dataCount - (pageNo-1) * size - status.index}</td>
-				<td colspan="4"><c:url var="url" value="/recruit/article">
-						<c:param name="recruitNum" value="${dto.recruitNum}"/>
-						<c:param name="pageNo" value="${pageNo}"/>
-						<c:if test="${not empty keyword}">
-							<c:param name="condition" value="${condition}"></c:param>
-							<c:param name="keyword" value="${keyword}"></c:param>
-						</c:if>
-					</c:url>
-					<a href="${url}">${dto.subject}</a></td>
-				<td>${dto.corporation}</td>
-				<td>${dto.startDate}</td>
-			</tr>
+			<tr class="historyPost-table-tr" data-rNum="${dto.recruitNum}">
+			<td colspan="1">${dto.게시판}</td>		
+			<td colspan="4">${dto.subject}</td>		
+			<td colspan="1">${dto.regDate}</td>		
 		</c:forEach>
 	</tbody>
 	</c:if>
+	
+			
 </table>
 
 

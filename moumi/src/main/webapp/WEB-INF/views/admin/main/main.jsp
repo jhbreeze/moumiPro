@@ -12,26 +12,34 @@ $(function(){
 	$.getJSON(url, function(data){
 		// console.log(data);
 		chartsDay(data);
-		chartsDayOfWeek(data);
+		//chartsDayOfWeek(data);
 			
 	});
 	
 	function chartsDay(data) {
+		let chartData = [];
+		let dateData = [];
 		
+		for(let item of data.Wdays){
+			let s = parseInt(item.PAYDATE.substring(5, 7))+'월 ';
+			s += parseInt(item.PAYDATE.substring(8))+'일';
+			dateData.push(s);
+
+			let obj = parseInt(item.PAYMENTPRICE);
+			chartData.push(obj);
+			console.log(chartData);
+		}
 		
 		const chartDom = document.querySelector(".charts-day");
 		let myChart = echarts.init(chartDom);
 		let option;
 		
 		option = {
-				  title: {
-				    text: 'Stacked Line'
-				  },
 				  tooltip: {
 				    trigger: 'axis'
 				  },
 				  legend: {
-				    data: ['Email', 'Union Ads', 'Video Ads', 'Direct', 'Search Engine']
+				    data: ['여자', '남자']
 				  },
 				  grid: {
 				    left: '3%',
@@ -47,41 +55,23 @@ $(function(){
 				  xAxis: {
 				    type: 'category',
 				    boundaryGap: false,
-				    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+				    data: dateData
 				  },
 				  yAxis: {
 				    type: 'value'
 				  },
 				  series: [
 				    {
-				      name: 'Email',
+				      name: '여자',
 				      type: 'line',
 				      stack: 'Total',
-				      data: [120, 132, 101, 134, 90, 230, 210]
+				      data: chartData
 				    },
 				    {
-				      name: 'Union Ads',
+				      name: '남자',
 				      type: 'line',
 				      stack: 'Total',
-				      data: [220, 182, 191, 234, 290, 330, 310]
-				    },
-				    {
-				      name: 'Video Ads',
-				      type: 'line',
-				      stack: 'Total',
-				      data: [150, 232, 201, 154, 190, 330, 410]
-				    },
-				    {
-				      name: 'Direct',
-				      type: 'line',
-				      stack: 'Total',
-				      data: [320, 332, 301, 334, 390, 330, 320]
-				    },
-				    {
-				      name: 'Search Engine',
-				      type: 'line',
-				      stack: 'Total',
-				      data: [820, 932, 901, 934, 1290, 1330, 1320]
+				      data: chartData
 				    }
 				  ]
 				};

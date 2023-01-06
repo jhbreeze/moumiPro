@@ -104,7 +104,7 @@ public class NoticeController {
 	public String writeForm(Model model, HttpSession session) throws Exception {
 		
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
-		if(info.getUserCode() != 1) {
+		if(info.getUserType() != 0) {
 			return "redirect:/notice/list";
 		}
 		
@@ -115,8 +115,7 @@ public class NoticeController {
 	@PostMapping("write")
 	public String writeSubmit(Notice dto, HttpSession session) throws Exception {
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
-		
-		if(info.getUserCode() != 1) {
+		if(info.getUserType() != 0) {
 			return "redirect:/notice/list";
 		}
 		try {
@@ -179,6 +178,11 @@ public class NoticeController {
 			@RequestParam String page,
 			HttpSession session,
 			Model model) throws Exception {
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		if(info.getUserType() != 0) {
+			return "redirect:/notice/list";
+		}
+		
 		Notice dto = service.readNotice(noticeNum);
 		
 		List<Notice> listFile = service.listFile(noticeNum);
@@ -197,6 +201,9 @@ public class NoticeController {
 			HttpSession session) throws Exception {
 		
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		if(info.getUserType() != 0) {
+			return "redirect:/notice/list";
+		}
 		try {
 			String root = session.getServletContext().getRealPath("/");
 			String pathname = root + File.separator + "uploads" + File.separator + "notice";
@@ -216,6 +223,12 @@ public class NoticeController {
 			@RequestParam(defaultValue = "all") String condition,
 			@RequestParam(defaultValue = "") String keyword,
 			HttpSession session) throws Exception {
+		
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		if(info.getUserType() != 0) {
+			return "redirect:/notice/list";
+		}
+		
 		keyword = URLDecoder.decode(keyword, "utf-8");
 		String query = "page="+page;
 		if(keyword.length() != 0) {

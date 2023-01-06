@@ -123,11 +123,8 @@ public class MySocketHandler extends TextWebSocketHandler {
 			ob.put("email", vo.getEmail());
 			ob.put("nickName", vo.getNickName());
 
-			// 다른 사용자에게 전송하기
-			//sendTextMessageToAll(ob.toString(), receiverVo.getEmail());
-			
 			// 관리자에게만 전송
-			sendTextMessageToOne(ob.toString(), adminVo.getSession()); // adminVo.getSession() ? 왜? checkhere
+			sendTextMessageToOne(ob.toString(), adminVo.getSession()); 
 			
 		} else if (type.equals("whisper")) { // 위스퍼을 전송 한 경우 // 관리자 입장에서 필요하니까
 			User user = getUser(session); // 관리자
