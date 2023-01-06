@@ -1,6 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="temp">
+<mapper namespace="myhistory">
+
+
+	<select id="myhistoryPost" parameterType="map" resultType="com.moumi.app.mypage.myhistory.Myhistory">
+		<choose>
+			<when test="div==1">
+				SELECT c.communityNum, c.subject, c.regDate
+				FROM community c
+				JOIN member m ON m.userCode = c.userCode
+				WHERE c.userCode = #{userCode}
+				
+				UNION ALL
+		
+				SELECT r.recruitNum, r.subject, r.regDate
+				FROM recruit r
+				JOIN member m ON m.userCode = r.userCode
+				WHERE r.userCode = #{userCode}
+				
+				ORDER BY regDate DESC
+			</when>
+			<otherwise>
+				SELECT r.content, r.regDate, c.subject
+				FROM reply r
+				JOIN community c ON c.communityNum = r.communityNum
+				WHERE r.userCode= #{userCode}
+			</otherwise>
+		</choose>
+		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
+	</select>
+
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		<choose>
+			<when test="div==1">
+				SELECT NVL(COUNT(*), 0) 
+				FROM (
+				    SELECT '자유게시판' tablename, c.communityNum, c.subject, c.regDate
+				            FROM community c
+				            JOIN member m ON m.userCode = c.userCode
+				            WHERE c.userCode = #{userCode}
+				            
+				            UNION ALL
+				    
+				    SELECT '채용' tablename, r.recruitNum, r.subject, r.regDate
+				            FROM recruit r
+				            JOIN member m ON m.userCode = r.userCode
+				            WHERE r.userCode = #{userCode}
+				)
+			</when>
+			<otherwise>
+				SELECT NVL(COUNT(*), 0) 
+		        FROM (
+			        SELECT r.content, r.regDate, c.subject
+					FROM reply r
+					JOIN community c ON c.communityNum = r.communityNum
+					WHERE r.userCode= 30
+		        )
+        	</otherwise>
+		</choose>
+	</select>
+	
+
 
 </mapper>
+

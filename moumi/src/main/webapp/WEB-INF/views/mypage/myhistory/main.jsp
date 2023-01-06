@@ -16,6 +16,46 @@ thead {
 tbody tr:hover {
 	box-shadow: 1px 1px 5px -5px;
 }
+.side {
+list-style: none;
+font-family:"Malgun Gothic", "맑은 고딕", NanumGothic, 나눔고딕, 돋움, sans-serif;
+font-size: 20px;
+
+}
+.side-menu1{
+position:absolute;
+top: 10rem;
+left: 15rem;
+background: #198754;
+width: 9rem;
+height: 3rem;
+text-align: center;
+color: white;
+padding-top: 0.5rem;
+}
+.side-menu2{
+position:absolute;
+top: 14rem;
+left: 15rem;
+
+}
+.side-menu2 a{
+color: #198754;
+font-weight: bold;
+text-decoration: none;
+
+}
+.side-menu3{
+position:absolute;
+top: 17rem;
+left: 15rem;
+
+}
+.side-menu3 a{
+text-decoration: none;
+color: gray;
+
+}
 
 </style>
 
@@ -54,9 +94,9 @@ function ajaxFun(url, method, query, dataType, fn) {
 $(function(){
 	listPage(1);
 	
-    $("button[role='tab']").on("click", function(e){
+/*     $("button[role='tab']").on("click", function(e){
     	listPage(1);
-    });
+    }); */
     
 });
 
@@ -65,39 +105,46 @@ function listPage(page) {
 	const $tab = $("button[role='tab'].active");
 	
 	div = $tab.attr("data-div");
+	alert(div);
 	
-	let url = "${pageContext.request.contextPath}/recruit/list";
-	let query = "pageNo="+page+"&div="+div;
-	let search = $('form[name=recruitSearchForm]').serialize();
-	query = query+"&"+search;
+	let url = "${pageContext.request.contextPath}/mypage/myhistory/list";
+	let query = "div="+div;
 	
 	let selector = "#panel-"+div;
 	
 	const fn = function(data){
+		console.log(data);
 		$(selector).html(data);
 	};
 	ajaxFun(url, "get", query, "html", fn);
 }
 
 // 검색
-function searchList() {
-	const f = document.recruitSearchForm;
-	f.condition.value = $("#condition").val();
-	f.keyword.value = $.trim($("#keyword").val());
-
-	listPage(1);
-}
 
 // 새로고침
 function reloadMyHistory() {
 	const f = document.myhistorySearchForm;
-	f.condition.value = "subject";
-	f.keyword.value = "";
 	
 	listPage(1);
 }
 
 </script>
+<nav>
+	<ul class="side">
+		<li class="side-menu1">
+			고객센터
+		</li>
+		<li class="side-menu2">
+			<a href="${pageContext.request.contextPath}/notice/main">공지사항</a>
+		</li>
+		<li class="side-menu3">
+			<a href="${pageContext.request.contextPath}/faq/main">자주 묻는 질문</a>
+		</li>
+	</ul>
+</nav>
+
+
+
 
 <div class="container body-container">
 	<div class="body-main mx-auto">
@@ -129,6 +176,6 @@ function reloadMyHistory() {
 </div>
 
 <form name="myhistorySearchForm" method="post">
-	<input type="hidden" name="condition" value="subject">
+	<input type="hidden" name="condition" value="all">
     <input type="hidden" name="keyword" value="">
 </form>

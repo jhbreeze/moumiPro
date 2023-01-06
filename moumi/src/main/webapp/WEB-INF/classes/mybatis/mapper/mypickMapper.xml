@@ -3,4 +3,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="temp">
 
+	<select id="mypickCommunity" parameterType="String" resultType="com.moumi.app.member.Member">
+		SELECT c.communityNum, c.subject, m.nickName, c.regDate
+		FROM pick p
+		LEFT JOIN community c ON p.communityNum = c.communityNum
+		LEFT JOIN member m ON p.userCode = #{userCode};
+	</select>
+
+	<select id="mypickRecruit" parameterType="String" resultType="com.moumi.app.member.Member">
+		SELECT r.recruitNum, r.categoryNum, r.subject, r.startDate, r.endDate, r.corporation
+		FROM recruitPick rp
+		LEFT JOIN recruit r ON rp.recruitNum = #{recruitNum};
+	</select>
+
+
+
+
 </mapper>
