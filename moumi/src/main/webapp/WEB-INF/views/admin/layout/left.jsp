@@ -136,9 +136,9 @@ color: #198754;
 	
 		<li class="menu--item menu--item__has_sub_menu">
 		
-			<label class="menu--link" title="공지 사항 관리">
+			<label class="menu--link" title="고객센터 관리">
 				<i class="menu--icon  fa-fw fa-solid fa-person-circle-question"></i>
-				<span class="menu--label">공지사항 관리</span>
+				<span class="menu--label">고객센터 관리</span>
 			</label>
 
 			<ul class="sub_menu">

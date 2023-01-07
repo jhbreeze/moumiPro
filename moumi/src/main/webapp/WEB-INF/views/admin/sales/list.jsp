@@ -337,9 +337,9 @@ $(function() {
 		let name;
 		
 		for(let item of data.Wpies){
-			name =  parseInt(item.STARTMONTH.substring(0, 4))+'년 ';
+			name =  parseInt(item.STARTMONTH.substring(2, 4))+'년 ';
 			name += parseInt(item.STARTMONTH.substring(4,7))+'월';
-			name += ~ parseInt(item.ENDMONTH.substring(0, 4))+'년 ';
+			name += - parseInt(item.ENDMONTH.substring(2, 4))+'년 ';
 			name += parseInt(item.ENDMONTH.substring(5,7))+'월';
 			obj = parseInt(item.WOMAN);
 		}
@@ -583,9 +583,9 @@ $(function() {
 		let name;
 		
 		for(let item of data.Tpies){
-			name =  parseInt(item.STARTMONTH.substring(0, 4))+'년 ';
+			name =  parseInt(item.STARTMONTH.substring(2, 4))+'년 ';
 			name += parseInt(item.STARTMONTH.substring(4,7))+'월';
-			name += ~ parseInt(item.ENDMONTH.substring(0, 4))+'년 ';
+			name += - parseInt(item.ENDMONTH.substring(2, 4))+'년 ';
 			name += parseInt(item.ENDMONTH.substring(5,7))+'월';
 			obj = parseInt(item.TEEN);
 		}

@@ -103,7 +103,6 @@
 		<thead>
 			<tr id="tabled">
 				<th>내용</th>
-				<th width="130">담당자</th>
 				<th width="200">등록일</th>
 			</tr>
 		</thead>
@@ -112,7 +111,6 @@
 			<c:forEach var="vo" items="${listState}">
 				<tr>
 					<td class="ps-5">${vo.memo} (${vo.stateNum})</td>
-					<td class="text-center">${vo.registerCode}</td>
 					<td class="text-center">${vo.register_date}</td>
 				</tr>
 			</c:forEach>
