@@ -158,6 +158,13 @@ public class HomeController {
 		return ".api.api";
 	}
 
+	@RequestMapping(value = "search")
+	public String search() throws Exception {
+
+		return ".search.search";
+	}
+
+	
 	
 
 }
