@@ -64,8 +64,8 @@ margin : 200px 0 0;
 color: white;
 }
 
-.menu--subitens__opened > .menu--link, .menu--subitens__opened > .menu--label{
-color: #198754;
+.menu--subitens__opened > .menu--label {
+	color: green;
 }
 
 .menu-side{
@@ -76,6 +76,7 @@ color: #198754;
     padding : 17px 0;
     margin : 0;
 }
+
 </style>
 
 <header class="header clearfix">

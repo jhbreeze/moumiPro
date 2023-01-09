@@ -30,6 +30,14 @@ $(function() {
 	});
 });
 </script>
+<style type="text/css">
+.btn{
+	background-color: #ECF4EB;
+	color: #198754;
+}
+
+
+</style>
 <div style="float: right; width: 5%; text-align: center;">
 	<input type="checkbox" class="form-check-input" name="chkAll" id="chkAll">
 </div>
@@ -93,9 +101,8 @@ $(function() {
 
 <div class="row py-3">
 	<div class="col">
-		<button type="button" class="btn btn-light" onclick="reloadFaq();">새로고침</button>
 	</div>
 	<div class="col text-end">
-			<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/admin/faq/write';">글올리기</button>
+			<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/admin/faq/write';">글올리기</button>
 	</div>
 </div>

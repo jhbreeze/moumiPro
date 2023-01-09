@@ -27,6 +27,11 @@ tr {
 	
 }
 
+.btn{
+	background-color: #ECF4EB;
+	color: #198754;
+}
+
 tr:hover {
 	background: #fff;
 	box-shadow: 0px 0px 4px rgb(72, 92, 161, 0.4);
@@ -77,6 +82,25 @@ tr:hover {
 
 .text-line{
 	text-decoration : none;
+	color : green;
+}
+.nav-tabs .nav-link {
+	color : black;
+}
+
+#tab-0.active {
+	color : green;
+}
+
+#tab-1.active {
+	color : green;
+}
+
+#tab-2.active {
+	color : green;
+}
+
+#tab-3.active {
 	color : green;
 }
 </style>
@@ -173,7 +197,7 @@ function reloadFaq() {
 	<div class="body-container">	
 		<div class="body-title">
 			<h2>
-				<i class="fa-brands fa-perbyte"></i> 자주하는 질문
+				자주하는 질문
 			</h2>
 		</div>
 	    		

@@ -22,6 +22,11 @@ function deleteOk() {
 	min-height: 800px;
 }
 
+.btn{
+	background-color: #ECF4EB;
+	color: #198754;
+}
+
 main {
 	position: relative;
 	top: -55px;
@@ -86,7 +91,7 @@ tr {
 	<div class="body-container">
 		<div class="body-title">
 			<h2>
-				<i class="fa-brands fa-perbyte"></i> 공지사항
+				공지사항
 			</h2>
 		</div>
 

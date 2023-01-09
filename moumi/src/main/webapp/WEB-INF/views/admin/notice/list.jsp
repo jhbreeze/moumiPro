@@ -72,6 +72,15 @@ tr:hover {
 .btn:active, .btn:focus, .btn:hover {
 	color: #eee;
 }
+
+.btn{
+	background-color: #ECF4EB;
+	color: #198754;
+}
+
+.trN{
+	pointer-events: none;
+}
 </style>
 
 <script type="text/javascript">
@@ -84,7 +93,7 @@ function searchList() {
 	<div class="body-container">
 		<div class="body-title">
 			<h2>
-				<i class="fa-brands fa-perbyte"></i> 공지사항
+				공지사항
 			</h2>
 		</div>
 
@@ -96,7 +105,7 @@ function searchList() {
 				
 				<table class="table">
 					<tbody>
-						<tr>
+						<tr class="trN">
 							<td scope="row" class="text-center sort-td"><div class="sort">번호</div></td>
 							<td class="text-center"><a href="#" class="text-reset text-decoration-none">제목</a></td>
 							<td class="text-center date-th"><div class="date-div">날짜</div></td>

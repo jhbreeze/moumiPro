@@ -29,7 +29,12 @@ public class FaqController {
 	
 	@RequestMapping("main")
 	public String main(@RequestParam(value = "pageNo", defaultValue = "1")int current_page,
-			Model model) throws Exception {
+			Model model, HttpSession session) throws Exception {
+		
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		if(info.getUserType() != 0) {
+			return "redirect:/main";
+		}
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		List<Faq> listCategory = service.listCategory(map);
@@ -45,7 +50,12 @@ public class FaqController {
 	public String list(@RequestParam(value = "pageNo", defaultValue = "1")int current_page,
 			HttpServletRequest req,
 			@RequestParam(defaultValue = "0") int categoryNum,
-			Model model) throws Exception {
+			Model model, HttpSession session) throws Exception {
+		
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		if(info.getUserType() != 0) {
+			return "redirect:/main";
+		}
 		
 		int size = 5;
 		int total_page = 0;
@@ -69,9 +79,6 @@ public class FaqController {
 		map.put("size", size);
 		
 		List<Faq>list = service.listFaq(map);
-		for (Faq dto : list) {
-			// dto.setContent(myUtil.htmlSymbols(dto.getContent()));
-		}
 		
 		String paging = myUtil.pagingMethod(current_page, total_page, "listPage");
 		
@@ -107,8 +114,10 @@ public class FaqController {
 	@PostMapping("write")
 	public String writeSubmit(Faq dto, HttpSession session) throws Exception {
 		
-		SessionInfo info = (SessionInfo)session.getAttribute("member");
-		
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		if(info.getUserType() != 0) {
+			return "redirect:/main";
+		}
 		try {
 			if(info.getUserCode() == 1) {
 				dto.setUserCode(info.getUserCode());
@@ -124,7 +133,10 @@ public class FaqController {
 	public String updateForm(@RequestParam long faqNum,
 			HttpSession session,
 			Model model) throws Exception {
-		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		if(info.getUserType() != 0) {
+			return "redirect:/main";
+		}
 		
 		Faq dto = service.readFaq(faqNum);
 		if (dto == null) {
@@ -144,6 +156,11 @@ public class FaqController {
 	public String updateSubmit(Faq dto, 
 			HttpSession session) throws Exception {
 		
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		if(info.getUserType() != 0) {
+			return "redirect:/main";
+		}
+		
 		try {
 			service.updateFaq(dto);
 		} catch (Exception e) {
@@ -156,8 +173,11 @@ public class FaqController {
 	
 	@PostMapping("deleteList")
 	public String deleteList(@RequestParam List<Long> faqNums, HttpSession session) throws Exception {
-		SessionInfo info = (SessionInfo)session.getAttribute("member");
-		String state = "false";
+		
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		if(info.getUserType() != 0) {
+			return "redirect:/main";
+		}
 		
 		try {
 			service.deleteFaq(faqNums);

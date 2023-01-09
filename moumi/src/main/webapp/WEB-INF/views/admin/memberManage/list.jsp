@@ -44,6 +44,10 @@ tr:hover {
 	box-shadow: 0px 0px 4px rgb(72, 92, 161, 0.4);
 }
 
+.trN{
+	pointer-events: none;
+}
+
 .sort {
 	font-size: 10px;
 	border: 1px solid #e2e2e2;
@@ -147,9 +151,6 @@ function detailedMember(userCode){
 			" 수정 " : function() {
 				updateOk();
 			},
-			" 삭제 " : function() {
-				deleteOk(email);
-			},
 			" 닫기 " : function() {
 				$(this).dialog("close");
 			}
@@ -252,7 +253,7 @@ function selectStateChange() {
 	<div class="body-container">
 		<div class="body-title">
 			<h2>
-				<i class="fa-brands fa-perbyte"></i> 회원관리
+				회원관리
 			</h2>
 		</div>
 
@@ -261,7 +262,7 @@ function selectStateChange() {
 			<div id="tab-content" style="clear:both; padding: 20px 10px 0;">
 		
 			<table class="table">
-				<tr>
+				<tr class="trN">
 					<td align="left" width="50%">
 						${dataCount}개(${page}/${total_page} 페이지)
 					</td>
@@ -284,7 +285,7 @@ function selectStateChange() {
 				
 			<table class="table table-border table-list">
 				<thead>
-					<tr id="tablec"> 
+					<tr id="tablec" class="trN"> 
 						<th class="wx-60">번호</th>
 						<th class="wx-120">회원구분</th>
 						<th class="wx-100">아이디(이메일)</th>
@@ -335,13 +336,8 @@ function selectStateChange() {
 			</div>
 					
 			<table class="table">
-				<tr>
-					<td align="left" width="100">
-						<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/admin/memberManage/list';" style="width:max-content;">새로고침</button>
-					</td>
-					<td align="right" width="100">&nbsp;</td>
-					<td align="right" width="100">&nbsp;</td>
-					<td align="right" width="100">&nbsp;</td>
+				<tr class="trN">
+					<td align="right" width="350">&nbsp;</td>
 					<td align="center">
 						<form name="searchForm" action="${pageContext.request.contextPath}/admin/memberManage/list" method="post">
 							<select name="condition" class="form-select" style="width: auto; float: left;">
@@ -354,7 +350,7 @@ function selectStateChange() {
 								<input type="hidden" name="enabled" value="${enabled}">
 								<input type="hidden" name="userType" value="${userType}">
 								<input type="hidden" name="page" value="1">
-							<button type="button" class="btn" onclick="searchList()">검색</button>
+							<button type="button" class="btn" onclick="searchList()" style="float: left;">검색</button>
 						</form>
 					</td>
 				</tr>

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.moumi.app.common.MyUtil;
+import com.moumi.app.member.SessionInfo;
 
 @Controller("admin.memberManage.memberManageController")
 
@@ -37,7 +39,12 @@ public class MemberManageController {
 			@RequestParam(defaultValue = "") String enabled,
 			@RequestParam(defaultValue = "-1") Long userType,
 			HttpServletRequest req,
-			Model model) throws Exception {
+			Model model, HttpSession session) throws Exception {
+		
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		if(info.getUserType() != 0) {
+			return "redirect:/main";
+		}
 		
 		String cp = req.getContextPath();
 		

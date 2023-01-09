@@ -750,12 +750,32 @@ tr:hover {
 td{
 	vertical-align: middle;
 }
+butten {
+	color: black;
+}
+
+.nav-link {
+	color : black;
+}
+
+#tab-1.active {
+	color : green;
+}
+
+#tab-2.active {
+	color : green;
+}
+
+#tab-3.active {
+	color : green;
+}
+
 </style>
 <div class="container">
 	<div class="body-container">
 		<div class="body-title">
 			<h2>
-				<i class="fa-brands fa-perbyte"></i> 매출 관리
+				매출 관리
 			</h2>
 		</div>
 		

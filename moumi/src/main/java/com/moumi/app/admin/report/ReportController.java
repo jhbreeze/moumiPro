@@ -43,7 +43,12 @@ public class ReportController {
 			@RequestParam(defaultValue = "all") String condition,
 			@RequestParam(defaultValue = "") String keyword,
 			HttpServletRequest req,
-			Model model) throws Exception{
+			Model model, HttpSession session) throws Exception{
+		
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		if(info.getUserType() != 0) {
+			return "redirect:/main";
+		}
 		
 		int size = 6;
 		int total_page;
@@ -98,7 +103,12 @@ public class ReportController {
 	}
 	
 	@GetMapping("write")
-	public String writeForm(Model model) {
+	public String writeForm(Model model, HttpSession session) {
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		if(info.getUserType() != 0) {
+			return "redirect:/main";
+		}
+		
 		model.addAttribute("mode", "write");
 		
 		return ".admin.report.write";
@@ -108,7 +118,10 @@ public class ReportController {
 	public String writeSubmit(Report dto, 
 			HttpSession session, 
 			Model model) {
-		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		if(info.getUserType() != 0) {
+			return "redirect:/main";
+		}
 		
 		try {
 			String root = session.getServletContext().getRealPath("/");
@@ -128,7 +141,12 @@ public class ReportController {
 			@RequestParam String page, 
 			@RequestParam(defaultValue = "all")String condition, 
 			@RequestParam(defaultValue = "")String keyword,
-			Model model) throws Exception {
+			Model model, HttpSession session) throws Exception {
+		
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		if(info.getUserType() != 0) {
+			return "redirect:/main";
+		}
 		
 		try {
 			keyword = URLDecoder.decode(keyword, "utf-8");
@@ -172,6 +190,11 @@ public class ReportController {
 			@RequestParam String page, 
 			HttpSession session, 
 			Model model) throws Exception {
+		
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		if(info.getUserType() != 0) {
+			return "redirect:/main";
+		}
 		Report dto = service.readReport(reportNum);
 		List<Report> listFile = service.listReportFile(reportNum);
 		
@@ -189,6 +212,9 @@ public class ReportController {
 			@RequestParam String page, 
 			HttpSession session) throws Exception {
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		if(info.getUserType() != 0) {
+			return "redirect:/main";
+		}
 
 		try {
 			String root = session.getServletContext().getRealPath("/");
@@ -211,6 +237,9 @@ public class ReportController {
 			@RequestParam(defaultValue = "") String keyword, 
 			HttpSession session) throws Exception {
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		if(info.getUserType() != 0) {
+			return "redirect:/main";
+		}
 		
 		keyword = URLDecoder.decode(keyword, "utf-8");
 		String query = "page="+page;

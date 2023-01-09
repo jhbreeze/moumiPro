@@ -66,6 +66,11 @@ tr:hover {
 .btn:active, .btn:focus, .btn:hover {
 	color: #eee;
 }
+
+.btn{
+	background-color: #ECF4EB;
+	color: #198754;
+}
 </style>
 
 <script type="text/javascript">
@@ -85,7 +90,7 @@ function searchList() {
 	<div class="body-container">
 		<div class="body-title">
 			<h2>
-				<i class="fa-brands fa-perbyte"></i> 분석 리포트 관리
+				분석 리포트 관리
 			</h2>
 		</div>
 
@@ -119,9 +124,8 @@ function searchList() {
 		</div>
 		
 		<div class="row board-list-footer">
-			<div class="col">
-					<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/admin/report/list';">새로고침</button>
-				</div>
+			<div class="col" style="width: 300"></div>
+			<div class="col"></div>
 				<div class="col-6 text-center">
 					<form class="row" name="searchForm" action="${pageContext.request.contextPath}/admin/report/list" method="post">
 						<div class="col-auto p-1">

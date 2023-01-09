@@ -105,12 +105,17 @@ tr {
 .table{
 	table-layout : fixed;
 }
+
+.btn{
+	background-color: #ECF4EB;
+	color: #198754;
+}
 </style>
 <div class="container">
 	<div class="body-container">
 		<div class="body-title">
 			<h2>
-				<i class="fa-brands fa-perbyte"></i> 분석 리포트
+				분석 리포트
 			</h2>
 		</div>
 

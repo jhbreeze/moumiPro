@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.moumi.app.common.MyUtil;
+import com.moumi.app.member.SessionInfo;
 
 @Controller("admin.comment.commentController")
 
@@ -39,7 +41,12 @@ public class CommentController {
 	public String list(@RequestParam(value = "pageNo", defaultValue = "1")int current_page,
 			@RequestParam(defaultValue = "0")int status,
 			HttpServletRequest req,
-			Model model) throws Exception {
+			Model model, HttpSession session) throws Exception {
+		
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		if(info.getUserType() != 0) {
+			return "redirect:/main";
+		}
 		
 		int size = 10;
 		int total_page = 0;
@@ -90,7 +97,7 @@ public class CommentController {
 	@PostMapping("update")
 	@ResponseBody
 	public Map<String, Object> update(@RequestParam long replyNum, 
-			 @RequestParam int status) throws Exception {
+			 @RequestParam int status, HttpSession session) throws Exception {
 		
 		String state = "false";
 		try {

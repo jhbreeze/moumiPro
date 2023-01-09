@@ -213,6 +213,22 @@ tr:hover {
 .line{
 	padding: 10px 45px;
 }
+
+.nav-link {
+	color : black;
+}
+
+#tab-1.active {
+	color : green;
+}
+
+#tab-2.active {
+	color : green;
+}
+
+#tab-3.active {
+	color : green;
+}
 </style>
 <div class="body-container">
     <div class="body-main">

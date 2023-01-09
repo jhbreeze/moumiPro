@@ -87,6 +87,22 @@ tr:hover {
 .pp{
 	background-color : #ECF4EB;
 }
+
+#tab-0.active {
+	color : green;
+}
+
+#tab-1.active {
+	color : green;
+}
+
+.nav-tabs .nav-link {
+	color : black;
+}
+
+a{
+	color : green;
+}
 </style>
 <script type="text/javascript">
 function login() {
@@ -162,7 +178,7 @@ function updateReply(replyNum, page, status) {
 	<div class="body-container">	
 		<div class="body-title">
 			<h2>
-				<i class="fa-brands fa-perbyte"></i> 신고 댓글 관리
+				신고 댓글 관리
 			</h2>
 		</div>
 	    		

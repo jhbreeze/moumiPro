@@ -106,7 +106,7 @@ tr {
 	<div class="body-container">	
 		<div class="body-title">
 			<h2>
-				<i class="fa-brands fa-perbyte"></i> 자주하는 질문
+				분석 리포트
 			</h2>
 		</div>
 		
