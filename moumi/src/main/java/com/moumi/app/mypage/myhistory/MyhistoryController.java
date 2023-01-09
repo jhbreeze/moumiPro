@@ -110,6 +110,7 @@ public class MyhistoryController {
 		map.put("offset", offset);
 		map.put("size", size);
 		
+		
 		List<Myhistory> reply = service.listMyhistoryReply(map);
 		
 		String paging = myUtil.pagingMethod(current_page, total_page, "listPage");

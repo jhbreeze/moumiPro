@@ -9,26 +9,23 @@
 <table class="table myhistory-table">
 	<thead class="fw-bold">
 		<tr>
-			<th>댓글<br></th>
-			<th>게시판<br></th>
-			<th colspan="4">제목<br></th>
-			<th>작성일</th>
+			<th>댓글</th>
 		</tr>
 	</thead>
 
 	<tbody class="text-center">
 		<c:forEach var="dto" items="${reply}" varStatus="status">
 			<tr class="historyPost-table-tr">
-				<td colspan="1">${dto.content}</td>
-				<td colspan="4">
-						<a href="${pageContext.request.contextPath}/board/article?communityNum=${dto.communityNum}&page=1">${dto.subject}</a>
-				</td>		
-				<td colspan="1">${dto.regDate}</td>
+				<td style="text-align: left;"><a href="${pageContext.request.contextPath}/board/article?communityNum=${dto.communityNum}&page=1">
+				<span style="font-weight: bold;">${dto.content}</span><br>
+				<span style="color: #878787;">${dto.regDate}</span><br>
+				<span style="color: #878787;">${dto.subject}</span></a>
+				</td>
 		</c:forEach>
 	</tbody>
 
 </table>
-
+ 
 
 <div class="page-navigation">
 	${dataCount == 0 ? "등록된 게시물이 없습니다." : paging}

@@ -22,7 +22,7 @@
 	</select>
 
 	<select id="myhistoryReply" parameterType="map" resultType="com.moumi.app.mypage.myhistory.Myhistory">
-		SELECT r.content, r.regDate, c.subject
+		SELECT r.content, r.regDate, c.subject, c.communityNum
 		FROM reply r
 		JOIN community c ON c.communityNum = r.communityNum
 		WHERE r.userCode= #{userCode}
