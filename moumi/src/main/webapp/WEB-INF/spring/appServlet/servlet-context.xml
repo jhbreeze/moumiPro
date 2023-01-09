@@ -59,11 +59,6 @@
 		<beans:property name="maxUploadSize" value="10485760" />
     </beans:bean>
 	
-	<!-- 웹소켓 환경 설정 -->
- 	<websocket:handlers>
- 		<websocket:mapping handler="mySocketHandler" path="/chat.msg"/>
- 	</websocket:handlers>
- 	<beans:bean id="mySocketHandler" class="com.moumi.app.chatting.MySocketHandler" />
 	
     <!-- 예외처리 -->
     <beans:bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
