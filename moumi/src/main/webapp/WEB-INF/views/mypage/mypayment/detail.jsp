@@ -6,31 +6,34 @@
 	<span style="color: green" >${dataCount}</span>건
 </p>
     
-<table class="table mypicktable">
+<table class="table mypayment-table">
 	<thead class="fw-bold">
 		<tr>
-			<th>글번호</th>
-			<th colspan="4">제목</th>
-			<th>작성자</th>
-			<th>작성일</th>
+			<th>결제번호</th>
+			<th>이용권</th>
+			<th colspan="2">결제일</th>
+			<th colspan="3">사용 기간 안내</th>
 		</tr>
 	</thead>
-	
+
 	<tbody class="text-center">
-		<c:forEach var="dto" items="${scrap}" varStatus="status">
-			<tr class="pickScrap-table-tr">
-				<td>${dto.communityNum}</td>		
-				<td colspan="4"><a href="${pageContext.request.contextPath}/board/article?communityNum=${dto.communityNum}&page=1">${dto.subject}</a></td>		
-				<td>${dto.nickName}</td>		
-				<td>${dto.regDate}</td>		
+		<c:forEach var="dto" items="${detail}" varStatus="status">
+			<tr class="paymentDetail-table-tr">
+				<td colspan="1">${dto.paymentNum}</td>		
+				<td colspan="1">${dto.subject}</td>		
+				<td colspan="4">${dto.payDate}</td>		
+				<td colspan="1">${dto.payDate}&nbsp;~&nbsp;${dto.endDate}</td>
 		</c:forEach>
 	</tbody>
-	
-			
+
 </table>
 
 
 <div class="page-navigation">
 	${dataCount == 0 ? "등록된 게시물이 없습니다." : paging}
 </div>
+
+
+
+
 

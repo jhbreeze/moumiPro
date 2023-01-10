@@ -4,7 +4,7 @@
 <mapper namespace="mypick">
 
 	<select id="mypickScrap" parameterType="map" resultType="com.moumi.app.mypage.mypick.Mypick">
-		SELECT c.communityNum, c.subject, c.nickName, c.regDate
+		SELECT c.communityNum, c.subject, c.nickName, TO_CHAR(c.regDate, 'YYYY-MM-DD') regDate
 		FROM pick p
 		LEFT JOIN community c ON p.communityNum = c.communityNum
 		LEFT JOIN member m ON p.userCode = m.userCode
@@ -15,7 +15,7 @@
 	</select>
 
 	<select id="mypickRecruit" parameterType="map" resultType="com.moumi.app.mypage.mypick.Mypick">
-		SELECT r.recruitNum, r.categoryNum, r.subject, r.startDate, r.endDate, r.corporation
+		SELECT r.recruitNum, r.categoryNum, r.subject, TO_CHAR(r.startDate, 'YYYY-MM-DD') startDate, TO_CHAR(r.endDate, 'YYYY-MM-DD') endDate, r.corporation
 		FROM recruitPick rp
 		LEFT JOIN recruit r ON rp.recruitNum = r.recruitNum
         LEFT JOIN member m ON rp.userCode = m.userCode

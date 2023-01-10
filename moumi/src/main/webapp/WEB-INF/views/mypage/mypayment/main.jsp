@@ -20,7 +20,6 @@ tbody tr:hover {
 list-style: none;
 font-family:"Malgun Gothic", "맑은 고딕", NanumGothic, 나눔고딕, 돋움, sans-serif;
 font-size: 20px;
-
 }
 .side-menu1{
 position:absolute;
@@ -70,7 +69,6 @@ left: 15rem;
 text-decoration: none;
 color: gray;
 }
-
 </style>
 
 
@@ -106,24 +104,28 @@ function ajaxFun(url, method, query, dataType, fn) {
 }
 
 $(function(){
-	listPage(1);
-	
-    $("button[role='tab']").on("click", function(e){
-    	listPage(1);
-    });
-    
+	current();
+
+
+     $("button[role='tab']").on("click", function(e){
+ 		let tab = $(this).attr("aria-controls");
+ 		
+ 		if(tab === "1") { 
+ 			current();
+ 		} else if(tab === "2"){ 
+ 			detail()
+ 		}
+     });     
 });
 
 //글리스트 및 페이징 처리
-function listPage(page) {
+function current() {
 	const $tab = $("button[role='tab'].active");
 	
 	div = $tab.attr("data-div");
 	
-	let url = "${pageContext.request.contextPath}/recruit/list";
-	let query = "pageNo="+page+"&div="+div;
-	let search = $('form[name=recruitSearchForm]').serialize();
-	query = query+"&"+search;
+	let url = "${pageContext.request.contextPath}/mypage/mypayment/current";
+	let query = "div="+div;
 	
 	let selector = "#panel-"+div;
 	
@@ -133,22 +135,20 @@ function listPage(page) {
 	ajaxFun(url, "get", query, "html", fn);
 }
 
-// 검색
-function searchList() {
-	const f = document.recruitSearchForm;
-	f.condition.value = $("#condition").val();
-	f.keyword.value = $.trim($("#keyword").val());
-
-	listPage(1);
-}
-
-// 새로고침
-function reloadRecruit() {
-	const f = document.recruitSearchForm;
-	f.condition.value = "subject";
-	f.keyword.value = "";
+function detail() {
+	const $tab = $("button[role='tab'].active");
 	
-	listPage(1);
+	div = $tab.attr("data-div");
+	
+	let url = "${pageContext.request.contextPath}/mypage/mypayment/detail";
+	let query = "div="+div;
+	
+	let selector = "#panel-"+div;
+	
+	const fn = function(data){
+		$(selector).html(data);
+	};
+	ajaxFun(url, "get", query, "html", fn);
 }
 
 </script>
@@ -176,11 +176,11 @@ function reloadRecruit() {
 		<ul class="nav nav-tabs" id="myTab" role="tablist">
 			<li class="nav-item" role="presentation">
 				<button class="nav-link active" id="tab-1" data-bs-toggle="tab" data-bs-target="#panel-1" 
-					type="button" role="tab" data-div="1" aria-controls="panel-1" aria-selected="true">보유 현황</button>
+					type="button" role="tab" data-div="1" aria-controls="1" aria-selected="true">보유 현황</button>
 			</li>
 			<li class="nav-item" role="presentation">
 				<button class="nav-link" id="tab-2" data-bs-toggle="tab" data-bs-target="#panel-2"
-					type="button" role="tab" data-div="2" aria-controls="panel-2" aria-selected="true">결제 내역</button>
+					type="button" role="tab" data-div="2" aria-controls="2" aria-selected="true">결제 내역</button>
 			</li>
 		</ul>
 		
@@ -199,8 +199,3 @@ function reloadRecruit() {
 
 	</div>
 </div>
-
-<form name="recruitSearchForm" method="post">
-	<input type="hidden" name="condition" value="subject">
-    <input type="hidden" name="keyword" value="">
-</form>
