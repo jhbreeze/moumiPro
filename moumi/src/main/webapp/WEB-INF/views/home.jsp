@@ -304,8 +304,9 @@ $(function(){
 	$(".btnSearch").click(function(){
 		let url = "${pageContext.request.contextPath}/search/searchResult";
 		// let kwd = encodeURIComponent("하")
-
-		let kwd = "regex"
+		
+		const kwd = document.getElementById('kwd').value;
+	
 		let query = "kwd="+kwd;
 		alert(query)
 		const fn = function(data) {
@@ -461,7 +462,7 @@ $(function(){
 	<form class="d-flex searchBox" role="search">
 		<div class="customInput">
 			<input class="form-control mx-5 inputSearch" type="search"
-				placeholder="궁금한 분석 단어를 입력하세요." aria-label="Search">
+				placeholder="궁금한 분석 단어를 입력하세요." aria-label="Search" id ="kwd">
 			<button type="button" class="btn btnSearch">
 				<i class="fa-solid fa-magnifying-glass"></i>
 			</button>

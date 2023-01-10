@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -156,12 +157,35 @@ public class HomeController {
 
 		return ".api.api";
 	}
-
-	@GetMapping(value = "search")
+	
+	
+	@PostMapping("search")
 	public String search() throws Exception {
-
+		
 		return ".search.search";
 	}
+
+
+	
+	
+	
+	 
+//	@GetMapping(value = "search")
+//	public String search() throws Exception {
+//
+//		return ".search.search";
+//	}
+
+	/*
+	@RequestMapping("/search/searchResult")
+	@ResponseBody
+	public Map<String, Object> searchResult(@RequestParam String kwd) throws Exception {
+		Map<String, Object> model = service.search(kwd);
+
+		return model;
+
+	}
+	*/
 
 	@RequestMapping("/search/searchResult")
 	@ResponseBody
@@ -171,5 +195,4 @@ public class HomeController {
 		return model;
 
 	}
-
 }
