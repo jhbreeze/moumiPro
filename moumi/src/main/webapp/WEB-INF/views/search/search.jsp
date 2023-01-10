@@ -27,11 +27,11 @@
 }
 
 .layoutSNS {
-	width: 400px;
-	height: 600px;
+	width: 455px;
+	height: 615px;
 	background: blue;
 	border-radius: 15px;
-	margin: 2px;
+	margin: 3px;
 	padding: 50px;
 }
 
@@ -39,27 +39,31 @@
 	width: 400px;
 	height: 70px;
 	border-radius: 15px;
-	margin: 2px;
+	margin-right: 4px;
+	margin-left: 10px;
 	padding: 50px;
 	background: blue;
 	
 }
 
 .layoutMention {
-	width: 800px;
+	width: 811px;
 	height: 500px;
 	border-radius: 15px;
-	margin: 5px;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	
 	padding: 50px;
 	background: blue;
 	
 }
 
 .layoutYoutube{
-	width: 1400px;
+	width: 1295px;
 	height: 200px;
 	border-radius: 15px;
 	background: blue;
+	margin-left: 15px;
 	
 
 }
