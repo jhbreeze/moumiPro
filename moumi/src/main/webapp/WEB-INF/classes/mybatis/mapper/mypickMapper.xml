@@ -1,22 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="temp">
+<mapper namespace="mypick">
 
-	<select id="mypickCommunity" parameterType="String" resultType="com.moumi.app.member.Member">
-		SELECT c.communityNum, c.subject, m.nickName, c.regDate
+	<select id="mypickScrap" parameterType="map" resultType="com.moumi.app.mypage.mypick.Mypick">
+		SELECT c.communityNum, c.subject, c.nickName, c.regDate
 		FROM pick p
 		LEFT JOIN community c ON p.communityNum = c.communityNum
-		LEFT JOIN member m ON p.userCode = #{userCode};
+		LEFT JOIN member m ON p.userCode = m.userCode
+        WHERE p.userCode = #{userCode}
+		
+		ORDER BY p.regDate DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
 	</select>
 
-	<select id="mypickRecruit" parameterType="String" resultType="com.moumi.app.member.Member">
+	<select id="mypickRecruit" parameterType="map" resultType="com.moumi.app.mypage.mypick.Mypick">
 		SELECT r.recruitNum, r.categoryNum, r.subject, r.startDate, r.endDate, r.corporation
 		FROM recruitPick rp
-		LEFT JOIN recruit r ON rp.recruitNum = #{recruitNum};
+		LEFT JOIN recruit r ON rp.recruitNum = r.recruitNum
+        LEFT JOIN member m ON rp.userCode = m.userCode
+		WHERE rp.userCode = #{userCode}
+		
+		ORDER BY rp.regDate DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
 	</select>
 
-
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) 
+		FROM (
+		    SELECT c.communityNum, c.subject, c.nickName, c.regDate
+			FROM pick p
+			LEFT JOIN community c ON p.communityNum = c.communityNum
+			LEFT JOIN member m ON p.userCode = m.userCode
+	        WHERE p.userCode = #{userCode}
+		)
+	</select>
+	
+	<select id="dataCountR" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) 
+        FROM (
+	        SELECT r.recruitNum, r.categoryNum, r.subject, r.startDate, r.endDate, r.corporation
+			FROM recruitPick rp
+			LEFT JOIN recruit r ON rp.recruitNum = r.recruitNum
+	        LEFT JOIN member m ON rp.userCode = m.userCode
+			WHERE rp.userCode = #{userCode}
+        )
+	</select>
 
 
 </mapper>

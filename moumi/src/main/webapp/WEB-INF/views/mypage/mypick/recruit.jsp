@@ -6,29 +6,31 @@
 	<span style="color: green" >${dataCountR}</span>건
 </p>
     
-<table class="table myhistory-table">
+<table class="table mypick-table">
 	<thead class="fw-bold">
 		<tr>
-			<th>댓글</th>
+			<th colspan="1">글번호</th>
+			<th colspan="1">회사명</th>
+			<th colspan="4">공고명</th>
+			<th colspan="2">모집기간</th>
 		</tr>
 	</thead>
-
+	
 	<tbody class="text-center">
-		<c:forEach var="dto" items="${reply}" varStatus="status">
-			<tr class="historyPost-table-tr">
-				<td style="text-align: left;"><a href="${pageContext.request.contextPath}/board/article?communityNum=${dto.communityNum}&page=1">
-				<span style="font-weight: bold;">${dto.content}</span><br>
-				<span style="color: #878787;">${dto.regDate}</span><br>
-				<span style="color: #878787;">${dto.subject}</span></a>
-				</td>
+		<c:forEach var="dto" items="${recruit}" varStatus="status">
+			<tr class="pickRecruit-table-tr">
+				<td colspan="1">${dto.recruitNum}</td>		
+				<td colspan="1">${dto.corporation}</td>		
+				<td colspan="4">${dto.subject}</td>		
+				<td colspan="2">${dto.startDate}&nbsp;~&nbsp;${dto.endDate}</td>		
 		</c:forEach>
 	</tbody>
-
+	
+			
 </table>
- 
+
 
 <div class="page-navigation">
 	${dataCount == 0 ? "등록된 게시물이 없습니다." : paging}
 </div>
-
 

@@ -37,24 +37,38 @@ padding-top: 0.5rem;
 position:absolute;
 top: 14rem;
 left: 15rem;
-
 }
 .side-menu2 a{
-color: #198754;
-font-weight: bold;
 text-decoration: none;
-
+color: gray;
 }
 .side-menu3{
 position:absolute;
 top: 17rem;
 left: 15rem;
-
 }
 .side-menu3 a{
 text-decoration: none;
 color: gray;
-
+}
+.side-menu4{
+position:absolute;
+top: 20rem;
+left: 15rem;
+}
+.side-menu4 a{
+text-decoration: none;
+color: gray;
+}
+.side-menu5{
+position:absolute;
+top: 23rem;
+left: 15rem;
+}
+.side-menu5 a{
+color: #198754;
+font-weight: bold;
+text-decoration: none;
 }
 
 </style>
@@ -141,21 +155,25 @@ function reply() {
 }
 
 </script>
-<!-- 
 <nav>
 	<ul class="side">
 		<li class="side-menu1">
-			고객센터
+			마이페이지
 		</li>
 		<li class="side-menu2">
-			<a href="${pageContext.request.contextPath}/notice/main">공지사항</a>
+			<a href="${pageContext.request.contextPath}/member/pwd">회원 정보 수정</a>
 		</li>
 		<li class="side-menu3">
-			<a href="${pageContext.request.contextPath}/faq/main">자주 묻는 질문</a>
+			<a href="${pageContext.request.contextPath}/mypage/mypayment/main">이용권 상세 내역</a>
+		</li>
+		<li class="side-menu4">
+			<a href="${pageContext.request.contextPath}/mypage/mypick/main">관심 글</a>
+		</li>
+		<li class="side-menu5">
+			<a href="${pageContext.request.contextPath}/mypage/myhistory/main">나의 활동 내역</a>
 		</li>
 	</ul>
 </nav>
- -->
 
 
 

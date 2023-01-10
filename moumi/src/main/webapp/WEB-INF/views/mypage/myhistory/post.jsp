@@ -41,15 +41,6 @@
 </div>
 
 
-<div class="row py-3">
-	<div class="col">
-		<button type="button" class="btn btn-success"
-			onclick="reloadMyhistory();">새로고침</button>
-	</div>
 
 
 
-
-	<div class="col text-end">
-	</div>
-</div>
