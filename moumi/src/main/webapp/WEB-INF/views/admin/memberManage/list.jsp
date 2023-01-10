@@ -39,7 +39,7 @@ tr {
 	font-size: 15px;
 }
 
-tr:hover {
+.tr1:hover {
 	background: #fff;
 	box-shadow: 0px 0px 4px rgb(72, 92, 161, 0.4);
 }
@@ -262,7 +262,7 @@ function selectStateChange() {
 			<div id="tab-content" style="clear:both; padding: 20px 10px 0;">
 		
 			<table class="table">
-				<tr class="trN">
+				<tr>
 					<td align="left" width="50%">
 						${dataCount}개(${page}/${total_page} 페이지)
 					</td>
@@ -297,7 +297,7 @@ function selectStateChange() {
 				
 				<tbody>
 					<c:forEach var="dto" items="${list}" varStatus="status">
-						<tr class="hover" onclick="detailedMember('${dto.userCode}');"> 
+						<tr class="hover tr1" onclick="detailedMember('${dto.userCode}');"> 
 							<td>${dataCount - (page-1) * size - status.index}</td>
 							<td> 
 								<c:if test="${dto.userType == 0}">
@@ -336,7 +336,7 @@ function selectStateChange() {
 			</div>
 					
 			<table class="table">
-				<tr class="trN">
+				<tr>
 					<td align="right" width="350">&nbsp;</td>
 					<td align="center">
 						<form name="searchForm" action="${pageContext.request.contextPath}/admin/memberManage/list" method="post">

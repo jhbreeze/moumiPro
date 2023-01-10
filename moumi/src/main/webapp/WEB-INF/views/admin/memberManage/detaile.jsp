@@ -129,15 +129,15 @@
 		<thead>
 			<tr style="background-color: #ECF4EB;">
 				<th>구독기간</th>
-				<th width="200">등록일</th>
+				<th width="200">결제금액</th>
 			</tr>
 		</thead>
 		
 		<tbody>
 			<c:forEach var="vo" items="${listSub}">
 				<tr>
-					<td class="text-center">${dto.startDate} ~ ${dto.endDate}</td>
-					<td class="text-center">${vo.payDate}</td>
+					<td class="text-center">${vo.startDate} ~ ${vo.endDate}</td>
+					<td class="text-center">${vo.paymentPrice}</td>
 				</tr>
 			</c:forEach>
 	  

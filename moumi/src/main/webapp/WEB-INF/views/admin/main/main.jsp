@@ -229,6 +229,11 @@ tr:hover {
 #tab-3.active {
 	color : green;
 }
+
+a{
+	text-decoration : none;
+	color : green;
+}
 </style>
 <div class="body-container">
     <div class="body-main">
@@ -324,7 +329,26 @@ tr:hover {
 		</div>
 		
 		<div id="container5">
-			<div class="dtab p-2 fs-6 fw-semibold mb-2"><i class="bi bi-chevron-right"></i> 채팅</div>
+			<div class="dtab p-2 fs-6 fw-semibold mb-2"><i class="bi bi-chevron-right"></i> 신고댓글</div>
+			<c:choose>
+				<c:when test="${!empty list}">
+					<c:forEach var="dto" items="${list}" varStatus="status">
+				<div class="border rounded" style="padding: 10px;">
+						<div style="font-size: 15px;">
+							${dataCount - (page-1) * size - status.index}. ${dto.writeName}/${dto.regDate}
+						</div>
+							<div style="margin: 10px; font-size: 20px;">
+								${dto.content}
+							</div>
+						</div>
+				</c:forEach>
+				<div class="text-center" style="margin: 25px; font-size: 20px;"> >>&nbsp;<a href="${pageContext.request.contextPath}/admin/comment/main">신고댓글 관리</a> </div>
+				</c:when>
+				<c:otherwise>
+					<div>&nbsp;신고된 댓글이 없습니다.</div>
+				</c:otherwise>
+			</c:choose>
+			
 		</div>
 		</div>
 	</div>

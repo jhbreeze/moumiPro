@@ -23,6 +23,7 @@ public class Member {
 	private String endDate;
 	private String startDate;
 	private String payDate;
+	private long paymentPrice;
 	
 	public long getUserCode() {
 		return userCode;
@@ -143,6 +144,12 @@ public class Member {
 	}
 	public void setPayDate(String payDate) {
 		this.payDate = payDate;
+	}
+	public long getPaymentPrice() {
+		return paymentPrice;
+	}
+	public void setPaymentPrice(long paymentPrice) {
+		this.paymentPrice = paymentPrice;
 	}
 	
 
