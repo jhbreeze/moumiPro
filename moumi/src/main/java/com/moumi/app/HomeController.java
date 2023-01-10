@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.moumi.app.common.MyUtil;
 
@@ -109,8 +110,7 @@ public class HomeController {
 	}
 
 	@RequestMapping("article")
-	public String article(@RequestParam long reportNum,
-			Model model) throws Exception {
+	public String article(@RequestParam long reportNum, Model model) throws Exception {
 
 		try {
 			// keyword = URLDecoder.decode(keyword, "utf-8");
@@ -123,15 +123,14 @@ public class HomeController {
 			Report dto = service.readReport(reportNum);
 			if (dto == null) {
 				return "redirect:/report/list";
-			}		
-			
+			}
+
 			Map<String, Object> map = new HashMap<String, Object>();
 //			map.put("condition", condition);
 //			map.put("keyword", keyword);
 			map.put("reportNum", reportNum);
-			
+
 			model.addAttribute("dto", dto);
-			
 
 			// Report preReadDto = service.preReadReport(map);
 			// Report nextReadDto = service.nextReadReport(map);
@@ -158,13 +157,19 @@ public class HomeController {
 		return ".api.api";
 	}
 
-	@RequestMapping(value = "search")
+	@GetMapping(value = "search")
 	public String search() throws Exception {
 
 		return ".search.search";
 	}
 
-	
-	
+	@RequestMapping("/search/searchResult")
+	@ResponseBody
+	public Map<String, Object> searchResult(@RequestParam String kwd) throws Exception {
+		Map<String, Object> model = service.search(kwd);
+
+		return model;
+
+	}
 
 }

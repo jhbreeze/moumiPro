@@ -272,6 +272,58 @@ text-align:left;
 	});
 </script>
 
+<script type="text/javascript">
+function ajaxFun(url, method, query, dataType, fn) {
+	$.ajax({
+		type:method,
+		url:url,
+		data:query,
+		dataType:dataType,
+		success:function(data) {
+			fn(data);
+		},
+		beforeSend:function(jqXHR) {
+			jqXHR.setRequestHeader("AJAX", true);
+		},
+		error:function(jqXHR) {
+			if(jqXHR.status === 400) {
+				alert("요청 처리가 실패 했습니다.");
+				return false;
+			}
+
+			console.log(jqXHR.responseText);
+		}
+	});
+}
+</script>
+
+
+<script type="text/javascript">
+
+$(function(){
+	$(".btnSearch").click(function(){
+		let url = "${pageContext.request.contextPath}/search/searchResult";
+		// let kwd = encodeURIComponent("하")
+
+		let kwd = "regex"
+		let query = "kwd="+kwd;
+		alert(query)
+		const fn = function(data) {
+			console.log(data);
+			printResult(data);
+		};
+			
+		ajaxFun(url, "get", query, "json", fn);
+	});
+	
+	function printResult(data) {
+		let result = data.result;
+		$(".info-box").html(result)
+	}
+});
+
+</script>
+
 <script>
 	function map(latitude1, longitude1) {
 		let latitude = latitude1;
@@ -410,7 +462,7 @@ text-align:left;
 		<div class="customInput">
 			<input class="form-control mx-5 inputSearch" type="search"
 				placeholder="궁금한 분석 단어를 입력하세요." aria-label="Search">
-			<button class="btn btnSearch " type="submit">
+			<button type="button" class="btn btnSearch">
 				<i class="fa-solid fa-magnifying-glass"></i>
 			</button>
 		</div>
@@ -426,6 +478,10 @@ text-align:left;
 	</div>
 </div>
 
+	<div class="info-box" style ="width:900px; height: 900px; background:tomato"></div>
+
+
+	
 
 <div class="container body-container">
 	<div class="inner-page">
@@ -438,7 +494,7 @@ text-align:left;
 						onclick="location.href='${pageContext.request.contextPath}/reportList'">더보기</button>
 				</div>
 			</div>
-			<div class="col-9">
+			<%-- <div class="col-9">
 				<div class="container text-center">
 					<div class="row  row-cols-lg-3">
 						<c:forEach var="dto" items="${listMainReport}" varStatus="status">
@@ -455,7 +511,7 @@ text-align:left;
 						</c:forEach>
 
 					</div>
-				</div>
+				</div> --%>
 				<br> <br> <br> <br>
 			</div>
 		</div>
@@ -508,7 +564,6 @@ text-align:left;
 		</div>
 		<br> <br> <br> <br>
 	</div>
-</div>
 
 
 <div class="eventLayout"
@@ -604,6 +659,5 @@ text-align:left;
   ChannelIO('boot', {
     "pluginKey": "9194e1f4-8ac6-4a65-90ce-cc33f25c6873"
   });
-<!-- End Channel Plugin -->
 
 </script>

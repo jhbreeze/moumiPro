@@ -13,6 +13,9 @@ import com.moumi.app.common.dao.CommonDAO;
 public class HomeServiceImpl implements HomeService {
 	@Autowired
 	private CommonDAO dao;
+	
+	@Autowired
+	private KeywordMongoOperations keywordMongo;
 
 	@Override
 	public List<Region> listRegion(Map<String, Object> map) {
@@ -84,6 +87,13 @@ public class HomeServiceImpl implements HomeService {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	@Override
+	public Map<String, Object> search(String kwd) {
+		System.out.println("구현 클래스 search ");
+		System.out.println(kwd);
+		return keywordMongo.search(kwd);
 	}
 
 	
