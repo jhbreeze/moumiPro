@@ -3,7 +3,7 @@ package com.moumi.app.pay;
 public class Pay {
 
 	private long paymentNum;
-	private int productNum;
+	private int categoryNum;
 	private int paymentPrice;
 	private int discount;
 	private String payDate;
@@ -16,12 +16,11 @@ public class Pay {
 	private String subject;
 	private String content;
 	
-	
 	public long getPaymentNum() {
 		return paymentNum;
 	}
-	public int getProductNum() {
-		return productNum;
+	public int getCategoryNum() {
+		return categoryNum;
 	}
 	public int getPaymentPrice() {
 		return paymentPrice;
@@ -41,6 +40,9 @@ public class Pay {
 	public String getEmail() {
 		return email;
 	}
+	public long getUserCode() {
+		return userCode;
+	}
 	public String getSubject() {
 		return subject;
 	}
@@ -50,8 +52,8 @@ public class Pay {
 	public void setPaymentNum(long paymentNum) {
 		this.paymentNum = paymentNum;
 	}
-	public void setProductNum(int productNum) {
-		this.productNum = productNum;
+	public void setCategoryNum(int categoryNum) {
+		this.categoryNum = categoryNum;
 	}
 	public void setPaymentPrice(int paymentPrice) {
 		this.paymentPrice = paymentPrice;
@@ -71,20 +73,17 @@ public class Pay {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public void setUserCode(long userCode) {
+		this.userCode = userCode;
+	}
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public long getUserCode() {
-		return userCode;
-	}
-	public void setUserCode(long userCode) {
-		this.userCode = userCode;
-	}
-	
-	
-	
 	
 }
+	
+	
+	

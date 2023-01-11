@@ -14,6 +14,7 @@ public class PayServiceImpl implements PayService{
 	public void insertPay(Pay dto) throws Exception {
 		try {
 			dao.insertData("pay.insertPay",dto);
+			dao.insertData("pay.insertProduct",dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

@@ -230,6 +230,7 @@ function requestPay() {
 			</div>
 		</div>
 	</div>
+	<input type="hidden" name="categoryNum" value="${productNum}"> 
 </form>
 </body>
 </html>

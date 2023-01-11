@@ -6,6 +6,9 @@
 		INSERT INTO payment(paymentNum,paymentPrice,userCode,payDate,discount,endDate)
 			VALUES(#{paymentNum},#{paymentPrice},#{userCode},#{payDate},#{discount},#{endDate})
 	</insert>
+	<insert id = "insertProduct" parameterType="com.moumi.app.pay.Pay">
+		INSERT INTO payDetail(categoryNum,paymentNum) VALUES(#{categoryNum},#{paymentNum})
+	</insert>
 	<select id="selectMember" parameterType="Long" resultType="com.moumi.app.pay.Pay">
 		SELECT userName,email
 		FROM member

@@ -34,7 +34,7 @@
 
 <div class="row py-3">
 	<div class="col">
-		<button type="button" class="btn btn-light" onclick="reloadFaq();">새로고침</button>
+		<button type="button" class="btn btn-success" onclick="reloadFaq();">새로고침</button>
 	</div>
 	<div class="col-6 text-center">
 		<form class="row" name="searchForm" method="post">
