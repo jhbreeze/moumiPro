@@ -90,6 +90,26 @@
 	border-radius: 30px;
 	padding: 12px;
 }
+
+.snsContent {
+	width: 500px;
+	height: 100px;
+	border: 1px solid #f8f9fa;
+	border-radius: 15px;
+	padding: 15px;
+	margin: 5px;
+	background: #f8f9fa;
+}
+
+.snsImgLayout {
+	width: 40px;
+	height: 36px;
+}
+
+.snsImg {
+	width: 40px;
+	height: 36px;
+}
 </style>
 
 
@@ -107,7 +127,6 @@
 
 			<div class="col">
 				<div class="chooseSNS">
-
 					<div class="container">
 						<div class="row">
 							<div class="col">
@@ -166,24 +185,27 @@
 <div class="searchMainLayout">
 	<div class="container body-container">
 		<div class="inner-page">
+
+
 			<div class="row">
 				<div class="col">
 					<div class="layoutSNS">
-					
 						<c:forEach var="dto" items="${list}" varStatus="status">
-								<div class="col-lg-4 col-sm-3">
-											<p class="eventName">${dto.sns}
-											<p class="term">${dto.date}></p>
-											<p class="term">${dto.content}></p>
-											<p class="term">${dto.url}></p>
-											
+							<div class="container">
+								<div class="col snsImgLayout">
+									<img alt="채널 이미지" class="snsImg"
+										src="${pageContext.request.contextPath}/resources/images/moumi/sns/twitter.png">
+								</div>
+								<div class="col">
+									<div class="col-lg-4 col-sm-3 snsContent" onclick="${dto.url}">
+										<div class="row">
+											<p class="term">${dto.date}</p>
+											<div class="col-20 text-truncate">${dto.content}</div>
 										</div>
-									
+									</div>
+								</div>
+							</div>
 						</c:forEach>
-					
-					
-					
-					
 					</div>
 				</div>
 				<div class="col">
