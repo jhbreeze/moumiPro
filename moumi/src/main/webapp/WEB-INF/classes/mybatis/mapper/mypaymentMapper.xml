@@ -11,7 +11,7 @@
 	                LEFT JOIN payDetail pd ON p.paymentNum = pd.paymentNum
 	                LEFT JOIN payCategory pc ON pd.categoryNum = pc.CategoryNum
 	                
-	                WHERE p.userCode = 30
+	                WHERE p.userCode = #{userCode}
 	                
 	                ORDER BY p.payDate DESC
 		)
