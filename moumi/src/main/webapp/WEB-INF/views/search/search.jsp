@@ -168,7 +168,23 @@
 		<div class="inner-page">
 			<div class="row">
 				<div class="col">
-					<div class="layoutSNS"></div>
+					<div class="layoutSNS">
+					
+						<c:forEach var="dto" items="${list}" varStatus="status">
+								<div class="col-lg-4 col-sm-3">
+											<p class="eventName">${dto.sns}
+											<p class="term">${dto.date}></p>
+											<p class="term">${dto.content}></p>
+											<p class="term">${dto.url}></p>
+											
+										</div>
+									
+						</c:forEach>
+					
+					
+					
+					
+					</div>
 				</div>
 				<div class="col">
 					<div class="row">

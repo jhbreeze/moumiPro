@@ -157,42 +157,40 @@ public class HomeController {
 
 		return ".api.api";
 	}
+
+	@PostMapping(value = "analyze")
+	public String search(@RequestParam String kwd, Model model) throws Exception {
 	
-	
-	@PostMapping("search")
-	public String search() throws Exception {
-		
+		 List<Twit> list = service.search(kwd);
+		 
+		model.addAttribute("list", list);
+		model.addAttribute("kwd", kwd);
+
+
+
 		return ".search.search";
 	}
+	
 
+	
+/*	
+	@RequestMapping("/search/searchResult")
+	@ResponseBody
+	public Map<String, Object> searchResult(@RequestParam String kwd) throws Exception {
+		Map<String, Object> model = service.search(kwd);
+
+		return model;
+
+	}
+	
+*/
 
 	
-	
-	
-	 
-//	@GetMapping(value = "search")
-//	public String search() throws Exception {
-//
+//	@RequestMapping("/search/searchResult")
+//	public String search(@RequestParam String kwd, Model model) throws Exception {
+//		Map<String, Object> twit = service.search(kwd);
+//		model.addAttribute("twit", twit);
 //		return ".search.search";
+//
 //	}
-
-	/*
-	@RequestMapping("/search/searchResult")
-	@ResponseBody
-	public Map<String, Object> searchResult(@RequestParam String kwd) throws Exception {
-		Map<String, Object> model = service.search(kwd);
-
-		return model;
-
-	}
-	*/
-
-	@RequestMapping("/search/searchResult")
-	@ResponseBody
-	public Map<String, Object> searchResult(@RequestParam String kwd) throws Exception {
-		Map<String, Object> model = service.search(kwd);
-
-		return model;
-
-	}
 }

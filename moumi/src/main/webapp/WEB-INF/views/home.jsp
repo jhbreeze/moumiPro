@@ -303,7 +303,6 @@ function ajaxFun(url, method, query, dataType, fn) {
 $(function(){
 	$(".btnSearch").click(function(){
 		let url = "${pageContext.request.contextPath}/search/searchResult";
-		// let kwd = encodeURIComponent("하")
 		
 		const kwd = document.getElementById('kwd').value;
 	
@@ -312,6 +311,7 @@ $(function(){
 		const fn = function(data) {
 			console.log(data);
 			printResult(data);
+			
 		};
 			
 		ajaxFun(url, "get", query, "json", fn);
@@ -459,13 +459,16 @@ $(function(){
 
 <div class="mainBox">
 	<h3 class="mainText">MOUMI 분석 서비스</h3>
-	<form class="d-flex searchBox" role="search">
+	<form class="d-flex searchBox" role="search" method="post" action="${pageContext.request.contextPath}/analyze">
 		<div class="customInput">
 			<input class="form-control mx-5 inputSearch" type="search"
-				placeholder="궁금한 분석 단어를 입력하세요." aria-label="Search" id ="kwd">
-			<button type="button" class="btn btnSearch">
+				placeholder="궁금한 분석 단어를 입력하세요." aria-label="Search" id ="kwd" name ="kwd">
+			<button type="submit" class="btn" >
 				<i class="fa-solid fa-magnifying-glass"></i>
 			</button>
+			
+
+	
 		</div>
 
 	</form>
@@ -479,10 +482,8 @@ $(function(){
 	</div>
 </div>
 
-	<div class="info-box" style ="width:900px; height: 900px; background:tomato"></div>
 
 
-	
 
 <div class="container body-container">
 	<div class="inner-page">
@@ -495,15 +496,14 @@ $(function(){
 						onclick="location.href='${pageContext.request.contextPath}/reportList'">더보기</button>
 				</div>
 			</div>
-			<%-- <div class="col-9">
+			 <div class="col-9">
 				<div class="container text-center">
 					<div class="row  row-cols-lg-3">
 						<c:forEach var="dto" items="${listMainReport}" varStatus="status">
 							<div style="width: 18rem; margin: 10px;"
 								data-reportNum="${dto.reportNum}"
 								onclick="location.href='${pageContext.request.contextPath}/article?&reportNum=${dto.reportNum}'">
-								<img style="height: 280px; width: 285px;"
-									src="${pageContext.request.contextPath}/uploads/report/${dto.thumbnail}"
+								<img style="height: 280px; width: 285px;" src="${pageContext.request.contextPath}/uploads/report/${dto.thumbnail}"
 									style="width: -webkit-fill-available;">
 								<div class="p-2">
 									<div class="card-body">${dto.subject}</div>
@@ -512,7 +512,7 @@ $(function(){
 						</c:forEach>
 
 					</div>
-				</div> --%>
+				</div> 
 				<br> <br> <br> <br>
 			</div>
 		</div>
@@ -619,7 +619,7 @@ $(function(){
 		</div>
 	</div>
 </div>
-
+</div>
 <script type="text/javascript">
 <!-- Channel Plugin Scripts -->
 (function() {
