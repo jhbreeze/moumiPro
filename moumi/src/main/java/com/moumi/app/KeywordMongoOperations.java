@@ -20,7 +20,7 @@ public class KeywordMongoOperations {
 
 	public List<Twit> search(String kwd) {
 		
-		BasicQuery query = new BasicQuery("{content: { $regex: '^" + kwd + "' }}"); // 쿼리
+		BasicQuery query = new BasicQuery("{content: { $regex: /" + kwd + "/i}}");
 		
 		Pageable pageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "date"));
 		query.with(pageable);
