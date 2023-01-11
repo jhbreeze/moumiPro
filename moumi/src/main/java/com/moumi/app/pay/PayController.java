@@ -84,7 +84,7 @@ public class PayController {
 		try {
 			dto.setUserCode(info.getUserCode());
 			dto.setDiscount(1000);
-			dto.setPaymentNum(Long.parseLong(pNum));
+			dto.setPaymentNum(Long.parseLong(pNum)); 
 			System.out.println(Long.parseLong(pNum));
 			System.out.println(dto.getPaymentPrice());
 			System.out.println(dto.getPayDate());
