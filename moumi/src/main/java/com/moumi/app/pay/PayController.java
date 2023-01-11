@@ -63,6 +63,7 @@ public class PayController {
 		model.addAttribute("price",price);
 		model.addAttribute("now",now);
 		model.addAttribute("enddate",enddate);
+		model.addAttribute("productNum",productNum);
 		
 		return ".pay.payment";
 	}
