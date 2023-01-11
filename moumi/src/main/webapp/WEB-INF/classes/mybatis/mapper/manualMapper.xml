@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manual">
+	<select id="seq" resultType="Long">
+		SELECT manualNum_seq.NEXTVAL FROM dual
+	</select>
+
+	<insert id="insertManual" parameterType="com.moumi.app.manual.Manual">
+		INSERT INTO manual(manualNum, subject, content, regDate, thumbnail, userCode)
+		VALUES (#{manualNum}, #{subject}, #{content}, SYSDATE, #{thumbnail}, #{userCode})
+	</insert>
+	
+	<insert id="insertManualFile" parameterType="com.moumi.app.manual.Manual">
+		INSERT INTO manualFIle(fileNum, imageFilename, manualNum)
+		VALUES(manualFile_seq.NEXTVAL, #{imageFilename}, #{manualNum})
+	</insert>
+	
+	<sql id="where-list">
+		<if test="condition=='all' ">
+			( INSTR(subject, #{keyword}) &gt; 0
+				OR DBMS_LOB.INSTR(content, #{keyword}) &gt; 0 )
+		</if>
+		<if test="condition=='subject' ">
+			INSTR(subject, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='content' ">
+			DBMS_LOB.INSTR( content, #{keyword}) &gt; 0 
+		</if>
+		<if test="condition=='regDate' ">
+			( TO_CHAR(regDate, 'YYYY-MM-DD') = #{keyword}
+				OR TO_CHAR(regDate, 'YYYYMMDD') = #{keyword} )
+		</if>
+	</sql>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM manual n
+		JOIN member m ON n.userCode = m.userCode
+		<where>
+			<if test="keyword!=null and keyword!='' ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+	
+	<select id="listManual" parameterType="map" resultType="com.moumi.app.manual.Manual">
+		SELECT n.manualNum, subject,  m.nickName, thumbnail,
+				TO_CHAR(n.regDate, 'YYYY-MM-DD') regDate,
+				NVL(fileCount, 0) fileCount
+		FROM manual n
+		JOIN member m ON n.userCode = m.userCode
+		LEFT OUTER JOIN (
+			SELECT manualNum, COUNT(*) fileCount FROM manualFile
+			GROUP BY manualNum
+		) f ON n.manualNum = f.manualNum
+		<where>
+			<if test="keyword != null and keyword != ''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+		ORDER BY manualNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
+	</select>
+	
+	<select id="readManual" parameterType="Long" resultType="com.moumi.app.manual.Manual">
+		SELECT manualNum, n.userCode, m.userName, subject, content, n.regDate, thumbnail
+		FROM manual n
+		JOIN member m ON n.userCode = m.userCode
+		WHERE manualNum = #{manualNum}
+	</select>
+	
+	<select id="preReadManual" parameterType="map" resultType="com.moumi.app.manual.Manual">
+		SELECT manualNum, subject
+		FROM manual n
+		JOIN member m ON n.userCode = m.userCode
+		<where>
+			<if test="keyword != null and keyword != ''">
+				<include refid="where-list"/>
+			</if>
+			AND (manualNum &gt; #{manualNum})
+		</where>
+		ORDER BY manualNum ASC
+		FETCH FIRST 1 ROWS ONLY
+	</select>
+	
+	<select id="nextReadManual" parameterType="map" resultType="com.moumi.app.manual.Manual">
+		SELECT manualNum, subject
+		FROM manual n
+		JOIN member m ON n.userCode = m.userCode
+		<where>
+			<if test="keyword != null and keyword != ''">
+				<include refid="where-list"/>
+			</if>
+			AND (manualNum &lt; #{manualNum})
+		</where>
+		ORDER BY manualNum DESC
+		FETCH FIRST 1 ROWS ONLY
+	</select>
+	
+	<update id="updateManual" parameterType="com.moumi.app.manual.Manual">
+		UPDATE manual SET subject=#{subject},
+			content=#{content}, thumbnail=#{thumbnail}
+		WHERE manualNum = #{manualNum}
+	</update>
+	
+	<delete id="deleteManual" parameterType="Long">
+		DELETE FROM manual WHERE manualNum = #{manualNum}
+	</delete>
+	
+	<select id="listManualFile" parameterType="Long" resultType="com.moumi.app.manual.Manual">
+		SELECT fileNum, manualNum, imageFileName
+		FROM manualFile
+		WHERE manualNum = #{manualNum}
+	</select>
+	
+	<update id="updateManualFile" parameterType="com.moumi.app.manual.Manual">
+		UPDATE manualFile SET imageFileName = #{imageFileName}
+		WHERE manualNum = #{manualNum}
+	</update>
+
+</mapper>
