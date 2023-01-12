@@ -19,4 +19,7 @@
 		FROM payCategory
 		WHERE categoryNum = #{categoryNum}
 	</select>
+	<select id="selectCountPay" parameterType="Long" resultType="INTEGER">
+		SELECT COUNT(*) FROM payment WHERE userCode = #{userCode} AND endDate > SYSDATE
+	</select>
 </mapper>

@@ -58,12 +58,15 @@ public class PayController {
 		int productNum = Integer.parseInt(productnum);
 		Pay dto2 = service.readPay(productNum);
 		
+		int paymentCount = service.dataCountPay(info.getUserCode());
+		
 		model.addAttribute("dto",dto);
 		model.addAttribute("dto2",dto2);
 		model.addAttribute("price",price);
 		model.addAttribute("now",now);
 		model.addAttribute("enddate",enddate);
 		model.addAttribute("productNum",productNum);
+		model.addAttribute("paymentCount",paymentCount);
 		
 		return ".pay.payment";
 	}

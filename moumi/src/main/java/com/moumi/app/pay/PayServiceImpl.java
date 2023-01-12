@@ -1,5 +1,7 @@
 package com.moumi.app.pay;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +45,19 @@ public class PayServiceImpl implements PayService{
 		}
 		return dto;
 	}
+
+	@Override
+	public int dataCountPay(long userCode) {
+		int result = 0;
+		try {
+			result = dao.selectOne("pay.selectCountPay",userCode);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	
 
 	
 }

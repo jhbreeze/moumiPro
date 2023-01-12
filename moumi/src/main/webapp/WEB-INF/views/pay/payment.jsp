@@ -92,6 +92,15 @@
 	src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 
 <script type="text/javascript">
+$(function(){
+	$(window).on("load",function(){
+		count = ${paymentCount}
+		if(count > 0){
+			$("#productModal").modal("show");
+		}
+	});
+});
+
 var IMP = window.IMP;
 IMP.init("imp68833433");
 
@@ -105,6 +114,7 @@ var makeMerchantUid = hours + minutes + seconds + milliseconds;
 function requestPay() {
 	const f = document.payForm;
 	
+
 	
 	//결제 
 	let paymentPrice = $("form[name=payForm] input[name=paymentPrice]").val();
@@ -134,13 +144,31 @@ function requestPay() {
 			console.log(rsp);
 			alert("결제를 실패했습니다");
 			}
-	});	
-
+	});
+	
+	
 }
 </script>
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
 <body>
+<!-- Modal -->
+<div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">구독</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      	구독중인 상품이 있습니다!
+      </div>
+      <div class="modal-footer">
+        <button type="button" onclick="location.href='${pageContext.request.contextPath}/mypage/mypayment/main'" class="btn btn-success" data-bs-dismiss="modal">닫기</button>
+      </div>
+    </div>
+  </div>
+</div>
 <form name="payForm" method="post">
 	<div class="payment">
 		<div class="pay-content">

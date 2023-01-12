@@ -5,4 +5,5 @@ public interface PayService {
 	public void insertPay(Pay dto) throws Exception;
 	public Pay readMember(long userCode);
 	public Pay readPay(int productNum);
+	public int dataCountPay(long userCode);
 }
