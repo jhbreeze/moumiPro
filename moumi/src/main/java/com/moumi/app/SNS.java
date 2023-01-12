@@ -1,10 +1,15 @@
 package com.moumi.app;
 
+import java.util.Date;
 import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 public class SNS {
 	private String _id; // 인스타그램
 	private String sns; // sns 종류
+
 	private String date; // 작성일
 	private String content; // 내용
 	private String url; // url

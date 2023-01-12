@@ -10,7 +10,6 @@
 	background: #ECF4EB;
 }
 
-
 .analyzeLayout {
 	width: 90%;
 	height: 2000px;
@@ -106,7 +105,7 @@
 
 .snsContent {
 	width: 480px;
-	height: 80px;
+	height: 100px;
 	border-radius: 15px;
 	padding: 17px;
 	background: #f8f9fa;
@@ -151,6 +150,10 @@
 	height: 800px;
 	margin: auto;
 	overflow: hidden;
+}
+
+.tags {
+	color: blue;
 }
 </style>
 
@@ -239,9 +242,7 @@
 											src="${pageContext.request.contextPath}/resources/images/add_photo.png">
 								</div>
 							</div>
-							<div class="col-1">
-								
-							</div>
+							<div class="col-1"></div>
 							<div class="col-5">
 								<div class="layoutChannel">
 									<p class="channelContent">
@@ -249,7 +250,7 @@
 											src="${pageContext.request.contextPath}/resources/images/add_photo.png">
 								</div>
 							</div>
-							
+
 							<div class="marginBox"></div>
 
 
@@ -278,19 +279,29 @@
 							<c:forEach var="dto" items="${list}" varStatus="status">
 								<div class="row" style="margin: 2px;">
 									<div class="col ms-auto me-auto">
-										<img alt="채널 이미지" class="snsImg"
-											style="margin-left: 2px; margin-top: 5px;"
-											src="${pageContext.request.contextPath}/resources/images/moumi/sns/twitter.png">
+										<c:if test="${dto.sns eq 'Twitter'}">
+											<img alt="채널 이미지" class="snsImg"
+												style="margin-left: 2px; margin-top: 5px;"
+												src="${pageContext.request.contextPath}/resources/images/moumi/sns/twitter.png">
+										</c:if>
+
+
+										<c:if test="${dto.sns eq 'instagram'}">
+											<img alt="채널 이미지" class="snsImg"
+												style="margin-left: 2px; margin-top: 5px;"
+												src="${pageContext.request.contextPath}/resources/images/moumi/sns/instagram.png">
+										</c:if>
 									</div>
 									<div class="col">
 
 										<div class="snsContent" onclick="location.href='${dto.url}'">
-											<p class="term">${dto.date}</p>
+											<div class="date">${dto.date}</div>
 											<div class="col-20 text-truncate">${dto.content}</div>
+											<div class="col-20 text-truncate tags">${dto.tags}</div>
+
 										</div>
 
 									</div>
-
 								</div>
 							</c:forEach>
 

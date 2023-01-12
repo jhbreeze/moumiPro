@@ -1,7 +1,11 @@
 package com.moumi.app;
 
+import java.util.Date;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 //컬렉션(테이블명)
 @Document(collection = "twit")
@@ -9,7 +13,8 @@ public class Twit {
 	@Id
 	private String _id; // 아이디
 	private String sns; // sns 종류
-	private String date; // 작성일
+	@DateTimeFormat(iso = ISO.DATE_TIME)
+	private Date date; // 작성일
 	private String content; // 내용
 	private String url; // url
 
@@ -29,11 +34,11 @@ public class Twit {
 		this.sns = sns;
 	}
 
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 

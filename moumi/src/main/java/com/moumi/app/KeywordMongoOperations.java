@@ -1,5 +1,6 @@
 package com.moumi.app;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class KeywordMongoOperations {
 		Pageable pageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "date"));
 		twitterQuery.with(pageable);
 
-		List<Twit> twitList = mongo.find(twitterQuery, Twit.class); // 리스트에 담기
+		List<Twit> twitList = mongo.find(twitterQuery, Twit.class);
 
 		// 인스타그램 크롤링
 		BasicQuery instagramQuery = new BasicQuery("{content: { $regex: /" + kwd + "/i}}");
@@ -32,17 +33,23 @@ public class KeywordMongoOperations {
 		Pageable instagramPageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "date"));
 		instagramQuery.with(instagramPageable);
 
-		List<Instagram> instagramList = mongo.find(instagramQuery, Instagram.class); // 리스트에 담기
+		List<Instagram> instagramList = mongo.find(instagramQuery, Instagram.class);
 
-		System.out.println(instagramList.size() +"인스타 사이즈임둥.. ");
-		
-		
+		// 블로그 크롤링
+
+		// 뉴스 크롤링
+
 		List<SNS> list = new ArrayList<>();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		
+		
 		for (int i = 0; i < 5; i++) {
 			if (twitList.size() > i) {
 				SNS obj = new SNS();
 				obj.setSns(twitList.get(i).getSns());
-				obj.setDate(twitList.get(i).getSns());
+				obj.setDate(sdf.format(twitList.get(i).getDate()));
+				obj.setUrl(twitList.get(i).getUrl());
 				obj.setContent(twitList.get(i).getContent());
 
 				list.add(obj);
@@ -51,8 +58,9 @@ public class KeywordMongoOperations {
 			if (instagramList.size() > i) {
 				SNS obj = new SNS();
 				obj.setSns(instagramList.get(i).getSns());
-				obj.setDate(instagramList.get(i).getSns());
+				obj.setDate(instagramList.get(i).getDate());
 				obj.setContent(instagramList.get(i).getContent());
+				obj.setUrl(instagramList.get(i).getUrl());
 				obj.setTags(instagramList.get(i).getTags());
 
 				list.add(obj);
