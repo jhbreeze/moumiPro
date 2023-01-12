@@ -161,7 +161,7 @@ public class HomeController {
 	@PostMapping(value = "analyze")
 	public String search(@RequestParam String kwd, Model model) throws Exception {
 	
-		 List<Twit> list = service.search(kwd);
+		 List<SNS> list = service.search(kwd);
 		 
 		model.addAttribute("list", list);
 		model.addAttribute("kwd", kwd);

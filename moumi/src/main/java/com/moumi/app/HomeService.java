@@ -14,6 +14,6 @@ public interface HomeService {
 	public Report readReport(long reportNum);
 	public Report preReadReport(Map<String, Object> map);
 	public Report nextReadReport(Map<String, Object> map);
-	public List<Twit> search(String kwd);
+	public List<SNS> search(String kwd);
 	
 }

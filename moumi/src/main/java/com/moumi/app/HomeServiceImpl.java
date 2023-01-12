@@ -90,7 +90,7 @@ public class HomeServiceImpl implements HomeService {
 	}
 
 	@Override
-	public List<Twit> search(String kwd) {
+	public List<SNS> search(String kwd) {
 		System.out.println("구현 클래스 search ");
 		System.out.println(kwd);
 		return keywordMongo.search(kwd);
