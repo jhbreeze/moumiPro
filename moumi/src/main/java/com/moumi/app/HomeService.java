@@ -19,5 +19,7 @@ public interface HomeService {
 	public Report nextReadReport(Map<String, Object> map);
 
 	public List<SNS> search(String kwd);
+	
+	public int dataCountPay(long userCode);
 
 }

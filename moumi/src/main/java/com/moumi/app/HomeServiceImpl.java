@@ -96,6 +96,17 @@ public class HomeServiceImpl implements HomeService {
 		return keywordMongo.search(kwd);
 	}
 
+	@Override
+	public int dataCountPay(long userCode) {
+		int result = 0;
+		try {
+			result = dao.selectOne("pay.selectCountPay",userCode);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 	
 
 }

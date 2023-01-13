@@ -21,20 +21,20 @@ public class KeywordMongoOperations {
 
 		// 트위터 크롤링
 		BasicQuery twitterQuery = new BasicQuery("{content: { $regex: /" + kwd + "/i}}");
-
+		System.out.println(twitterQuery);
 		Pageable pageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "date"));
 		twitterQuery.with(pageable);
 
 		List<Twit> twitList = mongo.find(twitterQuery, Twit.class);
-
+		System.out.println(twitList.size());
 		// 인스타그램 크롤링
-		BasicQuery instagramQuery = new BasicQuery("{content: { $regex: /" + kwd + "/i}}");
+		BasicQuery instagramQuery = new BasicQuery("{content: { $regex: /"+kwd+"/i }}");
 
 		Pageable instagramPageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "date"));
 		instagramQuery.with(instagramPageable);
 
 		List<Instagram> instagramList = mongo.find(instagramQuery, Instagram.class);
-
+		System.out.println(instagramList.size());
 		// 블로그 크롤링
 
 		// 뉴스 크롤링

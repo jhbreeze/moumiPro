@@ -7,6 +7,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.moumi.app.common.MyUtil;
+import com.moumi.app.member.SessionInfo;
 
 @Controller()
 
@@ -158,12 +160,15 @@ public class HomeController {
 	}
 
 	@PostMapping(value = "analyze")
-	public String search(@RequestParam String kwd, Model model) throws Exception {
+	public String search(@RequestParam String kwd, Model model,HttpSession session) throws Exception {
 	
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		 List<SNS> list = service.search(kwd);
+		 int payCheck = service.dataCountPay(info.getUserCode());
 		 
 		model.addAttribute("list", list);
 		model.addAttribute("kwd", kwd);
+		model.addAttribute("payCheck",payCheck);
 
 
 
