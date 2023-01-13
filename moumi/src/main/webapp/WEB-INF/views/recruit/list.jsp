@@ -48,43 +48,4 @@
 </div>
 
 
-<div class="row py-3">
-	<div class="col">
-		<button type="button" class="btn btn-success"
-			onclick="reloadRecruit();">새로고침</button>
-	</div>
 
-
-	<div class="col-6 text-center" >
-		<form class="row" name="searchForm" method="post">
-			<div class="col-auto p-1">
-				<select name="condition" id="condition" class="form-select">
-					<option value="subject"
-						${condition=="subject"?"selected='selected'":""}>공고명</option>
-					<option value="career"
-						${condition=="career"?"selected='selected'":""}>구분</option>
-					<option value="corporation"
-						${condition=="corporation"?"selected='selected'":""}>회사명</option>
-				</select>
-			</div>
-
-			<div class="col-auto p-1">
-				<input type="text" name="keyword" id="keyword" value="${keyword}"
-					class="form-control">
-			</div>
-			<div class="col-auto p-1">
-				<button type="button" class="btn btn-success" onclick="searchList()">
-					<i class="bi bi-search"></i>
-				</button>
-			</div>
-		</form>
-	</div>
-
-
-	<div class="col text-end">
-		<c:if test="${sessionScope.member.userType==0 || sessionScope.member.userType==3}">
-			<button type="button" class="btn btn-success"
-				onclick="location.href='${pageContext.request.contextPath}/recruit/write';">글올리기</button>
-		</c:if>
-	</div>
-</div>

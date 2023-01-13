@@ -1,8 +1,11 @@
 package com.moumi.app;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -105,6 +108,25 @@ public class HomeServiceImpl implements HomeService {
 			e.printStackTrace();
 		}
 		return result;
+	}
+
+	@Override
+	public void insertKeyword(String kwd) throws Exception {
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String now = sdf.format(date);
+		
+		try {
+			Keyword dto = new Keyword();
+			dto.setId(ObjectId.get());
+			dto.setRegDate(now);
+			dto.setKeyword(kwd);
+			
+			keywordMongo.insertKeyword(dto);
+		} catch (Exception e) {
+			throw e;
+		}
+		
 	}
 
 	

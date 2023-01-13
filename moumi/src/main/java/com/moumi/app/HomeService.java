@@ -21,5 +21,7 @@ public interface HomeService {
 	public List<SNS> search(String kwd);
 	
 	public int dataCountPay(long userCode);
+	
+	public void insertKeyword(String kwd) throws Exception;
 
 }

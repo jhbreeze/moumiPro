@@ -70,4 +70,15 @@ public class KeywordMongoOperations {
 		}
 		return list;
 	}
+	
+	// 키워드 저장
+	public void insertKeyword(Keyword dto) throws Exception {
+		try {
+			mongo.save(dto, "keyword");
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			throw e;
+		}
+	}
 }

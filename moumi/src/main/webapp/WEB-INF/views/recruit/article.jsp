@@ -22,6 +22,15 @@
 }
 
 .table tr {height: 40px; }
+
+#tab-1.active {
+	color : green;
+}
+
+.nav-tabs .nav-link {
+	color : black;
+}
+
 </style>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
@@ -110,13 +119,7 @@ $(function(){
 
 <div class="container body-container">
 	<div class="body-main mx-auto">
-		<ul class="nav nav-tabs" id="myTab" role="tablist">
-			<li class="nav-item" role="presentation"><a class="nav-link active" aria-current="page"
-				 href="${pageContext.request.contextPath}/recruit/main">진행중인 공고</a></li>
-			<li class="nav-item" role="presentation"><a class="nav-link" 
-				href="${pageContext.request.contextPath}/recruit/main">마감된 공고</a></li>
-		</ul>
-		
+	
 		<form name="recruitForm" method="post">
 			<table class="table mt-5 recruit-table border-top">
 				<tr>

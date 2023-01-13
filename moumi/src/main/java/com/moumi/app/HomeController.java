@@ -160,8 +160,16 @@ public class HomeController {
 	}
 
 	@PostMapping(value = "analyze")
-	public String search(@RequestParam String kwd, Model model,HttpSession session) throws Exception {
-	
+	public String search(@RequestParam String kwd, Model model,
+			HttpSession session, Keyword keyword) throws Exception {
+		
+		// 몽고에 키워드 저장 
+		try {
+			service.insertKeyword(kwd);
+			
+		} catch (Exception e) {
+		}
+		
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		 List<SNS> list = service.search(kwd);
 		 int payCheck = service.dataCountPay(info.getUserCode());
@@ -169,7 +177,6 @@ public class HomeController {
 		model.addAttribute("list", list);
 		model.addAttribute("kwd", kwd);
 		model.addAttribute("payCheck",payCheck);
-
 
 
 		return ".search.search";
