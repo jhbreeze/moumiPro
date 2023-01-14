@@ -158,35 +158,19 @@
 </style>
 
 <script type="text/javascript">
-
-function ajaxFun(url, method, query, dataType, fn) {
-	$.ajax({
-		type:method,
-		url:url,
-		data:query,
-		dataType:dataType,
-		success:function(data) {
-			fn(data);
-		},
-		beforeSend:function(jqXHR) {
-			jqXHR.setRequestHeader("AJAX", true);
-		},
-		error:function(jqXHR) {
-			if(jqXHR.status === 403) {
-				login();
-				return false;
-			} else if(jqXHR.status === 400) {
-				alert("요청 처리가 실패 했습니다.");
-				return false;
-			}
-	    	
-			console.log(jqXHR.responseText);
-		}
-	});
-}
-
 $(function(){
  	payCheck = ${payCheck};
+ 	youtube = ${youtube};
+ 	instagram = ${instagram};
+ 	blog = ${blog};
+ 	twitter = ${twitter};
+ 	
+	$("body").one('load',function(){
+		$(".blog").prop("checked",true);
+		$(".twitter").prop("checked",true);
+	});
+ 	
+ 	
 	if(payCheck == 0){
 		$(".youtube").prop("checked",false);
 		$(".youtube").attr("disabled",true);
@@ -194,14 +178,45 @@ $(function(){
 		$(".instagram").attr("disabled",true);
 	}
 	
+	if(youtube === 0){
+		$(".youtube").prop("checked",false)
+	} else {
+		$(".youtube").prop("checked",true)
+	}
+	
+	if(instagram === 0){
+		$(".instagram").prop("checked",false)
+	} else {
+		$(".instagram").prop("checked",true)
+	}
+	
+	if(blog === 0){
+		$(".blog").prop("checked",false)
+	} else {
+		$(".blog").prop("checked",true)
+	}
+	
+	if(twitter === 0){
+		$(".twitter").prop("checked",false)
+	} else {
+		$(".twitter").prop("checked",true)
+	}
+	
+	let y_check = $(".youtube").is(":checked");
+ 	if (y_check == true){
+		$(".layoutYoutube").show();
+	} else {
+		$(".layoutYoutube").hide();
+	}
+	
 	$(".change").click(function(){
 		let frm = $(".channelForm");
 		let check = $(".channel");
+	
 		if(check.is(':checked')==false){
-			alert("체크된 값이 없습니다");
+			alert("하나의 채널은 선택해야 합니다.");
 			return false;
 		}else {
-			alert(check);
 			frm.submit();
 		}
 	});
@@ -269,6 +284,7 @@ $(function(){
 									<button class="btn btn-primary change" type="button">채널적용</button>
 								</div>
 							</div>
+							<input type="hidden" name="kwd" value="${kwd}"> 
 						</div>
 					</div>
 				</div>

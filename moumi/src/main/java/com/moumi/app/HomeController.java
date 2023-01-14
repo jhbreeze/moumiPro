@@ -160,7 +160,11 @@ public class HomeController {
 	}
 
 	@PostMapping(value = "analyze")
-	public String search(@RequestParam String kwd, Model model,
+	public String search(@RequestParam String kwd,
+			@RequestParam(defaultValue = "0") String youtube,
+			@RequestParam(defaultValue = "0") String instagram,
+			@RequestParam(defaultValue = "0") String blog,
+			@RequestParam(defaultValue = "0") String twitter,Model model,
 			HttpSession session, Keyword keyword) throws Exception {
 		
 		// 몽고에 키워드 저장 
@@ -171,12 +175,17 @@ public class HomeController {
 		}
 		
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
-		 List<SNS> list = service.search(kwd);
+		 List<SNS> list = service.search(kwd,youtube,instagram,blog,twitter);
 		 int payCheck = service.dataCountPay(info.getUserCode());
 		 
 		model.addAttribute("list", list);
 		model.addAttribute("kwd", kwd);
 		model.addAttribute("payCheck",payCheck);
+		model.addAttribute("youtube",youtube);
+		model.addAttribute("instagram",instagram);
+		model.addAttribute("blog",blog);
+		model.addAttribute("twitter",twitter);
+
 
 
 		return ".search.search";

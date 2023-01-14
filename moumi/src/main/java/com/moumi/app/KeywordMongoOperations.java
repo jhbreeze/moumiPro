@@ -17,7 +17,7 @@ public class KeywordMongoOperations {
 	@Autowired
 	private MongoOperations mongo;
 
-	public List<SNS> search(String kwd) {
+	public List<SNS> search(String kwd,String youtube,String instagram,String blog,String twitter) {
 
 		// 트위터 크롤링
 		BasicQuery twitterQuery = new BasicQuery("{content: { $regex: /" + kwd + "/i}}");
@@ -42,6 +42,15 @@ public class KeywordMongoOperations {
 		List<SNS> list = new ArrayList<>();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		
+		if(instagram.equals("0")) {
+			instagramList.clear();
+		}
+//		if(blog.equals("0")) {
+//			blogList.clear();
+//		}
+		if(twitter.equals("0")) {
+			twitList.clear();
+		}
 		
 		
 		for (int i = 0; i < 5; i++) {

@@ -467,6 +467,8 @@ $(function(){
 				<i class="fa-solid fa-magnifying-glass"></i>
 			</button>
 			
+			<input type="hidden" value="3" name="blog">
+			<input type="hidden" value="4" name="twitter">
 
 	
 		</div>

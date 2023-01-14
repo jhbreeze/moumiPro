@@ -18,7 +18,7 @@ public interface HomeService {
 
 	public Report nextReadReport(Map<String, Object> map);
 
-	public List<SNS> search(String kwd);
+	public List<SNS> search(String kwd, String youtube, String instagram, String blog, String twitter);
 	
 	public int dataCountPay(long userCode);
 	
