@@ -26,7 +26,7 @@ public class KeywordMongoOperations {
 		twitterQuery.with(pageable);
 
 		List<Twit> twitList = mongo.find(twitterQuery, Twit.class);
-		System.out.println(twitList.size());
+		
 		// 인스타그램 크롤링
 		BasicQuery instagramQuery = new BasicQuery("{content: { $regex: /"+kwd+"/i }}");
 
@@ -36,6 +36,13 @@ public class KeywordMongoOperations {
 		List<Instagram> instagramList = mongo.find(instagramQuery, Instagram.class);
 		System.out.println(instagramList.size());
 		// 블로그 크롤링
+		
+		BasicQuery BlogQuery = new BasicQuery("{content: { $regex: /" + kwd + "/i}}");
+		System.out.println(twitterQuery);
+		Pageable blogPageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "date"));
+		BlogQuery.with(blogPageable);
+
+		List<Blog> blogList = mongo.find(BlogQuery, Blog.class);
 
 		// 뉴스 크롤링
 
@@ -45,9 +52,9 @@ public class KeywordMongoOperations {
 		if(instagram.equals("0")) {
 			instagramList.clear();
 		}
-//		if(blog.equals("0")) {
-//			blogList.clear();
-//		}
+		if(blog.equals("0")) {
+			blogList.clear();
+		}
 		if(twitter.equals("0")) {
 			twitList.clear();
 		}
@@ -72,6 +79,15 @@ public class KeywordMongoOperations {
 				obj.setUrl(instagramList.get(i).getUrl());
 				obj.setTags(instagramList.get(i).getTags());
 
+				list.add(obj);
+
+			}
+			if (blogList.size() > i) {
+				SNS obj = new SNS();
+				obj.setSns(blogList.get(i).getSns());
+				obj.setDate(blogList.get(i).getDate());
+				obj.setContent(blogList.get(i).getContent());
+				obj.setUrl(blogList.get(i).getUrl());
 				list.add(obj);
 
 			}
