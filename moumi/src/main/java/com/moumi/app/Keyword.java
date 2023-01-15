@@ -1,16 +1,19 @@
 package com.moumi.app;
 
+import java.util.Date;
+
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "keyword") // 재희 - 추가함
+@Document(collection = "keyword") 
 public class Keyword {
 	@Id
-	private ObjectId id; // 재희- 추가함
+	private ObjectId id;
 	private String keyword;
 	private String regDate;
 	private long userCode;
+	private Date date;
 
 	public ObjectId getId() {
 		return id;
@@ -42,5 +45,13 @@ public class Keyword {
 	public void setUserCode(long userCode) {
 		this.userCode = userCode;
 	}
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	
+	
 
 }

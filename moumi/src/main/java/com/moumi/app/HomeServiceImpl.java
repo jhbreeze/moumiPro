@@ -121,6 +121,7 @@ public class HomeServiceImpl implements HomeService {
 			dto.setId(ObjectId.get());
 			dto.setRegDate(now);
 			dto.setKeyword(kwd);
+			dto.setRegDate(now);
 			
 			keywordMongo.insertKeyword(dto);
 		} catch (Exception e) {
