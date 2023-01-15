@@ -164,7 +164,29 @@ $(function(){
  	instagram = ${instagram};
  	blog = ${blog};
  	twitter = ${twitter};
+ 	startDate = ${startDate};
+ 	endDate = ${endDate};
  	
+ 	console.log(startDate);
+ 	console.log(endDate);
+ 	
+ 	
+ 	
+ 	if(endDate===0){
+ 		$('.end').val( new Date().toISOString().substring(0, 10));
+ 	}
+ 	
+ 	if(startDate===0){
+ 		$('.start').val(dateAdd($('.end').val(),30));
+ 	}
+ 	
+ 	
+ 	$('.start').prop("min",dateAdd(new Date().toISOString().substring(0, 10),30));
+ 	$('.start').prop("max",dateAdd(new Date().toISOString().substring(0, 10)));
+ 	
+ 	$('.end').prop("min",dateAdd(new Date().toISOString().substring(0, 10),30));
+ 	$('.end').prop("max",dateAdd(new Date().toISOString().substring(0, 10)));
+ 
 	$("body").one('load',function(){
 		$(".blog").prop("checked",true);
 		$(".twitter").prop("checked",true);
@@ -221,6 +243,26 @@ $(function(){
 		}
 	});
 });
+
+//날짜 더하기
+function dateAdd(date, addDays) {
+
+    var datetmp = date.replace(/-/g,'');
+    
+    var y = parseInt(datetmp.substr(0, 4));
+    var m = parseInt(datetmp.substr(4, 2));
+    var d = parseInt(datetmp.substr(6,2));
+ 
+    d = new Date(y, m - 1, d - addDays);
+ 
+    y = d.getFullYear();
+    m = d.getMonth() + 1; m = (m < 10) ? '0' + m : m;
+    d = d.getDate(); d = (d < 10) ? '0' + d : d;
+ 
+    return '' + y + '-' +  m  + '-' + d;		
+}
+
+
 </script>
 <form class="channelForm" method="post">
 	<div class="chooseInfoBox">
@@ -228,8 +270,8 @@ $(function(){
 			<div class="row">
 				<div class="col">
 					<div class="chooseDate">
-						시작일&nbsp;<input type="date" class="customInputDate">&nbsp;종료일&nbsp;<input
-							type="date" class="customInputDate">
+						시작일&nbsp;<input type="date" name="startDate" value="${startDate}" class="customInputDate start">&nbsp;종료일&nbsp;<input
+							type="date" name="endDate" value="${endDate}" class="customInputDate end">
 					</div>
 				</div>
 				<div class="col">
@@ -281,7 +323,7 @@ $(function(){
 								</div>
 							<div class="col">
 								<div class="row">
-									<button class="btn btn-primary change" type="button">채널적용</button>
+									<button class="btn btn-primary change" type="button">날짜 및 채널적용</button>
 								</div>
 							</div>
 							<input type="hidden" name="kwd" value="${kwd}"> 

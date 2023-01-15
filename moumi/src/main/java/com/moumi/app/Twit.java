@@ -13,8 +13,7 @@ public class Twit {
 	@Id
 	private String _id; // 아이디
 	private String sns; // sns 종류
-	@DateTimeFormat(iso = ISO.DATE_TIME)
-	private Date date; // 작성일
+	private String date; // 작성일
 	private String content; // 내용
 	private String url; // url
 
@@ -34,13 +33,6 @@ public class Twit {
 		this.sns = sns;
 	}
 
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
 
 	public String getContent() {
 		return content;
@@ -56,6 +48,14 @@ public class Twit {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
 	}
 
 }

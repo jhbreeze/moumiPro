@@ -1,6 +1,9 @@
 package com.moumi.app;
 
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -39,9 +42,21 @@ public class HomeController {
 
 		List<Region> listRegion = service.listRegion(map); // 지도 지역 카테고리
 		List<Report> listMainReport = service.listMainReport(map); // 분석 리포트
+		
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String now = sdf.format(date);
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.DATE, -30);
+		String endDate = sdf.format(cal.getTime());
 
 		model.addAttribute("listRegion", listRegion);
 		model.addAttribute("listMainReport", listMainReport);
+		model.addAttribute("now", endDate);
+		model.addAttribute("endDate", now);
+		
 
 		return ".home";
 	}
@@ -164,7 +179,9 @@ public class HomeController {
 			@RequestParam(defaultValue = "0") String youtube,
 			@RequestParam(defaultValue = "0") String instagram,
 			@RequestParam(defaultValue = "0") String blog,
-			@RequestParam(defaultValue = "0") String twitter,Model model,
+			@RequestParam(defaultValue = "0") String twitter,
+			@RequestParam(defaultValue = "0") String startDate,
+			@RequestParam(defaultValue = "0") String endDate,Model model,
 			HttpSession session, Keyword keyword) throws Exception {
 		
 		// 몽고에 키워드 저장 
@@ -175,8 +192,11 @@ public class HomeController {
 		}
 		
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
-		 List<SNS> list = service.search(kwd,youtube,instagram,blog,twitter);
+		 List<SNS> list = service.search(kwd,youtube,instagram,blog,twitter,startDate,endDate);
 		 int payCheck = service.dataCountPay(info.getUserCode());
+		 
+		 System.out.println(startDate);
+		 System.out.println(endDate);
 		 
 		model.addAttribute("list", list);
 		model.addAttribute("kwd", kwd);
@@ -185,6 +205,8 @@ public class HomeController {
 		model.addAttribute("instagram",instagram);
 		model.addAttribute("blog",blog);
 		model.addAttribute("twitter",twitter);
+		model.addAttribute("startDate",startDate);
+		model.addAttribute("endDate",endDate);
 
 
 

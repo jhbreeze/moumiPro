@@ -17,10 +17,11 @@ public class KeywordMongoOperations {
 	@Autowired
 	private MongoOperations mongo;
 
-	public List<SNS> search(String kwd,String youtube,String instagram,String blog,String twitter) {
+	public List<SNS> search(String kwd,String youtube,String instagram,String blog,String twitter,
+				String startDate,String endDate) {
 
 		// 트위터 크롤링
-		BasicQuery twitterQuery = new BasicQuery("{content: { $regex: /" + kwd + "/i}}");
+		BasicQuery twitterQuery = new BasicQuery("{$and : [{content: { $regex: /"+kwd+"/i }},  {date: { $gte:'"+startDate+"'"+",$lte:'"+endDate+"'}}] }");
 		System.out.println(twitterQuery);
 		Pageable pageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "date"));
 		twitterQuery.with(pageable);
@@ -28,7 +29,7 @@ public class KeywordMongoOperations {
 		List<Twit> twitList = mongo.find(twitterQuery, Twit.class);
 		
 		// 인스타그램 크롤링
-		BasicQuery instagramQuery = new BasicQuery("{content: { $regex: /"+kwd+"/i }}");
+		BasicQuery instagramQuery = new BasicQuery("{$and : [{content: { $regex: /"+kwd+"/i }},  {date: { $gte:'"+startDate+"'"+",$lte:'"+endDate+"'}}] }");
 
 		Pageable instagramPageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "date"));
 		instagramQuery.with(instagramPageable);
@@ -37,7 +38,7 @@ public class KeywordMongoOperations {
 		System.out.println(instagramList.size());
 		// 블로그 크롤링
 		
-		BasicQuery BlogQuery = new BasicQuery("{content: { $regex: /" + kwd + "/i}}");
+		BasicQuery BlogQuery = new BasicQuery("{$and : [{content: { $regex: /"+kwd+"/i }}, {date: { $gte:'"+startDate+"'"+",$lte:'"+endDate+"'}}] }");
 		System.out.println(twitterQuery);
 		Pageable blogPageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "date"));
 		BlogQuery.with(blogPageable);
@@ -47,7 +48,7 @@ public class KeywordMongoOperations {
 		// 뉴스 크롤링
 
 		List<SNS> list = new ArrayList<>();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		
 		if(instagram.equals("0")) {
 			instagramList.clear();
@@ -64,7 +65,7 @@ public class KeywordMongoOperations {
 			if (twitList.size() > i) {
 				SNS obj = new SNS();
 				obj.setSns(twitList.get(i).getSns());
-				obj.setDate(sdf.format(twitList.get(i).getDate()));
+				obj.setDate(twitList.get(i).getDate());
 				obj.setUrl(twitList.get(i).getUrl());
 				obj.setContent(twitList.get(i).getContent());
 
@@ -106,4 +107,5 @@ public class KeywordMongoOperations {
 			throw e;
 		}
 	}
+	
 }

@@ -469,6 +469,8 @@ $(function(){
 			
 			<input type="hidden" value="3" name="blog">
 			<input type="hidden" value="4" name="twitter">
+			<input type="hidden" value="${now}" name="startDate">
+			<input type="hidden" value="${endDate}" name="endDate">
 
 	
 		</div>

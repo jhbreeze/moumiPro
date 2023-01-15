@@ -93,10 +93,11 @@ public class HomeServiceImpl implements HomeService {
 	}
 
 	@Override
-	public List<SNS> search(String kwd,String youtube,String instagram, String blog, String twitter) {
+	public List<SNS> search(String kwd,String youtube,String instagram, String blog, 
+			String twitter,String startDate,String endDate) {
 		System.out.println("구현 클래스 search ");
 		System.out.println(kwd);
-		return keywordMongo.search(kwd,youtube,instagram,blog,twitter);
+		return keywordMongo.search(kwd,youtube,instagram,blog,twitter,startDate,endDate);
 	}
 
 	@Override
@@ -129,6 +130,7 @@ public class HomeServiceImpl implements HomeService {
 		}
 		
 	}
+
 
 	
 

@@ -18,10 +18,12 @@ public interface HomeService {
 
 	public Report nextReadReport(Map<String, Object> map);
 
-	public List<SNS> search(String kwd, String youtube, String instagram, String blog, String twitter);
+	public List<SNS> search(String kwd, String youtube, String instagram, String blog,
+			String twitter,String startDate,String endDate);
 	
 	public int dataCountPay(long userCode);
 	
 	public void insertKeyword(String kwd) throws Exception;
+	
 
 }
