@@ -2,10 +2,31 @@
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<style>
+.fw-bold {
+	color: #198754;
+	font-weight: bold;
+}
+thead { 
+	border-top: 1px solid green; 
+	text-align: center; 
+	color: green; 
+}
+tbody {
+	border-bottom: 1px solid green; 
+}
+th, td {
+	padding: 35px 35px;
+}
+
+</style>
+
+
+
 <c:choose>
 	<c:when test="${detail.size() > 0 }">
 		    
-		<table class="table mypayment-table">
+		<table class="mypayment-table">
 			<thead class="fw-bold">
 				<tr>
 					<th>결제번호</th>
@@ -20,7 +41,7 @@
 					<tr class="paymentDetail-table-tr">
 						<td colspan="1">${dto.paymentNum}</td>		
 						<td colspan="1">${dto.subject}</td>		
-						<td colspan="4">${dto.payDate}</td>		
+						<td colspan="4"><span style="color: #DC3545;">${dto.payDate}</span></td>		
 						<td colspan="1">${dto.payDate}&nbsp;~&nbsp;${dto.endDate}</td>
 				</c:forEach>
 			</tbody>
