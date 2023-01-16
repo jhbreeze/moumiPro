@@ -4,9 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:choose>
 	<c:when test="${detail.size() > 0 }">
-		<p class="text-end p-1 pb-0 fw-bold">전체 
-			<span style="color: green" >${dataCount}</span>건
-		</p>
 		    
 		<table class="table mypayment-table">
 			<thead class="fw-bold">

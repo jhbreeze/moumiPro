@@ -2,7 +2,6 @@
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<p class="text-end p-1 pb-0 fw-bold">나의 이용 내역 </p>
 <c:choose>	
 	<c:when test="${current.size() > 0}">   
 	<table class="table mypayment-table">
