@@ -23,6 +23,8 @@ public interface HomeService {
 	
 	public int dataCountPay(long userCode);
 	
+	public int productCategory(long userCode);
+	
 	public void insertKeyword(String kwd) throws Exception;
 	
 

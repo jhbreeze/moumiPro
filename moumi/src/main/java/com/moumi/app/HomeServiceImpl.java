@@ -131,6 +131,17 @@ public class HomeServiceImpl implements HomeService {
 		
 	}
 
+	@Override
+	public int productCategory(long userCode) {
+		int result = 0;
+		try {
+			result = dao.selectOne("pay.selectCategory",userCode);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 
 	
 

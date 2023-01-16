@@ -181,6 +181,7 @@ $(function(){
  	
  	$('.end').prop("min",dateAdd(new Date().toISOString().substring(0, 10),30));
  	$('.end').prop("max",new Date().toISOString().substring(0, 10));
+ 	
  
 	$("body").one('load',function(){
 		$(".blog").prop("checked",true);
@@ -239,6 +240,24 @@ $(function(){
 	});
 });
 
+function changeDate(productCategory){
+	
+	if (! (productCategory === 1 || productCategory === 2)){
+		alert("이용권을 구매해주세요");
+		return;
+	}
+
+ 	$('.end').val( new Date().toISOString().substring(0, 10));
+
+ 	$('.start').val(dateAdd($('.end').val(),90));
+ 	
+	$('.start').prop("min",dateAdd(new Date().toISOString().substring(0, 10),90));
+ 	$('.start').prop("max",new Date().toISOString().substring(0, 10));
+ 	
+ 	$('.end').prop("min",dateAdd(new Date().toISOString().substring(0, 10),90));
+ 	$('.end').prop("max",new Date().toISOString().substring(0, 10));
+}
+
 //날짜 더하기
 function dateAdd(date, addDays) {
 
@@ -267,6 +286,7 @@ function dateAdd(date, addDays) {
 					<div class="chooseDate">
 						시작일&nbsp;<input type="date" name="startDate" value="${startDate}" class="customInputDate start">&nbsp;종료일&nbsp;<input
 							type="date" name="endDate" value="${endDate}" class="customInputDate end">
+						<button type="button" class="btn btn-primary" onclick="changeDate(${productCategory})">3개월</button>
 					</div>
 				</div>
 				<div class="col">

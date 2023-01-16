@@ -22,4 +22,12 @@
 	<select id="selectCountPay" parameterType="Long" resultType="INTEGER">
 		SELECT COUNT(*) FROM payment WHERE userCode = #{userCode} AND endDate > SYSDATE
 	</select>
+	
+	<select id="selectCategory" parameterType="Long" resultType="INTEGER">
+		SELECT p.categoryNum
+		FROM payCategory p
+		JOIN payDetail pd on p.categoryNum = pd.categoryNum
+		JOIN payment pm on pd.paymentNum = pm.paymentNum
+		WHERE pm.userCode = #{userCode}
+	</select>
 </mapper>

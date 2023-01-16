@@ -51,6 +51,10 @@ public class HomeController {
 		cal.setTime(date);
 		cal.add(Calendar.DATE, -30);
 		String endDate = sdf.format(cal.getTime());
+		
+
+		
+		
 
 		model.addAttribute("listRegion", listRegion);
 		model.addAttribute("listMainReport", listMainReport);
@@ -194,6 +198,7 @@ public class HomeController {
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		 List<SNS> list = service.search(kwd,youtube,instagram,blog,twitter,startDate,endDate);
 		 int payCheck = service.dataCountPay(info.getUserCode());
+		 int productCategory = service.productCategory(info.getUserCode());
 		 
 		 System.out.println(startDate);
 		 System.out.println(endDate);
@@ -207,6 +212,7 @@ public class HomeController {
 		model.addAttribute("twitter",twitter);
 		model.addAttribute("startDate",startDate);
 		model.addAttribute("endDate",endDate);
+		model.addAttribute("productCategory",productCategory);
 
 
 
