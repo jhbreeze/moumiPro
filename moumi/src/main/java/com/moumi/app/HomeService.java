@@ -27,5 +27,7 @@ public interface HomeService {
 	
 	public void insertKeyword(String kwd) throws Exception;
 	
+	public List<Summary>  keywordList();
+	
 
 }

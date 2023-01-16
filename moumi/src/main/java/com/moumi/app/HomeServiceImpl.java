@@ -141,6 +141,11 @@ public class HomeServiceImpl implements HomeService {
 		}
 		return result;
 	}
+	
+	@Override
+	public List<Summary> keywordList() {
+		return keywordMongo.keywordList();
+	}
 
 
 	

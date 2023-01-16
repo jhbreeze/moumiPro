@@ -1,14 +1,21 @@
 package com.moumi.app;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.query.BasicQuery;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Service;
 
 @Service("keyword.KeywordMongoOperations")
@@ -16,19 +23,21 @@ public class KeywordMongoOperations {
 	@Autowired
 	private MongoOperations mongo;
 
-	public List<SNS> search(String kwd,String youtube,String instagram,String blog,String twitter,
-				String startDate,String endDate) {
+	public List<SNS> search(String kwd, String youtube, String instagram, String blog, String twitter, String startDate,
+			String endDate) {
 
 		// 트위터 크롤링
-		BasicQuery twitterQuery = new BasicQuery("{$and : [{content: { $regex: /"+kwd+"/i }},  {date: { $gte:'"+startDate+"'"+",$lte:'"+endDate+"'}}] }");
+		BasicQuery twitterQuery = new BasicQuery("{$and : [{content: { $regex: /" + kwd + "/i }},  {date: { $gte:'"
+				+ startDate + "'" + ",$lte:'" + endDate + "'}}] }");
 		System.out.println(twitterQuery);
 		Pageable pageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "date"));
 		twitterQuery.with(pageable);
 
 		List<Twit> twitList = mongo.find(twitterQuery, Twit.class);
-		
+
 		// 인스타그램 크롤링
-		BasicQuery instagramQuery = new BasicQuery("{$and : [{content: { $regex: /"+kwd+"/i }},  {date: { $gte:'"+startDate+"'"+",$lte:'"+endDate+"'}}] }");
+		BasicQuery instagramQuery = new BasicQuery("{$and : [{content: { $regex: /" + kwd + "/i }},  {date: { $gte:'"
+				+ startDate + "'" + ",$lte:'" + endDate + "'}}] }");
 
 		Pageable instagramPageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "date"));
 		instagramQuery.with(instagramPageable);
@@ -36,8 +45,9 @@ public class KeywordMongoOperations {
 		List<Instagram> instagramList = mongo.find(instagramQuery, Instagram.class);
 		System.out.println(instagramList.size());
 		// 블로그 크롤링
-		
-		BasicQuery BlogQuery = new BasicQuery("{$and : [{content: { $regex: /"+kwd+"/i }}, {date: { $gte:'"+startDate+"'"+",$lte:'"+endDate+"'}}] }");
+
+		BasicQuery BlogQuery = new BasicQuery("{$and : [{content: { $regex: /" + kwd + "/i }}, {date: { $gte:'"
+				+ startDate + "'" + ",$lte:'" + endDate + "'}}] }");
 		System.out.println(twitterQuery);
 		Pageable blogPageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "date"));
 		BlogQuery.with(blogPageable);
@@ -47,19 +57,18 @@ public class KeywordMongoOperations {
 		// 뉴스 크롤링
 
 		List<SNS> list = new ArrayList<>();
-		//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		
-		if(instagram.equals("0")) {
+		// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+		if (instagram.equals("0")) {
 			instagramList.clear();
 		}
-		if(blog.equals("0")) {
+		if (blog.equals("0")) {
 			blogList.clear();
 		}
-		if(twitter.equals("0")) {
+		if (twitter.equals("0")) {
 			twitList.clear();
 		}
-		
-		
+
 		for (int i = 0; i < 5; i++) {
 			if (twitList.size() > i) {
 				SNS obj = new SNS();
@@ -95,16 +104,42 @@ public class KeywordMongoOperations {
 		}
 		return list;
 	}
-	
+
 	// 키워드 저장
 	public void insertKeyword(Keyword dto) throws Exception {
 		try {
 			mongo.save(dto, "keyword");
 		} catch (Exception e) {
 			e.printStackTrace();
-			
+
 			throw e;
 		}
 	}
-	
+
+	public List<Summary> keywordList() {
+		LocalDate now = LocalDate.now();
+
+		// 포맷 정의
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+		// 포맷 적용
+		String today = now.format(formatter);
+
+		Aggregation keyword = Aggregation.newAggregation(
+
+				Aggregation.match(Criteria.where("regDate").is(today)),
+				Aggregation.group("keyword").count().as("count"),
+
+				Aggregation.sort(Sort.Direction.DESC, "count"));
+
+		AggregationResults<Summary> groupResults = mongo.aggregate(keyword, Keyword.class, Summary.class);
+		List<Summary> list = groupResults.getMappedResults();
+
+		System.out.println("키워드 리스트 길이");
+		System.out.println(list.size());
+
+		return list;
+
+	}
+
 }

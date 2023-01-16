@@ -53,14 +53,21 @@ public class HomeController {
 		String endDate = sdf.format(cal.getTime());
 		
 
-		
+		List<Summary> keywordList = service.keywordList();
+
 		
 
 		model.addAttribute("listRegion", listRegion);
 		model.addAttribute("listMainReport", listMainReport);
 		model.addAttribute("now", endDate);
 		model.addAttribute("endDate", now);
+		model.addAttribute("keywordList", keywordList);
+
 		
+		
+		
+		
+
 
 		return ".home";
 	}
@@ -220,25 +227,5 @@ public class HomeController {
 	}
 	
 
-	
-/*	
-	@RequestMapping("/search/searchResult")
-	@ResponseBody
-	public Map<String, Object> searchResult(@RequestParam String kwd) throws Exception {
-		Map<String, Object> model = service.search(kwd);
 
-		return model;
-
-	}
-	
-*/
-
-	
-//	@RequestMapping("/search/searchResult")
-//	public String search(@RequestParam String kwd, Model model) throws Exception {
-//		Map<String, Object> twit = service.search(kwd);
-//		model.addAttribute("twit", twit);
-//		return ".search.search";
-//
-//	}
 }

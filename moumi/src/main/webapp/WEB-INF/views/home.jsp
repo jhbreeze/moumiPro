@@ -472,15 +472,17 @@ $(function(){
 			<input type="hidden" value="${now}" name="startDate">
 			<input type="hidden" value="${endDate}" name="endDate">
 		
+		
 	
 		</div>
 
 	</form>
 
+
 	<div class="keywordDiv">
-		<c:forEach var="item" begin="0" end="12" step="1" varStatus="status">
+		<c:forEach var="dto" items="${keywordList}" varStatus="status">
 			<ul>
-				<li><p class="keyword">키워드</p></li>
+				<li><p class="keyword">${dto._id}</p></li>
 			</ul>
 		</c:forEach>
 	</div>
