@@ -167,11 +167,6 @@ $(function(){
  	startDate = ${startDate};
  	endDate = ${endDate};
  	
- 	console.log(startDate);
- 	console.log(endDate);
- 	
- 	
- 	
  	if(endDate===0){
  		$('.end').val( new Date().toISOString().substring(0, 10));
  	}
@@ -182,10 +177,10 @@ $(function(){
  	
  	
  	$('.start').prop("min",dateAdd(new Date().toISOString().substring(0, 10),30));
- 	$('.start').prop("max",dateAdd(new Date().toISOString().substring(0, 10)));
+ 	$('.start').prop("max",new Date().toISOString().substring(0, 10));
  	
  	$('.end').prop("min",dateAdd(new Date().toISOString().substring(0, 10),30));
- 	$('.end').prop("max",dateAdd(new Date().toISOString().substring(0, 10)));
+ 	$('.end').prop("max",new Date().toISOString().substring(0, 10));
  
 	$("body").one('load',function(){
 		$(".blog").prop("checked",true);
