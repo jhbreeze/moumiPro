@@ -2,6 +2,25 @@
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<style>
+.fw-bold {
+	color: #198754;
+	font-weight: bold;
+}
+thead { 
+	border-top: 1px solid green; 
+	text-align: center; 
+	color: green; 
+}
+tbody {
+	border-bottom: 1px solid green; 
+}
+
+</style>
+
+
+
+
 <c:choose>	
 	<c:when test="${current.size() > 0}">   
 	<table class="table mypayment-table">
@@ -20,7 +39,7 @@
 						<td colspan="1">${dto.paymentNum}</td>		
 						<td colspan="1">${dto.subject}</td>		
 						<td colspan="4">${dto.content}</td>		
-						<td colspan="1">${dto.payDate}&nbsp;~&nbsp;${dto.endDate}</td>
+						<td colspan="1"><span style="color: #DC3545; font-weight: 700;">${dto.payDate}&nbsp;~&nbsp;${dto.endDate}</span></td>
 				</c:forEach>
 			</tbody>
 		</table>
