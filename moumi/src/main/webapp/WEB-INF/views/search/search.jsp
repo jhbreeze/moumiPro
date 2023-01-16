@@ -185,7 +185,7 @@ $(function(){
 	$("body").one('load',function(){
 		$(".blog").prop("checked",true);
 		$(".twitter").prop("checked",true);
-	});
+	}); 
  	
  	
 	if(payCheck == 0){
