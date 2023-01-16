@@ -3,9 +3,7 @@ package com.moumi.app;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -44,8 +42,8 @@ public class KeywordMongoOperations {
 
 		List<Instagram> instagramList = mongo.find(instagramQuery, Instagram.class);
 		System.out.println(instagramList.size());
+		
 		// 블로그 크롤링
-
 		BasicQuery BlogQuery = new BasicQuery("{$and : [{content: { $regex: /" + kwd + "/i }}, {date: { $gte:'"
 				+ startDate + "'" + ",$lte:'" + endDate + "'}}] }");
 		System.out.println(twitterQuery);
@@ -53,8 +51,6 @@ public class KeywordMongoOperations {
 		BlogQuery.with(blogPageable);
 
 		List<Blog> blogList = mongo.find(BlogQuery, Blog.class);
-
-		// 뉴스 크롤링
 
 		List<SNS> list = new ArrayList<>();
 		// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -104,6 +100,19 @@ public class KeywordMongoOperations {
 		}
 		return list;
 	}
+	
+	public List<Youtube> youtubeList(String kwd) {
+
+		// 유튜브 크롤링
+		BasicQuery youtubeQuery = new BasicQuery("{title: { $regex: /" + kwd + "/i }} ");
+		System.out.println(youtubeQuery);
+		Pageable pageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "date"));
+		youtubeQuery.with(pageable);
+
+		List<Youtube> youtubeList = mongo.find(youtubeQuery, Youtube.class);
+		return youtubeList;
+	}
+
 
 	// 키워드 저장
 	public void insertKeyword(Keyword dto) throws Exception {

@@ -90,7 +90,7 @@
 
 .layoutYoutube {
 	width: 1100px;
-	height: 400px;
+	height: 600px;
 	border-radius: 15px;
 	background: white;
 }
@@ -154,6 +154,12 @@
 
 .tags {
 	color: blue;
+}
+
+.youtubeImg {
+	width: 250px;
+	height: 150px;
+	border-radius: 24px;
 }
 </style>
 
@@ -284,9 +290,12 @@ function dateAdd(date, addDays) {
 			<div class="row">
 				<div class="col">
 					<div class="chooseDate">
-						시작일&nbsp;<input type="date" name="startDate" value="${startDate}" class="customInputDate start">&nbsp;종료일&nbsp;<input
-							type="date" name="endDate" value="${endDate}" class="customInputDate end">
-						<button type="button" class="btn btn-primary" onclick="changeDate(${productCategory})">3개월</button>
+						시작일&nbsp;<input type="date" name="startDate" value="${startDate}"
+							class="customInputDate start">&nbsp;종료일&nbsp;<input
+							type="date" name="endDate" value="${endDate}"
+							class="customInputDate end">
+						<button type="button" class="btn btn-primary"
+							onclick="changeDate(${productCategory})">3개월</button>
 					</div>
 				</div>
 				<div class="col">
@@ -295,9 +304,10 @@ function dateAdd(date, addDays) {
 							<div class="row">
 								<div class="col">
 									<div class="form-check form-switch ">
-										<input class="form-check-input btn btn-outline-danger channel youtube"
-											type="checkbox" role="switch" id="flexSwitchCheckDefault" name="youtube"
-											value="1">
+										<input
+											class="form-check-input btn btn-outline-danger channel youtube"
+											type="checkbox" role="switch" id="flexSwitchCheckDefault"
+											name="youtube" value="1">
 										<div class="row">
 											<label class="form-check-label labelSNS"
 												for="flexSwitchCheckDefault">유튜브</label>
@@ -306,9 +316,10 @@ function dateAdd(date, addDays) {
 								</div>
 								<div class="col">
 									<div class="form-check form-switch">
-										<input class="form-check-input btn btn-outline-warning channel instagram"
-											type="checkbox" role="switch" id="flexSwitchCheckChecked" name="instagram"
-											value="2" checked>
+										<input
+											class="form-check-input btn btn-outline-warning channel instagram"
+											type="checkbox" role="switch" id="flexSwitchCheckChecked"
+											name="instagram" value="2" checked>
 										<div class="row">
 											<label class="form-check-label" for="flexSwitchCheckChecked">인스타</label>
 										</div>
@@ -316,39 +327,44 @@ function dateAdd(date, addDays) {
 								</div>
 								<div class="col">
 									<div class="form-check form-switch">
-										<input class="form-check-input btn btn-outline-success channel blog"
-											type="checkbox" role="switch" id="flexSwitchCheckDisabled" name="blog" value="3">
+										<input
+											class="form-check-input btn btn-outline-success channel blog"
+											type="checkbox" role="switch" id="flexSwitchCheckDisabled"
+											name="blog" value="3">
 										<div class="row">
 											<label class="form-check-label" for="flexSwitchCheckChecked">블로그</label>
 										</div>
 									</div>
-	
-	
+
+
 								</div>
-	
+
 								<div class="col">
 									<div class="form-check form-switch">
-										<input class="form-check-input btn btn-outline-info channel twitter"
+										<input
+											class="form-check-input btn btn-outline-info channel twitter"
 											type="checkbox" role="switch"
-											id="flexSwitchCheckCheckedDisabled" name="twitter" value="4" checked>
+											id="flexSwitchCheckCheckedDisabled" name="twitter" value="4"
+											checked>
 										<div class="row">
 											<label class="form-check-label" for="flexSwitchCheckChecked">트위터</label>
 										</div>
 									</div>
 								</div>
-							<div class="col">
-								<div class="row">
-									<button class="btn btn-primary change" type="button">날짜 및 채널적용</button>
+								<div class="col">
+									<div class="row">
+										<button class="btn btn-primary change" type="button">날짜
+											및 채널적용</button>
+									</div>
 								</div>
+								<input type="hidden" name="kwd" value="${kwd}">
 							</div>
-							<input type="hidden" name="kwd" value="${kwd}"> 
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
 </form>
 
 <div class="marginBox"></div>
@@ -393,6 +409,23 @@ function dateAdd(date, addDays) {
 						<div class="row">
 							<div class="layoutYoutube">
 								<p class="menuTitle">유튜브 반응 확인하기</p>
+								<c:forEach var="dto" items="${youtubeList}" varStatus="status">
+									<div class="row" style="margin: 2px;">
+										<div class="col ms-auto me-auto">
+											<div class="youtube"  onclick="location.href='${dto.url}'">
+												<div class="row">
+													<img alt="썸네일" class="youtubeImg" src="${dto.thumbnail}">
+													<div class="col-3 text-truncate">${dto.title}</div>
+
+												</div>
+												<div class="row">
+													<p>${dto.writer}| ${dto.view}</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</c:forEach>
+
 							</div>
 						</div>
 

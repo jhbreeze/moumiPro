@@ -21,6 +21,9 @@ public interface HomeService {
 	public List<SNS> search(String kwd, String youtube, String instagram, String blog,
 			String twitter,String startDate,String endDate);
 	
+	public List<Youtube> youtubeList(String kwd);
+	
+	
 	public int dataCountPay(long userCode);
 	
 	public int productCategory(long userCode);

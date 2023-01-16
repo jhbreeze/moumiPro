@@ -42,32 +42,23 @@ public class HomeController {
 
 		List<Region> listRegion = service.listRegion(map); // 지도 지역 카테고리
 		List<Report> listMainReport = service.listMainReport(map); // 분석 리포트
-		
+
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String now = sdf.format(date);
-		
+
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		cal.add(Calendar.DATE, -30);
 		String endDate = sdf.format(cal.getTime());
-		
 
 		List<Summary> keywordList = service.keywordList();
-
-		
 
 		model.addAttribute("listRegion", listRegion);
 		model.addAttribute("listMainReport", listMainReport);
 		model.addAttribute("now", endDate);
 		model.addAttribute("endDate", now);
 		model.addAttribute("keywordList", keywordList);
-
-		
-		
-		
-		
-
 
 		return ".home";
 	}
@@ -207,8 +198,11 @@ public class HomeController {
 		 int payCheck = service.dataCountPay(info.getUserCode());
 		 int productCategory = service.productCategory(info.getUserCode());
 		 
+		 
 		 System.out.println(startDate);
 		 System.out.println(endDate);
+		 
+		 List<Youtube> youtubeList = service.youtubeList(kwd);
 		 
 		model.addAttribute("list", list);
 		model.addAttribute("kwd", kwd);
@@ -219,13 +213,12 @@ public class HomeController {
 		model.addAttribute("twitter",twitter);
 		model.addAttribute("startDate",startDate);
 		model.addAttribute("endDate",endDate);
+		model.addAttribute("youtubeList", youtubeList);
 		model.addAttribute("productCategory",productCategory);
 
 
 
 		return ".search.search";
 	}
-	
-
 
 }
