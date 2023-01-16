@@ -1,14 +1,11 @@
 package com.moumi.app;
 
-import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 //컬렉션(테이블명)
-@Document(collection = "twit")
+@Document(collection = "twitter")
 public class Twit {
 	@Id
 	private String _id; // 아이디
