@@ -32,5 +32,7 @@ public interface HomeService {
 	
 	public List<Summary>  keywordList();
 	
+	public List<String> channel(String kwd, String startDate, String endDate);
+
 
 }

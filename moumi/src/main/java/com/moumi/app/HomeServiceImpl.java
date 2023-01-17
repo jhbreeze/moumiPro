@@ -152,6 +152,12 @@ public class HomeServiceImpl implements HomeService {
 		return keywordMongo.keywordList();
 	}
 
+	@Override
+	public List<String> channel(String kwd, String startDate, String endDate) {
+		// TODO Auto-generated method stub
+		return keywordMongo.channel(kwd, startDate, endDate);
+	}
+
 
 	
 

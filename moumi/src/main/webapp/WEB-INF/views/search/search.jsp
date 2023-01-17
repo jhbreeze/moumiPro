@@ -380,7 +380,11 @@ function dateAdd(date, addDays) {
 							<div class="col-5">
 								<div class="layoutChannel">
 									<p class="channelContent">
-										언급량이 가장 많았던 채널 <img alt="채널 이미지" class="channelImg"
+										언급량이 가장 많았던 채널
+											${topChannel}
+										
+										
+										 <img alt="채널 이미지" class="channelImg"
 											src="${pageContext.request.contextPath}/resources/images/add_photo.png">
 								</div>
 							</div>
@@ -452,7 +456,7 @@ function dateAdd(date, addDays) {
 										</c:if>
 									</div>
 									<div class="col">
-
+			
 										<div class="snsContent" onclick="location.href='${dto.url}'">
 											<div class="date">${dto.date}</div>
 											<div class="col-20 text-truncate">${dto.content}</div>

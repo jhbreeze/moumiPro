@@ -42,7 +42,7 @@ public class KeywordMongoOperations {
 
 		List<Instagram> instagramList = mongo.find(instagramQuery, Instagram.class);
 		System.out.println(instagramList.size());
-		
+
 		// 블로그 크롤링
 		BasicQuery BlogQuery = new BasicQuery("{$and : [{content: { $regex: /" + kwd + "/i }}, {date: { $gte:'"
 				+ startDate + "'" + ",$lte:'" + endDate + "'}}] }");
@@ -100,7 +100,7 @@ public class KeywordMongoOperations {
 		}
 		return list;
 	}
-	
+
 	public List<Youtube> youtubeList(String kwd) {
 
 		// 유튜브 크롤링
@@ -112,7 +112,6 @@ public class KeywordMongoOperations {
 		List<Youtube> youtubeList = mongo.find(youtubeQuery, Youtube.class);
 		return youtubeList;
 	}
-
 
 	// 키워드 저장
 	public void insertKeyword(Keyword dto) throws Exception {
@@ -144,10 +143,49 @@ public class KeywordMongoOperations {
 		AggregationResults<Summary> groupResults = mongo.aggregate(keyword, Keyword.class, Summary.class);
 		List<Summary> list = groupResults.getMappedResults();
 
-		System.out.println("키워드 리스트 길이");
-		System.out.println(list.size());
-
 		return list;
+
+	}
+
+	public List<String> channel(String kwd, String startDate, String endDate) {
+
+		BasicQuery twitterQuery = new BasicQuery("{$and : [{content: { $regex: /" + kwd + "/i }},  {date: { $gte:'"
+				+ startDate + "'" + ",$lte:'" + endDate + "'}}] }");
+		List<Twit> twitList = mongo.find(twitterQuery, Twit.class);
+		int todayTwtit = twitList.size();
+
+		BasicQuery instagramQuery = new BasicQuery("{$and : [{content: { $regex: /" + kwd + "/i }},  {date: { $gte:'"
+				+ startDate + "'" + ",$lte:'" + endDate + "'}}] }");
+
+		List<Instagram> instagramList = mongo.find(instagramQuery, Instagram.class);
+		System.out.println(instagramList.size());
+
+		int todayInstagram = instagramList.size();
+
+		// 블로그 크롤링
+		BasicQuery BlogQuery = new BasicQuery("{$and : [{content: { $regex: /" + kwd + "/i }}, {date: { $gte:'"
+				+ startDate + "'" + ",$lte:'" + endDate + "'}}] }");
+		System.out.println(twitterQuery);
+
+		List<Blog> blogList = mongo.find(BlogQuery, Blog.class);
+
+		int todayBlog = blogList.size();
+
+		int max = Math.max(Math.max(todayTwtit, todayInstagram), todayBlog);
+
+		List<String> topChannel = new ArrayList<>(3);
+
+		if (max == todayTwtit) {
+
+			topChannel.add("트위터");
+		} else if (max == todayInstagram) {
+			topChannel.add("인스타그램");
+
+		} else if (max == todayBlog) {
+			topChannel.add("블로그");
+		}
+
+		return topChannel;
 
 	}
 
