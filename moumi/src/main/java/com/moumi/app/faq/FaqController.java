@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.moumi.app.admin.faq.Faq;
-import com.moumi.app.common.MyUtil;
 
 @Controller("faq.faqUController")
 @RequestMapping("/faq/*")
@@ -22,9 +21,6 @@ public class FaqController {
 	
 	@Autowired
 	private FaqService service;
-	
-	@Autowired
-	private MyUtil myUtil;
 	
 	@RequestMapping(value = "main")
 	public String main(Model model) throws Exception {
