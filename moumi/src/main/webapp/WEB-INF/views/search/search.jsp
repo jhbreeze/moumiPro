@@ -163,12 +163,12 @@
 }
 
 .layoutChart {
-    background-color: #fff;
-    border: 1px solid #ecedee;
-    border-radius: 20px;
-    height: 100%;
-    overflow: hidden;
-    padding: 25px;
+	background-color: #fff;
+	border: 1px solid #ecedee;
+	border-radius: 20px;
+	height: 100%;
+	overflow: hidden;
+	padding: 25px;
 }
 </style>
 
@@ -389,11 +389,8 @@ function dateAdd(date, addDays) {
 							<div class="col-5">
 								<div class="layoutChannel">
 									<p class="channelContent">
-										언급량이 가장 많았던 채널
-											${topChannel}
-										
-										
-										 <img alt="채널 이미지" class="channelImg"
+										언급량이 가장 많았던 채널 ${topChannel} <img alt="채널 이미지"
+											class="channelImg"
 											src="${pageContext.request.contextPath}/resources/images/add_photo.png">
 								</div>
 							</div>
@@ -401,7 +398,7 @@ function dateAdd(date, addDays) {
 							<div class="col-5">
 								<div class="layoutChannel">
 									<p class="channelContent">
-										언급량이 가장 많았던 채널 <img alt="채널 이미지" class="channelImg"
+										언급량이 가장 많았던 날 ${topDay} <img alt="채널 이미지" class="channelImg"
 											src="${pageContext.request.contextPath}/resources/images/add_photo.png">
 								</div>
 							</div>
@@ -411,7 +408,8 @@ function dateAdd(date, addDays) {
 
 
 							<div class="row">
-								<div class="layoutChart pt-0" id="crawlingChart" style="height: 500px; ">
+								<div class="layoutChart pt-0" id="crawlingChart"
+									style="height: 500px;">
 									<p class="menuTitle m-0">언급량 추이</p>
 								</div>
 							</div>
@@ -425,14 +423,14 @@ function dateAdd(date, addDays) {
 								<c:forEach var="dto" items="${youtubeList}" varStatus="status">
 									<div class="row" style="margin: 2px;">
 										<div class="col ms-auto me-auto">
-											<div class="youtube"  onclick="location.href='${dto.url}'">
+											<div class="youtube" onclick="location.href='${dto.url}'">
 												<div class="row">
 													<img alt="썸네일" class="youtubeImg" src="${dto.thumbnail}">
 													<div class="col-3 text-truncate">${dto.title}</div>
 
 												</div>
 												<div class="row">
-													<p>${dto.writer}| ${dto.view}</p>
+													<p>${dto.writer}|${dto.view}</p>
 												</div>
 											</div>
 										</div>
@@ -465,7 +463,7 @@ function dateAdd(date, addDays) {
 										</c:if>
 									</div>
 									<div class="col">
-			
+
 										<div class="snsContent" onclick="location.href='${dto.url}'">
 											<div class="date">${dto.date}</div>
 											<div class="col-20 text-truncate">${dto.content}</div>
@@ -495,7 +493,8 @@ function dateAdd(date, addDays) {
 	</div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.0/echarts.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.0/echarts.min.js"></script>
 <script type="text/javascript">
 
 $(function(){

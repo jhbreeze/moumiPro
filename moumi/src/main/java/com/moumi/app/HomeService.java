@@ -39,5 +39,8 @@ public interface HomeService {
 	public List<Count> instagramCount(String kwd,String instagram, String startDate, String endDate);
 	
 	public List<Count> blogCount(String kwd,String blog, String startDate, String endDate);
+	
+	public String day(String kwd, String startDate, String endDate);
+
 
 }

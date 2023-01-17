@@ -176,6 +176,22 @@ public class HomeServiceImpl implements HomeService {
 		return keywordMongo.blogCount(kwd, blog, startDate, endDate);
 	}
 
+	
+	@Override
+	public String day(String kwd, String startDate, String endDate){
+		// TODO Auto-generated method stub
+		try {
+			System.out.println(kwd);
+			System.out.println(startDate);
+			System.out.println(endDate);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return keywordMongo.day(kwd, startDate, endDate);
+
+	}
+
+
 
 	
 

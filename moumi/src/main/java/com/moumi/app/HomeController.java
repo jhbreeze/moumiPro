@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.moumi.app.common.MyUtil;
 import com.moumi.app.member.SessionInfo;
 
-@Controller()
+@Controller
 
 public class HomeController {
 	@Autowired
@@ -69,7 +69,7 @@ public class HomeController {
 		return "ajax_local_callback";
 	}
 
-	@GetMapping(value = "reportList")
+	@GetMapping(value = "/reportList")
 	public String reportlist(@RequestParam(defaultValue = "0") long reportNum,
 			@RequestParam(value = "page", defaultValue = "1") int current_page,
 			@RequestParam(defaultValue = "all") String condition, @RequestParam(defaultValue = "") String keyword,
@@ -177,61 +177,58 @@ public class HomeController {
 	}
 
 	@PostMapping(value = "analyze")
-	public String search(@RequestParam String kwd,
-			@RequestParam(defaultValue = "0") String youtube,
-			@RequestParam(defaultValue = "0") String instagram,
-			@RequestParam(defaultValue = "0") String blog,
-			@RequestParam(defaultValue = "0") String twitter,
-			@RequestParam(defaultValue = "0") String startDate,
-			@RequestParam(defaultValue = "0") String endDate,Model model,
-			HttpSession session, Keyword keyword) throws Exception {
-		
-		// 몽고에 키워드 저장 
+	public String search(@RequestParam String kwd, @RequestParam(defaultValue = "0") String youtube,
+			@RequestParam(defaultValue = "0") String instagram, @RequestParam(defaultValue = "0") String blog,
+			@RequestParam(defaultValue = "0") String twitter, @RequestParam(defaultValue = "0") String startDate,
+			@RequestParam(defaultValue = "0") String endDate, Model model, HttpSession session, Keyword keyword)
+			throws Exception {
+
+		// 몽고에 키워드 저장
 		try {
 			service.insertKeyword(kwd);
-			
+
 		} catch (Exception e) {
 		}
-		
-		SessionInfo info = (SessionInfo)session.getAttribute("member");
-		 List<SNS> list = service.search(kwd,youtube,instagram,blog,twitter,startDate,endDate);
-		 List<String> topChannel = service.channel(kwd, startDate, endDate);
-		 int payCheck = service.dataCountPay(info.getUserCode());
-		 int productCategory = service.productCategory(info.getUserCode());
-		 
-		 
-		 System.out.println(startDate);
-		 System.out.println(endDate);
-		 
-		 List<Youtube> youtubeList = service.youtubeList(kwd);
-		 
-		// 몽고에서 검색한 키워드로 데이터 카운트 해서 반환 
+
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		List<SNS> list = service.search(kwd, youtube, instagram, blog, twitter, startDate, endDate);
+		List<String> topChannel = service.channel(kwd, startDate, endDate);
+		int payCheck = service.dataCountPay(info.getUserCode());
+		int productCategory = service.productCategory(info.getUserCode());
+
+		System.out.println(startDate);
+		System.out.println(endDate);
+
+		List<Youtube> youtubeList = service.youtubeList(kwd);
+
+		// 몽고에서 검색한 키워드로 데이터 카운트 해서 반환
 		/*
-		List<Count> twitCount = service.twitCount(kwd, twitter, startDate, endDate);
-		List<Count> blogCount = service.blogCount(kwd, blog, startDate, endDate);
-		List<Count> instaCount = service.instagramCount(kwd, instagram, startDate, endDate);
-		*/
-		 
+		 * List<Count> twitCount = service.twitCount(kwd, twitter, startDate, endDate);
+		 * List<Count> blogCount = service.blogCount(kwd, blog, startDate, endDate);
+		 * List<Count> instaCount = service.instagramCount(kwd, instagram, startDate,
+		 * endDate);
+		 */
+
+		String topDay = service.day(kwd, startDate, endDate);
+
 		model.addAttribute("list", list);
 		model.addAttribute("kwd", kwd);
-		model.addAttribute("payCheck",payCheck);
-		model.addAttribute("youtube",youtube);
-		model.addAttribute("instagram",instagram);
-		model.addAttribute("blog",blog);
-		model.addAttribute("twitter",twitter);
-		model.addAttribute("startDate",startDate);
-		model.addAttribute("endDate",endDate);
+		model.addAttribute("payCheck", payCheck);
+		model.addAttribute("youtube", youtube);
+		model.addAttribute("instagram", instagram);
+		model.addAttribute("blog", blog);
+		model.addAttribute("twitter", twitter);
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
 		model.addAttribute("topChannel", topChannel);
-
+		model.addAttribute("topDay", topDay);
 		model.addAttribute("youtubeList", youtubeList);
-		model.addAttribute("productCategory",productCategory);
-		
-		/*
-		model.addAttribute("twitCount", twitCount);
-		model.addAttribute("blogCount", blogCount);
-		model.addAttribute("instaCount", instaCount);
-		*/
+		model.addAttribute("productCategory", productCategory);
 
+		/*
+		 * model.addAttribute("twitCount", twitCount); model.addAttribute("blogCount",
+		 * blogCount); model.addAttribute("instaCount", instaCount);
+		 */
 
 		return ".search.search";
 	}

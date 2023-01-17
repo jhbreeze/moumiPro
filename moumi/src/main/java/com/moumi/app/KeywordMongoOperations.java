@@ -188,49 +188,103 @@ public class KeywordMongoOperations {
 		return topChannel;
 
 	}
-	
+
 	// 트위터 개수
 	public List<Count> twitCount(String kwd, String twitter, String startDate, String endDate) {
-		
+
 		Aggregation aggregation = Aggregation.newAggregation(
-				Aggregation.match(Criteria.where("content").regex(kwd).andOperator(Criteria.where("date").gte(startDate), Criteria.where("date").lte(endDate))),
-				Aggregation.group("date").count().as("result")
-			);
-		
+				Aggregation.match(Criteria.where("content").regex(kwd)
+						.andOperator(Criteria.where("date").gte(startDate), Criteria.where("date").lte(endDate))),
+				Aggregation.group("date").count().as("result"));
+
 		AggregationResults<Count> twitResults = mongo.aggregate(aggregation, Twit.class, Count.class);
 		List<Count> list = twitResults.getMappedResults();
-		
-		
+
 		return list;
 	}
-	
+
 	// 블로그 개수
 	public List<Count> blogCount(String kwd, String blog, String startDate, String endDate) {
-		
+
 		Aggregation aggregation = Aggregation.newAggregation(
-				Aggregation.match(Criteria.where("content").regex(kwd).andOperator(Criteria.where("date").gte(startDate), Criteria.where("date").lte(endDate))),
-				Aggregation.group("date").count().as("result")
-			);
-		
+				Aggregation.match(Criteria.where("content").regex(kwd)
+						.andOperator(Criteria.where("date").gte(startDate), Criteria.where("date").lte(endDate))),
+				Aggregation.group("date").count().as("result"));
+
 		AggregationResults<Count> blogResults = mongo.aggregate(aggregation, Blog.class, Count.class);
 		List<Count> list = blogResults.getMappedResults();
-		
+
 		return list;
 	}
-	
 
 	// 인스타 개수
 	public List<Count> instagramCount(String kwd, String instagram, String startDate, String endDate) {
-		
+
 		Aggregation aggregation = Aggregation.newAggregation(
-				Aggregation.match(Criteria.where("content").regex(kwd).andOperator(Criteria.where("date").gte(startDate), Criteria.where("date").lte(endDate))),
-				Aggregation.group("date").count().as("result")
-			);
-		
+				Aggregation.match(Criteria.where("content").regex(kwd)
+						.andOperator(Criteria.where("date").gte(startDate), Criteria.where("date").lte(endDate))),
+				Aggregation.group("date").count().as("result"));
+
 		AggregationResults<Count> instaResults = mongo.aggregate(aggregation, Instagram.class, Count.class);
 		List<Count> list = instaResults.getMappedResults();
-		
+
 		return list;
+	}
+
+	public String day(String kwd, String startDate, String endDate) {
+
+		String date = null;
+		int count = 0;
+
+		Aggregation instagram = Aggregation.newAggregation(
+				Aggregation.match(Criteria.where("date").gte(startDate).lte(endDate).and("brand").is(kwd)),
+				Aggregation.group("date").count().as("count"), Aggregation.sort(Sort.Direction.DESC, "count"),
+				Aggregation.limit(1));
+
+		AggregationResults<Summary> todayInstagram = mongo.aggregate(instagram, Instagram.class, Summary.class);
+
+		List<Summary> list1 = todayInstagram.getMappedResults();
+
+		Aggregation twitter = Aggregation.newAggregation(
+				Aggregation.match(Criteria.where("date").gte(startDate).lte(endDate).and("brand").is(kwd)),
+				Aggregation.group("date").count().as("count"), Aggregation.sort(Sort.Direction.DESC, "count"),
+				Aggregation.limit(1));
+
+		AggregationResults<Summary> todayTwitter = mongo.aggregate(twitter, Twit.class, Summary.class);
+
+		List<Summary> list2 = todayTwitter.getMappedResults();
+
+		Aggregation blog = Aggregation.newAggregation(
+				Aggregation.match(Criteria.where("date").gte(startDate).lte(endDate).and("brand").is(kwd)),
+				Aggregation.group("date").count().as("count"), Aggregation.sort(Sort.Direction.DESC, "count"),
+				Aggregation.limit(1));
+		AggregationResults<Summary> todayBlog = mongo.aggregate(blog, Blog.class, Summary.class);
+
+		List<Summary> list3 = todayBlog.getMappedResults();
+
+		if (list1.size() > 0) {
+
+			date = list1.get(0).get_id();
+			count = list1.get(0).getCount();
+		}
+		if (list2.size() > 0) {
+			if (count < list2.get(0).getCount()) {
+				date = list2.get(0).get_id();
+				count = list2.get(0).getCount();
+			}
+
+		}
+
+		if (list3.size() > 0) {
+			if (count < list3.get(0).getCount()) {
+				date = list3.get(0).get_id();
+				count = list3.get(0).getCount();
+			}
+
+		}
+
+		return date;
+
 	}
 
 }
