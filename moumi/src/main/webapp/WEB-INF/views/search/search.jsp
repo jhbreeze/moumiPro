@@ -62,7 +62,8 @@
 	background: white;
 	padding: 5px;
 	background: white;
-	background: white;
+	text-align: center;
+	vertical-align: middle;
 }
 
 .channelContent {
@@ -90,7 +91,7 @@
 
 .layoutYoutube {
 	width: 1100px;
-	height: 600px;
+	height: 700px;
 	border-radius: 15px;
 	background: white;
 }
@@ -128,8 +129,7 @@
 
 .menuTitle {
 	font-size: 17px;
-	padding: 20px;
-	margin: 18px;
+	margin: 15px;
 	font-weight: 600;
 	margin: 18px;
 }
@@ -160,6 +160,22 @@
 	width: 250px;
 	height: 150px;
 	border-radius: 24px;
+	margin-bottom: 3px;
+}
+
+.yotubeWriter {
+	font-weight: 500;
+}
+
+.youtubeTitle {
+	width: 250px;
+	height: 50px;
+}
+
+.youtubeView {
+	float: right;
+	color: #808080;
+	margin-bottom: 5px;
 }
 
 .layoutChart {
@@ -174,7 +190,20 @@
 .topChannelImg {
 	width: 90px;
 	hegiht: 90px;
+}
 
+ul {
+	list-style: none;
+}
+
+ul li {
+	list-style-type: none;
+	float: left;
+	margin-right: 15px;
+}
+
+.topDay {
+	color: #198754;
 }
 </style>
 
@@ -396,39 +425,33 @@ function dateAdd(date, addDays) {
 								<div class="layoutChannel">
 									<p class="channelContent">
 										언급량이 가장 많았던 채널
-									
+
 										<c:if test="${topChannel eq '[인스타그램]'}">
-											<img alt="채널 이미지" class ="topChannelImg"
+											<img alt="채널 이미지" class="topChannelImg"
 												src="${pageContext.request.contextPath}/resources/images/moumi/sns/instagram.png">
 										</c:if>
-										
+
 										<c:if test="${topChannel eq '[트위터]'}">
-											<img alt="채널 이미지"  class ="topChannelImg"
-										
+											<img alt="채널 이미지" class="topChannelImg"
 												src="${pageContext.request.contextPath}/resources/images/moumi/sns/twitter.png">
 										</c:if>
-										
+
 										<c:if test="${topChannel eq '[블로그]'}">
-											<img alt="채널 이미지" class ="topChannelImg"
+											<img alt="채널 이미지" class="topChannelImg"
 												src="${pageContext.request.contextPath}/resources/images/moumi/sns/instagram.png">
 										</c:if>
-										
-										
-										
 								</div>
 							</div>
 							<div class="col-1"></div>
 							<div class="col-5">
 								<div class="layoutChannel">
-									<p class="channelContent">
-										언급량이 가장 많았던 날 ${topDay} <img alt="채널 이미지" class="channelImg"
-											src="${pageContext.request.contextPath}/resources/images/add_photo.png">
+									언급량이 가장 많았던 날 <br>
+									<div class="topDay">${topDay}</div>
+
 								</div>
 							</div>
 
 							<div class="marginBox"></div>
-
-
 
 							<div class="row">
 								<div class="layoutChart pt-0" id="crawlingChart"
@@ -444,21 +467,22 @@ function dateAdd(date, addDays) {
 							<div class="layoutYoutube">
 								<p class="menuTitle">유튜브 반응 확인하기</p>
 								<c:forEach var="dto" items="${youtubeList}" varStatus="status">
-									<div class="row" style="margin: 2px;">
-										<div class="col ms-auto me-auto">
-											<div class="youtube" onclick="location.href='${dto.url}'">
-												<div class="row">
-													<img alt="썸네일" class="youtubeImg" src="${dto.thumbnail}">
-													<div class="col-3 text-truncate">${dto.title}</div>
+									<ul class="youtube" onclick="location.href='${dto.url}'">
+										<li><c:if test="${dto.thumbnail != 'noImg'}">
+												<img alt="썸네일" class="youtubeImg" src="${dto.thumbnail}">
+											</c:if> <c:if test="${dto.thumbnail eq 'noImg'}">
+												<img alt="썸네일" class="youtubeImg"
+													src="${pageContext.request.contextPath}/resources/images/moumi/sns/youtube.png">
 
-												</div>
-												<div class="row">
-													<p>${dto.writer}|${dto.view}</p>
-												</div>
-											</div>
-										</div>
-									</div>
+											</c:if>
+											<div class="yotubeWriter">${dto.writer}</div>
+											<div class="youtubeTitle text-truncate">${dto.title}</div>
+											<div class="youtubeView">
+												<i class="fa-regular fa-circle-play"></i>${dto.view}</div></li>
+
+									</ul>
 								</c:forEach>
+
 
 							</div>
 						</div>
@@ -484,9 +508,9 @@ function dateAdd(date, addDays) {
 												style="margin-left: 2px; margin-top: 5px;"
 												src="${pageContext.request.contextPath}/resources/images/moumi/sns/instagram.png">
 										</c:if>
+
 									</div>
 									<div class="col">
-
 										<div class="snsContent" onclick="location.href='${dto.url}'">
 											<div class="date">${dto.date}</div>
 											<div class="col-20 text-truncate">${dto.content}</div>
