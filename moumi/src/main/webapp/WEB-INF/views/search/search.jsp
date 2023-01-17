@@ -170,6 +170,12 @@
 	overflow: hidden;
 	padding: 25px;
 }
+
+.topChannelImg {
+	width: 90px;
+	hegiht: 90px;
+
+}
 </style>
 
 <script type="text/javascript">
@@ -303,7 +309,7 @@ function dateAdd(date, addDays) {
 							class="customInputDate start">&nbsp;종료일&nbsp;<input
 							type="date" name="endDate" value="${endDate}"
 							class="customInputDate end">
-						<button type="button" class="btn btn-primary"
+						<button type="button" class="btn btn-success"
 							onclick="changeDate(${productCategory})">3개월</button>
 					</div>
 				</div>
@@ -362,7 +368,7 @@ function dateAdd(date, addDays) {
 								</div>
 								<div class="col">
 									<div class="row">
-										<button class="btn btn-primary change" type="button">날짜
+										<button class="btn btn-success change" type="button">날짜
 											및 채널적용</button>
 									</div>
 								</div>
@@ -389,9 +395,26 @@ function dateAdd(date, addDays) {
 							<div class="col-5">
 								<div class="layoutChannel">
 									<p class="channelContent">
-										언급량이 가장 많았던 채널 ${topChannel} <img alt="채널 이미지"
-											class="channelImg"
-											src="${pageContext.request.contextPath}/resources/images/add_photo.png">
+										언급량이 가장 많았던 채널
+									
+										<c:if test="${topChannel eq '[인스타그램]'}">
+											<img alt="채널 이미지" class ="topChannelImg"
+												src="${pageContext.request.contextPath}/resources/images/moumi/sns/instagram.png">
+										</c:if>
+										
+										<c:if test="${topChannel eq '[트위터]'}">
+											<img alt="채널 이미지"  class ="topChannelImg"
+										
+												src="${pageContext.request.contextPath}/resources/images/moumi/sns/twitter.png">
+										</c:if>
+										
+										<c:if test="${topChannel eq '[블로그]'}">
+											<img alt="채널 이미지" class ="topChannelImg"
+												src="${pageContext.request.contextPath}/resources/images/moumi/sns/instagram.png">
+										</c:if>
+										
+										
+										
 								</div>
 							</div>
 							<div class="col-1"></div>
