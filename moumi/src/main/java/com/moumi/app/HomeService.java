@@ -32,7 +32,10 @@ public interface HomeService {
 	
 	public List<Summary>  keywordList();
 	
-	public List<String> channel(String kwd, String startDate, String endDate);
+	//public List<String> channel(String kwd, String startDate, String endDate);
+	
+	public String channel(String kwd, String startDate, String endDate);
+
 	
 	public List<Count> twitCount(String kwd,String twitter, String startDate, String endDate);
 	

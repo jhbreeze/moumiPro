@@ -153,10 +153,14 @@ public class HomeServiceImpl implements HomeService {
 	}
 
 	@Override
-	public List<String> channel(String kwd, String startDate, String endDate) {
+	//public List<String> channel(String kwd, String startDate, String endDate) {
+	public String channel(String kwd, String startDate, String endDate) {
+
 		// TODO Auto-generated method stub
+		// return keywordMongo.channel(kwd, startDate, endDate);
 		return keywordMongo.channel(kwd, startDate, endDate);
 	}
+	
 
 	@Override
 	public List<Count> twitCount(String kwd, String twitter, String startDate, String endDate) {

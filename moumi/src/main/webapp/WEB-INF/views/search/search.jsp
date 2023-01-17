@@ -426,17 +426,17 @@ function dateAdd(date, addDays) {
 									<p class="channelContent">
 										언급량이 가장 많았던 채널
 
-										<c:if test="${topChannel eq '[인스타그램]'}">
+										<c:if test="${topChannel eq '인스타그램'}">
 											<img alt="채널 이미지" class="topChannelImg"
 												src="${pageContext.request.contextPath}/resources/images/moumi/sns/instagram.png">
 										</c:if>
 
-										<c:if test="${topChannel eq '[트위터]'}">
+										<c:if test="${topChannel eq '트위터'}">
 											<img alt="채널 이미지" class="topChannelImg"
 												src="${pageContext.request.contextPath}/resources/images/moumi/sns/twitter.png">
 										</c:if>
 
-										<c:if test="${topChannel eq '[블로그]'}">
+										<c:if test="${topChannel eq '블로그'}">
 											<img alt="채널 이미지" class="topChannelImg"
 												src="${pageContext.request.contextPath}/resources/images/moumi/sns/instagram.png">
 										</c:if>

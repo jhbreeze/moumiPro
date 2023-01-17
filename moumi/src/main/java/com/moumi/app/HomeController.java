@@ -192,7 +192,9 @@ public class HomeController {
 
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		List<SNS> list = service.search(kwd, youtube, instagram, blog, twitter, startDate, endDate);
-		List<String> topChannel = service.channel(kwd, startDate, endDate);
+		//List<String> topChannel = service.channel(kwd, startDate, endDate);
+		String topChannel = service.channel(kwd, startDate, endDate);
+
 		int payCheck = service.dataCountPay(info.getUserCode());
 		int productCategory = service.productCategory(info.getUserCode());
 

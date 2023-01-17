@@ -41,7 +41,6 @@ public class KeywordMongoOperations {
 		instagramQuery.with(instagramPageable);
 
 		List<Instagram> instagramList = mongo.find(instagramQuery, Instagram.class);
-		System.out.println(instagramList.size());
 
 		// 블로그 크롤링
 		BasicQuery BlogQuery = new BasicQuery("{$and : [{content: { $regex: /" + kwd + "/i }}, {date: { $gte:'"
@@ -53,7 +52,6 @@ public class KeywordMongoOperations {
 		List<Blog> blogList = mongo.find(BlogQuery, Blog.class);
 
 		List<SNS> list = new ArrayList<>();
-		// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 		if (instagram.equals("0")) {
 			instagramList.clear();
@@ -147,42 +145,50 @@ public class KeywordMongoOperations {
 
 	}
 
-	public List<String> channel(String kwd, String startDate, String endDate) {
+	public String channel(String kwd, String startDate, String endDate) {
 
+		String topChannel = null;
+		int count = 0;
+
+		// 트위터
 		BasicQuery twitterQuery = new BasicQuery("{$and : [{content: { $regex: /" + kwd + "/i }},  {date: { $gte:'"
 				+ startDate + "'" + ",$lte:'" + endDate + "'}}] }");
 		List<Twit> twitList = mongo.find(twitterQuery, Twit.class);
-		int todayTwtit = twitList.size();
 
+		// 인스타그램
 		BasicQuery instagramQuery = new BasicQuery("{$and : [{content: { $regex: /" + kwd + "/i }},  {date: { $gte:'"
 				+ startDate + "'" + ",$lte:'" + endDate + "'}}] }");
 
 		List<Instagram> instagramList = mongo.find(instagramQuery, Instagram.class);
 		System.out.println(instagramList.size());
 
-		int todayInstagram = instagramList.size();
 
-		// 블로그 크롤링
+		// 블로그
 		BasicQuery BlogQuery = new BasicQuery("{$and : [{content: { $regex: /" + kwd + "/i }}, {date: { $gte:'"
 				+ startDate + "'" + ",$lte:'" + endDate + "'}}] }");
 		System.out.println(twitterQuery);
 
 		List<Blog> blogList = mongo.find(BlogQuery, Blog.class);
 
-		int todayBlog = blogList.size();
+		if (twitList.size() > 0) {
+			topChannel = "트위터";
+			count = twitList.size();
+		}
 
-		int max = Math.max(Math.max(todayTwtit, todayInstagram), todayBlog);
+		if (instagramList.size() > 0) {
+			if (count < instagramList.size()) {
+				count = instagramList.size();
+				topChannel = "인스타그램";
+			}
 
-		List<String> topChannel = new ArrayList<>(3);
+		}
 
-		if (max == todayTwtit) {
+		if (blogList.size() > 0) {
+			if (count < blogList.size()) {
+				count = blogList.size();
+				topChannel = "블로그";
+			}
 
-			topChannel.add("트위터");
-		} else if (max == todayInstagram) {
-			topChannel.add("인스타그램");
-
-		} else if (max == todayBlog) {
-			topChannel.add("블로그");
 		}
 
 		return topChannel;
