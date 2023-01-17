@@ -188,5 +188,49 @@ public class KeywordMongoOperations {
 		return topChannel;
 
 	}
+	
+	// 트위터 개수
+	public List<Count> twitCount(String kwd, String twitter, String startDate, String endDate) {
+		
+		Aggregation aggregation = Aggregation.newAggregation(
+				Aggregation.match(Criteria.where("content").regex(kwd).andOperator(Criteria.where("date").gte(startDate), Criteria.where("date").lte(endDate))),
+				Aggregation.group("date").count().as("result")
+			);
+		
+		AggregationResults<Count> twitResults = mongo.aggregate(aggregation, Twit.class, Count.class);
+		List<Count> list = twitResults.getMappedResults();
+		
+		
+		return list;
+	}
+	
+	// 블로그 개수
+	public List<Count> blogCount(String kwd, String blog, String startDate, String endDate) {
+		
+		Aggregation aggregation = Aggregation.newAggregation(
+				Aggregation.match(Criteria.where("content").regex(kwd).andOperator(Criteria.where("date").gte(startDate), Criteria.where("date").lte(endDate))),
+				Aggregation.group("date").count().as("result")
+			);
+		
+		AggregationResults<Count> blogResults = mongo.aggregate(aggregation, Blog.class, Count.class);
+		List<Count> list = blogResults.getMappedResults();
+		
+		return list;
+	}
+	
+
+	// 인스타 개수
+	public List<Count> instagramCount(String kwd, String instagram, String startDate, String endDate) {
+		
+		Aggregation aggregation = Aggregation.newAggregation(
+				Aggregation.match(Criteria.where("content").regex(kwd).andOperator(Criteria.where("date").gte(startDate), Criteria.where("date").lte(endDate))),
+				Aggregation.group("date").count().as("result")
+			);
+		
+		AggregationResults<Count> instaResults = mongo.aggregate(aggregation, Instagram.class, Count.class);
+		List<Count> list = instaResults.getMappedResults();
+		
+		return list;
+	}
 
 }

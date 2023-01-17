@@ -33,6 +33,11 @@ public interface HomeService {
 	public List<Summary>  keywordList();
 	
 	public List<String> channel(String kwd, String startDate, String endDate);
-
+	
+	public List<Count> twitCount(String kwd,String twitter, String startDate, String endDate);
+	
+	public List<Count> instagramCount(String kwd,String instagram, String startDate, String endDate);
+	
+	public List<Count> blogCount(String kwd,String blog, String startDate, String endDate);
 
 }

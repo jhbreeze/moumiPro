@@ -161,6 +161,15 @@
 	height: 150px;
 	border-radius: 24px;
 }
+
+.layoutChart {
+    background-color: #fff;
+    border: 1px solid #ecedee;
+    border-radius: 20px;
+    height: 100%;
+    overflow: hidden;
+    padding: 25px;
+}
 </style>
 
 <script type="text/javascript">
@@ -402,8 +411,8 @@ function dateAdd(date, addDays) {
 
 
 							<div class="row">
-								<div class="layoutYoutube">
-									<p class="menuTitle">그래프</p>
+								<div class="layoutChart pt-0" id="crawlingChart" style="height: 500px; ">
+									<p class="menuTitle m-0">언급량 추이</p>
 								</div>
 							</div>
 							<div class="marginBox"></div>
@@ -485,3 +494,38 @@ function dateAdd(date, addDays) {
 		</div>
 	</div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.0/echarts.min.js"></script>
+<script type="text/javascript">
+
+$(function(){
+	$.getJSON(url, function(data){
+		
+		let chartDom = document.getElementById('crawlingChart');
+		let myChart = echarts.init(chartDom);
+		let option;
+
+		option = {
+		  title: {
+			text: "채널별 언급량 분석"
+		  },
+		  legend: { // 범례
+			data: data.legend  
+		  },
+		  tooltip: {
+			trigger: 'axis'  
+		  },
+		  xAxis: {
+		    type: 'category',
+		    data: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
+		  },
+		  yAxis: {
+		    type: 'value'
+		  },
+		  series: data.series // series는 이 형식을 반드시 지켜야함 : 배열 안에 객체
+		};
+		option && myChart.setOption(option);
+	});
+});
+
+</script>
