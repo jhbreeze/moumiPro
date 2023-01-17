@@ -539,10 +539,10 @@ $(function(){
 								<img class="menuImg"
 									src="${pageContext.request.contextPath}/resources/images/add_photo.png" />
 								<p class="menuMainText">MOUMI가 처음이라면?
-								<br><span class="menuSpanText">아직 구현이 안 돼서<br>연결 안 됐습니당</span></p>
+								<br><span class="menuSpanText">MOUMI를 알차게~</span><span><br>이용하는 방법</span></p>
 							</div>
 							<button class="btn btn-outline-success menuButton " type="button"
-								onclick="location.href='${pageContext.request.contextPath}/farm'">확인하기</button>
+								onclick="location.href='${pageContext.request.contextPath}/manual/list'">확인하기</button>
 
 						</div>
 						<div class="M1">
