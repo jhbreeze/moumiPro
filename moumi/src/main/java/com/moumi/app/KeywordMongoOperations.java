@@ -3,7 +3,9 @@ package com.moumi.app;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -196,45 +198,69 @@ public class KeywordMongoOperations {
 	}
 
 	// 트위터 개수
-	public List<Count> twitCount(String kwd, String twitter, String startDate, String endDate) {
-
+	public List<Map<String, Object>> twitCount(String kwd, String startDate, String endDate) {
+		
 		Aggregation aggregation = Aggregation.newAggregation(
-				Aggregation.match(Criteria.where("content").regex(kwd)
-						.andOperator(Criteria.where("date").gte(startDate), Criteria.where("date").lte(endDate))),
-				Aggregation.group("date").count().as("result"));
-
+				Aggregation.match(Criteria.where("content").regex(kwd).andOperator(Criteria.where("date").gte(startDate), Criteria.where("date").lte(endDate))),
+				Aggregation.group("date").count().as("result"),
+				Aggregation.sort(Sort.Direction.ASC, "_id")
+			);
+		
 		AggregationResults<Count> twitResults = mongo.aggregate(aggregation, Twit.class, Count.class);
-		List<Count> list = twitResults.getMappedResults();
-
-		return list;
+		List<Count> twitCountList = twitResults.getMappedResults();
+		List<Map<String, Object>> resultList = new ArrayList<>();
+		for(Count twitCount : twitCountList) {
+			Map<String, Object> tmpMap = new HashMap<>();
+			tmpMap.put("id", twitCount.get_id());
+			tmpMap.put("result", twitCount.getResult());
+			resultList.add(tmpMap);
+		}
+		return resultList;
 	}
-
+	
 	// 블로그 개수
-	public List<Count> blogCount(String kwd, String blog, String startDate, String endDate) {
-
+	public List<Map<String, Object>> blogCount(String kwd, String startDate, String endDate) {
+		
 		Aggregation aggregation = Aggregation.newAggregation(
-				Aggregation.match(Criteria.where("content").regex(kwd)
-						.andOperator(Criteria.where("date").gte(startDate), Criteria.where("date").lte(endDate))),
-				Aggregation.group("date").count().as("result"));
-
+				Aggregation.match(Criteria.where("content").regex(kwd).andOperator(Criteria.where("date").gte(startDate), Criteria.where("date").lte(endDate))),
+				Aggregation.group("date").count().as("result"),
+				Aggregation.sort(Sort.Direction.ASC, "_id")
+			);
+		
 		AggregationResults<Count> blogResults = mongo.aggregate(aggregation, Blog.class, Count.class);
-		List<Count> list = blogResults.getMappedResults();
-
-		return list;
+		List<Count> blogCountList = blogResults.getMappedResults();
+		List<Map<String, Object>> resultList = new ArrayList<>();
+		for(Count blogCount : blogCountList) {
+			Map<String, Object> tmpMap = new HashMap<>();
+			tmpMap.put("id", blogCount.get_id());
+			tmpMap.put("result", blogCount.getResult());
+			resultList.add(tmpMap);
+		}
+		return resultList;
 	}
+	
 
 	// 인스타 개수
-	public List<Count> instagramCount(String kwd, String instagram, String startDate, String endDate) {
-
+	public List<Map<String, Object>> instagramCount(String kwd, String startDate, String endDate) {
+		
 		Aggregation aggregation = Aggregation.newAggregation(
-				Aggregation.match(Criteria.where("content").regex(kwd)
-						.andOperator(Criteria.where("date").gte(startDate), Criteria.where("date").lte(endDate))),
-				Aggregation.group("date").count().as("result"));
-
+				Aggregation.match(Criteria.where("content").regex(kwd).andOperator(Criteria.where("date").gte(startDate), Criteria.where("date").lte(endDate))),
+				Aggregation.group("date").count().as("result"),
+				Aggregation.sort(Sort.Direction.ASC, "_id")
+			);
+		
 		AggregationResults<Count> instaResults = mongo.aggregate(aggregation, Instagram.class, Count.class);
-		List<Count> list = instaResults.getMappedResults();
-
-		return list;
+		List<Count> instaCountlist = instaResults.getMappedResults();
+		List<Map<String, Object>> resultList = new ArrayList<>();
+		for(Count instaCount : instaCountlist) {
+			Map<String, Object> tmpMap = new HashMap<>();
+			tmpMap.put("id", instaCount.get_id());
+			tmpMap.put("result", instaCount.getResult());
+			resultList.add(tmpMap);
+		}
+		return resultList;
+		
+		
 	}
 
 	public String day(String kwd, String startDate, String endDate) {

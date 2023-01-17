@@ -163,22 +163,23 @@ public class HomeServiceImpl implements HomeService {
 	
 
 	@Override
-	public List<Count> twitCount(String kwd, String twitter, String startDate, String endDate) {
+	public List<Map<String, Object>> twitCount(String kwd, String startDate, String endDate) {
 		
-		return keywordMongo.twitCount(kwd, twitter, startDate, endDate);
+		return keywordMongo.twitCount(kwd, startDate, endDate);
 	}
 
 	@Override
-	public List<Count> instagramCount(String kwd, String instagram, String startDate, String endDate) {
+	public List<Map<String, Object>> instaCount(String kwd, String startDate, String endDate) {
 		
-		return keywordMongo.instagramCount(kwd, instagram, startDate, endDate);
+		return keywordMongo.instagramCount(kwd, startDate, endDate);
 	}
 
 	@Override
-	public List<Count> blogCount(String kwd, String blog, String startDate, String endDate) {
+	public List<Map<String, Object>> blogCount(String kwd, String startDate, String endDate) {
 		
-		return keywordMongo.blogCount(kwd, blog, startDate, endDate);
+		return keywordMongo.blogCount(kwd, startDate, endDate);
 	}
+
 
 	
 	@Override

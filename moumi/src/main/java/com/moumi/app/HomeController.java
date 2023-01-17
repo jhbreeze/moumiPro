@@ -203,14 +203,6 @@ public class HomeController {
 
 		List<Youtube> youtubeList = service.youtubeList(kwd);
 
-		// 몽고에서 검색한 키워드로 데이터 카운트 해서 반환
-		/*
-		 * List<Count> twitCount = service.twitCount(kwd, twitter, startDate, endDate);
-		 * List<Count> blogCount = service.blogCount(kwd, blog, startDate, endDate);
-		 * List<Count> instaCount = service.instagramCount(kwd, instagram, startDate,
-		 * endDate);
-		 */
-
 		String topDay = service.day(kwd, startDate, endDate);
 
 		model.addAttribute("list", list);
@@ -226,11 +218,6 @@ public class HomeController {
 		model.addAttribute("topDay", topDay);
 		model.addAttribute("youtubeList", youtubeList);
 		model.addAttribute("productCategory", productCategory);
-
-		/*
-		 * model.addAttribute("twitCount", twitCount); model.addAttribute("blogCount",
-		 * blogCount); model.addAttribute("instaCount", instaCount);
-		 */
 
 		return ".search.search";
 	}

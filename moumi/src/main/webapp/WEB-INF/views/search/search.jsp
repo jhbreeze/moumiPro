@@ -62,8 +62,7 @@
 	background: white;
 	padding: 5px;
 	background: white;
-	text-align: center;
-	vertical-align: middle;
+	background: white;
 }
 
 .channelContent {
@@ -91,7 +90,7 @@
 
 .layoutYoutube {
 	width: 1100px;
-	height: 700px;
+	height: 600px;
 	border-radius: 15px;
 	background: white;
 }
@@ -129,7 +128,8 @@
 
 .menuTitle {
 	font-size: 17px;
-	margin: 15px;
+	padding: 20px;
+	margin: 18px;
 	font-weight: 600;
 	margin: 18px;
 }
@@ -160,50 +160,15 @@
 	width: 250px;
 	height: 150px;
 	border-radius: 24px;
-	margin-bottom: 3px;
-}
-
-.yotubeWriter {
-	font-weight: 500;
-}
-
-.youtubeTitle {
-	width: 250px;
-	height: 50px;
-}
-
-.youtubeView {
-	float: right;
-	color: #808080;
-	margin-bottom: 5px;
 }
 
 .layoutChart {
-	background-color: #fff;
-	border: 1px solid #ecedee;
-	border-radius: 20px;
-	height: 100%;
-	overflow: hidden;
-	padding: 25px;
-}
-
-.topChannelImg {
-	width: 90px;
-	hegiht: 90px;
-}
-
-ul {
-	list-style: none;
-}
-
-ul li {
-	list-style-type: none;
-	float: left;
-	margin-right: 15px;
-}
-
-.topDay {
-	color: #198754;
+    background-color: #fff;
+    border: 1px solid #ecedee;
+    border-radius: 20px;
+    height: 100%;
+    overflow: hidden;
+    padding: 25px;
 }
 </style>
 
@@ -326,7 +291,6 @@ function dateAdd(date, addDays) {
     return '' + y + '-' +  m  + '-' + d;		
 }
 
-
 </script>
 <form class="channelForm" method="post">
 	<div class="chooseInfoBox">
@@ -338,7 +302,7 @@ function dateAdd(date, addDays) {
 							class="customInputDate start">&nbsp;종료일&nbsp;<input
 							type="date" name="endDate" value="${endDate}"
 							class="customInputDate end">
-						<button type="button" class="btn btn-success"
+						<button type="button" class="btn btn-primary"
 							onclick="changeDate(${productCategory})">3개월</button>
 					</div>
 				</div>
@@ -397,7 +361,7 @@ function dateAdd(date, addDays) {
 								</div>
 								<div class="col">
 									<div class="row">
-										<button class="btn btn-success change" type="button">날짜
+										<button class="btn btn-primary change" type="button">날짜
 											및 채널적용</button>
 									</div>
 								</div>
@@ -425,38 +389,28 @@ function dateAdd(date, addDays) {
 								<div class="layoutChannel">
 									<p class="channelContent">
 										언급량이 가장 많았던 채널
-
-										<c:if test="${topChannel eq '인스타그램'}">
-											<img alt="채널 이미지" class="topChannelImg"
-												src="${pageContext.request.contextPath}/resources/images/moumi/sns/instagram.png">
-										</c:if>
-
-										<c:if test="${topChannel eq '트위터'}">
-											<img alt="채널 이미지" class="topChannelImg"
-												src="${pageContext.request.contextPath}/resources/images/moumi/sns/twitter.png">
-										</c:if>
-
-										<c:if test="${topChannel eq '블로그'}">
-											<img alt="채널 이미지" class="topChannelImg"
-												src="${pageContext.request.contextPath}/resources/images/moumi/sns/instagram.png">
-										</c:if>
+											${topChannel}
+										
+										
+										 <img alt="채널 이미지" class="channelImg"
+											src="${pageContext.request.contextPath}/resources/images/add_photo.png">
 								</div>
 							</div>
 							<div class="col-1"></div>
 							<div class="col-5">
 								<div class="layoutChannel">
-									언급량이 가장 많았던 날 <br>
-									<div class="topDay">${topDay}</div>
-
+									<p class="channelContent">
+										언급량이 가장 많았던 채널 <img alt="채널 이미지" class="channelImg"
+											src="${pageContext.request.contextPath}/resources/images/add_photo.png">
 								</div>
 							</div>
 
 							<div class="marginBox"></div>
 
+
+
 							<div class="row">
-								<div class="layoutChart pt-0" id="crawlingChart"
-									style="height: 500px;">
-									<p class="menuTitle m-0">언급량 추이</p>
+								<div class="layoutChart pt-0" id="crawlingChart" style="height: 500px; ">
 								</div>
 							</div>
 							<div class="marginBox"></div>
@@ -467,22 +421,21 @@ function dateAdd(date, addDays) {
 							<div class="layoutYoutube">
 								<p class="menuTitle">유튜브 반응 확인하기</p>
 								<c:forEach var="dto" items="${youtubeList}" varStatus="status">
-									<ul class="youtube" onclick="location.href='${dto.url}'">
-										<li><c:if test="${dto.thumbnail != 'noImg'}">
-												<img alt="썸네일" class="youtubeImg" src="${dto.thumbnail}">
-											</c:if> <c:if test="${dto.thumbnail eq 'noImg'}">
-												<img alt="썸네일" class="youtubeImg"
-													src="${pageContext.request.contextPath}/resources/images/moumi/sns/youtube.png">
+									<div class="row" style="margin: 2px;">
+										<div class="col ms-auto me-auto">
+											<div class="youtube"  onclick="location.href='${dto.url}'">
+												<div class="row">
+													<img alt="썸네일" class="youtubeImg" src="${dto.thumbnail}">
+													<div class="col-3 text-truncate">${dto.title}</div>
 
-											</c:if>
-											<div class="yotubeWriter">${dto.writer}</div>
-											<div class="youtubeTitle text-truncate">${dto.title}</div>
-											<div class="youtubeView">
-												<i class="fa-regular fa-circle-play"></i>${dto.view}</div></li>
-
-									</ul>
+												</div>
+												<div class="row">
+													<p>${dto.writer}| ${dto.view}</p>
+												</div>
+											</div>
+										</div>
+									</div>
 								</c:forEach>
-
 
 							</div>
 						</div>
@@ -508,9 +461,9 @@ function dateAdd(date, addDays) {
 												style="margin-left: 2px; margin-top: 5px;"
 												src="${pageContext.request.contextPath}/resources/images/moumi/sns/instagram.png">
 										</c:if>
-
 									</div>
 									<div class="col">
+			
 										<div class="snsContent" onclick="location.href='${dto.url}'">
 											<div class="date">${dto.date}</div>
 											<div class="col-20 text-truncate">${dto.content}</div>
@@ -539,39 +492,96 @@ function dateAdd(date, addDays) {
 		</div>
 	</div>
 </div>
+<input type="hidden" id="analyzeKwd" value="${kwd}">
 
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.0/echarts.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.0/echarts.min.js"></script>
 <script type="text/javascript">
 
 $(function(){
+	let startDate = $("form input[name=startDate]").val();
+	let endDate = $("form input[name=endDate]").val();
+ 	let kwd = $("#analyzeKwd").val();
+ 	
+ 	query = kwd+"&startDate="+startDate+"&endDate="+endDate;
+ 	
+	let url = "${pageContext.request.contextPath}/analyze/chart?kwd="+query;
+	
 	$.getJSON(url, function(data){
+		let dataBlog = [];
+		let dataTwit = [];
+		let dataInsta = [];
 		
-		let chartDom = document.getElementById('crawlingChart');
-		let myChart = echarts.init(chartDom);
-		let option;
-
+		console.log("data.blogCountList : ", data.blogCountList);
+		console.log("data.twitCountList : ", data.twitCountList);
+		console.log("data.instaCountList : ", data.instaCountList);
+		
+		for (let _data of data.blogCountList){
+			dataBlog.push([_data.id, _data.result]);
+		}
+		for (let _data of data.twitCountList){
+			dataTwit.push([_data.id, _data.result]);
+		}
+		for (let _data of data.instaCountList){
+			dataInsta.push([_data.id, _data.result]);
+		}
+		
+		console.log("dataBlog : ", dataBlog);
+		console.log("dataTwit : ", dataTwit);
+		console.log("dataInsta : ", dataInsta);
+		
+		var chartDom = document.getElementById('crawlingChart');
+		var myChart = echarts.init(chartDom);
+		var option;
+	
 		option = {
 		  title: {
-			text: "채널별 언급량 분석"
-		  },
-		  legend: { // 범례
-			data: data.legend  
+		    text: '언급량 추이'
 		  },
 		  tooltip: {
-			trigger: 'axis'  
+		    trigger: 'axis'
+		  },
+		  grid: {
+		    left: '3%',
+		    right: '4%',
+		    bottom: '3%',
+		    containLabel: true
+		  },
+		  toolbox: {
+		    feature: {
+		      saveAsImage: {}
+		    }
 		  },
 		  xAxis: {
-		    type: 'category',
-		    data: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
+		    type: 'time',
+		    boundaryGap: false,
 		  },
 		  yAxis: {
 		    type: 'value'
 		  },
-		  series: data.series // series는 이 형식을 반드시 지켜야함 : 배열 안에 객체
+		  series: [
+		    {
+		      name: 'Blog',
+		      type: 'line',
+		      data: dataBlog
+		    },
+		    {
+		      name: 'Twit',
+		      type: 'line',
+		      data: dataTwit
+		    },
+		    {
+		      name: 'Insta',
+		      type: 'line',
+		      data: dataInsta
+		    },
+		  ]
 		};
+	
 		option && myChart.setOption(option);
 	});
+		
 });
-
 </script>
+
+
+

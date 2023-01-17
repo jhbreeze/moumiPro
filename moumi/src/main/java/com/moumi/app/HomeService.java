@@ -37,11 +37,11 @@ public interface HomeService {
 	public String channel(String kwd, String startDate, String endDate);
 
 	
-	public List<Count> twitCount(String kwd,String twitter, String startDate, String endDate);
+	public List<Map<String, Object>> twitCount(String kwd, String startDate, String endDate);
 	
-	public List<Count> instagramCount(String kwd,String instagram, String startDate, String endDate);
+	public List<Map<String, Object>> instaCount(String kwd, String startDate, String endDate);
 	
-	public List<Count> blogCount(String kwd,String blog, String startDate, String endDate);
+	public List<Map<String, Object>> blogCount(String kwd, String startDate, String endDate);
 	
 	public String day(String kwd, String startDate, String endDate);
 
