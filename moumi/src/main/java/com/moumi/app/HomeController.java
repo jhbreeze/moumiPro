@@ -228,30 +228,5 @@ public class HomeController {
 
 		return ".search.search";
 	}
-	
-	@RequestMapping("wordcloud")
-	@ResponseBody
-	public Map<String, Object> flask(Model model, HttpSession session,@RequestParam String instagram,
-				@RequestParam String blog, @RequestParam String twitter,@RequestParam String word) {
-
-		
-			String state = "true";
-		try {
-			String root = session.getServletContext().getRealPath("/");
-			String path = root + "uploads" + File.separator + "wordcloud";
-			System.out.println(path);
-			String spec = "http://localhost:5000/wordcloud?word="+URLEncoder.encode(word,"utf-8")+"&instagram="+instagram+"&blog="+blog+
-						"&twitter="+twitter;
-			String stringJson = apiSerializer.receiveToString(spec);
-			JSONObject job = new JSONObject(stringJson);
-		} catch (Exception e) {
-			state = "false";
-		}
-			Map<String, Object> map = new HashMap<>();
-			map.put("state", state);
-			
-		return map;
-	
-	}
 
 }

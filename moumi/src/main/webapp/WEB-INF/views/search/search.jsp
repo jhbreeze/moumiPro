@@ -367,7 +367,7 @@ $(function(){
 		
 	}); 
 		
-		let url = "${pageContext.request.contextPath}/wordcloud"
+		let url = "${pageContext.request.contextPath}/flask/wordcloud"
 		let query = "instagram="+i_check+"&blog="+b_check+"&twitter="+t_check+"&word="+word;
 		alert(query);
 	
