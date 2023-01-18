@@ -1,5 +1,6 @@
 package com.moumi.app;
 
+import java.io.File;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -12,6 +13,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -21,7 +23,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.moumi.app.common.APISerializer;
 import com.moumi.app.common.MyUtil;
 import com.moumi.app.member.SessionInfo;
 
@@ -30,6 +34,9 @@ import com.moumi.app.member.SessionInfo;
 public class HomeController {
 	@Autowired
 	private HomeService service;
+	
+	@Autowired
+	private APISerializer apiSerializer;
 
 	@Autowired
 	@Qualifier("myUtil")
@@ -220,6 +227,31 @@ public class HomeController {
 		model.addAttribute("productCategory", productCategory);
 
 		return ".search.search";
+	}
+	
+	@RequestMapping("wordcloud")
+	@ResponseBody
+	public Map<String, Object> flask(Model model, HttpSession session,@RequestParam String instagram,
+				@RequestParam String blog, @RequestParam String twitter,@RequestParam String word) {
+
+		
+			String state = "true";
+		try {
+			String root = session.getServletContext().getRealPath("/");
+			String path = root + "uploads" + File.separator + "wordcloud";
+			System.out.println(path);
+			String spec = "http://localhost:5000/wordcloud?word="+URLEncoder.encode(word,"utf-8")+"&instagram="+instagram+"&blog="+blog+
+						"&twitter="+twitter;
+			String stringJson = apiSerializer.receiveToString(spec);
+			JSONObject job = new JSONObject(stringJson);
+		} catch (Exception e) {
+			state = "false";
+		}
+			Map<String, Object> map = new HashMap<>();
+			map.put("state", state);
+			
+		return map;
+	
 	}
 
 }

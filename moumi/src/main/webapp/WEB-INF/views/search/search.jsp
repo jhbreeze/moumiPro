@@ -208,6 +208,32 @@ ul li {
 </style>
 
 <script type="text/javascript">
+function ajaxFun(url, method, query, dataType, fn) {
+	$.ajax({
+		type:method,
+		url:url,
+		data:query,
+		dataType:dataType,
+		success:function(data) {
+			fn(data);
+		},
+		beforeSend:function(jqXHR) {
+			jqXHR.setRequestHeader("AJAX", true);
+		},
+		error:function(jqXHR) {
+			if(jqXHR.status === 403) {
+				login();
+				return false;
+			} else if(jqXHR.status === 400) {
+				alert("요청 처리가 실패 했습니다.");
+				return false;
+			}
+	    	
+			console.log(jqXHR.responseText);
+		}
+	});
+}
+
 $(function(){
  	payCheck = ${payCheck};
  	youtube = ${youtube};
@@ -325,6 +351,31 @@ function dateAdd(date, addDays) {
  
     return '' + y + '-' +  m  + '-' + d;		
 }
+
+
+$(function(){
+	
+	let i_check = $(".instagram").is(":checked");
+	let b_check = $(".blog").is(":checked");
+	let t_check = $(".twitter").is(":checked");
+	let word = $("input[name=kwd]").val();
+
+	$("body").one('load',function(){
+		i_check = "false";
+		b_check = "true";
+		t_check = "true";
+		
+	}); 
+		
+		let url = "${pageContext.request.contextPath}/wordcloud"
+		let query = "instagram="+i_check+"&blog="+b_check+"&twitter="+t_check+"&word="+word;
+		alert(query);
+	
+	const fn = function(data){
+		
+	};
+	ajaxFun(url,"post",query,"json",fn);
+});
 
 
 </script>
@@ -529,7 +580,7 @@ function dateAdd(date, addDays) {
 					<div class="row">
 						<div class="wordCloudLayout">
 							<img alt="채널 이미지" class="wordCloudImg"
-								src="${pageContext.request.contextPath}/resources/images/moumi/wordcloud.png">
+								src="${pageContext.request.contextPath}/uploads/wordcloud.png">
 						</div>
 
 					</div>
