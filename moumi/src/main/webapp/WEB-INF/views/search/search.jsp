@@ -146,8 +146,8 @@
 }
 
 .wordCloudImg {
-	width: 800px;
-	height: 800px;
+	width: -webkit-fill-available;
+	height: -webkit-fill-available;
 	margin: auto;
 	overflow: hidden;
 }
@@ -182,6 +182,7 @@
 	background-color: #fff;
 	border: 1px solid #ecedee;
 	border-radius: 20px;
+	width: 1100px;
 	height: 100%;
 	overflow: hidden;
 	padding: 25px;
@@ -205,35 +206,20 @@ ul li {
 .topDay {
 	color: #198754;
 }
+
+.layoutshop {
+	background-color: #fff;
+	border: 1px solid #ecedee;
+	border-radius: 20px;
+	height: 350px;
+	width: 1100px;
+	overflow: hidden;
+	padding: 25px;
+}
+
 </style>
 
 <script type="text/javascript">
-function ajaxFun(url, method, query, dataType, fn) {
-	$.ajax({
-		type:method,
-		url:url,
-		data:query,
-		dataType:dataType,
-		success:function(data) {
-			fn(data);
-		},
-		beforeSend:function(jqXHR) {
-			jqXHR.setRequestHeader("AJAX", true);
-		},
-		error:function(jqXHR) {
-			if(jqXHR.status === 403) {
-				login();
-				return false;
-			} else if(jqXHR.status === 400) {
-				alert("요청 처리가 실패 했습니다.");
-				return false;
-			}
-	    	
-			console.log(jqXHR.responseText);
-		}
-	});
-}
-
 $(function(){
  	payCheck = ${payCheck};
  	youtube = ${youtube};
@@ -353,31 +339,6 @@ function dateAdd(date, addDays) {
 }
 
 
-$(function(){
-	
-	let i_check = $(".instagram").is(":checked");
-	let b_check = $(".blog").is(":checked");
-	let t_check = $(".twitter").is(":checked");
-	let word = $("input[name=kwd]").val();
-
-	$("body").one('load',function(){
-		i_check = "false";
-		b_check = "true";
-		t_check = "true";
-		
-	}); 
-		
-		let url = "${pageContext.request.contextPath}/flask/wordcloud"
-		let query = "instagram="+i_check+"&blog="+b_check+"&twitter="+t_check+"&word="+word;
-		alert(query);
-	
-	const fn = function(data){
-		
-	};
-	ajaxFun(url,"post",query,"json",fn);
-});
-
-
 </script>
 <form class="channelForm" method="post">
 	<div class="chooseInfoBox">
@@ -469,10 +430,11 @@ $(function(){
 	<div class="analyzeLayout ">
 		<div class="inner-page">
 			<div class="row">
-				<div class="col">
-					<div class="row">
-						<div class="row">
-							<div class="col-5">
+				<div class="col" style="margin-top : 100px;">
+					<div class="container1" style="width : 1850px; height:1010px; margin: auto;">
+					<div class="right" style="float: left;">
+						<div class="box1">
+							<div class="" style="width: 500px; float: left;">
 								<div class="layoutChannel">
 									<p class="channelContent">
 										언급량이 가장 많았던 채널
@@ -493,8 +455,8 @@ $(function(){
 										</c:if>
 								</div>
 							</div>
-							<div class="col-1"></div>
-							<div class="col-5">
+							<div style="width: 100px; float: left; height: 120px;"></div>
+							<div class="" style="width: 500px; float: left;">
 								<div class="layoutChannel">
 									언급량이 가장 많았던 날 <br>
 									<div class="topDay">${topDay}</div>
@@ -502,9 +464,9 @@ $(function(){
 								</div>
 							</div>
 
-							<div class="marginBox"></div>
+							<div class="marginBox" style="clear: left; width: 1100px;"></div>
 
-							<div class="row">
+							<div class="">
 								<div class="layoutChart pt-0" id="crawlingChart"
 									style="height: 500px;">
 									<p class="menuTitle m-0">언급량 추이</p>
@@ -514,7 +476,7 @@ $(function(){
 
 
 						</div>
-						<div class="row">
+						<div>
 							<div class="layoutYoutube">
 								<p class="menuTitle">유튜브 반응 확인하기</p>
 								<c:forEach var="dto" items="${youtubeList}" varStatus="status">
@@ -537,148 +499,160 @@ $(function(){
 
 							</div>
 						</div>
-
-					</div>
-				</div>
-
-				<div class="col">
-					<div class="row">
-						<div class="layoutSNS">
-							<c:forEach var="dto" items="${list}" varStatus="status">
-								<div class="row" style="margin: 2px;">
-									<div class="col ms-auto me-auto">
-										<c:if test="${dto.sns eq 'Twitter'}">
-											<img alt="채널 이미지" class="snsImg"
-												style="margin-left: 2px; margin-top: 5px;"
-												src="${pageContext.request.contextPath}/resources/images/moumi/sns/twitter.png">
-										</c:if>
-
-
-										<c:if test="${dto.sns eq 'instagram'}">
-											<img alt="채널 이미지" class="snsImg"
-												style="margin-left: 2px; margin-top: 5px;"
-												src="${pageContext.request.contextPath}/resources/images/moumi/sns/instagram.png">
-										</c:if>
-
+						
+						<div class="marginBox"></div>
+						
+								<div class="layoutshop ">
+									<p>추천 브랜드 & 상품</p>
+									
+									<div style="float: left; height: 100%; margin-right: 20px;">
+										<a href="https://www.11st.co.kr/products/1757604255?inpu=&trTypeCd=22&trCtgrNo=895019">
+											<img alt="상품이미지" src="https://cdn.011st.com/11dims/resize/600x600/quality/75/11src/pd/v2/6/0/4/2/5/5/dmLSK/1757604255_B.jpg" height="50%">
+										</a>
+											<div>> 브랜드명</div>
+											<div>> 상품명</div>
+											<div>리뷰평점 : </div>
 									</div>
-									<div class="col">
-										<div class="snsContent" onclick="location.href='${dto.url}'">
-											<div class="date">${dto.date}</div>
-											<div class="col-20 text-truncate">${dto.content}</div>
-											<div class="col-20 text-truncate tags">${dto.tags}</div>
-
-										</div>
-
+									
+									<div style="float: left; height: 100%; margin-right: 20px;">
+										<a href="https://www.11st.co.kr/products/1757604255?inpu=&trTypeCd=22&trCtgrNo=895019">
+											<img alt="상품이미지" src="https://cdn.011st.com/11dims/resize/600x600/quality/75/11src/pd/v2/6/0/4/2/5/5/dmLSK/1757604255_B.jpg" height="50%">
+										</a>
+											<div>> 브랜드명</div>
+											<div>> 상품명</div>
+											<div>리뷰평점 : </div>
 									</div>
+									
+									<div style="float: left; height: 100%; margin-right: 20px;">
+										<a href="https://www.11st.co.kr/products/1757604255?inpu=&trTypeCd=22&trCtgrNo=895019">
+											<img alt="상품이미지" src="https://cdn.011st.com/11dims/resize/600x600/quality/75/11src/pd/v2/6/0/4/2/5/5/dmLSK/1757604255_B.jpg" height="50%">
+										</a>
+											<div>> 브랜드명</div>
+											<div>> 상품명</div>
+											<div>리뷰평점 : </div>
+									</div>
+									
+									<div style="float: left; height: 100%; margin-right: 20px;">
+										<a href="https://www.11st.co.kr/products/1757604255?inpu=&trTypeCd=22&trCtgrNo=895019">
+											<img alt="상품이미지" src="https://cdn.011st.com/11dims/resize/600x600/quality/75/11src/pd/v2/6/0/4/2/5/5/dmLSK/1757604255_B.jpg" height="50%">
+										</a>
+											<div>> 브랜드명</div>
+											<div>> 상품명</div>
+											<div>리뷰평점 : </div>
+									</div>
+									
+									<div style="float: left; height: 100%; margin-right: 20px;">
+										<a href="https://www.11st.co.kr/products/1757604255?inpu=&trTypeCd=22&trCtgrNo=895019">
+											<img alt="상품이미지" src="https://cdn.011st.com/11dims/resize/600x600/quality/75/11src/pd/v2/6/0/4/2/5/5/dmLSK/1757604255_B.jpg" height="50%">
+										</a>
+											<div>> 브랜드명</div>
+											<div>> 상품명</div>
+											<div>리뷰평점 : </div>
+									</div>
+									
+									<div style="float: left; height: 100%; margin-right: 20px;">
+										<a href="https://www.11st.co.kr/products/1757604255?inpu=&trTypeCd=22&trCtgrNo=895019">
+											<img alt="상품이미지" src="https://cdn.011st.com/11dims/resize/600x600/quality/75/11src/pd/v2/6/0/4/2/5/5/dmLSK/1757604255_B.jpg" height="50%">
+										</a>
+											<div>> 브랜드명</div>
+											<div>> 상품명</div>
+											<div>리뷰평점 : </div>
+									</div>
+									
 								</div>
-							</c:forEach>
-
+								
 						</div>
-					</div>
-					<div class="marginBox"></div>
-
-					<div class="row">
-						<div class="wordCloudLayout">
-							<img alt="채널 이미지" class="wordCloudImg"
-								src="${pageContext.request.contextPath}/uploads/wordcloud.png">
+								
+						<div style="float: left; margin-left:100px;" class="left">
+								<div class="layoutSNS">
+									<c:forEach var="dto" items="${list}" varStatus="status">
+										<div class="row" style="margin: 2px;">
+											<div class="col ms-auto me-auto">
+												<c:if test="${dto.sns eq 'Twitter'}">
+													<img alt="채널 이미지" class="snsImg"
+														style="margin-left: 2px; margin-top: 5px;"
+														src="${pageContext.request.contextPath}/resources/images/moumi/sns/twitter.png">
+												</c:if>
+		
+		
+												<c:if test="${dto.sns eq 'instagram'}">
+													<img alt="채널 이미지" class="snsImg"
+														style="margin-left: 2px; margin-top: 5px;"
+														src="${pageContext.request.contextPath}/resources/images/moumi/sns/instagram.png">
+												</c:if>
+		
+											</div>
+											<div class="col">
+												<div class="snsContent" onclick="location.href='${dto.url}'">
+													<div class="date">${dto.date}</div>
+													<div class="col-20 text-truncate">${dto.content}</div>
+													<div class="col-20 text-truncate tags">${dto.tags}</div>
+		
+												</div>
+		
+											</div>
+										</div>
+									</c:forEach>
+		
+								</div>
+							
+							<div class="marginBox"></div>
+		
+							<div class="row">
+								<div class="wordCloudLayout" style="margin-top: 100px;">
+									<img alt="채널 이미지" class="wordCloudImg"
+										src="${pageContext.request.contextPath}/resources/images/moumi/wordcloud.png">
+								</div>
+		
+							</div>
+		
 						</div>
 
 					</div>
-
+							
+							
+							
+							
 				</div>
+
+				
 			</div>
 		</div>
 	</div>
 </div>
 
-<input type="hidden" id="analyzeKwd" value="${kwd}">
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.0/echarts.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.0/echarts.min.js"></script>
 <script type="text/javascript">
 
 $(function(){
-	let startDate = $("form input[name=startDate]").val();
-	let endDate = $("form input[name=endDate]").val();
- 	let kwd = $("#analyzeKwd").val();
- 	
- 	query = kwd+"&startDate="+startDate+"&endDate="+endDate;
- 	
-	let url = "${pageContext.request.contextPath}/analyze/chart?kwd="+query;
-	
 	$.getJSON(url, function(data){
-		let dataBlog = [];
-		let dataTwit = [];
-		let dataInsta = [];
 		
-		console.log("data.blogCountList : ", data.blogCountList);
-		console.log("data.twitCountList : ", data.twitCountList);
-		console.log("data.instaCountList : ", data.instaCountList);
-		
-		for (let _data of data.blogCountList){
-			dataBlog.push([_data.id, _data.result]);
-		}
-		for (let _data of data.twitCountList){
-			dataTwit.push([_data.id, _data.result]);
-		}
-		for (let _data of data.instaCountList){
-			dataInsta.push([_data.id, _data.result]);
-		}
-		
-		console.log("dataBlog : ", dataBlog);
-		console.log("dataTwit : ", dataTwit);
-		console.log("dataInsta : ", dataInsta);
-		
-		var chartDom = document.getElementById('crawlingChart');
-		var myChart = echarts.init(chartDom);
-		var option;
-	
+		let chartDom = document.getElementById('crawlingChart');
+		let myChart = echarts.init(chartDom);
+		let option;
+
 		option = {
 		  title: {
-		    text: '언급량 추이'
+			text: "채널별 언급량 분석"
+		  },
+		  legend: { // 범례
+			data: data.legend  
 		  },
 		  tooltip: {
-		    trigger: 'axis'
-		  },
-		  grid: {
-		    left: '3%',
-		    right: '4%',
-		    bottom: '3%',
-		    containLabel: true
-		  },
-		  toolbox: {
-		    feature: {
-		      saveAsImage: {}
-		    }
+			trigger: 'axis'  
 		  },
 		  xAxis: {
-		    type: 'time',
-		    boundaryGap: false,
+		    type: 'category',
+		    data: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
 		  },
 		  yAxis: {
 		    type: 'value'
 		  },
-		  series: [
-		    {
-		      name: 'Blog',
-		      type: 'line',
-		      data: dataBlog
-		    },
-		    {
-		      name: 'Twit',
-		      type: 'line',
-		      data: dataTwit
-		    },
-		    {
-		      name: 'Insta',
-		      type: 'line',
-		      data: dataInsta
-		    },
-		  ]
+		  series: data.series // series는 이 형식을 반드시 지켜야함 : 배열 안에 객체
 		};
-	
 		option && myChart.setOption(option);
 	});
-		
 });
-</script>
 
+</script>
