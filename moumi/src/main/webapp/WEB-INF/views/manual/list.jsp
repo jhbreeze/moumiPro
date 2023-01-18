@@ -43,7 +43,7 @@ function searchList() {
 	<div class="body-container">
 		<div class="body-title">
 			<h2>
-				사용 방법 게시판
+				사용 방법 안내
 			</h2>
 		</div>
 
@@ -100,7 +100,9 @@ function searchList() {
 
 				</div>
 		<div class="col text-end">
-			<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/manual/write';">글올리기</button>
+			<c:if test="${sessionScope.member.userType == 0}">
+				<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/manual/write';">글올리기</button>
+			</c:if>
 		</div>
 		</div>
 	</div>
