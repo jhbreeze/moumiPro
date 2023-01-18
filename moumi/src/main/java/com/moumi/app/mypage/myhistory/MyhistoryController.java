@@ -38,7 +38,7 @@ public class MyhistoryController {
 			HttpServletRequest req, 
 			Model model) throws Exception {
 		
-		int size = 10;
+		int size = 15;
 		int total_page = 0;
 		int dataCount = 0;
 		
@@ -86,7 +86,7 @@ public class MyhistoryController {
 			HttpServletRequest req, 
 			Model model) throws Exception {
 		
-		int size = 10;
+		int size = 15;
 		int total_page = 0;
 		int dataCountR = 0;
 		

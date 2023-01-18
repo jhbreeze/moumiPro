@@ -148,7 +148,7 @@ function post() {
 	div = $tab.attr("data-div");
 	
 	let url = "${pageContext.request.contextPath}/mypage/myhistory/post";
-	let query = "div="+div+"&pageNo="+page;
+	let query = "div="+div;
 	
 	let selector = "#panel-"+div;
 	
