@@ -49,6 +49,7 @@ public class MyhistoryController {
 		map.put("div", div);
 		
 		dataCount = service.dataCount(map);
+		total_page = myUtil.pageCount(dataCount, size);
 		if (dataCount != 0) {
 			total_page = myUtil.pageCount(dataCount, size);
 		}

@@ -74,7 +74,7 @@
 								<div class="p-2">
 									<a href="${pageContext.request.contextPath}/member/logout" title="로그아웃">
 									<img style ="height:35px; width:30px;"src="${pageContext.request.contextPath}/resources/images/profile.png"/></a>
-									<a>${sessionScope.member.nickName}</a>
+									<a style="color: white; padding : 100px 5px;">${sessionScope.member.nickName}</a>
 								</div>
 							</c:otherwise>	
 						</c:choose>	

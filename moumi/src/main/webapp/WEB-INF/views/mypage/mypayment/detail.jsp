@@ -16,7 +16,7 @@ tbody {
 	border-bottom: 1px solid green; 
 }
 th, td {
-	padding: 35px 35px;
+	margin: 35px 25px;
 }
 
 </style>

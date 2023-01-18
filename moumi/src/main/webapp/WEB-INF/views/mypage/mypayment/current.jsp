@@ -15,7 +15,9 @@ thead {
 tbody {
 	border-bottom: 1px solid green; 
 }
-
+th, td {
+	padding: 35px 35px;
+}
 </style>
 
 
@@ -23,7 +25,7 @@ tbody {
 
 <c:choose>	
 	<c:when test="${current.size() > 0}">   
-	<table class="table mypayment-table">
+	<table class="mypayment-table">
 		<thead class="fw-bold">
 			<tr>
 				<th>NO</th>
