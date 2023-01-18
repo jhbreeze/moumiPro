@@ -65,7 +65,6 @@ li {
 }
 
 .regionText {
-	
 	font-size: 40px;
 	font-weight: 600;
 	margin-top: 130px;
@@ -78,8 +77,6 @@ li {
 	font-size: 15px;
 	font-weigth: 100;
 }
-
-
 
 .mainText {
 	font-size: 40px;
@@ -234,9 +231,8 @@ li {
 	margin-top: 17px;
 	font-size: 18px;
 	font-weight: 500;
-	text-align:left;
-	padding-left:15px;
-	
+	text-align: left;
+	padding-left: 15px;
 }
 
 .sideText {
@@ -253,10 +249,9 @@ li {
 	color: #808080;
 }
 
-.menuSpanText{
-font-size: 13px;
-text-align:left;
-
+.menuSpanText {
+	font-size: 13px;
+	text-align: left;
 }
 </style>
 <script type="text/javascript"
@@ -273,56 +268,54 @@ text-align:left;
 </script>
 
 <script type="text/javascript">
-function ajaxFun(url, method, query, dataType, fn) {
-	$.ajax({
-		type:method,
-		url:url,
-		data:query,
-		dataType:dataType,
-		success:function(data) {
-			fn(data);
-		},
-		beforeSend:function(jqXHR) {
-			jqXHR.setRequestHeader("AJAX", true);
-		},
-		error:function(jqXHR) {
-			if(jqXHR.status === 400) {
-				alert("요청 처리가 실패 했습니다.");
-				return false;
-			}
+	function ajaxFun(url, method, query, dataType, fn) {
+		$.ajax({
+			type : method,
+			url : url,
+			data : query,
+			dataType : dataType,
+			success : function(data) {
+				fn(data);
+			},
+			beforeSend : function(jqXHR) {
+				jqXHR.setRequestHeader("AJAX", true);
+			},
+			error : function(jqXHR) {
+				if (jqXHR.status === 400) {
+					alert("요청 처리가 실패 했습니다.");
+					return false;
+				}
 
-			console.log(jqXHR.responseText);
-		}
-	});
-}
+				console.log(jqXHR.responseText);
+			}
+		});
+	}
 </script>
 
 
 <script type="text/javascript">
+	$(function() {
+		$(".btnSearch").click(function() {
+			let url = "${pageContext.request.contextPath}/search/searchResult";
 
-$(function(){
-	$(".btnSearch").click(function(){
-		let url = "${pageContext.request.contextPath}/search/searchResult";
-		
-		const kwd = document.getElementById('kwd').value;
-	
-		let query = "kwd="+kwd;
-		alert(query)
-		const fn = function(data) {
-			console.log(data);
-			printResult(data);
-			
-		};
-			
-		ajaxFun(url, "get", query, "json", fn);
+			const kwd = document.getElementById('kwd').value;
+
+			let query = "kwd=" + kwd;
+			alert(query)
+			const fn = function(data) {
+				console.log(data);
+				printResult(data);
+
+			};
+
+			ajaxFun(url, "get", query, "json", fn);
+		});
+
+		function printResult(data) {
+			let result = data.result;
+			$(".info-box").html(result)
+		}
 	});
-	
-	function printResult(data) {
-		let result = data.result;
-		$(".info-box").html(result)
-	}
-});
-
 </script>
 
 <script>
@@ -457,23 +450,41 @@ $(function(){
 	}
 </script>
 
+<script>
+const content = "Hi. I'm Somi.";
+const text = document.querySelector(".text");
+let i = 0;
+
+function typing(){
+    if (i < content.length) {
+    let txt = content.charAt(i);
+    text.innerHTML += txt;
+    i++;
+    }
+}
+setInterval(typing, 200)
+
+</script>
 <div class="mainBox">
+
 	<h3 class="mainText">MOUMI 분석 서비스</h3>
-	<form class="d-flex searchBox" role="search" method="post" action="${pageContext.request.contextPath}/analyze">
+	<form class="d-flex searchBox" role="search" method="post"
+		action="${pageContext.request.contextPath}/analyze">
 		<div class="customInput">
-			<input class="form-control mx-5 inputSearch" type="search"
-				placeholder="궁금한 분석 단어를 입력하세요." aria-label="Search" id ="kwd" name ="kwd">
-			<button type="submit" class="btn" >
+	<input class="form-control mx-5 inputSearch" type="search"
+				placeholder="궁금한 분석 단어를 입력하세요." aria-label="Search" id="kwd"
+				name="kwd">
+			<button type="submit" class="btn">
 				<i class="fa-solid fa-magnifying-glass"></i>
 			</button>
-			
-			<input type="hidden" value="3" name="blog">
-			<input type="hidden" value="4" name="twitter">
-			<input type="hidden" value="${now}" name="startDate">
-			<input type="hidden" value="${endDate}" name="endDate">
-		
-		
-	
+
+			<input type="hidden" value="3" name="blog"> <input
+				type="hidden" value="4" name="twitter"> <input type="hidden"
+				value="${now}" name="startDate"> <input type="hidden"
+				value="${endDate}" name="endDate">
+
+
+
 		</div>
 
 	</form>
@@ -502,14 +513,15 @@ $(function(){
 						onclick="location.href='${pageContext.request.contextPath}/reportList'">더보기</button>
 				</div>
 			</div>
-			 <div class="col-9">
+			<div class="col-9">
 				<div class="container text-center">
 					<div class="row  row-cols-lg-3">
 						<c:forEach var="dto" items="${listMainReport}" varStatus="status">
 							<div style="width: 18rem; margin: 10px;"
 								data-reportNum="${dto.reportNum}"
 								onclick="location.href='${pageContext.request.contextPath}/article?&reportNum=${dto.reportNum}'">
-								<img style="height: 280px; width: 285px;" src="${pageContext.request.contextPath}/uploads/report/${dto.thumbnail}"
+								<img style="height: 280px; width: 285px;"
+									src="${pageContext.request.contextPath}/uploads/report/${dto.thumbnail}"
 									style="width: -webkit-fill-available;">
 								<div class="p-2">
 									<div class="card-body">${dto.subject}</div>
@@ -518,7 +530,7 @@ $(function(){
 						</c:forEach>
 
 					</div>
-				</div> 
+				</div>
 				<br> <br> <br> <br>
 			</div>
 		</div>
@@ -526,7 +538,7 @@ $(function(){
 
 		<div class="row" style="height: 500px; margin-top: 50px;">
 			<div class="col-3">
-				<div class="col-1 col-sm-2 sideText" style ="color:#198754">
+				<div class="col-1 col-sm-2 sideText" style="color: #198754">
 					<i>#</i>&nbsp;머라고 하지 ㅜㅜㅜㅜ <br> <span class="sideSpanText">MOUMI를
 						알차게 즐기는 방법</span><br>
 				</div>
@@ -538,8 +550,10 @@ $(function(){
 							<div class="col menuLayout">
 								<img class="menuImg"
 									src="${pageContext.request.contextPath}/resources/images/add_photo.png" />
-								<p class="menuMainText">MOUMI가 처음이라면?
-								<br><span class="menuSpanText">MOUMI를 알차게~</span><span><br>이용하는 방법</span></p>
+								<p class="menuMainText">
+									MOUMI가 처음이라면? <br> <span class="menuSpanText">MOUMI를
+										알차게~</span><span><br>이용하는 방법</span>
+								</p>
 							</div>
 							<button class="btn btn-outline-success menuButton " type="button"
 								onclick="location.href='${pageContext.request.contextPath}/manual/list'">확인하기</button>
@@ -549,7 +563,10 @@ $(function(){
 							<div class="col menuLayout">
 								<img class="menuImg"
 									src="${pageContext.request.contextPath}/resources/images/moumi/manual.png" />
-								<p class="menuMainText">MOUMI 일정 관리<br><span class="menuSpanText">간편하게 분석 일정을 관리하자</span></p>
+								<p class="menuMainText">
+									MOUMI 일정 관리<br> <span class="menuSpanText">간편하게 분석
+										일정을 관리하자</span>
+								</p>
 							</div>
 							<button class="btn btn-outline-success menuButton" type="button"
 								onclick="location.href='${pageContext.request.contextPath}/schedule/main'">관리하기</button>
@@ -558,7 +575,10 @@ $(function(){
 							<div class="col menuLayout">
 								<img class="menuImg"
 									src="${pageContext.request.contextPath}/resources/images/moumi/farm.jpeg" />
-								<p class="menuMainText">우리 농가 살리기<br><span class="menuSpanText">농촌 진흥청에서 선별한 농촌 브랜드</span></p>
+								<p class="menuMainText">
+									우리 농가 살리기<br> <span class="menuSpanText">농촌 진흥청에서
+										선별한 농촌 브랜드</span>
+								</p>
 							</div>
 							<button class="btn btn-outline-success menuButton" type="button"
 								onclick="location.href='${pageContext.request.contextPath}/farm'">확인하기</button>
@@ -573,98 +593,98 @@ $(function(){
 	</div>
 
 
-<div class="eventLayout"
-	onclick="location.href='${pageContext.request.contextPath}/event/list'">
-	<div class="container">
-		<div class="row">
-			<div class="col">
-				<img style="height: 250px; width: 300px; float: right"
-					src="${pageContext.request.contextPath}/resources/images/moumi/pick.png" />
-			</div>
-			<div class="col">
-				<p class="eventText">
-					이벤트 참여하고,<br> <span style="font-size: 30px; font-weight: 600;">
-						할인쿠폰 받자!</span> <br> <span style="font-size: 15px;"> 랜덤 쿠폰
-						응모하고 MOUMI 서비스 이용하기</span>
-				</p>
-			</div>
-		</div>
-	</div>
-
-</div>
-
-<div class="container text-center">
-	<div class="container">
-		<div class="row">
-			<div class="col">
-				<div id="map" class="map"></div>
-			</div>
-
-			<div class="col">
-				<div class="search-container">
-					<p class="regionText">
-						<i>#</i>&nbsp;우리 지역 <br>&nbsp;&nbsp;&nbsp; 살리기<br> <span
-							class="regionTextDetail">지역 별 우수 프랜차이즈를 확인해보세요!</span>
+	<div class="eventLayout"
+		onclick="location.href='${pageContext.request.contextPath}/event/list'">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<img style="height: 250px; width: 300px; float: right"
+						src="${pageContext.request.contextPath}/resources/images/moumi/pick.png" />
+				</div>
+				<div class="col">
+					<p class="eventText">
+						이벤트 참여하고,<br> <span
+							style="font-size: 30px; font-weight: 600;"> 할인쿠폰 받자!</span> <br>
+						<span style="font-size: 15px;"> 랜덤 쿠폰 응모하고 MOUMI 서비스 이용하기</span>
 					</p>
-					<div class="col-auto p-1">
-						<c:if test="${!empty listRegion}">
-							<div class="selectBox">
-								<select name="regionCode" id="regionCode" class="customSelect"
-									onchange="javascript:myListener(this);">
-									<c:forEach var="region" items="${listRegion}" varStatus="i">
-										<option value="${region.regionCode}">${region.regionName}</option>
-									</c:forEach>
-								</select>
-							</div>
-						</c:if>
-
-					</div>
 				</div>
 			</div>
+		</div>
 
+	</div>
+
+	<div class="container text-center">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div id="map" class="map"></div>
+				</div>
+
+				<div class="col">
+					<div class="search-container">
+						<p class="regionText">
+							<i>#</i>&nbsp;우리 지역 <br>&nbsp;&nbsp;&nbsp; 살리기<br> <span
+								class="regionTextDetail">지역 별 우수 프랜차이즈를 확인해보세요!</span>
+						</p>
+						<div class="col-auto p-1">
+							<c:if test="${!empty listRegion}">
+								<div class="selectBox">
+									<select name="regionCode" id="regionCode" class="customSelect"
+										onchange="javascript:myListener(this);">
+										<c:forEach var="region" items="${listRegion}" varStatus="i">
+											<option value="${region.regionCode}">${region.regionName}</option>
+										</c:forEach>
+									</select>
+								</div>
+							</c:if>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
 		</div>
 	</div>
-</div>
 </div>
 <script type="text/javascript">
 <!-- Channel Plugin Scripts -->
-(function() {
-    var w = window;
-    if (w.ChannelIO) {
-      return (window.console.error || window.console.log || function(){})('ChannelIO script included twice.');
-    }
-    var ch = function() {
-      ch.c(arguments);
-    };
-    ch.q = [];
-    ch.c = function(args) {
-      ch.q.push(args);
-    };
-    w.ChannelIO = ch;
-    function l() {
-      if (w.ChannelIOInitialized) {
-        return;
-      }
-      w.ChannelIOInitialized = true;
-      var s = document.createElement('script');
-      s.type = 'text/javascript';
-      s.async = true;
-      s.src = 'https://cdn.channel.io/plugin/ch-plugin-web.js';
-      s.charset = 'UTF-8';
-      var x = document.getElementsByTagName('script')[0];
-      x.parentNode.insertBefore(s, x);
-    }
-    if (document.readyState === 'complete') {
-      l();
-    } else if (window.attachEvent) {
-      window.attachEvent('onload', l);
-    } else {
-      window.addEventListener('DOMContentLoaded', l, false);
-      window.addEventListener('load', l, false);
-    }
-  })();
-  ChannelIO('boot', {
-    "pluginKey": "9194e1f4-8ac6-4a65-90ce-cc33f25c6873"
-  });
-
+	(function() {
+		var w = window;
+		if (w.ChannelIO) {
+			return (window.console.error || window.console.log || function() {
+			})('ChannelIO script included twice.');
+		}
+		var ch = function() {
+			ch.c(arguments);
+		};
+		ch.q = [];
+		ch.c = function(args) {
+			ch.q.push(args);
+		};
+		w.ChannelIO = ch;
+		function l() {
+			if (w.ChannelIOInitialized) {
+				return;
+			}
+			w.ChannelIOInitialized = true;
+			var s = document.createElement('script');
+			s.type = 'text/javascript';
+			s.async = true;
+			s.src = 'https://cdn.channel.io/plugin/ch-plugin-web.js';
+			s.charset = 'UTF-8';
+			var x = document.getElementsByTagName('script')[0];
+			x.parentNode.insertBefore(s, x);
+		}
+		if (document.readyState === 'complete') {
+			l();
+		} else if (window.attachEvent) {
+			window.attachEvent('onload', l);
+		} else {
+			window.addEventListener('DOMContentLoaded', l, false);
+			window.addEventListener('load', l, false);
+		}
+	})();
+	ChannelIO('boot', {
+		"pluginKey" : "9194e1f4-8ac6-4a65-90ce-cc33f25c6873"
+	});
 </script>
