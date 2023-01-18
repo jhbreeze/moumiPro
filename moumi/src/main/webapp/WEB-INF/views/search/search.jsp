@@ -634,6 +634,7 @@ $(function(){
 	let endDate = $("form input[name=endDate]").val();
  	let kwd = $("#analyzeKwd").val();
  	
+ 	
  	query = kwd+"&startDate="+startDate+"&endDate="+endDate;
  	
 	let url = "${pageContext.request.contextPath}/analyze/chart?kwd="+query;
