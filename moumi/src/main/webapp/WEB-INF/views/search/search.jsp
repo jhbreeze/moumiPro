@@ -466,11 +466,15 @@ function dateAdd(date, addDays) {
 
 							<div class="marginBox" style="clear: left; width: 1100px;"></div>
 
-							<div class="">
-								<div class="layoutChart pt-0" id="crawlingChart"
-									style="height: 500px;">
-									<p class="menuTitle m-0">언급량 추이</p>
+							<div>
+								<div class="fw-bold h4">언급량 추이
+									<button type="button" onclick="location.href='${pageContext.request.contextPath}/analyze/excel';" 
+											class="btn btn-success">EXCEL</button>
 								</div>
+								<div class="layoutChart" id="crawlingChart"
+									style="height: 500px;">
+								</div>
+								
 							</div>
 							<div class="marginBox"></div>
 
@@ -620,39 +624,109 @@ function dateAdd(date, addDays) {
 		</div>
 	</div>
 </div>
+<input type="hidden" id="analyzeKwd" value="${kwd}">
 
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.0/echarts.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.0/echarts.min.js"></script>
 <script type="text/javascript">
 
 $(function(){
+	let startDate = $("form input[name=startDate]").val();
+	let endDate = $("form input[name=endDate]").val();
+ 	let kwd = $("#analyzeKwd").val();
+ 	
+ 	query = kwd+"&startDate="+startDate+"&endDate="+endDate;
+ 	
+	let url = "${pageContext.request.contextPath}/analyze/chart?kwd="+query;
+	
 	$.getJSON(url, function(data){
+		let dataBlog = [];
+		let dataTwit = [];
+		let dataInsta = [];
 		
-		let chartDom = document.getElementById('crawlingChart');
-		let myChart = echarts.init(chartDom);
-		let option;
-
+		if( $(".blog").prop("checked") == true )  {
+			for (let _data of data.blogCountList){
+				dataBlog.push([_data.id, _data.result]);
+			}
+		} else {
+			dataBlog = [];
+		}
+		
+		if( $(".twitter").prop("checked") == true )  {
+			for (let _data of data.twitCountList){
+				dataTwit.push([_data.id, _data.result]);
+			}
+		} else {
+			dataTwit = [];
+		}
+		
+		if( $(".instagram").prop("checked") == true )  {
+			for (let _data of data.instaCountList){
+				dataInsta.push([_data.id, _data.result]);
+			}
+		} else {
+			dataInsta = [];
+		}
+		
+		var chartDom = document.getElementById('crawlingChart');
+		var myChart = echarts.init(chartDom);
+		var option;
+	
 		option = {
 		  title: {
-			text: "채널별 언급량 분석"
-		  },
-		  legend: { // 범례
-			data: data.legend  
+			  text: '채널별 건수'
 		  },
 		  tooltip: {
-			trigger: 'axis'  
+		    trigger: 'axis'
+		  },
+		  
+		  legend: {
+			  data: ['Blog', 'Twit', 'Insta']
+		  },
+		  
+		  grid: {
+		    left: '3%',
+		    right: '4%',
+		    bottom: '3%',
+		    containLabel: true
+		  },
+		  toolbox: {
+		    feature: {
+		      saveAsImage: {}
+		    }
 		  },
 		  xAxis: {
-		    type: 'category',
-		    data: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
+		    type: 'time',
+		    boundaryGap: false,
+		    axisLabel: {
+	          formatter: '{yyyy}-{MM}-{dd}'
+		    }
 		  },
 		  yAxis: {
 		    type: 'value'
 		  },
-		  series: data.series // series는 이 형식을 반드시 지켜야함 : 배열 안에 객체
+		  series: [
+		    {
+		      name: 'Blog',
+		      type: 'line',
+		      data: dataBlog
+		    },
+		    {
+		      name: 'Twit',
+		      type: 'line',
+		      data: dataTwit
+		    },
+		    {
+		      name: 'Insta',
+		      type: 'line',
+		      data: dataInsta
+		    }
+		  ]
 		};
+	
 		option && myChart.setOption(option);
 	});
+		
 });
+</script>
 
 </script>
