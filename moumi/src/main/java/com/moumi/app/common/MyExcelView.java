@@ -66,7 +66,7 @@ public class MyExcelView extends AbstractXlsxView {
 		Row labelRow = sheet.createRow(0);
 		
 		Cell cell;
-		for(int idx = 0; idx < columnLabels.size(); idx++) {
+		for(int idx = 0; idx < columnLabels.size(); idx++) { // columnLabels 사이즈 만큼 cell 객체를 만듦.
 			sheet.setColumnWidth(idx, 256*15); // 컬럼폭
 			
 			cell = labelRow.createCell(idx);

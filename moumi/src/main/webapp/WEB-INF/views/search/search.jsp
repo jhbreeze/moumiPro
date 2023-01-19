@@ -540,7 +540,7 @@ $(function(){
 
 							<div>
 								<div class="fw-bold h4">언급량 추이
-									<button type="button" onclick="location.href='${pageContext.request.contextPath}/analyze/excel';" 
+									<button type="button" onclick="downloadExcel();" 
 											class="btn btn-success">EXCEL</button>
 								</div>
 								<div class="layoutChart" id="crawlingChart"
@@ -808,4 +808,25 @@ $(function(){
 });
 </script>
 
+<script type="text/javascript">
+function downloadExcel() {
+	let startDate = $("form input[name=startDate]").val();
+	let endDate = $("form input[name=endDate]").val();
+ 	let kwd = $("#analyzeKwd").val();
+ 	let channel = [];
+ 	
+ 	if( $(".blog").prop("checked") == true )  {
+ 		channel.push("blog");
+	} 
+	
+	if( $(".twitter").prop("checked") == true )  {
+ 		channel.push("twitter");
+	}
+	
+	if( $(".instagram").prop("checked") == true )  {
+ 		channel.push("instagram");
+	}
+ 	
+	alert("channel = " + channel);
+};
 </script>

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.View;
 
+import com.moumi.app.Count;
 import com.moumi.app.HomeService;
 import com.moumi.app.common.MyExcelView;
 
@@ -49,25 +50,26 @@ public class AnalyzeController {
 	}
 	
 	@RequestMapping("excel")
-	public View excelView(Map<String, Object> model) throws Exception {
-		// 데이터를 리스트로 반환해줄 서비스
+	public View excelView(Map<String, Object> model, @RequestParam String kwd, 
+			@RequestParam String startDate, @RequestParam String endDate,
+			@RequestParam List<Object> channel) throws Exception {
 		
-		String sheetName = "채널별 건수";
-		List<String> columnLabels = new ArrayList<String>();
-		List<Object[]> columnValues = new ArrayList<Object[]>();
+		// 데이터를 리스트로 반환해줄 서비스
+		List<Count> blogList = null;
+		
+		String sheetName = "키워드 언급량_블로그";
+		List<String> columnLabels = new ArrayList<String>(); // 엑셀의 컬럼 
+		List<Object[]> columnValues = new ArrayList<Object[]>(); // 엑셀 값 
 		
 		columnLabels.add("날짜");
-		columnLabels.add("키워드");
-		columnLabels.add("블로그");
-		columnLabels.add("트위터");
-		columnLabels.add("인스타그램");
+		columnLabels.add("검색 건수");
 		
-		// dto에 리스트 담기
-		/*
-		for(Count dto : list) {
+		// 리스트에 있는 데이터들을 columnValues에 담기 
+		for(Count dto : blogList) {
 			//columnValues.add();
 		}
-		*/
+		
+		
 		model.put("filename", "analyze.xlsx");
 		model.put("sheetName", sheetName);
 		model.put("columnLabels", columnLabels);
