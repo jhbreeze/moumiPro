@@ -523,7 +523,7 @@ $(function(){
 
 										<c:if test="${topChannel eq '블로그'}">
 											<img alt="채널 이미지" class="topChannelImg"
-												src="${pageContext.request.contextPath}/resources/images/moumi/sns/instagram.png">
+												src="${pageContext.request.contextPath}/resources/images/moumi/sns/blog.png">
 										</c:if>
 								</div>
 							</div>
@@ -656,6 +656,14 @@ $(function(){
 														style="margin-left: 2px; margin-top: 5px;"
 														src="${pageContext.request.contextPath}/resources/images/moumi/sns/instagram.png">
 												</c:if>
+												
+															
+												<c:if test="${dto.sns eq 'blog'}">
+													<img alt="채널 이미지" class="snsImg"
+														style="margin-left: 2px; margin-top: 5px;"
+														src="${pageContext.request.contextPath}/resources/images/moumi/sns/blog.png">
+												</c:if>
+		
 		
 											</div>
 											<div class="col">

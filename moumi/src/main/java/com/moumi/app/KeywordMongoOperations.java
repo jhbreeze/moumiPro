@@ -27,9 +27,9 @@ public class KeywordMongoOperations {
 			String endDate) {
 
 		// 트위터 크롤링
-		BasicQuery twitterQuery = new BasicQuery("{$and : [{content: { $regex: /" + kwd + "/i }},  {date: { $gte:'"
+		BasicQuery twitterQuery = new BasicQuery
+				("{$and : [{content: { $regex: /" + kwd + "/i }},  {date: { $gte:'"
 				+ startDate + "'" + ",$lte:'" + endDate + "'}}] }");
-		System.out.println(twitterQuery);
 		Pageable pageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "date"));
 		twitterQuery.with(pageable);
 
@@ -53,7 +53,6 @@ public class KeywordMongoOperations {
 
 		List<Blog> blogList = mongo.find(BlogQuery, Blog.class);
 
-		List<SNS> list = new ArrayList<>();
 
 		if (instagram.equals("0")) {
 			instagramList.clear();
@@ -64,6 +63,8 @@ public class KeywordMongoOperations {
 		if (twitter.equals("0")) {
 			twitList.clear();
 		}
+		
+		List<SNS> list = new ArrayList<>();
 
 		for (int i = 0; i < 5; i++) {
 			if (twitList.size() > i) {
