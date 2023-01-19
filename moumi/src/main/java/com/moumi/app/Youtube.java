@@ -13,6 +13,7 @@ public class Youtube {
 	private String writer;
 	private String view; // url
 	private String thumbnail;
+	private String date;
 
 	public String get_id() {
 		return _id;
@@ -68,6 +69,14 @@ public class Youtube {
 
 	public void setThumbnail(String thumbnail) {
 		this.thumbnail = thumbnail;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
 	}
 
 }

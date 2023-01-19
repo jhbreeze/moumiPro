@@ -212,7 +212,7 @@ li {
 }
 
 .menuImg {
-	height: 290px;
+	height: 245px;
 	width: 290px;
 }
 
@@ -549,7 +549,7 @@ setInterval(typing, 200)
 						<div class="M1">
 							<div class="col menuLayout">
 								<img class="menuImg"
-									src="${pageContext.request.contextPath}/resources/images/add_photo.png" />
+									src="${pageContext.request.contextPath}/resources/images/moumi/manual.png" />
 								<p class="menuMainText">
 									MOUMI가 처음이라면? <br> <span class="menuSpanText">MOUMI를
 										알차게~</span><span><br>이용하는 방법</span>
@@ -562,19 +562,19 @@ setInterval(typing, 200)
 						<div class="M1">
 							<div class="col menuLayout">
 								<img class="menuImg"
-									src="${pageContext.request.contextPath}/resources/images/moumi/manual.png" />
+									src="${pageContext.request.contextPath}/resources/images/moumi/schedule.png" />
 								<p class="menuMainText">
 									MOUMI 일정 관리<br> <span class="menuSpanText">간편하게 분석
 										일정을 관리하자</span>
 								</p>
 							</div>
-							<button class="btn btn-outline-success menuButton" type="button"
+							<button class="btn btn-success menuButton" type="button"
 								onclick="location.href='${pageContext.request.contextPath}/schedule/main'">관리하기</button>
 						</div>
 						<div class="M1">
 							<div class="col menuLayout">
 								<img class="menuImg"
-									src="${pageContext.request.contextPath}/resources/images/moumi/farm.jpeg" />
+									src="${pageContext.request.contextPath}/resources/images/moumi/farm.png" />
 								<p class="menuMainText">
 									우리 농가 살리기<br> <span class="menuSpanText">농촌 진흥청에서
 										선별한 농촌 브랜드</span>
