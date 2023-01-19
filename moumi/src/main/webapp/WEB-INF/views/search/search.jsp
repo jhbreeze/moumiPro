@@ -377,13 +377,13 @@ function getCheckedCnt()  {
 	  
 	  let out = "";
 	  if (selectedElementsCnt ==1){
-	  		out = "<img alt='채널 이미지' class='wordCloudImg' src='${pageContext.request.contextPath}/uploads/wordcloud.png'>11"
+	  		out = "<img alt='채널 이미지' class='wordCloudImg' src='${pageContext.request.contextPath}/uploads/wordcloud.png'>"
 	  }
 	  if (selectedElementsCnt ==2){
-		  	out = "<img alt='채널 이미지' class='wordCloudImg' src='${pageContext.request.contextPath}/uploads/wordcloud2.png'>22"
+		  	out = "<img alt='채널 이미지' class='wordCloudImg' src='${pageContext.request.contextPath}/uploads/wordcloud2.png'>"
 		  }
 	  if (selectedElementsCnt ==3){
-		  	out = "<img alt='채널 이미지' class='wordCloudImg' src='${pageContext.request.contextPath}/uploads/wordcloud3.png'>33"
+		  	out = "<img alt='채널 이미지' class='wordCloudImg' src='${pageContext.request.contextPath}/uploads/wordcloud3.png'>"
 		  }
 	  // 출력
 	  document.querySelector('.wordCloudLayout').innerHTML
