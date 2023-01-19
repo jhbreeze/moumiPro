@@ -19,7 +19,7 @@
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link" style="color:#fff" href="${pageContext.request.contextPath}/board/list">자유게시판</a>
+						<a class="nav-link" style="color:#fff" href="${pageContext.request.contextPath}/board/list">브랜드 커뮤니티</a>
 					</li>
 	 
 					<li class="nav-item">
@@ -63,17 +63,17 @@
 							<c:when test="${sessionScope.member.userType == 0}">
 								<div class="p-2">
 									<a href="${pageContext.request.contextPath}/member/logout" title="로그아웃">
-									<img style ="height:35px; width:30px;"src="${pageContext.request.contextPath}/resources/images/profile.png"/></a>
-									<a>${sessionScope.member.nickName}</a>
+									<img style ="height:45px; width:45px;"src="${pageContext.request.contextPath}/resources/images/moumi/admin.png"/></a>
+									<a style="color: white; padding : 100px 5px; font-size:16px;">${sessionScope.member.nickName}</a>
 								</div>
 								<div class="p-2">
-									<a href="${pageContext.request.contextPath}/admin" title="관리자"><i style="height: 35px; width: 35px;" class="bi bi-gear"></i></a>
+									<a href="${pageContext.request.contextPath}/admin" title="관리자"><i class="fa-sharp fa-solid fa-gear" style ="font-size:20px; color:white; vertical-align:center"></i></a>
 								</div>
 							</c:when>
 							<c:otherwise>	
 								<div class="p-2">
 									<a href="${pageContext.request.contextPath}/member/logout" title="로그아웃">
-									<img style ="height:35px; width:30px;"src="${pageContext.request.contextPath}/resources/images/profile.png"/></a>
+									<img style ="height:45px; width:45px;"src="${pageContext.request.contextPath}/resources/images/profile.png"/></a>
 									<a style="color: white; padding : 100px 5px;">${sessionScope.member.nickName}</a>
 								</div>
 							</c:otherwise>	
