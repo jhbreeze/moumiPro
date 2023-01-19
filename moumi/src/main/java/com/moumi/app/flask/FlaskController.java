@@ -1,4 +1,4 @@
-package com.sp.app.flask;
+package com.moumi.app.flask;
 
 import java.io.File;
 import java.net.URLEncoder;
@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,11 +21,7 @@ import com.moumi.app.common.APISerializer;
 public class FlaskController {
 	@Autowired
 	private APISerializer apiSerializer;
-	
-	@RequestMapping("main")
-	public String main() {
-		return "flask/main";
-	}
+
 	
 	// 플라스크 웹서버 호출
 	@RequestMapping("wordcloud")
@@ -42,15 +37,15 @@ public class FlaskController {
 			System.out.println(path);
 			String spec = "http://localhost:5000/wordcloud?word="+URLEncoder.encode(word,"utf-8")+"&instagram="+instagram+"&blog="+blog+
 						"&twitter="+twitter;
+			@SuppressWarnings("unused")
 			String stringJson = apiSerializer.receiveToString(spec);
-			JSONObject job = new JSONObject(stringJson);
 		} catch (Exception e) {
 			state = "false";
 		}
 			Map<String, Object> map = new HashMap<>();
 			map.put("state", state);
 			
-		return map;
+		return map; 
 	
 	}
 }

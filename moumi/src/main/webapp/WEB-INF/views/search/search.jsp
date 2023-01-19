@@ -220,6 +220,33 @@ ul li {
 </style>
 
 <script type="text/javascript">
+function ajaxFun(url, method, query, dataType, fn) {
+	$.ajax({
+		type:method,
+		url:url,
+		data:query,
+		dataType:dataType,
+		success:function(data) {
+			fn(data);
+		},
+		beforeSend:function(jqXHR) {
+			jqXHR.setRequestHeader("AJAX", true);
+		},
+		error:function(jqXHR) {
+			if(jqXHR.status === 403) {
+				login();
+				return false;
+			} else if(jqXHR.status === 400) {
+				alert("요청 처리가 실패 했습니다.");
+				return false;
+			}
+	    	
+			console.log(jqXHR.responseText);
+		}
+	});
+}
+
+
 $(function(){
  	payCheck = ${payCheck};
  	youtube = ${youtube};
@@ -338,6 +365,51 @@ function dateAdd(date, addDays) {
     return '' + y + '-' +  m  + '-' + d;		
 }
 
+function getCheckedCnt()  {
+	  // 선택된 목록 가져오기
+	  const query = 'input[type=checkbox]:checked';
+	  const selectedElements = 
+	      document.querySelectorAll(query);
+	  
+	  // 선택된 목록의 갯수 세기
+	  const selectedElementsCnt =
+	        selectedElements.length;
+	  
+	  let out = "";
+	  if (selectedElementsCnt ==1){
+	  		out = "<img alt='채널 이미지' class='wordCloudImg' src='${pageContext.request.contextPath}/uploads/wordcloud.png'>11"
+	  }
+	  if (selectedElementsCnt ==2){
+		  	out = "<img alt='채널 이미지' class='wordCloudImg' src='${pageContext.request.contextPath}/uploads/wordcloud2.png'>22"
+		  }
+	  if (selectedElementsCnt ==3){
+		  	out = "<img alt='채널 이미지' class='wordCloudImg' src='${pageContext.request.contextPath}/uploads/wordcloud3.png'>33"
+		  }
+	  // 출력
+	  document.querySelector('.wordCloudLayout').innerHTML
+	    = out;
+	}
+	
+
+$(function(){
+	let i_check = $(".instagram").is(":checked");
+	let b_check = $(".blog").is(":checked");
+	let t_check = $(".twitter").is(":checked");
+	let word = $("input[name=kwd]").val();
+
+	let url = "${pageContext.request.contextPath}/flask/wordcloud"
+	let query = "instagram="+i_check+"&blog="+b_check+"&twitter="+t_check+"&word="+word;
+	alert(query);
+	
+	const fn = function(data){
+		getCheckedCnt();
+		
+	};
+	ajaxFun(url,"post",query,"json",fn);
+	
+	
+
+});
 
 </script>
 <form class="channelForm" method="post">
@@ -604,8 +676,6 @@ function dateAdd(date, addDays) {
 		
 							<div class="row">
 								<div class="wordCloudLayout" style="margin-top: 100px;">
-									<img alt="채널 이미지" class="wordCloudImg"
-										src="${pageContext.request.contextPath}/resources/images/moumi/wordcloud.png">
 								</div>
 		
 							</div>
