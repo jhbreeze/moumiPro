@@ -791,20 +791,24 @@ function downloadExcel() {
 	let startDate = $("form input[name=startDate]").val();
 	let endDate = $("form input[name=endDate]").val();
  	let kwd = $("#analyzeKwd").val();
- 	let channel = [];
  	
+ 	let channels = [];
+	if( $(".twitter").prop("checked") == true )  {
+ 		channels.push("twitter");
+	}
+	
  	if( $(".blog").prop("checked") == true )  {
- 		channel.push("blog");
+ 		channels.push("blog");
 	} 
 	
-	if( $(".twitter").prop("checked") == true )  {
- 		channel.push("twitter");
+	if( $(".instagram").prop("checked") == true )  {
+ 		channels.push("instagram");
 	}
 	
-	if( $(".instagram").prop("checked") == true )  {
- 		channel.push("instagram");
-	}
- 	
-	alert("channel = " + channel);
+	query = kwd+"&startDate="+startDate+"&endDate="+endDate+"&channels="+channels;
+	let url = "${pageContext.request.contextPath}/analyze/excel?kwd="+query;
+	
+	location.href = url;
+	
 };
 </script>

@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.View;
@@ -24,6 +23,9 @@ import com.moumi.app.common.MyExcelView;
 public class AnalyzeController {
 	@Autowired
 	private HomeService service;
+	
+	@Autowired
+	private AnalyzeService aService;
 	
 	@GetMapping(value = "/analyze/chart")
 	@ResponseBody
@@ -49,24 +51,52 @@ public class AnalyzeController {
 	
 	}
 	
-	@RequestMapping("excel")
+	@GetMapping("/analyze/excel")
 	public View excelView(Map<String, Object> model, @RequestParam String kwd, 
 			@RequestParam String startDate, @RequestParam String endDate,
-			@RequestParam List<Object> channel) throws Exception {
+			@RequestParam List<String> channels, HttpServletRequest req) throws Exception {
 		
-		// 데이터를 리스트로 반환해줄 서비스
-		List<Count> blogList = null;
+		if (req.getMethod().equalsIgnoreCase("GET")) {
+			kwd = URLDecoder.decode(kwd, "UTF-8");
+		}
 		
-		String sheetName = "키워드 언급량_블로그";
+		String sheetName = "채널별 언급량";
+		
 		List<String> columnLabels = new ArrayList<String>(); // 엑셀의 컬럼 
 		List<Object[]> columnValues = new ArrayList<Object[]>(); // 엑셀 값 
 		
 		columnLabels.add("날짜");
-		columnLabels.add("검색 건수");
 		
-		// 리스트에 있는 데이터들을 columnValues에 담기 
-		for(Count dto : blogList) {
-			//columnValues.add();
+		for(String channel: channels) {
+			if(channel.equals("twitter")) {
+				columnLabels.add("트위터");
+				String twitter = "twitter";
+				// 데이터를 리스트로 반환해줄 서비스
+				List<Count> list = aService.twitList(kwd, startDate, endDate, twitter);
+				
+				// 리스트에 있는 데이터들을 columnValues에 담기 
+				for(Count dto : list) {
+					columnValues.add(new Object[] {dto.get_id(), dto.getResult()});
+				}
+				
+			} else if(channel.equals("blog")) {
+				columnLabels.add("블로그");
+				String blog = "blog";
+				List<Count> list = aService.blogList(kwd, startDate, endDate, blog);
+				
+				for(Count dto : list) {
+					columnValues.add(new Object[] {dto.get_id(), dto.getResult()});
+				}
+			} else {
+				columnLabels.add("인스타그램");
+				String instagram = "instagram";
+				List<Count> list = aService.instaList(kwd, startDate, endDate, instagram);
+				
+				for(Count dto : list) {
+					columnValues.add(new Object[] {dto.get_id(), dto.getResult()});
+				}
+			}
+			
 		}
 		
 		
@@ -74,6 +104,9 @@ public class AnalyzeController {
 		model.put("sheetName", sheetName);
 		model.put("columnLabels", columnLabels);
 		model.put("columnValues", columnValues);
+		model.put("kwd", kwd);
+		model.put("startDate", startDate);
+		model.put("endDate", endDate);
 		
 		return new MyExcelView(); // 엑셀 다운로드
 	}

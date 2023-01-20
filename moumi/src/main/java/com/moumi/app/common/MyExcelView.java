@@ -37,6 +37,11 @@ public class MyExcelView extends AbstractXlsxView {
 		response.setHeader("Content-disposition", "attachment; filename="+filename); // Content-disposition 위치 = 파일이름
 		
 		Sheet sheet = createSheet(workbook, 0, sheetName); // 시트1(empty sheet) 하나 만듦.
+
+		String kwd = (String) model.get("kwd");
+		String startDate = (String) model.get("startDate");
+		String endDate = (String) model.get("endDate");
+		createInfo(sheet, kwd, startDate, endDate);
 		
 		if(columnLabels != null) {
 			createColumnLabel(sheet, columnLabels); // 시트에 학번, 이름, 과목 넣어주는 함수
@@ -61,16 +66,13 @@ public class MyExcelView extends AbstractXlsxView {
 		return sheet;
 	}
 	
-	// 제목(첫번째 row)
 	private void createColumnLabel(Sheet sheet, List<String> columnLabels) {
-		Row labelRow = sheet.createRow(0);
-		
+		int idx = 4; // 제목 위치 지정
+		Row labelRow = sheet.createRow(idx);
 		Cell cell;
-		for(int idx = 0; idx < columnLabels.size(); idx++) { // columnLabels 사이즈 만큼 cell 객체를 만듦.
-			sheet.setColumnWidth(idx, 256*15); // 컬럼폭
-			
+		for(int i = 0; i < columnLabels.size(); i++) { // columnLabels 사이즈 만큼 cell 객체를 만듦.
 			cell = labelRow.createCell(idx);
-			cell.setCellValue(columnLabels.get(idx));
+			cell.setCellValue(columnLabels.get(i));
 		}
 	}
 	
@@ -80,7 +82,7 @@ public class MyExcelView extends AbstractXlsxView {
 		Cell cell;
 		
 		for(int idx = 0; idx < columnValues.size(); idx++) {
-			row = sheet.createRow(idx + 1); // 제목 다음줄
+			row = sheet.createRow(idx + 5); // 제목 다음줄
 			
 			Object[] values = columnValues.get(idx); // 데이터 삽입
 			for(int col=0; col < values.length; col++) {
@@ -114,4 +116,23 @@ public class MyExcelView extends AbstractXlsxView {
 			}
 		}
 	}
+	
+	//조회기간 출력하기
+	public void createInfo(Sheet sheet, String kwd, String startDate, String endDate) {
+		
+		int idx = 0;
+		sheet.setColumnWidth(idx, 256*15);
+
+		Row kwdRow = sheet.createRow(1);
+		Cell kwdCell = kwdRow.createCell(idx);
+		kwdCell.setCellValue("분석 키워드 = " + kwd);
+		
+		
+		Row dayRow = sheet.createRow(2);
+		int dayCol = 0;
+		Cell dayCell = dayRow.createCell(dayCol); // 두번째줄의 첫번째열을 셀로 지정. 즉 두번째줄 첫째칸
+		
+		dayCell.setCellValue("조회날짜 = " + startDate + " ~ " + endDate); // 두번째 행은 입력받은 날짜를 출력
+	}
+	
 }
