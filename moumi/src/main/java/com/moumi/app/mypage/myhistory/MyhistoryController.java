@@ -38,7 +38,7 @@ public class MyhistoryController {
 			HttpServletRequest req, 
 			Model model) throws Exception {
 		
-		int size = 15;
+		int size = 10;
 		int total_page = 0;
 		int dataCount = 0;
 		
@@ -66,7 +66,7 @@ public class MyhistoryController {
 		
 		List<Myhistory> post = service.listMyhistoryPost(map);
 		
-		String paging = myUtil.pagingMethod(current_page, total_page, "listPage");
+		String paging = myUtil.pagingMethod(current_page, total_page, "listPost");
 		
 		model.addAttribute("post", post);
 		model.addAttribute("pageNo", current_page);
@@ -86,7 +86,7 @@ public class MyhistoryController {
 			HttpServletRequest req, 
 			Model model) throws Exception {
 		
-		int size = 15;
+		int size = 10;
 		int total_page = 0;
 		int dataCountR = 0;
 		
@@ -114,7 +114,7 @@ public class MyhistoryController {
 		
 		List<Myhistory> reply = service.listMyhistoryReply(map);
 		
-		String paging = myUtil.pagingMethod(current_page, total_page, "listPage");
+		String paging = myUtil.pagingMethod(current_page, total_page, "listReply");
 		
 		model.addAttribute("reply", reply);
 		model.addAttribute("pageNo", current_page);

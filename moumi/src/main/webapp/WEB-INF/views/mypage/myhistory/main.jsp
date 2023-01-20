@@ -126,30 +126,29 @@ function ajaxFun(url, method, query, dataType, fn) {
 }
 
 $(function(){
-	post();
+	listPost(1);
 
 
      $("button[role='tab']").on("click", function(e){
  		let tab = $(this).attr("aria-controls");
  		
  		if(tab === "1") { // 내가 쓴 글
- 			post();
+ 			listPost(1);
  		} else if(tab === "2"){ // 내가 쓴 댓글
- 			reply()
+ 			listReply(1)
  		}
      });     
 });
 
 
 // 글리스트 및 페이징 처리
-function post() {
+function listPost(page) {
 	const $tab = $("button[role='tab'].active");
 	
 	div = $tab.attr("data-div");
 	
 	let url = "${pageContext.request.contextPath}/mypage/myhistory/post";
-	let query = "div="+div;
-	
+	let query = "div="+div+"&pageNo="+page;
 	let selector = "#panel-"+div;
 	
 	const fn = function(data){
@@ -158,13 +157,13 @@ function post() {
 	ajaxFun(url, "get", query, "html", fn);
 }
 
-function reply() {
+function listReply(page) {
 	const $tab = $("button[role='tab'].active");
 	
 	div = $tab.attr("data-div");
 	
 	let url = "${pageContext.request.contextPath}/mypage/myhistory/reply";
-	let query = "div="+div;
+	let query = "div="+div+"&pageNo="+page;
 	
 	let selector = "#panel-"+div;
 	
