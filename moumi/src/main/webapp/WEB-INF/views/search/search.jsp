@@ -10,6 +10,10 @@
 	background: #ECF4EB;
 }
 
+.h4 {
+	margin: 0;
+}
+
 .analyzeLayout {
 	width: 90%;
 	height: 2000px;
@@ -29,6 +33,7 @@
 .chooseInfoBox {
 	width: 100%;
 	height: 60px;
+	background: white;
 }
 
 .chooseDate {
@@ -49,7 +54,6 @@
 	height: 400px;
 	background: white;
 	border-radius: 15px;
-	margin: 4px;
 	padding: 10px;
 	border-radius: 15px;
 	overflow: scroll;
@@ -137,7 +141,7 @@
 .wordCloudLayout {
 	font-weight: 300px;
 	width: 600px;
-	height: 550px;
+	height: 600px;
 	background: white;
 	border-radius: 15px;
 	height: 500px;
@@ -215,6 +219,10 @@ ul li {
 	width: 1100px;
 	overflow: hidden;
 	padding: 25px;
+}
+
+body{
+	background-color: #ECF4EB;
 }
 
 </style>
@@ -437,7 +445,7 @@ $(function(){
 <form class="channelForm" method="post">
 	<div class="chooseInfoBox">
 		<div class="container">
-			
+			<div class="row">
 				<div class="col">
 					<div class="chooseDate">
 						시작일&nbsp;<input type="date" name="startDate" value="${startDate}"
@@ -448,17 +456,17 @@ $(function(){
 							onclick="changeDate(${productCategory})">3개월</button>
 					</div>
 				</div>
-				<div class="col">
-					<div class="chooseSNS">
+				<div class="col" >
+					<div class="chooseSNS" style="width: max-content; display: flex;">
 						<div class="container">
-							<div class="row">
+							<div class="row" style="display: flex; align-items: center;">
 								<div class="col">
 									<div class="form-check form-switch ">
 										<input
 											class="form-check-input btn btn-outline-danger channel youtube"
 											type="checkbox" role="switch" id="flexSwitchCheckDefault"
 											name="youtube" value="1">
-										<div class="row">
+										<div class="row" style="width: max-content;">
 											<label class="form-check-label labelSNS"
 												for="flexSwitchCheckDefault">유튜브</label>
 										</div>
@@ -470,7 +478,7 @@ $(function(){
 											class="form-check-input btn btn-outline-warning channel instagram"
 											type="checkbox" role="switch" id="flexSwitchCheckChecked"
 											name="instagram" value="2" checked>
-										<div class="row">
+										<div class="row" style="width: max-content;">
 											<label class="form-check-label" for="flexSwitchCheckChecked">인스타</label>
 										</div>
 									</div>
@@ -481,7 +489,7 @@ $(function(){
 											class="form-check-input btn btn-outline-success channel blog"
 											type="checkbox" role="switch" id="flexSwitchCheckDisabled"
 											name="blog" value="3">
-										<div class="row">
+										<div class="row" style="width: max-content;">
 											<label class="form-check-label" for="flexSwitchCheckChecked">블로그</label>
 										</div>
 									</div>
@@ -503,8 +511,7 @@ $(function(){
 								</div>
 								<div class="col">
 									<div class="row">
-										<button class="btn btn-success change" type="button">날짜
-											및 채널적용</button>
+										<button class="btn btn-success change" type="button" style="width: max-content;">날짜 및 채널적용</button>
 									</div>
 								</div>
 								<input type="hidden" name="kwd" value="${kwd}">
@@ -512,7 +519,7 @@ $(function(){
 						</div>
 					</div>
 				</div>
-			
+			</div>
 		</div>
 	</div>
 </form>
@@ -525,11 +532,12 @@ $(function(){
 		<div class="inner-page">
 			<div class="row">
 				<div class="col" style="margin-top : 100px;">
-					<div class="container1" style="max-width : 1850px;  height:1010px; margin: auto;">
+					<div class="container1" style="width : max-content;  height:100%; margin: auto;">
 					<div class="right" style="float: left;">
 						<div class="box1">
-							<div class="" style="width: 500px; float: left;">
-								<div class="layoutChannel">
+							<div class="first-box" style="height: 120px;">
+							
+								<div class="layoutChannel" style="max-width: 525px; float: left;">
 									<p class="channelContent">
 										언급량이 가장 많았던 채널
 
@@ -548,30 +556,29 @@ $(function(){
 												src="${pageContext.request.contextPath}/resources/images/moumi/sns/blog.png">
 										</c:if>
 								</div>
-							</div>
-							<div style="width: 100px; float: left; height: 120px;"></div>
-							<div class="" style="width: 500px; float: left;">
-								<div class="layoutChannel">
-									언급량이 가장 많았던 날 <br>
+							
+							
+							
+								<div class="layoutChannel" style="max-width: 525px; float: right;">
+									<p class="channelContent">언급량이 가장 많았던 날 <br>
 									<div class="topDay">${topDay}</div>
 
 								</div>
 							</div>
 
-							<div class="marginBox" style="clear: left; width: 1100px;"></div>
-
 							<div>
-								<div class="fw-bold h4">언급량 추이
+								<div class="fw-bold h4" style="height: 50px; display: table-cell; vertical-align: middle; padding-left: 10px;">
+								
+									언급량 추이
+								
 									<button type="button" onclick="downloadExcel();" 
-											class="btn btn-success">EXCEL</button>
+											class="btn btn-success" >EXCEL</button>
 								</div>
 								<div class="layoutChart" id="crawlingChart"
 									style="height: 500px;">
 								</div>
 								
 							</div>
-							<div class="marginBox"></div>
-
 
 						</div>
 						<div>
@@ -617,7 +624,7 @@ $(function(){
 								
 						</div>
 								
-						<div style="float: left; margin-left:100px;" class="left">
+						<div style="float: left; margin-left:50px; height: -webkit-fill-available;display: flex; flex-direction: column; " class="left">
 								<div class="layoutSNS">
 									<c:forEach var="dto" items="${list}" varStatus="status">
 										<div class="row" style="margin: 2px;">
@@ -657,11 +664,9 @@ $(function(){
 									</c:forEach>
 		
 								</div>
-							
-							<div class="marginBox"></div>
 		
-							<div class="row">
-								<div class="wordCloudLayout" style="margin-top: 100px;">
+							<div style="padding-top: 40px;">
+								<div class="wordCloudLayout" style="height: 600px;">
 								</div>
 		
 							</div>
