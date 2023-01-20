@@ -793,6 +793,11 @@ $(function(){
 
 <script type="text/javascript">
 function downloadExcel() {
+	if(payCheck == 0) {
+		alert(" 이용권 구매 후 사용 가능합니다 :-) ");
+		return false;
+	}
+	
 	let startDate = $("form input[name=startDate]").val();
 	let endDate = $("form input[name=endDate]").val();
  	let kwd = $("#analyzeKwd").val();
