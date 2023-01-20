@@ -246,6 +246,7 @@ function ajaxFun(url, method, query, dataType, fn) {
 	});
 }
 
+
 $(function() {
 	
 	let url = "${pageContext.request.contextPath}/recommend";
@@ -436,7 +437,7 @@ $(function(){
 <form class="channelForm" method="post">
 	<div class="chooseInfoBox">
 		<div class="container">
-			<div class="row">
+			
 				<div class="col">
 					<div class="chooseDate">
 						시작일&nbsp;<input type="date" name="startDate" value="${startDate}"
@@ -511,7 +512,7 @@ $(function(){
 						</div>
 					</div>
 				</div>
-			</div>
+			
 		</div>
 	</div>
 </form>
@@ -601,16 +602,16 @@ $(function(){
 						
 								<div class="layoutshop ">
 									<p>추천 브랜드 & 상품</p>
-									<c:forEach var="dto" items="${list}" varStatus="status">
+									
 									<div style="float: left; height: 100%; margin-right: 20px;">
 										<a href="https://www.11st.co.kr/products/1757604255?inpu=&trTypeCd=22&trCtgrNo=895019">
 											<img alt="상품이미지" src="https://cdn.011st.com/11dims/resize/600x600/quality/75/11src/pd/v2/6/0/4/2/5/5/dmLSK/1757604255_B.jpg" height="50%">
 										</a>
-											<div>> ${dto.BRAND}</div>
+											<div>> 브랜드명</div>
 											<div>> 상품명</div>
 											<div>리뷰평점 : </div>
 									</div>
-									</c:forEach>
+									
 									
 								</div>
 								
