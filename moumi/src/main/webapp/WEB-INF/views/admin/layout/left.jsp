@@ -91,7 +91,7 @@ color: white;
 				<img style ="height:35px; width:160px;"src="${pageContext.request.contextPath}/resources/moumi/logo/green.png"/></a>
 		</div>
 		<div class="header-right">
-			<span class="img" style="background-image: url('${pageContext.request.contextPath}/resources/images/person.png');"></span>
+			<img style ="height:45px; width:45px;" src="${pageContext.request.contextPath}/resources/images/moumi/admin.png">
 			<span class="roll-user">
 				<label class="roll">${sessionScope.member.userName}</label>
 				<label class="user">
@@ -101,7 +101,6 @@ color: white;
 			</span>
 		</div>
 	</div>
-
 </header>
 
 <nav class="vertical_nav navbar-green" style="height: 1300px;">
