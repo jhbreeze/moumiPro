@@ -65,35 +65,35 @@ public class AnalyzeController {
 		List<String> columnLabels = new ArrayList<String>(); // 엑셀의 컬럼 
 		List<Object[]> columnValues = new ArrayList<Object[]>(); // 엑셀 값 
 		
+		columnLabels.add("채널");
 		columnLabels.add("날짜");
+		columnLabels.add("언급량");
 		
 		for(String channel: channels) {
 			if(channel.equals("twitter")) {
-				columnLabels.add("트위터");
 				String twitter = "twitter";
+				
 				// 데이터를 리스트로 반환해줄 서비스
 				List<Count> list = aService.twitList(kwd, startDate, endDate, twitter);
 				
 				// 리스트에 있는 데이터들을 columnValues에 담기 
 				for(Count dto : list) {
-					columnValues.add(new Object[] {dto.get_id(), dto.getResult()});
+					columnValues.add(new Object[] { "트위터", dto.get_id(), dto.getResult()});
 				}
 				
 			} else if(channel.equals("blog")) {
-				columnLabels.add("블로그");
 				String blog = "blog";
 				List<Count> list = aService.blogList(kwd, startDate, endDate, blog);
 				
 				for(Count dto : list) {
-					columnValues.add(new Object[] {dto.get_id(), dto.getResult()});
+					columnValues.add(new Object[] {"블로그", dto.get_id(), dto.getResult()});
 				}
 			} else {
-				columnLabels.add("인스타그램");
 				String instagram = "instagram";
 				List<Count> list = aService.instaList(kwd, startDate, endDate, instagram);
 				
 				for(Count dto : list) {
-					columnValues.add(new Object[] {dto.get_id(), dto.getResult()});
+					columnValues.add(new Object[] {"인스타그램", dto.get_id(), dto.getResult()});
 				}
 			}
 			

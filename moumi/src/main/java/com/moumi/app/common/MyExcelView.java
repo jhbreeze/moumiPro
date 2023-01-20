@@ -6,7 +6,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -36,20 +38,22 @@ public class MyExcelView extends AbstractXlsxView {
 		response.setContentType("application/ms-excel"); // 서버가 클라이언트한테 전송하는 타입 
 		response.setHeader("Content-disposition", "attachment; filename="+filename); // Content-disposition 위치 = 파일이름
 		
-		Sheet sheet = createSheet(workbook, 0, sheetName); // 시트1(empty sheet) 하나 만듦.
-
 		String kwd = (String) model.get("kwd");
 		String startDate = (String) model.get("startDate");
 		String endDate = (String) model.get("endDate");
+		
+		Sheet sheet = createSheet(workbook, 0, sheetName); // 시트1(empty sheet) 하나 만듦.
+		
 		createInfo(sheet, kwd, startDate, endDate);
 		
 		if(columnLabels != null) {
-			createColumnLabel(sheet, columnLabels); // 시트에 학번, 이름, 과목 넣어주는 함수
+			createColumnLabel(sheet, columnLabels);
 		}
 		
 		if(columnValues != null) {
 			createColumnValue(sheet, columnValues);
 		}
+
 		
 	}
 	
@@ -67,11 +71,15 @@ public class MyExcelView extends AbstractXlsxView {
 	}
 	
 	private void createColumnLabel(Sheet sheet, List<String> columnLabels) {
-		int idx = 4; // 제목 위치 지정
+		sheet.setColumnWidth(0, 256*15); // 채널명 폭
+		sheet.setColumnWidth(1, 256*15); // 날짜 폭
+
+		int idx = 4; // 제목행 위치 지정
 		Row labelRow = sheet.createRow(idx);
 		Cell cell;
+		
 		for(int i = 0; i < columnLabels.size(); i++) { // columnLabels 사이즈 만큼 cell 객체를 만듦.
-			cell = labelRow.createCell(idx);
+			cell = labelRow.createCell(i);
 			cell.setCellValue(columnLabels.get(i));
 		}
 	}
