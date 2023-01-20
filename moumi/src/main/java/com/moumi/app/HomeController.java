@@ -3,6 +3,7 @@ package com.moumi.app;
 import java.io.File;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -13,6 +14,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -205,8 +207,8 @@ public class HomeController {
 		int payCheck = service.dataCountPay(info.getUserCode());
 		int productCategory = service.productCategory(info.getUserCode());
 
-		System.out.println(startDate);
-		System.out.println(endDate);
+		//System.out.println(startDate);
+		//System.out.println(endDate);
 
 		List<Youtube> youtubeList = service.youtubeList(kwd);
 
@@ -227,6 +229,45 @@ public class HomeController {
 		model.addAttribute("productCategory", productCategory);
 
 		return ".search.search";
+	}
+	
+	
+	@GetMapping("recommend")
+	@ResponseBody
+	public Map<String, Object> recommend(@RequestParam String kwd) throws Exception{
+		Map<String, Object> model = new HashMap<String, Object>();
+		
+		try {
+			String query = "kwd="+URLEncoder.encode(kwd, "utf-8");
+			String spec = "http://localhost:5000/recommend?"+query;
+			String stringJson = apiSerializer.receiveToString(spec);
+			System.out.print(stringJson);
+			JSONArray jarr = new JSONArray(stringJson);
+			List<Shop11> list = new ArrayList<Shop11>();
+			for(int i=0; i<jarr.length(); i++) {
+				JSONObject job = jarr.getJSONObject(i);
+				Shop11 dto = new Shop11();
+				String brand = job.getString("brand");
+				String name = job.getString("name");
+				String url = job.getString("url");
+				String img = job.getString("img");
+				Double grade = job.getDouble("grade");
+				
+				dto.setBrand(brand);
+				dto.setName(name);
+				dto.setUrl(url);
+				dto.setImg(img);
+				dto.setGrade(grade);
+				list.add(dto);
+			}
+			System.out.println(list);
+			
+			model.put("list", list);
+		} catch (Exception e) {
+			
+		}
+		
+		return model;
 	}
 
 }

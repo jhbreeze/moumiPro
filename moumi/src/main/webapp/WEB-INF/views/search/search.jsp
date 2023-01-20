@@ -45,7 +45,7 @@
 }
 
 .layoutSNS {
-	width: 600px;;
+	max-width: 600px;
 	height: 400px;
 	background: white;
 	border-radius: 15px;
@@ -105,7 +105,7 @@
 }
 
 .snsContent {
-	width: 480px;
+	max-width: 480px;
 	height: 100px;
 	border-radius: 15px;
 	padding: 17px;
@@ -245,6 +245,27 @@ function ajaxFun(url, method, query, dataType, fn) {
 		}
 	});
 }
+
+$(function() {
+	
+	let url = "${pageContext.request.contextPath}/recommend";
+	let query = "kwd=" + encodeURIComponent('${kwd}');
+	
+	
+	const fn = function(data) {
+		
+		console.log(data.list);
+		for(let item of data.list){
+			let brand = item.BRAND;
+			let name = item.NAME;
+			let url = item.URL;
+			let img = item.IMG;
+			
+		}
+	};
+	
+	ajaxFun(url, "get", query, "json", fn);
+});
 
 
 $(function(){
@@ -503,7 +524,7 @@ $(function(){
 		<div class="inner-page">
 			<div class="row">
 				<div class="col" style="margin-top : 100px;">
-					<div class="container1" style="width : 1850px; height:1010px; margin: auto;">
+					<div class="container1" style="max-width : 1850px;  height:1010px; margin: auto;">
 					<div class="right" style="float: left;">
 						<div class="box1">
 							<div class="" style="width: 500px; float: left;">
@@ -580,60 +601,16 @@ $(function(){
 						
 								<div class="layoutshop ">
 									<p>추천 브랜드 & 상품</p>
-									
+									<c:forEach var="dto" items="${list}" varStatus="status">
 									<div style="float: left; height: 100%; margin-right: 20px;">
 										<a href="https://www.11st.co.kr/products/1757604255?inpu=&trTypeCd=22&trCtgrNo=895019">
 											<img alt="상품이미지" src="https://cdn.011st.com/11dims/resize/600x600/quality/75/11src/pd/v2/6/0/4/2/5/5/dmLSK/1757604255_B.jpg" height="50%">
 										</a>
-											<div>> 브랜드명</div>
+											<div>> ${dto.BRAND}</div>
 											<div>> 상품명</div>
 											<div>리뷰평점 : </div>
 									</div>
-									
-									<div style="float: left; height: 100%; margin-right: 20px;">
-										<a href="https://www.11st.co.kr/products/1757604255?inpu=&trTypeCd=22&trCtgrNo=895019">
-											<img alt="상품이미지" src="https://cdn.011st.com/11dims/resize/600x600/quality/75/11src/pd/v2/6/0/4/2/5/5/dmLSK/1757604255_B.jpg" height="50%">
-										</a>
-											<div>> 브랜드명</div>
-											<div>> 상품명</div>
-											<div>리뷰평점 : </div>
-									</div>
-									
-									<div style="float: left; height: 100%; margin-right: 20px;">
-										<a href="https://www.11st.co.kr/products/1757604255?inpu=&trTypeCd=22&trCtgrNo=895019">
-											<img alt="상품이미지" src="https://cdn.011st.com/11dims/resize/600x600/quality/75/11src/pd/v2/6/0/4/2/5/5/dmLSK/1757604255_B.jpg" height="50%">
-										</a>
-											<div>> 브랜드명</div>
-											<div>> 상품명</div>
-											<div>리뷰평점 : </div>
-									</div>
-									
-									<div style="float: left; height: 100%; margin-right: 20px;">
-										<a href="https://www.11st.co.kr/products/1757604255?inpu=&trTypeCd=22&trCtgrNo=895019">
-											<img alt="상품이미지" src="https://cdn.011st.com/11dims/resize/600x600/quality/75/11src/pd/v2/6/0/4/2/5/5/dmLSK/1757604255_B.jpg" height="50%">
-										</a>
-											<div>> 브랜드명</div>
-											<div>> 상품명</div>
-											<div>리뷰평점 : </div>
-									</div>
-									
-									<div style="float: left; height: 100%; margin-right: 20px;">
-										<a href="https://www.11st.co.kr/products/1757604255?inpu=&trTypeCd=22&trCtgrNo=895019">
-											<img alt="상품이미지" src="https://cdn.011st.com/11dims/resize/600x600/quality/75/11src/pd/v2/6/0/4/2/5/5/dmLSK/1757604255_B.jpg" height="50%">
-										</a>
-											<div>> 브랜드명</div>
-											<div>> 상품명</div>
-											<div>리뷰평점 : </div>
-									</div>
-									
-									<div style="float: left; height: 100%; margin-right: 20px;">
-										<a href="https://www.11st.co.kr/products/1757604255?inpu=&trTypeCd=22&trCtgrNo=895019">
-											<img alt="상품이미지" src="https://cdn.011st.com/11dims/resize/600x600/quality/75/11src/pd/v2/6/0/4/2/5/5/dmLSK/1757604255_B.jpg" height="50%">
-										</a>
-											<div>> 브랜드명</div>
-											<div>> 상품명</div>
-											<div>리뷰평점 : </div>
-									</div>
+									</c:forEach>
 									
 								</div>
 								
