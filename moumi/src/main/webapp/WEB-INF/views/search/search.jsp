@@ -253,28 +253,51 @@ function ajaxFun(url, method, query, dataType, fn) {
 		}
 	});
 }
-
+</script>
+<script type="text/javascript">
 
 $(function() {
-	
 	let url = "${pageContext.request.contextPath}/recommend";
 	let query = "kwd=" + encodeURIComponent('${kwd}');
-	
-	
-	const fn = function(data) {
+
+		const fn = function(data) {
+			printJSON(data);
+			console.log(data);
+
+		};
+
+		ajaxFun(url, "get", query, "json", fn);
+
+	function printJSON(data) {
+		let out = "<h3>XML로 받아오기</h3><hr>";
+		console.log(data);
+		let brand, grade, name, img, link;
 		
-		console.log(data.list);
 		for(let item of data.list){
-			let brand = item.BRAND;
-			let name = item.NAME;
-			let url = item.URL;
-			let img = item.IMG;
+			brand = item.brand;			
+			grade = item.grade;
+			name= item.name;
+			img = item.img;
+			url = item.url;
 			
+			out += "<p>"+ brand +"</p>";
+			
+			out += "<p>"+ grade +"</p>";
+			out += "<p>"+ name +"</p>";
+			out += "<p>"+ url +"</p>";
+			out += "<img style ='height:200px; width:200px' src ='"+ img + "'>";
 		}
-	};
 	
-	ajaxFun(url, "get", query, "json", fn);
+		$("#resultLayout").html(out);
+	}
 });
+
+
+	
+
+
+</script>
+<script type="text/javascript">
 
 
 $(function(){
@@ -416,9 +439,8 @@ function getCheckedCnt()  {
 		  	out = "<img alt='채널 이미지' class='wordCloudImg' src='${pageContext.request.contextPath}/uploads/wordcloud3.png'>"
 		  }
 	  // 출력
-	  document.querySelector('.wordCloudLayout').innerHTML
-	    = out;
-	}
+	 // document.querySelector('.wordCloudLayout').innerHTML = out;
+ 	}
 	
 
 $(function(){
@@ -623,6 +645,10 @@ $(function(){
 								</div>
 								
 						</div>
+						
+						
+						
+						 <div id="resultLayout" style="width: 500px; height: 500px; border:tomato;"></div>
 								
 						<div style="float: left; margin-left:50px; height: -webkit-fill-available;display: flex; flex-direction: column; " class="left">
 								<div class="layoutSNS">
@@ -665,18 +691,15 @@ $(function(){
 		
 								</div>
 		
-							<div style="padding-top: 40px;">
+							<!-- <div style="padding-top: 40px;">
 								<div class="wordCloudLayout" style="height: 600px;">
 								</div>
 		
-							</div>
+							</div> -->
 		
 						</div>
 
 					</div>
-							
-							
-							
 							
 				</div>
 
@@ -684,6 +707,8 @@ $(function(){
 			</div>
 		</div>
 	</div>
+	    
+	
 </div>
 <input type="hidden" id="analyzeKwd" value="${kwd}">
 
