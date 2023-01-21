@@ -806,7 +806,9 @@ $(function(){
 
 <script type="text/javascript">
 function downloadExcel() {
-	if(payCheck == 0) {
+	
+	let uid = ${loginCheck};
+	if(uid == 0) {
 		alert(" 이용권 구매 후 사용 가능합니다 :-) ");
 		return false;
 	}
