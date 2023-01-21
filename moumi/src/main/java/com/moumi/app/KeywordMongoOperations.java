@@ -117,7 +117,8 @@ public class KeywordMongoOperations {
 	// 키워드 저장
 	public void insertKeyword(Keyword dto) throws Exception {
 		try {
-			mongo.save(dto, "keyword");
+			//mongo.save(dto, "keyword");
+			mongo.save(dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 

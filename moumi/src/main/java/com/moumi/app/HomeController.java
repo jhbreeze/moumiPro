@@ -32,7 +32,6 @@ import com.moumi.app.common.MyUtil;
 import com.moumi.app.member.SessionInfo;
 
 @Controller
-
 public class HomeController {
 	@Autowired
 	private HomeService service;
@@ -184,6 +183,9 @@ public class HomeController {
 
 		return ".api.api";
 	}
+	
+	
+	
 
 	@PostMapping(value = "analyze")
 	public String search(@RequestParam String kwd, @RequestParam(defaultValue = "0") String youtube,
@@ -192,23 +194,24 @@ public class HomeController {
 			@RequestParam(defaultValue = "0") String endDate, Model model, HttpSession session, Keyword keyword)
 			throws Exception {
 
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		long loginCheck;
+		int productCategory;
 		// 몽고에 키워드 저장
 		try {
 			service.insertKeyword(kwd);
-
+			loginCheck = info.getUserCode();
+			productCategory = service.productCategory(loginCheck);
 		} catch (Exception e) {
+			loginCheck = 0;
+			productCategory = 0;
 		}
-
-		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		List<SNS> list = service.search(kwd, youtube, instagram, blog, twitter, startDate, endDate);
 		//List<String> topChannel = service.channel(kwd, startDate, endDate);
+		System.out.println(startDate);
+		System.out.println(endDate);
 		String topChannel = service.channel(kwd, startDate, endDate);
-
-		int payCheck = service.dataCountPay(info.getUserCode());
-		int productCategory = service.productCategory(info.getUserCode());
-
-		//System.out.println(startDate);
-		//System.out.println(endDate);
 
 		List<Youtube> youtubeList = service.youtubeList(kwd);
 
@@ -216,7 +219,6 @@ public class HomeController {
 
 		model.addAttribute("list", list);
 		model.addAttribute("kwd", kwd);
-		model.addAttribute("payCheck", payCheck);
 		model.addAttribute("youtube", youtube);
 		model.addAttribute("instagram", instagram);
 		model.addAttribute("blog", blog);
@@ -226,6 +228,53 @@ public class HomeController {
 		model.addAttribute("topChannel", topChannel);
 		model.addAttribute("topDay", topDay);
 		model.addAttribute("youtubeList", youtubeList);
+		model.addAttribute("loginCheck", loginCheck);
+		model.addAttribute("productCategory", productCategory);
+
+		return ".search.search";
+	}
+	
+	@GetMapping(value = "analyze")
+	public String searchForm(@RequestParam String kwd, @RequestParam(defaultValue = "0") String youtube,
+			@RequestParam(defaultValue = "0") String instagram, @RequestParam(defaultValue = "0") String blog,
+			@RequestParam(defaultValue = "0") String twitter, @RequestParam(defaultValue = "0") String startDate,
+			@RequestParam(defaultValue = "0") String endDate, Model model, HttpSession session, Keyword keyword)
+			throws Exception {
+
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		long loginCheck;
+		int productCategory;
+		// 몽고에 키워드 저장
+		try {
+			loginCheck = info.getUserCode();
+			productCategory = service.productCategory(loginCheck);
+		} catch (Exception e) {
+			loginCheck = 0;
+			productCategory = 0;
+		}
+		List<SNS> list = service.search(kwd, youtube, instagram, blog, twitter, startDate, endDate);
+		//List<String> topChannel = service.channel(kwd, startDate, endDate);
+		System.out.println(startDate);
+		System.out.println(endDate);
+		String topChannel = service.channel(kwd, startDate, endDate);
+
+		List<Youtube> youtubeList = service.youtubeList(kwd);
+
+		String topDay = service.day(kwd, startDate, endDate);
+
+		model.addAttribute("list", list);
+		model.addAttribute("kwd", kwd);
+		model.addAttribute("youtube", youtube);
+		model.addAttribute("instagram", instagram);
+		model.addAttribute("blog", blog);
+		model.addAttribute("twitter", twitter);
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
+		model.addAttribute("topChannel", topChannel);
+		model.addAttribute("topDay", topDay);
+		model.addAttribute("youtubeList", youtubeList);
+		model.addAttribute("loginCheck", loginCheck);
 		model.addAttribute("productCategory", productCategory);
 
 		return ".search.search";

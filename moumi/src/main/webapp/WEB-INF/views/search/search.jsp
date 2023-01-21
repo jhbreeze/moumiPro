@@ -242,7 +242,7 @@ function ajaxFun(url, method, query, dataType, fn) {
 		},
 		error:function(jqXHR) {
 			if(jqXHR.status === 403) {
-				login();
+				//login();
 				return false;
 			} else if(jqXHR.status === 400) {
 				alert("요청 처리가 실패 했습니다.");
@@ -302,7 +302,6 @@ $(function() {
 
 
 $(function(){
- 	payCheck = ${payCheck};
  	youtube = ${youtube};
  	instagram = ${instagram};
  	blog = ${blog};
@@ -310,6 +309,8 @@ $(function(){
  	startDate = ${startDate};
  	endDate = ${endDate};
  	
+ 	let uid = ${loginCheck};
+ 	console.log(uid);
  	if(endDate===0){
  		$('.end').val( new Date().toISOString().substring(0, 10));
  	}
@@ -332,7 +333,7 @@ $(function(){
 	}); 
  	
  	
-	if(payCheck == 0){
+ 	if(uid === 0){
 		$(".youtube").prop("checked",false);
 		$(".youtube").attr("disabled",true);
 		$(".instagram").prop("checked",false);
@@ -385,7 +386,7 @@ $(function(){
 
 function changeDate(productCategory){
 	
-	if (! (productCategory === 1 || productCategory === 2)){
+ 	if (! (productCategory === 1 || productCategory === 2)){
 		alert("이용권을 구매해주세요");
 		return;
 	}
@@ -452,7 +453,6 @@ $(function(){
 
 	let url = "${pageContext.request.contextPath}/flask/wordcloud"
 	let query = "instagram="+i_check+"&blog="+b_check+"&twitter="+t_check+"&word="+word;
-	alert(query);
 	
 	const fn = function(data){
 		getCheckedCnt();

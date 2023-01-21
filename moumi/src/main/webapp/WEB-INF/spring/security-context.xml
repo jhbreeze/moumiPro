@@ -47,8 +47,11 @@
 		<intercept-url pattern="/manual/list" access="permitAll"/>
 		<intercept-url pattern="/manual/article" access="permitAll"/>
 		<intercept-url pattern="/analyze" access="permitAll"/>
+		<intercept-url pattern="/analyze/chart" access="permitAll"/>
+		<intercept-url pattern="/analyze/excel" access="permitAll"/>
 		<intercept-url pattern="/reportList" access="permitAll"/>
 		<intercept-url pattern="/farm" access="permitAll"/>
+		<intercept-url pattern="/pay/list" access="permitAll"/>
 		
 		
 		

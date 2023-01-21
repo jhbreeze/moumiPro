@@ -41,8 +41,8 @@
 	height: 100px;
 	width: 800px;
 	margin: auto;
-	padding: 20px;
-	margin-top: 160px;
+	padding-left: 20px;
+	margin-top: 180px;
 }
 
 .keyword {
@@ -316,6 +316,7 @@ li {
 			$(".info-box").html(result)
 		}
 	});
+
 </script>
 
 <script>
@@ -451,7 +452,7 @@ li {
 </script>
 
 <script>
-const content = "Hi. I'm Somi.";
+/* const content = "Hi. I'm Somi.";
 const text = document.querySelector(".text");
 let i = 0;
 
@@ -462,14 +463,21 @@ function typing(){
     i++;
     }
 }
-setInterval(typing, 200)
-
+setInterval(typing, 200) */
+function sendKeyword(keyword) {
+	const f = document.analyze;
+	f.action = "${pageContext.request.contextPath}/analyze";
+	f.kwd.value = keyword;
+	f.method = "post";
+	f.submit();
+	
+}
 </script>
 <div class="mainBox">
 
 	<h3 class="mainText">MOUMI 분석 서비스</h3>
 	<form class="d-flex searchBox" role="search" method="post"
-		action="${pageContext.request.contextPath}/analyze">
+		action="${pageContext.request.contextPath}/analyze" name="analyze">
 		<div class="customInput">
 	<input class="form-control mx-5 inputSearch" type="search"
 				placeholder="궁금한 분석 단어를 입력하세요." aria-label="Search" id="kwd"
@@ -486,17 +494,25 @@ setInterval(typing, 200)
 
 
 		</div>
-
 	</form>
+
 
 
 	<div class="keywordDiv">
 		<c:forEach var="dto" items="${keywordList}" varStatus="status">
+			<c:url var="url" value="/analyze">
+				<c:param name="kwd" value="${dto._id}"/>
+				<c:param name="blog" value="3"/>
+				<c:param name="twitter" value="4"/>
+				<c:param name="startDate" value="${now}"/>
+				<c:param name="endDate" value="${endDate}"/>
+			</c:url>
 			<ul>
-				<li><p class="keyword">${dto._id}</p></li>
+				<li><p class="keyword"><a onclick="location.href='${url}'">${dto._id}</a></p></li>
 			</ul>
 		</c:forEach>
 	</div>
+
 </div>
 
 
