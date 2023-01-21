@@ -119,7 +119,7 @@ $(function(){
 
 <div class="container body-container">
 	<div class="body-main mx-auto">
-	
+		
 		<form name="recruitForm" method="post">
 			<table class="table mt-5 recruit-table border-top">
 				<tr>
@@ -165,7 +165,9 @@ $(function(){
 					<tr>
 						<td class="col-sm-2 align-middle text-center" scope="row" valign="top"> 전체  다운로드 </td>
 						<td class="ps-3" colspan="3">
-							<a href="${pageContext.request.contextPath}/recruit/zipdownload?recruitNum=${dto.recruitNum}&fileNum=${dto.fileNum}" class="text-reset"><i class="bi bi-file-arrow-down"></i></a>
+							<a href="${pageContext.request.contextPath}/recruit/zipdownload?recruitNum=${dto.recruitNum}&fileNum=${dto.fileNum}&corporation=${dto.corporation}" class="text-reset">
+								<i class="bi bi-file-arrow-down"></i>
+							</a>
 						</td>
 					</tr>	
 				</c:if>
@@ -207,7 +209,7 @@ $(function(){
 								onclick="location.href='${pageContext.request.contextPath}/recruit/update?recruitNum=${dto.recruitNum}&pageNo=${pageNo}';">수정</button>
 						</c:when>
 						<c:otherwise>
-							<button type="button" class="btn btn-success" disabled="disabled">수정</button>
+							<!-- 수정 버튼 숨김 -->
 						</c:otherwise>
 					</c:choose> 
 					<c:choose>
@@ -216,7 +218,7 @@ $(function(){
 								onclick="deleteRecruit();">삭제</button>
 						</c:when>
 						<c:otherwise>
-							<button type="button" class="btn btn-success" disabled="disabled">삭제</button>
+							<!-- 삭제 버튼 숨김 -->
 						</c:otherwise>
 					</c:choose>
 				</td>

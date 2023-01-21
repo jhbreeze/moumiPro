@@ -132,7 +132,7 @@ function deleteFile(fileNum) {
     <div class="body-main mx-auto">
 		<ul class="nav nav-tabs">
 			<li class="nav-item"><a class="nav-link active" aria-current="page">
-				${mode=='update'?'공고 등록':'공고 수정'}
+				${mode=='write'?'공고 등록':'공고 수정'}
 			</a></li>
 		</ul>
 		

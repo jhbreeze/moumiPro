@@ -309,7 +309,8 @@ public class RecruitController {
 	}
 	
 	@RequestMapping(value = "zipdownload")
-	public void zipdownload(@RequestParam long recruitNum, @RequestParam long fileNum,
+	public void zipdownload(@RequestParam long recruitNum, 
+			@RequestParam long fileNum, @RequestParam String corporation,
 			HttpServletResponse resp, HttpSession session) throws Exception {
 		String root = session.getServletContext().getRealPath("/");
 		String pathname = root + "uploads" + File.separator + "recruit";
@@ -320,7 +321,7 @@ public class RecruitController {
 		if (listFile.size() > 0) {
 			String[] sources = new String[listFile.size()];
 			String[] originals = new String[listFile.size()];
-			String zipFilename = recruitNum + ".zip";
+			String zipFilename = corporation + ".zip";
 
 			for (int idx = 0; idx < listFile.size(); idx++) {
 				sources[idx] = pathname + File.separator + listFile.get(idx).getSaveFilename();

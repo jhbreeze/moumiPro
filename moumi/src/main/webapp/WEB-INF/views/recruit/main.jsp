@@ -83,7 +83,7 @@ function listPage(page) {
 	
 	let url = "${pageContext.request.contextPath}/recruit/list";
 	let query = "pageNo="+page+"&div="+div;
-	let search = $('form[name=recruitSearchForm]').serialize();
+	let search = $('form[name=searchForm]').serialize();
 	query = query+"&"+search;
 	
 	let selector = "#panel-"+div;
@@ -96,19 +96,29 @@ function listPage(page) {
 
 // 검색
 function searchList() {
-	const f = document.recruitSearchForm;
+	const f = document.searchForm;
 	f.condition.value = $("#condition").val();
 	f.keyword.value = $.trim($("#keyword").val());
-
+	
 	listPage(1);
+	
 }
+ 
+// 검색 enter 누르면 작동
+$(function(){
+	const input = document.querySelector('#keyword');
+	input.addEventListener('keydown',function(e){
+	    if (e.keyCode === 13 || e.key === "Enter") {
+	    	searchList();
+	  	}  
+	});
+});
 
 // 새로고침
 function reloadRecruit() {
-	const f = document.recruitSearchForm;
+	const f = document.searchForm;
 	f.condition.value = "subject";
 	f.keyword.value = "";
-	
 	listPage(1);
 }
 
@@ -161,8 +171,7 @@ function reloadRecruit() {
 			</div>
 
 			<div class="col-auto p-1">
-				<input type="text" name="keyword" id="keyword" value="${keyword}"
-					class="form-control">
+				<input type="text" name="keyword" id="keyword" value="${keyword}" class="form-control">
 			</div>
 			<div class="col-auto p-1">
 				<button type="button" class="btn btn-success" onclick="searchList()">
@@ -183,8 +192,3 @@ function reloadRecruit() {
 
 	</div>
 </div>
-
-<form name="recruitSearchForm" method="post">
-	<input type="hidden" name="condition" value="subject">
-    <input type="hidden" name="keyword" value="">
-</form>
