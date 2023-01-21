@@ -269,7 +269,7 @@ $(function() {
 		ajaxFun(url, "get", query, "json", fn);
 
 	function printJSON(data) {
-		let out = "<h3>XML로 받아오기</h3><hr>";
+		let out = "";
 		console.log(data);
 		let brand, grade, name, img, link;
 		
@@ -280,15 +280,16 @@ $(function() {
 			img = item.img;
 			url = item.url;
 			
-			out += "<p>"+ brand +"</p>";
-			
-			out += "<p>"+ grade +"</p>";
-			out += "<p>"+ name +"</p>";
-			out += "<p>"+ url +"</p>";
+			out += "<ul onclick=location.href='"+url+"'>";
+			out += "<li sytle='margin-right:20px;'>"
 			out += "<img style ='height:200px; width:200px' src ='"+ img + "'>";
+			out += "<p style ='height:70px; width:200px;'><span style ='font-weight:600'>["+ brand +"]</span>&nbsp;"+name+"</p>";
+			out += "<p style ='float:right;'>"+ grade+ "</p>";
+			out += "</li>";
+
 		}
 	
-		$("#resultLayout").html(out);
+		$("#layoutshop").html(out);
 	}
 });
 
@@ -629,17 +630,9 @@ $(function(){
 						
 						<div class="marginBox"></div>
 						
-								<div class="layoutshop ">
-									<p>추천 브랜드 & 상품</p>
-									
-									<div style="float: left; height: 100%; margin-right: 20px;">
-										<a href="https://www.11st.co.kr/products/1757604255?inpu=&trTypeCd=22&trCtgrNo=895019">
-											<img alt="상품이미지" src="https://cdn.011st.com/11dims/resize/600x600/quality/75/11src/pd/v2/6/0/4/2/5/5/dmLSK/1757604255_B.jpg" height="50%">
-										</a>
-											<div>> 브랜드명</div>
-											<div>> 상품명</div>
-											<div>리뷰평점 : </div>
-									</div>
+								<div class="layoutshop" id ="layoutshop">
+									<p>추천 브랜드 상품</p>
+							
 									
 									
 								</div>
@@ -690,12 +683,7 @@ $(function(){
 									</c:forEach>
 		
 								</div>
-		
-							<!-- <div style="padding-top: 40px;">
-								<div class="wordCloudLayout" style="height: 600px;">
-								</div>
-		
-							</div> -->
+
 		
 						</div>
 
