@@ -49,26 +49,6 @@
 	font-size: 16px;
 }
 
-.layoutSNS {
-	max-width: 600px;
-	height: 400px;
-	background: white;
-	border-radius: 15px;
-	padding: 10px;
-	border-radius: 15px;
-	overflow: scroll;
-}
-
-.layoutChannel {
-	width: 500px;
-	height: 120px;
-	border-radius: 15px;
-	background: white;
-	padding: 5px;
-	background: white;
-	text-align: center;
-	vertical-align: middle;
-}
 
 .channelContent {
 	width: 300px;
@@ -627,7 +607,7 @@ $(function(){
 
 	<div style="height: 700px; width: 1700px; justify-content: center;">
 
-		<div class="recommendLayout">
+		<div class="recommendLayout" id="recommendLayout">
 			<p class="searchTitle">추천 상품</p>
 		</div>
 
