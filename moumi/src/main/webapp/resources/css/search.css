@@ -1,0 +1,80 @@
+@charset "UTF-8";
+
+.searchTitle {
+	padding: 15px;
+	font-size: 16px;
+	font-weight: 700;
+}
+
+.mentionChannelLayout {
+	background: white;
+	height: 160px;
+	width: 490px;
+	margin-right: 20px;
+	border-radius: 20px;
+}
+
+.mentionLayout {
+	height: 300px;
+	width: 670px;
+}
+
+.mentionDateLayout {
+	background: white;
+	height: 160px;
+	width: 490px;
+	border-radius: 20px;
+}
+
+.mentionGraphLayout {
+	background: white;
+	height: 830px;
+	width: 1200px;
+	margin-top: 20px;
+	border-radius: 20px;
+}
+
+.SNSLayout {
+	background: white;
+	height: 550px;
+	width: 650px;
+	border-radius: 20px;
+}
+
+.wordCloudLayout {
+	background: white;
+	height: 440px;
+	width: 650px;
+	margin-top: 20px;
+	border-radius: 20px;
+}
+
+.recommendLayout {
+	background: white;
+	height: 300px;
+	width: 1683px;
+	margin-left: 5px;
+	margin-top: 20px;
+	border-radius: 20px;
+}
+
+.youtubeLayout {
+	background: white;
+	height: 300px;
+	width: 1683px;
+	margin-left: 5px;
+	margin-top: 20px;
+	border-radius: 20px;
+}
+
+.searchLayout {
+	height: 100%;
+	margin: 0 auto;
+	display: flex;
+	justify-content: center;
+}
+
+.rightLayout {
+	height: 300px;
+	width: 670px;
+}

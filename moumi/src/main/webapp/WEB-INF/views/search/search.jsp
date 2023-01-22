@@ -3,10 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/search.css"
+	type="text/css">
+
 <style>
 .marginBox {
 	width: 100%;
-	height: 20px;
+	height: 10px;
 	background: #ECF4EB;
 }
 
@@ -20,9 +24,6 @@
 	margin: auto;
 }
 
-.searchBackGround {
-	background: #ECF4EB;
-}
 
 .searchMainLayout {
 	width: 100%;
@@ -93,12 +94,7 @@
 	margin-bottom: 15px
 }
 
-.layoutYoutube {
-	width: 1100px;
-	height: 700px;
-	border-radius: 15px;
-	background: white;
-}
+
 
 .customInputDate {
 	border: 1px solid #198754;
@@ -138,16 +134,6 @@
 	margin: 18px;
 }
 
-.wordCloudLayout {
-	font-weight: 300px;
-	width: 600px;
-	height: 600px;
-	background: white;
-	border-radius: 15px;
-	height: 500px;
-	overflow: hidden;
-	text-align: center;
-}
 
 .wordCloudImg {
 	width: -webkit-fill-available;
@@ -221,10 +207,9 @@ ul li {
 	padding: 25px;
 }
 
-body{
+body {
 	background-color: #ECF4EB;
 }
-
 </style>
 
 <script type="text/javascript">
@@ -289,7 +274,7 @@ $(function() {
 
 		}
 	
-		$("#layoutshop").html(out);
+		$("#recommendLayout").html(out);
 	}
 });
 
@@ -479,7 +464,7 @@ $(function(){
 							onclick="changeDate(${productCategory})">3개월</button>
 					</div>
 				</div>
-				<div class="col" >
+				<div class="col">
 					<div class="chooseSNS" style="width: max-content; display: flex;">
 						<div class="container">
 							<div class="row" style="display: flex; align-items: center;">
@@ -534,7 +519,8 @@ $(function(){
 								</div>
 								<div class="col">
 									<div class="row">
-										<button class="btn btn-success change" type="button" style="width: max-content;">날짜 및 채널적용</button>
+										<button class="btn btn-success change" type="button"
+											style="width: max-content;">날짜 및 채널적용</button>
 									</div>
 								</div>
 								<input type="hidden" name="kwd" value="${kwd}">
@@ -553,14 +539,14 @@ $(function(){
 <div class="searchMainLayout">
 	<div class="analyzeLayout ">
 		<div class="inner-page">
-			<div class="row">
-				<div class="col" style="margin-top : 100px;">
-					<div class="container1" style="width : max-content;  height:100%; margin: auto;">
+			<div class="col" style="margin-top: 100px;">
+				<div class="container1"
+					style="width: max-content; height: 100%; margin: auto;">
 					<div class="right" style="float: left;">
 						<div class="box1">
 							<div class="first-box" style="height: 120px;">
-							
-								<div class="layoutChannel" style="max-width: 525px; float: left;">
+
+								<div class="layoutChannel">
 									<p class="channelContent">
 										언급량이 가장 많았던 채널
 
@@ -579,26 +565,27 @@ $(function(){
 												src="${pageContext.request.contextPath}/resources/images/moumi/sns/blog.png">
 										</c:if>
 								</div>
-							
-							
-							
-								<div class="layoutChannel" style="max-width: 525px; float: right;">
-									<p class="channelContent">언급량이 가장 많았던 날 <br>
+
+
+								<div class="layoutChannel"
+									style="max-width: 525px; float: right;">
+									<p class="channelContent">
+										언급량이 가장 많았던 날 <br>
 									<div class="topDay">${topDay}</div>
 
 								</div>
 							</div>
 
 							<div>
-								<div class="fw-bold h4" style="height: 50px; display: table-cell; vertical-align: middle; padding-left: 10px;">
+								<div class="fw-bold h4"
+									style="height: 50px; display: table-cell; vertical-align: middle; padding-left: 10px;">
 									언급량 추이
-									<button type="button" onclick="downloadExcel();" 
-											class="btn btn-outline-success" style ="border-radius:30px;" >EXCEL</button>
+									<button type="button" onclick="downloadExcel();"
+										class="btn btn-outline-success" style="border-radius: 30px;">EXCEL</button>
 								</div>
 								<div class="layoutChart" id="crawlingChart"
-									style="height: 500px;"> 
-								</div>
-								
+									style="height: 500px;"></div>
+
 							</div>
 
 						</div>
@@ -625,80 +612,139 @@ $(function(){
 
 							</div>
 						</div>
-						
-						<div class="marginBox"></div>
-						
-								<div class="layoutshop" id ="layoutshop">
-									<p>추천 브랜드 상품</p>
-							
-									
-									
-								</div>
-								
-						</div>
-						
-						
-						
-						 <div id="resultLayout" style="width: 500px; height: 500px; border:tomato;"></div>
-								
-						<div style="float: left; margin-left:50px; height: -webkit-fill-available;display: flex; flex-direction: column; " class="left">
-								<div class="layoutSNS">
-									<c:forEach var="dto" items="${list}" varStatus="status">
-										<div class="row" style="margin: 2px;">
-											<div class="col ms-auto me-auto">
-												<c:if test="${dto.sns eq 'Twitter'}">
-													<img alt="채널 이미지" class="snsImg"
-														style="margin-left: 2px; margin-top: 5px;"
-														src="${pageContext.request.contextPath}/resources/images/moumi/sns/twitter.png">
-												</c:if>
-		
-		
-												<c:if test="${dto.sns eq 'instagram'}">
-													<img alt="채널 이미지" class="snsImg"
-														style="margin-left: 2px; margin-top: 5px;"
-														src="${pageContext.request.contextPath}/resources/images/moumi/sns/instagram.png">
-												</c:if>
-												
-															
-												<c:if test="${dto.sns eq 'blog'}">
-													<img alt="채널 이미지" class="snsImg"
-														style="margin-left: 2px; margin-top: 5px;"
-														src="${pageContext.request.contextPath}/resources/images/moumi/sns/blog.png">
-												</c:if>
-		
-		
-											</div>
-											<div class="col">
-												<div class="snsContent" onclick="location.href='${dto.url}'">
-													<div class="date">${dto.date}</div>
-													<div class="col-20 text-truncate">${dto.content}</div>
-													<div class="col-20 text-truncate tags">${dto.tags}</div>
-		
-												</div>
-		
-											</div>
-										</div>
-									</c:forEach>
-		
-								</div>
 
-		
+						<div class="marginBox"></div>
+
+						<div class="layoutshop" id="layoutshop">
+							<p>추천 브랜드 상품</p>
+
+
+
 						</div>
 
 					</div>
-							
+
+
+
+					<div id="resultLayout"
+						style="width: 500px; height: 500px; border: tomato;"></div>
+
+					<div
+						style="float: left; margin-left: 50px; height: -webkit-fill-available; display: flex; flex-direction: column;"
+						class="left">
+						<div class="layoutSNS">
+							<c:forEach var="dto" items="${list}" varStatus="status">
+								<div class="row" style="margin: 2px;">
+									<div class="col ms-auto me-auto">
+										<c:if test="${dto.sns eq 'Twitter'}">
+											<img alt="채널 이미지" class="snsImg"
+												style="margin-left: 2px; margin-top: 5px;"
+												src="${pageContext.request.contextPath}/resources/images/moumi/sns/twitter.png">
+										</c:if>
+
+
+										<c:if test="${dto.sns eq 'instagram'}">
+											<img alt="채널 이미지" class="snsImg"
+												style="margin-left: 2px; margin-top: 5px;"
+												src="${pageContext.request.contextPath}/resources/images/moumi/sns/instagram.png">
+										</c:if>
+
+
+										<c:if test="${dto.sns eq 'blog'}">
+											<img alt="채널 이미지" class="snsImg"
+												style="margin-left: 2px; margin-top: 5px;"
+												src="${pageContext.request.contextPath}/resources/images/moumi/sns/blog.png">
+										</c:if>
+
+
+									</div>
+									<div class="col">
+										<div class="snsContent" onclick="location.href='${dto.url}'">
+											<div class="date">${dto.date}</div>
+											<div class="col-20 text-truncate">${dto.content}</div>
+											<div class="col-20 text-truncate tags">${dto.tags}</div>
+
+										</div>
+
+									</div>
+								</div>
+							</c:forEach>
+
+						</div>
+
+
+					</div>
+
 				</div>
 
-				
 			</div>
+
+
 		</div>
 	</div>
-	    
-	
 </div>
+
+<!--  -->
+<div class ="searchLayout">
+	<div class="row">
+
+		<div style="height: 1000px; width: 1000px; margin-right: 20px">
+
+			<div class="row">
+				<!-- 언급량 -->
+				<div class="mentionChannelLayout">
+					<p class="searchTitle">언급량이 가장 많았던 채널</p>
+				</div>
+				<div class="mentionDateLayout">
+					<p class="searchTitle">언급량이 가장 많았던 날짜</p>
+				</div>
+			</div>
+
+			<div class="row">
+
+				<div class="mentionGraphLayout">
+					<p class="searchTitle">언급량 추이</p>
+				</div>
+
+			</div>
+		</div>
+
+
+		<div style="height: 300px; width: 670px;">
+			<div class="SNSLayout">
+				<p class="searchTitle">sns 리스트</p>
+
+			</div>
+			<div class="wordCloudLayout">
+				<p class="searchTitle">워드 클라우드</p>
+			</div>
+		</div>
+
+	</div>
+
+</div>
+
+<div class="searchLayout" style="margin-top: 20px;">
+
+	<div style="height: 700px; width: 1700px; justify-content: center;">
+
+		<div class ="recommendLayout">
+					<p class="searchTitle">추천 상품</p>
+		</div>
+
+		<div class="youtubeLayout">
+			<p class="searchTitle">유튜브 반응 확인하기</p>
+		</div>
+	</div>
+</div>
+
+
+
+
 <input type="hidden" id="analyzeKwd" value="${kwd}">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.0/echarts.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.0/echarts.min.js"></script>
 <script type="text/javascript">
 
 $(function(){
