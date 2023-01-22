@@ -591,14 +591,12 @@ $(function(){
 
 							<div>
 								<div class="fw-bold h4" style="height: 50px; display: table-cell; vertical-align: middle; padding-left: 10px;">
-								
 									언급량 추이
-								
 									<button type="button" onclick="downloadExcel();" 
-											class="btn btn-success" >EXCEL</button>
+											class="btn btn-outline-success" style ="border-radius:30px;" >EXCEL</button>
 								</div>
 								<div class="layoutChart" id="crawlingChart"
-									style="height: 500px;">
+									style="height: 500px;"> 
 								</div>
 								
 							</div>

@@ -16,12 +16,17 @@ tr td:first-child {
 function check() {
 	const f = document.eventForm;
 	let str;
-	
-	alert("${mode}");
 
 	if(! f.subject.value) {
 		alert("이벤트명을 입력해주세요.");
 		f.subject.focus();
+		return false;
+	}
+
+	str = f.price.value;
+	if( !/^\d{1,9}$/.test(str)){
+		alert("할인 가격을 입력해주세요.(숫자만 입력 가능합니다)");
+		f.price.focus();
 		return false;
 	}
 	
@@ -31,18 +36,21 @@ function check() {
 		return false;
 	}
 	
+	str = f.pickCount.value;
+	if( !/^\d{1,5}$/.test(str)){
+		alert("당첨자 인원을 입력해주세요.");
+		f.pickCount.focus();
+		return false;
+	}
+
 	
 	if(! f.thumbnailFile.value) {
 		alert("대표 이미지를 등록하세요.");
 		f.thumbnailFile.focus();
 		return false;
-	}
-	
-	
+	}	
 	
 	f.action = "${pageContext.request.contextPath}/admin/event/${mode}";
-	
-
 	
 	return true;
 }
@@ -110,45 +118,50 @@ $(function(){
 			</div>
 			<div class="body-main">
 
+				<!-- 이벤트-->
 				<form name="eventForm" method="post" enctype="multipart/form-data">
 					<table class="table mt-5 write-form">
 						<tr>
 							<td class="table-light col-sm-2">이벤트</td>
-							<td><input type="text" name="subject" value="${dto.subject}" class="form-control"
-								style="width: 93%;">
+							<td><input type="text" name="subject" value="${dto.subject}"
+								class="form-control" style="width: 93%;">
 						</tr>
 						<tr>
 							<td class="table-light col-sm-2">할인가</td>
-							<td><input type="text" name="price"  value="${dto.price}" class="form-control"
-								style="width: 93%;"></td>
+							<td><input type="text" name="price" value="${dto.price}"
+								class="form-control" style="width: 93%;"></td>
 						</tr>
 						<tr>
 							<td class="table-light col-sm-2">이벤트 시작일</td>
-							<td><input type="date" name="startDate" value="${dto.startDate}" class="form-control"
+							<td><input type="date" name="startDate"
+								value="${dto.startDate}" class="form-control"
 								style="width: 93%;"></td>
 						</tr>
 						<tr>
 							<td class="table-light col-sm-2">이벤트 종료일</td>
-							<td><input type="date" name="endDate" value="${dto.endDate}" class="form-control"
-								style="width: 93%;"></td>
+							<td><input type="date" name="endDate" value="${dto.endDate}"
+								class="form-control" style="width: 93%;"></td>
 						</tr>
-						
+
 						<tr>
 							<td class="table-light col-sm-2">당첨자 인원</td>
-							<td><input type="text" name="pickCount" value="${dto.pickCount}" class="form-control"
+							<td><input type="text" name="pickCount"
+								value="${dto.pickCount}" class="form-control"
 								style="width: 93%;"></td>
 						</tr>
-						
+
 
 						<tr>
 							<td class="table-light col-sm-2">이벤트 내용</td>
-							<td><textarea name="content"  id="ir1" class="form-control" style="width: 93%;"></textarea></td>
+							<td><textarea name="content" id="ir1" class="form-control"
+									style="width: 93%;"></textarea></td>
 						</tr>
 						<tr>
 							<td class="table-light col-sm-2">대표이미지</td>
 							<td>
-								<div class="thumbnail-viewer"></div> 
-								<input type="file" name="thumbnailFile" value="${dto.thumbnail}" accept="image/*" class="form-control">
+								<div class="thumbnail-viewer"></div> <input type="file"
+								name="thumbnailFile" value="${dto.thumbnail}" accept="image/*"
+								class="form-control">
 							</td>
 						</tr>
 					</table>
@@ -159,25 +172,26 @@ $(function(){
 								<button type="button" class="btn btn-success"
 									onclick="submitContents(this.form);">${mode=="update"?"수정완료":"등록완료"}</button>
 								<c:if test="${mode=='update'}">
-                        			<input type="hidden" name="eventNum" value="${dto.eventNum}">
-                        			<input type="hidden" name="thumbnail" value="${dto.thumbnail}">
-                     			</c:if>	
-									
+									<input type="hidden" name="eventNum" value="${dto.eventNum}">
+									<input type="hidden" name="thumbnail" value="${dto.thumbnail}">
+								</c:if>
+
 								<button type="reset" class="btn btn btn-outline-success">다시입력</button>
-								<button type="button" class="btn btn btn-outline-success" 
-								onclick="location.href='${pageContext.request.contextPath}/admin/event/list';">${mode=="update"?"수정취소":"등록취소"}</button>
+								<button type="button" class="btn btn btn-outline-success"
+									onclick="location.href='${pageContext.request.contextPath}/admin/event/list';">${mode=="update"?"수정취소":"등록취소"}</button>
 							</td>
 						</tr>
 					</table>
 				</form>
-
 			</div>
 		</div>
 	</div>
 
 </body>
 
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/vendor/se2/js/service/HuskyEZCreator.js"
+	charset="utf-8"></script>
 <script type="text/javascript">
 var oEditors = [];
 nhn.husky.EZCreator.createInIFrame({

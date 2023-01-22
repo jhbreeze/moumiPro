@@ -133,11 +133,13 @@ tr:hover {
 }
 
 #container2 {
-	 border : none;
+	border : none;
 	height: 50px;
 	width: 100%;
 	border: none; height : 50px; width : 100%;
 	margin: 20px auto;
+ 	margin: 20px auto;
+	
 }
 
 #container3 {
