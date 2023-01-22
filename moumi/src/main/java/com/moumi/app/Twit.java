@@ -4,7 +4,6 @@ package com.moumi.app;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-//컬렉션(테이블명)
 @Document(collection = "twitter")
 public class Twit {
 	@Id

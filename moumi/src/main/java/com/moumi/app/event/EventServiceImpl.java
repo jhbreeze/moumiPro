@@ -101,7 +101,7 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public void updateHitCount(long eventNum) throws Exception {
 		try {
-			
+
 			dao.updateData("event.updateHitCount", eventNum);
 		} catch (Exception e) {
 			e.printStackTrace();

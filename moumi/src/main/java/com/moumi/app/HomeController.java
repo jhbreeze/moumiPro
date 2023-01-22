@@ -1,6 +1,5 @@
 package com.moumi.app;
 
-import java.io.File;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -140,12 +139,7 @@ public class HomeController {
 	public String article(@RequestParam long reportNum, Model model) throws Exception {
 
 		try {
-			// keyword = URLDecoder.decode(keyword, "utf-8");
 
-//			String query = "page=" + page;
-//			if (keyword.length() != 0) {
-//				query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
-//			}
 
 			Report dto = service.readReport(reportNum);
 			if (dto == null) {
@@ -153,23 +147,12 @@ public class HomeController {
 			}
 
 			Map<String, Object> map = new HashMap<String, Object>();
-//			map.put("condition", condition);
-//			map.put("keyword", keyword);
+
 			map.put("reportNum", reportNum);
 
 			model.addAttribute("dto", dto);
-
-			// Report preReadDto = service.preReadReport(map);
-			// Report nextReadDto = service.nextReadReport(map);
-
-			// List<Report> listFile = service.listReportFile(reportNum);
-
 			model.addAttribute("dto", dto);
-			// model.addAttribute("listFile", listFile);
-			// model.addAttribute("preReadDto", preReadDto);
-			// model.addAttribute("nextReadDto", nextReadDto);
-			// model.addAttribute("page", page);
-			// model.addAttribute("query", query);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

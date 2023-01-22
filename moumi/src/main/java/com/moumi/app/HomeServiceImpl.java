@@ -55,19 +55,7 @@ public class HomeServiceImpl implements HomeService {
 		}
 		return dto;
 	}
-
-	@Override
-	public Report preReadReport(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Report nextReadReport(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	@Override
 	public int dataCount(Map<String, Object> map) {
 		int result = 0;
@@ -153,11 +141,7 @@ public class HomeServiceImpl implements HomeService {
 	}
 
 	@Override
-	//public List<String> channel(String kwd, String startDate, String endDate) {
 	public String channel(String kwd, String startDate, String endDate) {
-
-		// TODO Auto-generated method stub
-		// return keywordMongo.channel(kwd, startDate, endDate);
 		return keywordMongo.channel(kwd, startDate, endDate);
 	}
 	

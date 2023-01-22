@@ -14,10 +14,6 @@ public interface HomeService {
 
 	public Report readReport(long reportNum);
 
-	public Report preReadReport(Map<String, Object> map);
-
-	public Report nextReadReport(Map<String, Object> map);
-
 	public List<SNS> search(String kwd, String youtube, String instagram, String blog,
 			String twitter,String startDate,String endDate);
 	
@@ -31,12 +27,9 @@ public interface HomeService {
 	public void insertKeyword(String kwd) throws Exception;
 	
 	public List<Summary>  keywordList();
-	
-	//public List<String> channel(String kwd, String startDate, String endDate);
-	
+		
 	public String channel(String kwd, String startDate, String endDate);
 
-	
 	public List<Map<String, Object>> twitCount(String kwd, String startDate, String endDate);
 	
 	public List<Map<String, Object>> instaCount(String kwd, String startDate, String endDate);
