@@ -253,7 +253,7 @@ $(function() {
 		$("#recommendLayout").html(out);
 	}
 });
-
+ 
 
 	
 
@@ -382,27 +382,25 @@ function dateAdd(date, addDays) {
 }
 
 function getCheckedCnt()  {
-	  // 선택된 목록 가져오기
-	  const query = 'input[type=checkbox]:checked';
-	  const selectedElements = 
-	      document.querySelectorAll(query);
+	
+	  let instagram = ${instagram};
+	  let blog = ${blog};
+	  let twitter = ${twitter};
 	  
-	  // 선택된 목록의 갯수 세기
-	  const selectedElementsCnt =
-	        selectedElements.length;
-	  
+
 	  let out = "";
-	  if (selectedElementsCnt ==1){
+	  if (instagram == 2 || blog ==3 || twitter == 4){
 	  		out = "<img alt='채널 이미지' class='wordCloudImg' src='${pageContext.request.contextPath}/uploads/wordcloud.png'>"
 	  }
-	  if (selectedElementsCnt ==2){
+	  if ((instagram == 2 && blog ==3) ||(instagram == 2 && twitter ==4)||(twitter ==4  && blog ==3) ){
 		  	out = "<img alt='채널 이미지' class='wordCloudImg' src='${pageContext.request.contextPath}/uploads/wordcloud2.png'>"
 		  }
-	  if (selectedElementsCnt ==3){
+	  if (instagram == 2 && blog ==3 && twitter == 4){
 		  	out = "<img alt='채널 이미지' class='wordCloudImg' src='${pageContext.request.contextPath}/uploads/wordcloud3.png'>"
 		  }
 	  // 출력
-	 // document.querySelector('.wordCloudLayout').innerHTML = out;
+	 document.querySelector('.wordCloudLayout').innerHTML = out;
+	  console.log(out);
  	}
 	
 
@@ -426,7 +424,7 @@ $(function(){
 });
 
 </script>
-<form class="channelForm" method="post">
+<form class="channelForm">
 	<div class="chooseInfoBox">
 		<div class="container">
 			<div class="row">
@@ -461,7 +459,7 @@ $(function(){
 										<input
 											class="form-check-input btn btn-outline-warning channel instagram"
 											type="checkbox" role="switch" id="flexSwitchCheckChecked"
-											name="instagram" value="2" checked>
+											name="instagram" value="2">
 										<div class="row" style="width: max-content;">
 											<label class="form-check-label" for="flexSwitchCheckChecked">인스타</label>
 										</div>
@@ -487,7 +485,7 @@ $(function(){
 											class="form-check-input btn btn-outline-info channel twitter"
 											type="checkbox" role="switch"
 											id="flexSwitchCheckCheckedDisabled" name="twitter" value="4"
-											checked>
+											>
 										<div class="row">
 											<label class="form-check-label" for="flexSwitchCheckChecked">트위터</label>
 										</div>
@@ -620,7 +618,6 @@ $(function(){
 						</c:if> <c:if test="${dto.thumbnail eq 'noImg'}">
 							<img alt="썸네일" class="youtubeImg"
 								src="${pageContext.request.contextPath}/resources/images/moumi/sns/youtube.png">
-
 						</c:if>
 						<div class="yotubeWriter">${dto.writer}</div>
 						<div class="youtubeTitle text-truncate">${dto.title}</div>
