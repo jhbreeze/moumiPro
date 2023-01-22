@@ -339,21 +339,19 @@ li {
 		// 주소-좌표 변환 객체를 생성
 		var geocoder = new kakao.maps.services.Geocoder();
 
-		$
-				.ajax({
-					//ajax 옵션 설정 
-					// 공공데이터 포털 인증키
-					url : "https://api.odcloud.kr/api/3060388/v1/uddi:dacd930e-e26e-4f7c-bde7-ce2cfd272e16?page=1&perPage=1000&serviceKey=KAizYtDdo2AYzDzXklWBjNAnwBJq0%2BIahDUm%2FTZKLFK2Fh%2BrMgCMblxsG7mudwtZIqwWXC2XrpMZ9Ea77QWmOA%3D%3D",
-					type : "GET",
-					dataType : "json",
-					// 요청이 성공시 할 일 처리 
-					success : function(data) {
-						data = JSON.stringify(data)
-						data = JSON.parse(data) // String 
-
-						createMarker(data);
-					}
-				});
+		$.ajax({
+			//ajax 옵션 설정 
+			// 공공데이터 포털 인증키
+			url : "https://api.odcloud.kr/api/3060388/v1/uddi:dacd930e-e26e-4f7c-bde7-ce2cfd272e16?page=1&perPage=1000&serviceKey=KAizYtDdo2AYzDzXklWBjNAnwBJq0%2BIahDUm%2FTZKLFK2Fh%2BrMgCMblxsG7mudwtZIqwWXC2XrpMZ9Ea77QWmOA%3D%3D",
+			type : "GET",
+			dataType : "json",
+			// 요청이 성공시 할 일 처리 
+			success : function(data) {
+				data = JSON.stringify(data)
+				data = JSON.parse(data) // String 
+					createMarker(data);
+				}
+			});
 
 		function createMarker(data) {
 			$(data.data)
@@ -562,8 +560,7 @@ function sendKeyword(keyword) {
 								<img class="menuImg"
 									src="${pageContext.request.contextPath}/resources/images/moumi/schedule.png" />
 								<p class="menuMainText">
-									MOUMI 일정 관리<br> <span class="menuSpanText">간편하게 분석
-										일정을 관리하자</span>
+									MOUMI 일정 관리<br> <span class="menuSpanText">간편하게 분석 일정을 관리하자</span>
 								</p>
 							</div>
 							<button class="btn btn-success menuButton" type="button"
@@ -574,8 +571,7 @@ function sendKeyword(keyword) {
 								<img class="menuImg"
 									src="${pageContext.request.contextPath}/resources/images/moumi/farm.png" />
 								<p class="menuMainText">
-									우리 농가 살리기<br> <span class="menuSpanText">농촌 진흥청에서
-										선별한 농촌 브랜드</span>
+									우리 농가 살리기<br> <span class="menuSpanText">농촌 진흥청에서 선별한 농촌 브랜드</span>
 								</p>
 							</div>
 							<button class="btn btn-outline-success menuButton" type="button"

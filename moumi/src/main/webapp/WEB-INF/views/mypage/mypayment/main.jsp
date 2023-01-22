@@ -3,105 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<style type="text/css">
-.body-main {
-	max-width: 800px;
-}
 
-thead {
-	text-align: center;
-	background-color: #ECF4EB
-}
-
-tbody tr:hover {
-	box-shadow: 1px 1px 5px -5px;
-}
-
-.side {
-	list-style: none;
-	font-family: "Malgun Gothic", "맑은 고딕", NanumGothic, 나눔고딕, 돋움, sans-serif;
-	font-size: 16px;
-}
-
-.side-menu1 {
-	position: absolute;
-	top: 10rem;
-	left: 15rem;
-	background: #198754;
-	width: 9rem;
-	height: 3rem;
-	text-align: center;
-	color: white;
-	padding-top: 0.5rem;
-}
-
-.side-menu2 {
-	position: absolute;
-	top: 14rem;
-	left: 15rem;
-}
-
-.side-menu2 a {
-	text-decoration: none;
-	color: gray;
-}
-
-.side-menu3 {
-	position: absolute;
-	top: 17rem;
-	left: 15rem;
-}
-
-.side-menu3 a {
-	color: #198754;
-	font-weight: bold;
-	text-decoration: none;
-}
-
-.side-menu4 {
-	position: absolute;
-	top: 20rem;
-	left: 15rem;
-}
-
-.side-menu4 a {
-	text-decoration: none;
-	color: gray;
-}
-
-.side-menu5 {
-	position: absolute;
-	top: 23rem;
-	left: 15rem;
-}
-
-.side-menu5 a {
-	text-decoration: none;
-	color: gray;
-}
-
-.page-link {
-	color: #000;
-	background-color: #fff;
-	border: 1px solid #ccc;
-}
-
-.page-item.active .page-link {
-	z-index: 1;
-	color: #555;
-	font-weight: bold;
-	background-color: #f1f1f1;
-	border-color: #ccc;
-}
-
-.page-link:focus, .page-link:hover {
-	color: #000;
-	background-color: #fafafa;
-	border-color: #ccc;
-}
-</style>
-
-
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/sideMenu.css"
+	type="text/css">
+	
 <script type="text/javascript">
 	function login() {
 		location.href = "${pageContext.request.contextPath}/member/login";
