@@ -24,7 +24,6 @@
 	margin: auto;
 }
 
-
 .searchMainLayout {
 	width: 100%;
 	height: 2200px;
@@ -94,8 +93,6 @@
 	margin-bottom: 15px
 }
 
-
-
 .customInputDate {
 	border: 1px solid #198754;
 	width: 150px;
@@ -134,7 +131,6 @@
 	margin: 18px;
 }
 
-
 .wordCloudImg {
 	width: -webkit-fill-available;
 	height: -webkit-fill-available;
@@ -172,7 +168,7 @@
 	background-color: #fff;
 	border: 1px solid #ecedee;
 	border-radius: 20px;
-	width: 1100px;
+	width: 980px;
 	height: 100%;
 	overflow: hidden;
 	padding: 25px;
@@ -351,9 +347,9 @@ $(function(){
 	
 	let y_check = $(".youtube").is(":checked");
  	if (y_check == true){
-		$(".layoutYoutube").show();
+		$(".youtubeLayout").show();
 	} else {
-		$(".layoutYoutube").hide();
+		$(".youtubeLayout").hide();
 	}
 	
 	$(".change").click(function(){
@@ -533,207 +529,126 @@ $(function(){
 	</div>
 </form>
 
-<div class="marginBox"></div>
-
-
-<div class="searchMainLayout">
-	<div class="analyzeLayout ">
-		<div class="inner-page">
-			<div class="col" style="margin-top: 100px;">
-				<div class="container1"
-					style="width: max-content; height: 100%; margin: auto;">
-					<div class="right" style="float: left;">
-						<div class="box1">
-							<div class="first-box" style="height: 120px;">
-
-								<div class="layoutChannel">
-									<p class="channelContent">
-										언급량이 가장 많았던 채널
-
-										<c:if test="${topChannel eq '인스타그램'}">
-											<img alt="채널 이미지" class="topChannelImg"
-												src="${pageContext.request.contextPath}/resources/images/moumi/sns/instagram.png">
-										</c:if>
-
-										<c:if test="${topChannel eq '트위터'}">
-											<img alt="채널 이미지" class="topChannelImg"
-												src="${pageContext.request.contextPath}/resources/images/moumi/sns/twitter.png">
-										</c:if>
-
-										<c:if test="${topChannel eq '블로그'}">
-											<img alt="채널 이미지" class="topChannelImg"
-												src="${pageContext.request.contextPath}/resources/images/moumi/sns/blog.png">
-										</c:if>
-								</div>
-
-
-								<div class="layoutChannel"
-									style="max-width: 525px; float: right;">
-									<p class="channelContent">
-										언급량이 가장 많았던 날 <br>
-									<div class="topDay">${topDay}</div>
-
-								</div>
-							</div>
-
-							<div>
-								<div class="fw-bold h4"
-									style="height: 50px; display: table-cell; vertical-align: middle; padding-left: 10px;">
-									언급량 추이
-									<button type="button" onclick="downloadExcel();"
-										class="btn btn-outline-success" style="border-radius: 30px;">EXCEL</button>
-								</div>
-								<div class="layoutChart" id="crawlingChart"
-									style="height: 500px;"></div>
-
-							</div>
-
-						</div>
-						<div>
-							<div class="layoutYoutube">
-								<p class="menuTitle">유튜브 반응 확인하기</p>
-								<c:forEach var="dto" items="${youtubeList}" varStatus="status">
-									<ul class="youtube" onclick="location.href='${dto.url}'">
-										<li><c:if test="${dto.thumbnail != 'noImg'}">
-												<img alt="썸네일" class="youtubeImg" src="${dto.thumbnail}">
-											</c:if> <c:if test="${dto.thumbnail eq 'noImg'}">
-												<img alt="썸네일" class="youtubeImg"
-													src="${pageContext.request.contextPath}/resources/images/moumi/sns/youtube.png">
-
-											</c:if>
-											<div class="yotubeWriter">${dto.writer}</div>
-											<div class="youtubeTitle text-truncate">${dto.title}</div>
-											<div class="youtubeView">
-												<i class="fa-regular fa-circle-play"></i>${dto.view}</div></li>
-
-									</ul>
-								</c:forEach>
-
-
-							</div>
-						</div>
-
-						<div class="marginBox"></div>
-
-						<div class="layoutshop" id="layoutshop">
-							<p>추천 브랜드 상품</p>
-
-
-
-						</div>
-
-					</div>
-
-
-
-					<div id="resultLayout"
-						style="width: 500px; height: 500px; border: tomato;"></div>
-
-					<div
-						style="float: left; margin-left: 50px; height: -webkit-fill-available; display: flex; flex-direction: column;"
-						class="left">
-						<div class="layoutSNS">
-							<c:forEach var="dto" items="${list}" varStatus="status">
-								<div class="row" style="margin: 2px;">
-									<div class="col ms-auto me-auto">
-										<c:if test="${dto.sns eq 'Twitter'}">
-											<img alt="채널 이미지" class="snsImg"
-												style="margin-left: 2px; margin-top: 5px;"
-												src="${pageContext.request.contextPath}/resources/images/moumi/sns/twitter.png">
-										</c:if>
-
-
-										<c:if test="${dto.sns eq 'instagram'}">
-											<img alt="채널 이미지" class="snsImg"
-												style="margin-left: 2px; margin-top: 5px;"
-												src="${pageContext.request.contextPath}/resources/images/moumi/sns/instagram.png">
-										</c:if>
-
-
-										<c:if test="${dto.sns eq 'blog'}">
-											<img alt="채널 이미지" class="snsImg"
-												style="margin-left: 2px; margin-top: 5px;"
-												src="${pageContext.request.contextPath}/resources/images/moumi/sns/blog.png">
-										</c:if>
-
-
-									</div>
-									<div class="col">
-										<div class="snsContent" onclick="location.href='${dto.url}'">
-											<div class="date">${dto.date}</div>
-											<div class="col-20 text-truncate">${dto.content}</div>
-											<div class="col-20 text-truncate tags">${dto.tags}</div>
-
-										</div>
-
-									</div>
-								</div>
-							</c:forEach>
-
-						</div>
-
-
-					</div>
-
-				</div>
-
-			</div>
-
-
-		</div>
-	</div>
-</div>
-
-<!--  -->
-<div class ="searchLayout">
+<div class="searchLayout">
 	<div class="row">
 
 		<div style="height: 1000px; width: 1000px; margin-right: 20px">
 
 			<div class="row">
-				<!-- 언급량 -->
 				<div class="mentionChannelLayout">
 					<p class="searchTitle">언급량이 가장 많았던 채널</p>
+					<c:if test="${topChannel eq '인스타그램'}">
+						<img alt="채널 이미지" class="topChannelImg"
+							src="${pageContext.request.contextPath}/resources/images/moumi/sns/instagram.png">
+					</c:if>
+
+					<c:if test="${topChannel eq '트위터'}">
+						<img alt="채널 이미지" class="topChannelImg"
+							src="${pageContext.request.contextPath}/resources/images/moumi/sns/twitter.png">
+					</c:if>
+
+					<c:if test="${topChannel eq '블로그'}">
+						<img alt="채널 이미지" class="topChannelImg"
+							src="${pageContext.request.contextPath}/resources/images/moumi/sns/blog.png">
+					</c:if>
 				</div>
 				<div class="mentionDateLayout">
 					<p class="searchTitle">언급량이 가장 많았던 날짜</p>
+					${topDay}
 				</div>
 			</div>
 
 			<div class="row">
 
 				<div class="mentionGraphLayout">
-					<p class="searchTitle">언급량 추이</p>
+					<p class="searchTitle">언급량 추이<button type="button" onclick="downloadExcel();"
+						class="btn btn-outline-success" style="border-radius: 30px; float:right;">EXCEL</button>
+					</p>
+					
+					<div class="layoutChart" id="crawlingChart" style="height: 500px;"></div>
+
 				</div>
-
 			</div>
+
 		</div>
+	</div>
 
 
-		<div style="height: 300px; width: 670px;">
-			<div class="SNSLayout">
-				<p class="searchTitle">sns 리스트</p>
+	<div style="height: 300px; width: 670px;">
+		<div class="SNSLayout">
+			<p class="searchTitle">sns 리스트</p>
+			<c:forEach var="dto" items="${list}" varStatus="status">
+				<div class="row" style="margin: 2px;">
+					<div class="col ms-auto me-auto">
+						<c:if test="${dto.sns eq 'Twitter'}">
+							<img alt="채널 이미지" class="snsImg"
+								style="margin-left: 2px; margin-top: 5px;"
+								src="${pageContext.request.contextPath}/resources/images/moumi/sns/twitter.png">
+						</c:if>
 
-			</div>
-			<div class="wordCloudLayout">
-				<p class="searchTitle">워드 클라우드</p>
-			</div>
+
+						<c:if test="${dto.sns eq 'instagram'}">
+							<img alt="채널 이미지" class="snsImg"
+								style="margin-left: 2px; margin-top: 5px;"
+								src="${pageContext.request.contextPath}/resources/images/moumi/sns/instagram.png">
+						</c:if>
+
+
+						<c:if test="${dto.sns eq 'blog'}">
+							<img alt="채널 이미지" class="snsImg"
+								style="margin-left: 2px; margin-top: 5px;"
+								src="${pageContext.request.contextPath}/resources/images/moumi/sns/blog.png">
+						</c:if>
+
+
+					</div>
+					<div class="col">
+						<div class="snsContent" onclick="location.href='${dto.url}'">
+							<div class="date">${dto.date}</div>
+							<div class="col-20 text-truncate">${dto.content}</div>
+							<div class="col-20 text-truncate tags">${dto.tags}</div>
+
+						</div>
+
+					</div>
+				</div>
+			</c:forEach>
+
 		</div>
-
+		<div class="wordCloudLayout">
+			<p class="searchTitle">워드 클라우드</p>
+		</div>
 	</div>
 
 </div>
 
-<div class="searchLayout" style="margin-top: 20px;">
+
+<div class="searchLayout">
 
 	<div style="height: 700px; width: 1700px; justify-content: center;">
 
-		<div class ="recommendLayout">
-					<p class="searchTitle">추천 상품</p>
+		<div class="recommendLayout">
+			<p class="searchTitle">추천 상품</p>
 		</div>
 
 		<div class="youtubeLayout">
 			<p class="searchTitle">유튜브 반응 확인하기</p>
+			<c:forEach var="dto" items="${youtubeList}" varStatus="status">
+				<ul class="youtube" onclick="location.href='${dto.url}'">
+					<li><c:if test="${dto.thumbnail != 'noImg'}">
+							<img alt="썸네일" class="youtubeImg" src="${dto.thumbnail}">
+						</c:if> <c:if test="${dto.thumbnail eq 'noImg'}">
+							<img alt="썸네일" class="youtubeImg"
+								src="${pageContext.request.contextPath}/resources/images/moumi/sns/youtube.png">
+
+						</c:if>
+						<div class="yotubeWriter">${dto.writer}</div>
+						<div class="youtubeTitle text-truncate">${dto.title}</div>
+						<div class="youtubeView">
+							<i class="fa-regular fa-circle-play"></i>${dto.view}</div></li>
+
+				</ul>
+			</c:forEach>
 		</div>
 	</div>
 </div>
