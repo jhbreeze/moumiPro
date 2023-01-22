@@ -518,10 +518,10 @@ function sendKeyword(keyword) {
 				<div class="container text-center">
 					<div class="row  row-cols-lg-3">
 						<c:forEach var="dto" items="${listMainReport}" varStatus="status">
-							<div style="width: 18rem; margin: 10px;"
+							<div style="width: 18rem; margin: 17px;"
 								data-reportNum="${dto.reportNum}"
 								onclick="location.href='${pageContext.request.contextPath}/article?&reportNum=${dto.reportNum}'">
-								<img style="height: 280px; width: 285px;"
+								<img style ="max-width: 118%;height: auto;"
 									src="${pageContext.request.contextPath}/uploads/report/${dto.thumbnail}"
 									style="width: -webkit-fill-available;">
 								<div class="p-2">
@@ -535,7 +535,6 @@ function sendKeyword(keyword) {
 				<br> <br> <br> <br>
 			</div>
 		</div>
-
 
 		<div class="row" style="height: 500px; margin-top: 50px;">
 			<div class="col-3">
@@ -551,7 +550,7 @@ function sendKeyword(keyword) {
 								<img class="menuImg"
 									src="${pageContext.request.contextPath}/resources/images/moumi/manual.png" />
 								<p class="menuMainText">
-									MOUMI가 처음이라면? <br> <span class="menuSpanText">신규 회원을 위한 MOUMI 활용법</span></span>
+									MOUMI가 처음이라면? <br> <span class="menuSpanText">신규 회원을 위한 MOUMI 활용법</span>
 								</p>
 							</div>
 							<button class="btn btn-outline-success menuButton " type="button"

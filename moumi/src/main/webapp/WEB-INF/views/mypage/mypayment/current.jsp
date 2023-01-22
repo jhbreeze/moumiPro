@@ -7,14 +7,17 @@
 	color: #198754;
 	font-weight: bold;
 }
-thead { 
-	border-top: 1px solid green; 
-	text-align: center; 
-	color: green; 
+
+thead {
+	border-top: 1px solid green;
+	text-align: center;
+	color: green;
 }
+
 tbody {
-	border-bottom: 1px solid green; 
+	border-bottom: 1px solid green;
 }
+
 th, td {
 	padding: 35px 35px;
 }
@@ -23,25 +26,26 @@ th, td {
 
 
 
-<c:choose>	
-	<c:when test="${current.size() > 0}">   
-	<table class="mypayment-table">
-		<thead class="fw-bold">
-			<tr>
-				<th>NO</th>
-				<th>이용권</th>
-				<th colspan="4">이용 가능 서비스</th>
-				<th>사용 기간 안내</th>
-			</tr>
-		</thead>
+<c:choose>
+	<c:when test="${current.size() > 0}">
+		<table class="mypayment-table">
+			<thead class="fw-bold">
+				<tr>
+					<th>NO</th>
+					<th>이용권</th>
+					<th colspan="4">이용 가능 서비스</th>
+					<th>사용 기간 안내</th>
+				</tr>
+			</thead>
 
-		<tbody class="text-center">
-			<c:forEach var="dto" items="${current}" varStatus="status">
+			<tbody class="text-center">
+				<c:forEach var="dto" items="${current}" varStatus="status">
 					<tr class="paymentCurrent-table-tr">
-						<td colspan="1">${dto.paymentNum}</td>		
-						<td colspan="1">${dto.subject}</td>		
-						<td colspan="4">${dto.content}</td>		
-						<td colspan="1"><span style="color: #DC3545; font-weight: 700;">${dto.payDate}&nbsp;~&nbsp;${dto.endDate}</span></td>
+						<td colspan="1">${dto.paymentNum}</td>
+						<td colspan="1">${dto.subject}</td>
+						<td colspan="4">${dto.content}</td>
+						<td colspan="1"><span
+							style="color: #DC3545; font-weight: 700;">${dto.payDate}&nbsp;~&nbsp;${dto.endDate}</span></td>
 				</c:forEach>
 			</tbody>
 		</table>
@@ -51,8 +55,7 @@ th, td {
 	</c:otherwise>
 </c:choose>
 
-<div class="page-navigation">
-	${dataCount == 0 ? "등록된 게시물이 없습니다." : paging}
+<div class="page-navigation">${dataCount == 0 ? "등록된 게시물이 없습니다." : paging}
 </div>
 
 
