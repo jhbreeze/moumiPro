@@ -245,12 +245,12 @@ li {
 }
 
 .sideSpanText {
-	font-size: 14px;
+	font-size: 18px;
 	color: #808080;
 }
 
 .menuSpanText {
-	font-size: 13px;
+	font-size: 15px;
 	text-align: left;
 }
 </style>
@@ -504,16 +504,12 @@ function sendKeyword(keyword) {
 
 </div>
 
-
-
-
 <div class="container body-container">
 	<div class="inner-page">
 		<div class="row" style="height: 700px; margin-top: 50px;">
 			<div class="col-3">
 				<div class="col-1 col-sm-2 sideText">
-					<i>#</i>&nbsp;오늘의 MOUMI<br> <span class="sideSpanText">MOUMI가
-						제공하는 분석 리포트</span><br>
+					<i>#</i>&nbsp;오늘의 MOUMI<br> <span class="sideSpanText">MOUMI 분석 리포트</span><br>
 					<button class="moreButton" type="button"
 						onclick="location.href='${pageContext.request.contextPath}/reportList'">더보기</button>
 				</div>
@@ -544,8 +540,7 @@ function sendKeyword(keyword) {
 		<div class="row" style="height: 500px; margin-top: 50px;">
 			<div class="col-3">
 				<div class="col-1 col-sm-2 sideText" style="color: #198754">
-					<i>#</i>&nbsp;머라고 하지 ㅜㅜㅜㅜ <br> <span class="sideSpanText">MOUMI를
-						알차게 즐기는 방법</span><br>
+					<i>#</i>&nbsp;MOUMI 플러스<br><span class="sideSpanText">MOUMI를 알차게</span><br>
 				</div>
 			</div>
 			<div class="col-9">
@@ -556,8 +551,7 @@ function sendKeyword(keyword) {
 								<img class="menuImg"
 									src="${pageContext.request.contextPath}/resources/images/moumi/manual.png" />
 								<p class="menuMainText">
-									MOUMI가 처음이라면? <br> <span class="menuSpanText">MOUMI를
-										알차게~</span><span><br>이용하는 방법</span>
+									MOUMI가 처음이라면? <br> <span class="menuSpanText">신규 회원을 위한 MOUMI 활용법</span></span>
 								</p>
 							</div>
 							<button class="btn btn-outline-success menuButton " type="button"

@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.moumi.app.common.MyUtil;
 import com.moumi.app.event.Reply;
+import com.moumi.app.member.SessionInfo;
 
 @Controller("admin.event.eventController")
 @RequestMapping("/admin/event/*")
@@ -108,16 +109,18 @@ public class EventController {
 
 	@PostMapping("write")
 	public String writeSubmit(Event dto, Coupon cdto, HttpSession session, Model model) throws Exception {
-		// SessionInfo info = (SessionInfo) session.getAttribute("member");
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		try {
 
-			dto.setUserCode(1);
+			dto.setUserCode(info.getUserCode());
 
 			Calendar cal = Calendar.getInstance();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 			String root = session.getServletContext().getRealPath("/");
 			String path = root + "uploads" + File.separator + "event";
+
+			System.out.println(path);
 
 			service.insertEvent(dto, path);
 
