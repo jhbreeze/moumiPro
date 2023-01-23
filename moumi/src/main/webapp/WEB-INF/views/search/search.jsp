@@ -119,9 +119,6 @@ ul li {
 	margin-right: 15px;
 }
 
-.topDay {
-	color: #198754;
-}
 
 .layoutshop {
 	background-color: #fff;
@@ -190,17 +187,33 @@ $(function() {
 			name= item.name;
 			img = item.img;
 			url = item.url;
-			
+
 			out += "<ul onclick=location.href='"+url+"'>";
-			out += "<li sytle='margin-right:20px;'>"
+			out += "<li sytle='margin-right:30px; margin-top:10px;'>"
 			out += "<img style ='height:200px; width:200px' src ='"+ img + "'>";
 			out += "<p style ='height:70px; width:200px;'><span style ='font-weight:600'>["+ brand +"]</span>&nbsp;"+name+"</p>";
-			out += "<p style ='float:right;'>"+ grade+ "</p>";
+			
+			let bigStar = Math.floor(grade);
+			let smallStar = grade - bigStar;
+
+			for(let i = 0; i<bigStar; i++){
+				out += "<img style ='height:15px; width:15px' src ='${pageContext.request.contextPath}/resources/images/moumi/star.png'>";
+			
+			}
+			
+			if(0<smallStar){
+				out += "<img style ='height:15px; width:9px' src ='${pageContext.request.contextPath}/resources/images/moumi/halfstar.png'>";
+
+			}
+		
+			
+			
+			out += "<p style ='float:right; color:#A9A9A9'>"+ grade+ "</p>";
 			out += "</li>";
 
 		}
 	
-		$("#recommendLayout").html(out);
+		$("#recommendList").html(out);
 	}
 });
  
@@ -459,7 +472,7 @@ $(function(){
 <div class="searchLayout">
 	<div class="row">
 
-		<div style="height: 1000px; width: 1000px; margin-right: 20px">
+		<div style="height: 860px; width: 1000px; margin-right: 20px">
 
 			<div class="row">
 				<div class="mentionChannelLayout">
@@ -491,7 +504,7 @@ $(function(){
 				</div>
 				<div class="mentionDateLayout">
 					<p class="searchTitle">언급량이 가장 많았던 날짜</p>
-					${topDay}
+					<p class="topDay"><i class="fa-sharp fa-solid fa-calendar"></i>&nbsp;${topDay}</p>
 				</div>
 			</div>
 
@@ -568,8 +581,10 @@ $(function(){
 
 	<div style="height: 700px; width: 1700px; justify-content: center;">
 
-		<div class="recommendLayout" id="recommendLayout">
+		<div class="recommendLayout">
 			<p class="searchTitle">추천 상품</p>
+			<div class="recommendList" id ="recommendList">
+			</div>
 		</div>
 
 		<div class="youtubeLayout">

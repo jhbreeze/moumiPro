@@ -107,7 +107,7 @@ public class KeywordMongoOperations {
 		// 유튜브 크롤링
 		BasicQuery youtubeQuery = new BasicQuery("{title: { $regex: /" + kwd + "/i }} ");
 		System.out.println(youtubeQuery);
-		Pageable pageable = PageRequest.of(0, 7, Sort.by(Sort.Direction.DESC, "date"));
+		Pageable pageable = PageRequest.of(0, 6, Sort.by(Sort.Direction.DESC, "date"));
 		youtubeQuery.with(pageable);
 
 		List<Youtube> youtubeList = mongo.find(youtubeQuery, Youtube.class);
