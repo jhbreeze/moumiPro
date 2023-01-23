@@ -58,28 +58,6 @@
 	padding: 12px;
 }
 
-.snsContent {
-	max-width: 480px;
-	height: 100px;
-	border-radius: 15px;
-	padding: 17px;
-	background: #f8f9fa;
-	float: right;
-	margin-bottom: 1px;
-}
-
-.snsInfo {
-	width: 490px;
-	height: 100px;
-	border: 1px solid red;
-	border-radius: 15px;
-}
-
-.snsImg {
-	width: 35px;
-	height: 30px;
-	margin: 0 auto;
-}
 
 .menuTitle {
 	font-size: 17px;
@@ -538,7 +516,7 @@ $(function(){
 
 	<div style="height: 300px; width: 670px;">
 		<div class="SNSLayout">
-			<p class="searchTitle">sns 리스트</p>
+			<p class="searchTitle">${kwd}</p>
 			<c:forEach var="dto" items="${list}" varStatus="status">
 				<div class="row" style="margin: 2px;">
 					<div class="col ms-auto me-auto">
@@ -567,7 +545,7 @@ $(function(){
 					</div>
 					<div class="col">
 						<div class="snsContent" onclick="location.href='${dto.url}'">
-							<div class="date">${dto.date}</div>
+							<div class="snsDate">${dto.date}</div>
 							<div class="col-20 text-truncate">${dto.content}</div>
 							<div class="col-20 text-truncate tags">${dto.tags}</div>
 

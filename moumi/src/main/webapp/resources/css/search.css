@@ -38,7 +38,8 @@
 .topChannelImg {
 	width: 90px;
 	hegiht: 90px;
-	margin-left: 20px;
+	margin-left: 20px;	
+	
 }
 
 .topChannelName {
@@ -67,6 +68,30 @@
 	padding: 10px;
 	overflow: scroll;
 }
+
+
+.snsContent {
+	width: 520px;
+	height: 100px;
+	border-radius: 15px;
+	padding: 17px;
+	background: #f8f9fa;
+	float: right;
+	margin-bottom: 1px;
+}
+
+.snsImg {
+	width: 50px;
+	height: 45px;
+	
+}
+
+.snsDate{
+	color:#A9A9A9;
+	font-size:16px;
+	
+}
+
 
 .wordCloudLayout {
 	background: white;
