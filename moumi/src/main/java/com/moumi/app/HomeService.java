@@ -28,7 +28,7 @@ public interface HomeService {
 	
 	public List<Summary>  keywordList();
 		
-	public String channel(String kwd, String startDate, String endDate);
+	public String channel(String kwd, String startDate, String endDate,String instagram, String blog, String twitter);
 
 	public List<Map<String, Object>> twitCount(String kwd, String startDate, String endDate);
 	
@@ -36,7 +36,7 @@ public interface HomeService {
 	
 	public List<Map<String, Object>> blogCount(String kwd, String startDate, String endDate);
 	
-	public String day(String kwd, String startDate, String endDate);
+	public String day(String kwd, String startDate, String endDate,String instagram, String blog, String twitter);
 
 
 }

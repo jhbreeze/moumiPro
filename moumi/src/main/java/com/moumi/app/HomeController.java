@@ -194,11 +194,11 @@ public class HomeController {
 		//List<String> topChannel = service.channel(kwd, startDate, endDate);
 		System.out.println(startDate);
 		System.out.println(endDate);
-		String topChannel = service.channel(kwd, startDate, endDate);
+		String topChannel = service.channel(kwd, startDate, endDate,instagram, blog, twitter);
 
 		List<Youtube> youtubeList = service.youtubeList(kwd);
 
-		String topDay = service.day(kwd, startDate, endDate);
+		String topDay = service.day(kwd, startDate, endDate,instagram,blog,twitter);
 
 		model.addAttribute("list", list);
 		model.addAttribute("kwd", kwd);
@@ -240,11 +240,11 @@ public class HomeController {
 		//List<String> topChannel = service.channel(kwd, startDate, endDate);
 		System.out.println(startDate);
 		System.out.println(endDate);
-		String topChannel = service.channel(kwd, startDate, endDate);
+		String topChannel = service.channel(kwd, startDate, endDate,instagram, blog, twitter);
 
 		List<Youtube> youtubeList = service.youtubeList(kwd);
 
-		String topDay = service.day(kwd, startDate, endDate);
+		String topDay = service.day(kwd, startDate, endDate,instagram,blog,twitter);
 
 		model.addAttribute("list", list);
 		model.addAttribute("kwd", kwd);

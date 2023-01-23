@@ -149,7 +149,7 @@ public class KeywordMongoOperations {
 
 	}
 
-	public String channel(String kwd, String startDate, String endDate) {
+	public String channel(String kwd, String startDate, String endDate, String instagram, String blog, String twitter) {
 
 		String topChannel = null;
 		int count = 0;
@@ -173,6 +173,16 @@ public class KeywordMongoOperations {
 		System.out.println(twitterQuery);
 
 		List<Blog> blogList = mongo.find(BlogQuery, Blog.class);
+		
+		if (instagram.equals("0")) {
+			instagramList.clear();
+		}
+		if (blog.equals("0")) {
+			blogList.clear();
+		}
+		if (twitter.equals("0")) {
+			twitList.clear();
+		}
 
 		if (twitList.size() > 0) {
 			topChannel = "트위터";
@@ -265,7 +275,7 @@ public class KeywordMongoOperations {
 		
 	}
 
-	public String day(String kwd, String startDate, String endDate) {
+	public String day(String kwd, String startDate, String endDate,String Instagram, String Blog, String Twitter) {
 
 		String date = null;
 		int count = 0;
@@ -277,7 +287,7 @@ public class KeywordMongoOperations {
 
 		AggregationResults<Summary> todayInstagram = mongo.aggregate(instagram, Instagram.class, Summary.class);
 
-		List<Summary> list1 = todayInstagram.getMappedResults();
+		List<Summary> list1 = new ArrayList<>(todayInstagram.getMappedResults());
 
 		Aggregation twitter = Aggregation.newAggregation(
 				Aggregation.match(Criteria.where("date").gte(startDate).lte(endDate).and("brand").is(kwd)),
@@ -286,7 +296,7 @@ public class KeywordMongoOperations {
 
 		AggregationResults<Summary> todayTwitter = mongo.aggregate(twitter, Twit.class, Summary.class);
 
-		List<Summary> list2 = todayTwitter.getMappedResults();
+		List<Summary> list2 = new ArrayList<>(todayTwitter.getMappedResults());
 
 		Aggregation blog = Aggregation.newAggregation(
 				Aggregation.match(Criteria.where("date").gte(startDate).lte(endDate).and("brand").is(kwd)),
@@ -294,7 +304,20 @@ public class KeywordMongoOperations {
 				Aggregation.limit(1));
 		AggregationResults<Summary> todayBlog = mongo.aggregate(blog, Blog.class, Summary.class);
 
-		List<Summary> list3 = todayBlog.getMappedResults();
+		List<Summary> list3 = new ArrayList<>(todayBlog.getMappedResults());
+		
+
+		
+		if (Instagram.equals("0")) {
+			list1.clear();
+		}
+		if (Blog.equals("0")) {
+			list2.clear();
+		}
+		if (Twitter.equals("0")) {
+			list3.clear();
+		}
+
 
 		if (list1.size() > 0) {
 
@@ -316,7 +339,6 @@ public class KeywordMongoOperations {
 			}
 
 		}
-
 		return date;
 
 	}

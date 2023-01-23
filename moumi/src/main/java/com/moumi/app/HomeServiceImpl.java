@@ -141,8 +141,8 @@ public class HomeServiceImpl implements HomeService {
 	}
 
 	@Override
-	public String channel(String kwd, String startDate, String endDate) {
-		return keywordMongo.channel(kwd, startDate, endDate);
+	public String channel(String kwd, String startDate, String endDate,String instagram, String blog, String twitter) {
+		return keywordMongo.channel(kwd, startDate, endDate,instagram,blog,twitter);
 	}
 	
 
@@ -167,7 +167,7 @@ public class HomeServiceImpl implements HomeService {
 
 	
 	@Override
-	public String day(String kwd, String startDate, String endDate){
+	public String day(String kwd, String startDate, String endDate,String instagram, String blog, String twitter){
 		// TODO Auto-generated method stub
 		try {
 			System.out.println(kwd);
@@ -176,7 +176,7 @@ public class HomeServiceImpl implements HomeService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return keywordMongo.day(kwd, startDate, endDate);
+		return keywordMongo.day(kwd, startDate, endDate,instagram,blog,twitter);
 
 	}
 
