@@ -6,17 +6,18 @@
 	font-weight: 700;
 }
 
+.mentionLayout {
+	height: 300px;
+	width: 670px;
+}
+
 .mentionChannelLayout {
 	background: white;
 	height: 160px;
 	width: 490px;
 	margin-right: 20px;
 	border-radius: 20px;
-}
-
-.mentionLayout {
-	height: 300px;
-	width: 670px;
+	align-items: center;
 }
 
 .mentionDateLayout {
@@ -32,6 +33,30 @@
 	width: 1200px;
 	margin-top: 20px;
 	border-radius: 20px;
+}
+
+.topChannelImg {
+	width: 90px;
+	hegiht: 90px;
+	margin-left: 20px;
+}
+
+.topChannelName {
+	font-size: 16px;
+	font-weight: 600;
+	color: #198754;
+	height: 30px;
+	width: 100px;
+	margin: 0px;
+	padding: 0;
+	text-align: center;
+	vertical-align: center;
+}
+
+.topChannelNameDate {
+	float: right;
+	color: #A9A9A9;
+	margin-right: 30px;
 }
 
 .SNSLayout {

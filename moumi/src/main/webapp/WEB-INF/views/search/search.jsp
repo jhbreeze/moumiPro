@@ -8,28 +8,6 @@
 	type="text/css">
 
 <style>
-.marginBox {
-	width: 100%;
-	height: 10px;
-	background: #ECF4EB;
-}
-
-.h4 {
-	margin: 0;
-}
-
-.analyzeLayout {
-	width: 90%;
-	height: 2000px;
-	margin: auto;
-}
-
-.searchMainLayout {
-	width: 100%;
-	height: 2200px;
-	background: #ECF4EB;
-}
-
 .chooseInfoBox {
 	width: 100%;
 	height: 60px;
@@ -48,7 +26,6 @@
 	margin: 0 auto;
 	font-size: 16px;
 }
-
 
 .channelContent {
 	width: 300px;
@@ -152,11 +129,6 @@
 	height: 100%;
 	overflow: hidden;
 	padding: 25px;
-}
-
-.topChannelImg {
-	width: 90px;
-	hegiht: 90px;
 }
 
 ul {
@@ -399,7 +371,7 @@ function getCheckedCnt()  {
 		  	out = "<img alt='채널 이미지' class='wordCloudImg' src='${pageContext.request.contextPath}/uploads/wordcloud3.png'>"
 		  }
 	  // 출력
-	 document.querySelector('.wordCloudLayout').innerHTML = out;
+		document.querySelector('.wordCloudLayout').innerHTML = out;
 	  console.log(out);
  	}
 	
@@ -421,7 +393,7 @@ $(function(){
 	
 	
 
-});
+}); 
 
 </script>
 <form class="channelForm">
@@ -484,8 +456,7 @@ $(function(){
 										<input
 											class="form-check-input btn btn-outline-info channel twitter"
 											type="checkbox" role="switch"
-											id="flexSwitchCheckCheckedDisabled" name="twitter" value="4"
-											>
+											id="flexSwitchCheckCheckedDisabled" name="twitter" value="4">
 										<div class="row">
 											<label class="form-check-label" for="flexSwitchCheckChecked">트위터</label>
 										</div>
@@ -516,18 +487,28 @@ $(function(){
 				<div class="mentionChannelLayout">
 					<p class="searchTitle">언급량이 가장 많았던 채널</p>
 					<c:if test="${topChannel eq '인스타그램'}">
+						<p class="topChannelNameDate">${startDate}~${endDate}</p>
 						<img alt="채널 이미지" class="topChannelImg"
 							src="${pageContext.request.contextPath}/resources/images/moumi/sns/instagram.png">
+						<p class="topChannelName">인스타그램</p>
 					</c:if>
 
 					<c:if test="${topChannel eq '트위터'}">
+						<p class="topChannelNameDate">${startDate}~${endDate}</p>
+
 						<img alt="채널 이미지" class="topChannelImg"
 							src="${pageContext.request.contextPath}/resources/images/moumi/sns/twitter.png">
+						<p class="topChannelName">트위터</p>
 					</c:if>
 
 					<c:if test="${topChannel eq '블로그'}">
-						<img alt="채널 이미지" class="topChannelImg"
-							src="${pageContext.request.contextPath}/resources/images/moumi/sns/blog.png">
+						<p class="topChannelNameDate">${startDate}~${endDate}</p>
+						<div class="row" style="align-items: center">
+							<img alt="채널 이미지" class="topChannelImg"
+								src="${pageContext.request.contextPath}/resources/images/moumi/sns/blog.png">
+							<p class="topChannelName">네이버 블로그
+							<p>
+						</div>
 					</c:if>
 				</div>
 				<div class="mentionDateLayout">
@@ -539,10 +520,13 @@ $(function(){
 			<div class="row">
 
 				<div class="mentionGraphLayout">
-					<p class="searchTitle">언급량 추이<button type="button" onclick="downloadExcel();"
-						class="btn btn-outline-success" style="border-radius: 30px; float:right;">EXCEL</button>
+					<p class="searchTitle">
+						언급량 추이
+						<button type="button" onclick="downloadExcel();"
+							class="btn btn-outline-success"
+							style="border-radius: 30px; float: right;">EXCEL</button>
 					</p>
-					
+
 					<div class="layoutChart" id="crawlingChart" style="height: 500px;"></div>
 
 				</div>
@@ -576,6 +560,7 @@ $(function(){
 							<img alt="채널 이미지" class="snsImg"
 								style="margin-left: 2px; margin-top: 5px;"
 								src="${pageContext.request.contextPath}/resources/images/moumi/sns/blog.png">
+
 						</c:if>
 
 
