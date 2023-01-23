@@ -280,62 +280,53 @@ public class KeywordMongoOperations {
 		String date = null;
 		int count = 0;
 
-		Aggregation instagram = Aggregation.newAggregation(
-				Aggregation.match(Criteria.where("date").gte(startDate).lte(endDate).and("brand").is(kwd)),
-				Aggregation.group("date").count().as("count"), Aggregation.sort(Sort.Direction.DESC, "count"),
-				Aggregation.limit(1));
+		System.out.println("day");
+		System.out.println(startDate);
 
-		AggregationResults<Summary> todayInstagram = mongo.aggregate(instagram, Instagram.class, Summary.class);
+		System.out.println(endDate);
 
-		List<Summary> list1 = new ArrayList<>(todayInstagram.getMappedResults());
+		Aggregation aggregation1 = Aggregation.newAggregation(
+				Aggregation.match(Criteria.where("content").regex(kwd)
+						.andOperator(Criteria.where("date").gte(startDate), Criteria.where("date").lte(endDate))),
+				Aggregation.group("date").count().as("result"), Aggregation.sort(Sort.Direction.ASC, "_id"));
 
-		Aggregation twitter = Aggregation.newAggregation(
-				Aggregation.match(Criteria.where("date").gte(startDate).lte(endDate).and("brand").is(kwd)),
-				Aggregation.group("date").count().as("count"), Aggregation.sort(Sort.Direction.DESC, "count"),
-				Aggregation.limit(1));
+		AggregationResults<Count> instaResults = mongo.aggregate(aggregation1, Instagram.class, Count.class);
+		List<Count> instaCountlist = instaResults.getMappedResults();
 
-		AggregationResults<Summary> todayTwitter = mongo.aggregate(twitter, Twit.class, Summary.class);
+		Aggregation aggregation2 = Aggregation.newAggregation(
+				Aggregation.match(Criteria.where("content").regex(kwd)
+						.andOperator(Criteria.where("date").gte(startDate), Criteria.where("date").lte(endDate))),
+				Aggregation.group("date").count().as("result"), Aggregation.sort(Sort.Direction.ASC, "_id"));
 
-		List<Summary> list2 = new ArrayList<>(todayTwitter.getMappedResults());
 
-		Aggregation blog = Aggregation.newAggregation(
-				Aggregation.match(Criteria.where("date").gte(startDate).lte(endDate).and("brand").is(kwd)),
-				Aggregation.group("date").count().as("count"), Aggregation.sort(Sort.Direction.DESC, "count"),
-				Aggregation.limit(1));
-		AggregationResults<Summary> todayBlog = mongo.aggregate(blog, Blog.class, Summary.class);
+		AggregationResults<Count> blogResults = mongo.aggregate(aggregation2, Blog.class, Count.class);
+		List<Count> blogCountList = blogResults.getMappedResults();
 
-		List<Summary> list3 = new ArrayList<>(todayBlog.getMappedResults());
-		
+		Aggregation aggregation3 = Aggregation.newAggregation(
+				Aggregation.match(Criteria.where("content").regex(kwd)
+						.andOperator(Criteria.where("date").gte(startDate), Criteria.where("date").lte(endDate))),
+				Aggregation.group("date").count().as("result"), Aggregation.sort(Sort.Direction.ASC, "_id"));
 
-		
-		if (Instagram.equals("0")) {
-			list1.clear();
+		AggregationResults<Count> twitResults = mongo.aggregate(aggregation3, Twit.class, Count.class);
+		List<Count> twitCountList = twitResults.getMappedResults();
+
+		if (instaCountlist.size() > 0) {
+
+			date = instaCountlist.get(0).get_id();
+			count = instaCountlist.get(0).getResult();
 		}
-		if (Blog.equals("0")) {
-			list2.clear();
-		}
-		if (Twitter.equals("0")) {
-			list3.clear();
-		}
-
-
-		if (list1.size() > 0) {
-
-			date = list1.get(0).get_id();
-			count = list1.get(0).getCount();
-		}
-		if (list2.size() > 0) {
-			if (count < list2.get(0).getCount()) {
-				date = list2.get(0).get_id();
-				count = list2.get(0).getCount();
+		if (blogCountList.size() > 0) {
+			if (count < blogCountList.get(0).getResult()) {
+				date = blogCountList.get(0).get_id();
+				count = blogCountList.get(0).getResult();
 			}
 
 		}
 
-		if (list3.size() > 0) {
-			if (count < list3.get(0).getCount()) {
-				date = list3.get(0).get_id();
-				count = list3.get(0).getCount();
+		if (twitCountList.size() > 0) {
+			if (count < twitCountList.get(0).getResult()) {
+				date = twitCountList.get(0).get_id();
+				count = twitCountList.get(0).getResult();
 			}
 
 		}

@@ -26,7 +26,11 @@
 		<div class="container text-center">
 
 			<div class="container">
-				<p class="title">우리 농가 살리기</p>
+				<div class="body-title">
+					<h3>
+						<i class="bi bi-calendar-event"></i> 우리 농가 살리기
+					</h3>
+				</div>
 
 
 				<div id="nongsaroApiLoadingArea"></div>
