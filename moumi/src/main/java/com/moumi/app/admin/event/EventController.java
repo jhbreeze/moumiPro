@@ -41,7 +41,7 @@ public class EventController {
 			@RequestParam(defaultValue = "all") String condition, @RequestParam(defaultValue = "") String keyword,
 			HttpServletRequest req, Model model) throws Exception {
 
-		int size = 8;
+		int size = 6;
 		int total_page;
 		int dataCount;
 

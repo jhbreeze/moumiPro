@@ -28,7 +28,7 @@
 			<div class="container">
 				<div class="body-title">
 					<h3>
-						<i class="bi bi-calendar-event"></i> 우리 농가 살리기
+						<i class="fa-sharp fa-solid fa-tractor"></i> 우리 농가 살리기
 					</h3>
 				</div>
 
