@@ -264,8 +264,6 @@ public class RecruitController {
 			@RequestParam(defaultValue = "subject") String condition, @RequestParam(defaultValue = "") String keyword,
 			HttpSession session) throws Exception {
 
-		SessionInfo info = (SessionInfo) session.getAttribute("member");
-
 		keyword = URLDecoder.decode(keyword, "utf-8");
 		String query = "pageNo=" + pageNo;
 		if (keyword.length() != 0) {
