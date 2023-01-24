@@ -52,13 +52,11 @@
 		<intercept-url pattern="/reportList" access="permitAll"/>
 		<intercept-url pattern="/farm" access="permitAll"/>
 		<intercept-url pattern="/pay/list" access="permitAll"/>
-		
-		
+		<intercept-url pattern="/notice/**" access="permitAll"/>
+		<intercept-url pattern="faq/**" access="permitAll"/>
 		
 		<intercept-url pattern="/event/list" access="permitAll"/>
-		
 		<intercept-url pattern="/event/article" access="permitAll"/>
-		
 
 		<intercept-url pattern="/resources/**" access="permitAll"/>
 		<intercept-url pattern="/uploads/**" access="permitAll"/>
