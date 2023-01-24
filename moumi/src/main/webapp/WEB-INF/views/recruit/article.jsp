@@ -113,6 +113,7 @@ $(function(){
 	});
 });
 
+// 진행중이면 tab-1 활성화 or not tab-2 활성화 // HERE
 
 </script>
 

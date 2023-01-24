@@ -184,7 +184,7 @@ public class RecruitController {
 		
 		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("query", query);
-		
+
 		return ".recruit.article";
 	}
 	
