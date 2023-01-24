@@ -159,7 +159,7 @@ $(function(){
 
 		<div class="body-main">
 
-			<table class="table mb-0">
+			<table class="table mb-0" >
 				<thead>
 					<tr>
 						<td colspan="2" align="center">${dto.subject}</td>

@@ -13,6 +13,7 @@
 .term {
 	color: #6A6F77;
 	font-size: 13px;
+	padding-left:10px;
 }
 
 .progressStatus {
@@ -41,11 +42,10 @@
 	
 }
 
-.eventBody {
-	width: 450px;
-	height: 100px;
-	border: 1px solid red;
-	
+
+.eventInfo{
+	padding-left:10px;
+	font-size:16px;
 }
 </style>
 
@@ -76,13 +76,13 @@
 					<div class="row board-list-header"></div>
 					<div class="row">
 						<c:forEach var="dto" items="${list}" varStatus="status">
-							<div class="col-lg-4 col-sm-3" style ="border: 1px soild #eee;">
-								<div style ="border: 1px soild #eee;"
-									onclick="location.href='${pageContext.request.contextPath}/admin/event/article?&eventNum=${dto.eventNum}'">
+							<div class="col-lg-4 col-sm-3">
+								<div 
+									onclick="location.href='${pageContext.request.contextPath}/admin/event/article?&eventNum=${dto.eventNum}'"
+									style ="border: 1px solid #DDD;">
 									<img style="height: 300px; width: 400px; overflow:hidden;"
 										src="${pageContext.request.contextPath}/uploads/event/${dto.thumbnail}" />
-										<p class="eventText" >
-										<p class="eventName" >${dto.subject}
+										<p class="eventInfo" >${dto.subject}
 											<c:if test="${dto.startCheck >= 0 &&  dto.endCheck >= 0 }">
 												<p class="term">${dto.startDate}
 													~ ${dto.endDate}&nbsp;<em class="progressStatus"> 진행 중
@@ -100,7 +100,6 @@
 											</c:if>
 										</p>
 
-									<!-- </div> -->
 								</div>
 								<br>
 							</div>
@@ -116,6 +115,7 @@
 				<button type="button" class="btn btn-success" style="float: right;"
 					onclick="location.href='${pageContext.request.contextPath}/admin/event/write'">이벤트
 					등록</button>
+				<div style="width:100px; height:50px;"></div>
 			</div>
 		</div>
 	</div>

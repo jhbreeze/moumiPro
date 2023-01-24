@@ -44,7 +44,7 @@ public class CommentController {
 			Model model, HttpSession session) throws Exception {
 		
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
-		if(info.getUserType() != 0) {
+		if(info.getUserType() != 1) {
 			return "redirect:/main";
 		}
 		

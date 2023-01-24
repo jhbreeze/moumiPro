@@ -91,15 +91,15 @@
 
 				<tbody>
 					<tr>
-						<td align="right">등록일 | ${dto.regDate}</td>
+						<td width="50%">등록일 | ${dto.regDate}</td>
 
 					</tr>
 					<tr>
-						<td width="50%">${dto.startDate}~${dto.endDate}</td>
+						<td width="50%">진행 기간 | ${dto.startDate}~${dto.endDate}</td>
 					</tr>
 
 					<tr>
-						<td width="50%">${dto.pickCount}</td>
+						<td width="50%">당첨 인원 | ${dto.pickCount}</td>
 					</tr>
 
 					<tr>
