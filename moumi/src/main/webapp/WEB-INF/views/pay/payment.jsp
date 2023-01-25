@@ -260,7 +260,7 @@
 									<p style="color: #198754; font-weight: bold;">
 										<select name="coupon">
 											<c:forEach var="vo" items="${list}">
-												<option value="coupon">${vo.couponPrice}원할인</option>
+												<option value="${vo.couponPrice}">${vo.couponPrice}원할인</option>
 											</c:forEach>
 										</select>
 									</p>
