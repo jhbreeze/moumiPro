@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.moumi.app.admin.event.Coupon;
 import com.moumi.app.common.dao.CommonDAO;
 
 @Service("pay.payService")
@@ -55,6 +56,28 @@ public class PayServiceImpl implements PayService{
 			e.printStackTrace();
 		}
 		return result;
+	}
+
+	@Override
+	public List<Coupon> listCoupon(long userCode) {
+			List<Coupon> list = null;
+			try {
+				list = dao.selectList("pay.listCoupon",userCode);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		return list;
+	}
+
+	@Override
+	public int readcouponPrice(long userCode) {
+		int price = 0;
+		try {
+			price = dao.selectOne("pay.readCoupon",userCode);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return price;
 	}
 
 	

@@ -30,4 +30,17 @@
 		JOIN payment pm on pd.paymentNum = pm.paymentNum
 		WHERE pm.userCode = #{userCode}
 	</select>
+	
+	<select id= "listCoupon" parameterType="Long" resultType="com.moumi.app.admin.event.Coupon">
+		SELECT couponPrice
+		FROM coupon c
+		LEFT OUTER JOIN winner w ON c.couponNum = w.couponNum
+		WHERE w.userCode = #{userCode}
+	</select>
+	<select id= "readCoupon" parameterType="Long" resultType="Integer">
+		SELECT couponPrice
+		FROM coupon c
+		LEFT OUTER JOIN winner w ON c.couponNum = w.couponNum
+		WHERE w.userCode = #{userCode}
+	</select>
 </mapper>

@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.moumi.app.admin.event.Coupon;
 import com.moumi.app.member.SessionInfo;
 
 @Controller("pay.payController")
@@ -59,6 +61,8 @@ public class PayController {
 		Pay dto2 = service.readPay(productNum);
 		
 		int paymentCount = service.dataCountPay(info.getUserCode());
+		List<Coupon> list = service.listCoupon(info.getUserCode());
+		int couponPrice = service.readcouponPrice(info.getUserCode());
 		
 		model.addAttribute("dto",dto);
 		model.addAttribute("dto2",dto2);
@@ -67,12 +71,14 @@ public class PayController {
 		model.addAttribute("enddate",enddate);
 		model.addAttribute("productNum",productNum);
 		model.addAttribute("paymentCount",paymentCount);
+		model.addAttribute("list",list);
+		model.addAttribute("couponPrice",couponPrice);
 		
 		return ".pay.payment";
 	}
 	
 	@PostMapping("payment")
-	public String paymentSubmit(Pay dto,HttpSession session) throws Exception {
+	public String paymentSubmit(Pay dto,HttpSession session,@RequestParam String coupon) throws Exception {
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		
 		
@@ -84,14 +90,13 @@ public class PayController {
 		String end = endSplit[1] + endSplit[2];
 		
 		String pNum = start+Long.toString(info.getUserCode())+end;
+		
+		
 		try {
 			dto.setUserCode(info.getUserCode());
-			dto.setDiscount(1000);
-			dto.setPaymentNum(Long.parseLong(pNum)); 
-			System.out.println(Long.parseLong(pNum));
-			System.out.println(dto.getPaymentPrice());
-			System.out.println(dto.getPayDate());
-			System.out.println(dto.getEndDate());
+			dto.setDiscount(Integer.parseInt(coupon));
+			dto.setPaymentNum(Long.parseLong(pNum));
+			dto.setPaymentPrice(dto.getPaymentPrice() - Integer.parseInt(coupon));
 			service.insertPay(dto);
 		} catch (Exception e) {
 			
