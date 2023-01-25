@@ -144,7 +144,7 @@ $(function(){
 					<td class="ps-3" colspan="3">${dto.corporation}</td>
 				</tr>
 				<tr>
-					<td class="col-sm-2 align-middle text-center" scope="row">접수 이메일</td>
+					<td class="col-sm-2 align-middle text-center" scope="row">접수처</td>
 					<td class="ps-3" colspan="3">${dto.email}</td>
 				</tr>
 				<tr>

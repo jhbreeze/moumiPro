@@ -163,7 +163,7 @@ function deleteFile(fileNum) {
 						</td>
 					</tr>
 					<tr>
-						<td class="col-sm-2 align-middle text-center" scope="row">접수 이메일</td>
+						<td class="col-sm-2 align-middle text-center" scope="row">접수처</td>
 						<td colspan="3">
 							<input type="text" name="email" class="form-control" value="${dto.email}">
 						</td>
