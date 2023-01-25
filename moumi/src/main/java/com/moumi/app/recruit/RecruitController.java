@@ -105,7 +105,7 @@ public class RecruitController {
 	public String writeForm(Model model) throws Exception {
 		List<Recruit> listCategory = service.listCareerCategory(); 
 		
-		model.addAttribute("pageNo", "1"); // checkhere
+		model.addAttribute("pageNo", "1"); 
 		model.addAttribute("mode", "write");
 		model.addAttribute("listCategory", listCategory);
 		
@@ -120,7 +120,7 @@ public class RecruitController {
 			String root = session.getServletContext().getRealPath("/");
 			String pathname = root + "uploads" + File.separator + "recruit";
 
-			dto.setUserCode(info.getUserCode()); // user 코드(회원코드 시퀀스) 
+			dto.setUserCode(info.getUserCode());  
 			dto.setUserType(info.getUserType());
 			
 			service.insertRecruit(dto, pathname);
@@ -137,9 +137,6 @@ public class RecruitController {
 			HttpSession session, Model model) throws Exception {
 		
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
-		if( info == null) {
-			return "redirect:/member/login";
-		}
 		
 		keyword = URLDecoder.decode(keyword, "utf-8");
 
@@ -166,7 +163,11 @@ public class RecruitController {
 		dto.setFileCount(fileCount);
 			
 		// 게시글 공감 여부
-		map.put("userCode", info.getUserCode());
+		if( info == null) {
+			map.put("userCode", 0);
+		} else {
+			map.put("userCode", info.getUserCode());
+		}
 		boolean userRecruitLiked = service.userRecruitLiked(map);
 		
 		// 게시글 공감 개수
