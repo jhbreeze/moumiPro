@@ -50,6 +50,13 @@
 }
 </style>
 
+<script>
+$(document).on('click', '.accordion-button', function(){
+    $('.accordion-button').css('background-color', 'white');
+    $('.accordion-button').css('color', 'black');
+ });
+</script>
+
 <script type="text/javascript">
 	function login() {
 		location.href = "${pageContext.request.contextPath}/member/login";

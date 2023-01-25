@@ -48,6 +48,32 @@ font-weight: bold;
 text-decoration: none;
 
 }
+
+.alert-info {
+	background-color: #ECF4EB;
+	border: none;
+}
+
+#tab-0.active {
+	color : green;
+}
+
+#tab-1.active {
+	color : green;
+}
+
+#tab-2.active {
+	color : green;
+}
+
+#tab-3.active {
+	color : green;
+}
+
+.nav-tabs .nav-link {
+	color : black;
+}
+
 </style>
 
 <script type="text/javascript">
@@ -130,6 +156,13 @@ function reloadFaq() {
 
 
 </script>
+<script>
+$(document).on('click', '.accordion-button', function(){
+    $('.accordion-button').css('background-color', 'white');
+    $('.accordion-button').css('color', 'black');
+ });
+</script>
+
 <nav>
 	<ul class="side">
 		<li class="side-menu1">
