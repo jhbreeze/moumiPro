@@ -120,7 +120,7 @@ public class EventController {
 			String root = session.getServletContext().getRealPath("/");
 			String path = root + "uploads" + File.separator + "event";
 
-			System.out.println(path);
+			System.out.println("경로"+path);
 
 			service.insertEvent(dto, path);
 

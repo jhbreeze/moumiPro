@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mycoupon">
+
+	<select id="myCouponList" parameterType="map" resultType="com.moumi.app.mypage.mycoupon.MyCoupon">
+		SELECT w.userCode, couponName, couponPrice, c.startDate AS startDate, c.endDate
+		FROM winner w
+		LEFT OUTER JOIN event e ON w.eventNum = e.eventNum
+		LEFT OUTER JOIN coupon c ON c.eventNum = e.eventNum
+		WHERE w.userCode = #{userCode}
+		
+	</select>
+
+
+
+</mapper>
+
