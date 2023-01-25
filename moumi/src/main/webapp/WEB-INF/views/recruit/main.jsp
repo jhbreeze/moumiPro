@@ -78,9 +78,9 @@ $(function(){
 //글리스트 및 페이징 처리
 function listPage(page) {
 	const $tab = $("button[role='tab'].active");
-	
+
 	div = $tab.attr("data-div");
-	
+
 	let url = "${pageContext.request.contextPath}/recruit/list";
 	let query = "pageNo="+page+"&div="+div;
 	let search = $('form[name=searchForm]').serialize();
@@ -121,7 +121,6 @@ function reloadRecruit() {
 	f.keyword.value = "";
 	listPage(1);
 }
-
 </script>
 
 <div class="container body-container">

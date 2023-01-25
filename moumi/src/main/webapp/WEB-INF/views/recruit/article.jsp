@@ -34,17 +34,17 @@
 </style>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
-
 <c:if test="${sessionScope.member.userCode==dto.userCode||sessionScope.member.userType==0}">
 	function deleteRecruit() {
-	    if(confirm("게시글을 삭제하시겠습니까 ? ")) {
-		    let query = "recruitNum=${dto.recruitNum}&${query}";
-		    let url = "${pageContext.request.contextPath}/recruit/delete?" + query;
-	    	location.href = url;
-	    }
+		if (confirm("게시글을 삭제하시겠습니까 ? ")) {
+			let query = "recruitNum=${dto.recruitNum}&${query}";
+			let url = "${pageContext.request.contextPath}/recruit/delete?" + query;
+			
+			location.href = url;
+		}
 	}
 </c:if>
-
+	
 </script>
 <script type="text/javascript">
 function login() {
@@ -81,6 +81,13 @@ $(function(){
 	$(".btnSendRecruitLike").click(function(){
 		const $i = $(this).find("i");
 		let userLiked = $i.hasClass("bi-heart-fill");
+		let userCode = "${sessionScope.member.userCode}";
+		
+		if(userCode === "") {
+			alert(" 회원가입 후, 이용 가능합니다.");
+			return false;
+		}
+		
 		let msg = userLiked ? "게시글 공감을 취소하시겠습니까 ? " : "게시글에 공감하십니까 ? ";
 		
 		if(! confirm( msg )) {
@@ -148,12 +155,12 @@ $(function(){
 				<tr>
 					<td class="col-sm-2 align-middle text-center" scope="row" valign="top">내용</td>
 					<td class="ps-3" colspan="3">
-						<div style="height:400px;" class="editor">
+						<div style="height: auto;" class="editor">
 							${dto.content}
 						</div>
 						
 						<c:forEach var="vo" items="${listFile}">
-						<div class="recruit_file">
+						<div class="recruit_file pt-3 mt-3">
 							<a href="${pageContext.request.contextPath}/recruit/download?fileNum=${vo.fileNum}">${vo.originalFilename}</a>
 							(<fmt:formatNumber value="${vo.fileSize/1024}" pattern="0.00" />kb)
 						</div>
@@ -200,11 +207,11 @@ $(function(){
 				<tr>
 					<td class="text-start">
 						<button type="button" class="btn btn-success"
-							onclick="location.href='${pageContext.request.contextPath}/recruit/main?${query}';">돌아가기</button>
+							onclick="location.href='${pageContext.request.contextPath}/recruit/main';">돌아가기</button>
 					</td>
 					<td class="text-end">
 					<c:choose>
-						<c:when test="${sessionScope.member.userType==0 || sessionScope.member.userType==3}">
+						<c:when test="${sessionScope.member.userCode==dto.userCode || sessionScope.member.userType==0}">
 							<button type="button" class="btn btn-success"
 								onclick="location.href='${pageContext.request.contextPath}/recruit/update?recruitNum=${dto.recruitNum}&pageNo=${pageNo}';">수정</button>
 						</c:when>
@@ -213,7 +220,7 @@ $(function(){
 						</c:otherwise>
 					</c:choose> 
 					<c:choose>
-						<c:when test="${sessionScope.member.userType==0 || sessionScope.member.userType==3}">
+						<c:when test="${sessionScope.member.userCode==dto.userCode || sessionScope.member.userType==0}">
 							<button type="button" class="btn btn-success"
 								onclick="deleteRecruit();">삭제</button>
 						</c:when>

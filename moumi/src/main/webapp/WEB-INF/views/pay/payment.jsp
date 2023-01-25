@@ -104,10 +104,7 @@
 <script type="text/javascript">
 	$(function() {
 		$(window).on("load", function() {
-			count = $
-			{
-				paymentCount
-			}
+			count = ${paymentCount};
 			if (count > 0) {
 				$("#productModal").modal("show");
 			}
@@ -175,7 +172,6 @@
 				<div class="modal-body">구독중인 상품이 있습니다!</div>
 				<div class="modal-footer">
 					<button type="button"
-						onclick="location.href='${pageContext.request.contextPath}/mypage/mypayment/main'"
 						class="btn btn-success" data-bs-dismiss="modal">닫기</button>
 				</div>
 			</div>
@@ -258,12 +254,26 @@
 						<div class="pay-detail-desc">
 							<div class="pay-detail-desc-row">
 								<div class="pay-detail-desc-tit">
+									<p>쿠폰</p>
+								</div>
+								<div class="pay-detail-desc-con">
+									<p style="color: #198754; font-weight: bold;">
+										<select name="coupon">
+											<c:forEach var="vo" items="${list}">
+												<option value="coupon">${vo.couponPrice}원할인</option>
+											</c:forEach>
+										</select>
+									</p>
+								</div>
+							</div>
+							<div class="pay-detail-desc-row">
+								<div class="pay-detail-desc-tit">
 									<p>결제금액</p>
 								</div>
 								<div class="pay-detail-desc-con">
 									<p style="color: #198754; font-weight: bold;">
 										<input type="text" name="paymentPrice" style="width: 3rem;"
-											value="${price}"><span>원</span>
+											value="${price-couponPrice}"><span>원</span>
 									</p>
 								</div>
 							</div>

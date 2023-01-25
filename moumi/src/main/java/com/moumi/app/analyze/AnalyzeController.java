@@ -29,26 +29,24 @@ public class AnalyzeController {
 	
 	@GetMapping(value = "/analyze/chart")
 	@ResponseBody
-	public Map<String, Object> chart(@RequestParam String kwd,
-			@RequestParam(defaultValue = "0") String startDate,
+	public Map<String, Object> chart(@RequestParam String kwd, @RequestParam(defaultValue = "0") String startDate,
 			@RequestParam(defaultValue = "0") String endDate, HttpServletRequest req) throws Exception {
-	
+
 		if (req.getMethod().equalsIgnoreCase("GET")) {
 			kwd = URLDecoder.decode(kwd, "UTF-8");
 		}
-	
-	
-	List<Map<String, Object>> twitCountList = service.twitCount(kwd, startDate, endDate);
-	List<Map<String, Object>> blogCountList = service.blogCount(kwd, startDate, endDate);
-	List<Map<String, Object>> instaCountList = service.instaCount(kwd, startDate, endDate);
-	
-	Map<String, Object> model = new HashMap<String, Object>();
-	model.put("twitCountList", twitCountList);
-	model.put("blogCountList", blogCountList);
-	model.put("instaCountList", instaCountList);
-	
-	return model;
-	
+
+		List<Map<String, Object>> twitCountList = service.twitCount(kwd, startDate, endDate);
+		List<Map<String, Object>> blogCountList = service.blogCount(kwd, startDate, endDate);
+		List<Map<String, Object>> instaCountList = service.instaCount(kwd, startDate, endDate);
+
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("twitCountList", twitCountList);
+		model.put("blogCountList", blogCountList);
+		model.put("instaCountList", instaCountList);
+
+		return model;
+
 	}
 	
 	@GetMapping("/analyze/excel")

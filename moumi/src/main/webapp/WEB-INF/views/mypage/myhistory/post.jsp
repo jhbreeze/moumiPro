@@ -26,7 +26,7 @@
 						<a href="${pageContext.request.contextPath}/board/article?communityNum=${dto.communityNum}&page=1">${dto.subject}</a>
 					</c:if>
 					<c:if test="${dto.tableName=='recruit'}">
-						${dto.subject}
+						<a href="${pageContext.request.contextPath}/recruit/main">${dto.subject}</a>
 					</c:if>
 				</td>		
 				<td colspan="1">${dto.regDate}</td>

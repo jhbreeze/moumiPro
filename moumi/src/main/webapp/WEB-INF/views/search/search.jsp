@@ -166,7 +166,7 @@ function ajaxFun(url, method, query, dataType, fn) {
 
 $(function() {
 	let url = "${pageContext.request.contextPath}/recommend";
-	let query = "kwd=" + encodeURIComponent('${kwd}');
+	let query = "kwd=" + encodeURIComponent('${kwd}')+"&startDate="+encodeURIComponent('${startDate}')+"&endDate="+encodeURIComponent('${endDate}');
 
 		const fn = function(data) {
 			printJSON(data);
@@ -234,6 +234,7 @@ $(function(){
  	endDate = ${endDate};
  	
  	let uid = ${loginCheck};
+ 	let productCategory = ${productCategory};
  	console.log(uid);
  	if(endDate===0){
  		$('.end').val( new Date().toISOString().substring(0, 10));
@@ -257,7 +258,7 @@ $(function(){
 	}); 
  	
  	
- 	if(uid === 0){
+ 	if(uid === 0 || ! (productCategory === 1 || productCategory === 2)){
 		$(".youtube").prop("checked",false);
 		$(".youtube").attr("disabled",true);
 		$(".instagram").prop("checked",false);
@@ -497,7 +498,7 @@ $(function(){
 						<div class="row" style="align-items: center">
 							<img alt="채널 이미지" class="topChannelImg"
 								src="${pageContext.request.contextPath}/resources/images/moumi/sns/blog.png">
-							<p class="topChannelName">네이버 블로그
+							<p class="topChannelName" style="width: 110px;">네이버 블로그
 							<p>
 						</div>
 					</c:if>
@@ -722,9 +723,15 @@ $(function(){
 function downloadExcel() {
 	
 	let uid = ${loginCheck};
+	let productCategory = ${productCategory};
 	if(uid == 0) {
-		alert(" 이용권 구매 후 사용 가능합니다 :-) ");
+		alert("  로그인 후 사용 가능합니다 :-) ");
 		return false;
+	}
+	
+	if (! (productCategory === 1 || productCategory === 2)){
+		alert("이용권을 구매해주세요");
+		return;
 	}
 	
 	let startDate = $("form input[name=startDate]").val();
