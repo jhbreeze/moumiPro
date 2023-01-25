@@ -43,10 +43,7 @@ public class CommentController {
 			HttpServletRequest req,
 			Model model, HttpSession session) throws Exception {
 		
-		SessionInfo info = (SessionInfo) session.getAttribute("member");
-		if(info.getUserType() != 1) {
-			return "redirect:/main";
-		}
+		
 		
 		int size = 10;
 		int total_page = 0;

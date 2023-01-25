@@ -108,7 +108,7 @@ function searchList() {
 			<c:forEach var="dto" items="${list}" varStatus="status">
 				<div class="col-md-4 col-lg-3 mt-4" style="width: 350px; margin:25px;" >
 					<div class="border rounded report-item" data-reportNum="${dto.reportNum}">
-						<img class="thumbnail-img" src="${pageContext.request.contextPath}/uploads/report/${dto.thumbnail}" style="width: -webkit-fill-available;">
+						<img class="thumbnail-img" src="${pageContext.request.contextPath}/uploads/report/${dto.thumbnail}" style="width: -webkit-fill-available; height: 165px;">
 						<div class="p-2">
 							<div class="text-truncate fw-semibold pb-1">
 								<a href="${articleUrl}&reportNum=${dto.reportNum}" class="text-reset" style="text-decoration-line: none;">${dto.subject}</a>
