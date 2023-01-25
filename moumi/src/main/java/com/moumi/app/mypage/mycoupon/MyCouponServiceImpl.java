@@ -25,4 +25,18 @@ public class MyCouponServiceImpl implements MyCouponService {
 
 		return couponList;
 	}
+
+	@Override
+	public int dataCount(Map<String, Object> map) {
+		int result = 0;
+
+		try {
+			result = dao.selectOne("mycoupon.dataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
 }

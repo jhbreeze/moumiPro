@@ -5,6 +5,8 @@ import java.util.Map;
 
 public interface MyCouponService {
 	public List<MyCoupon> listMyCoupon(Map<String, Object> map);
+	public int dataCount(Map<String, Object> map);
+
 
 
 }

@@ -11,6 +11,18 @@
 		WHERE w.userCode = #{userCode}
 		
 	</select>
+	
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) 
+		FROM (
+		    SELECT w.userCode, couponName, couponPrice, TO_CHAR(c.startDate, 'yyyy-mm-dd') AS startDate, c.endDate 
+            FROM winner w 
+            LEFT OUTER JOIN event e ON w.eventNum = e.eventNum 
+            LEFT OUTER JOIN coupon c ON c.eventNum = e.eventNum
+            WHERE w.userCode =  #{userCode}
+		)
+	</select>
 
 
 

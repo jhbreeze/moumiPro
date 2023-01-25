@@ -20,28 +20,24 @@ public class MyCouponController {
 	@Autowired
 	private MyCouponService service;
 
-
 	@RequestMapping(value = "mycoupon")
 	public String myCoupon(HttpSession session, HttpServletRequest req, Model model) throws Exception {
 
-
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
-		
-		System.out.println(info.getUserCode()+"getUserCode");
 
+		System.out.println(info.getUserCode() + "getUserCode");
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("userCode", info.getUserCode());
-		
 
-		
-		List<MyCoupon>  couponList= service.listMyCoupon(map);
+		int dataCount = service.dataCount(map);
 
+		List<MyCoupon> couponList = service.listMyCoupon(map);
 
 		model.addAttribute("couponList", couponList);
-		
+		model.addAttribute("dataCount", dataCount);
 
-		return "mypage/mycoupon/mycoupon";
+		return ".mypage.mycoupon.mycoupon";
 	}
 
 }
