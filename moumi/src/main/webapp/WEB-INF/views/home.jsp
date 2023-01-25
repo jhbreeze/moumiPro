@@ -435,16 +435,25 @@ li {
 <script>
 	// 위도 경도 설정
 	function myListener(obj) {
-		alert(obj.value); // 선택된 option의 value가 출력된다!
+		// alert(obj.value); // 선택된 option의 value가 출력된다!
+	
+		let url = "${pageContext.request.contextPath}/location";
+		let query = "code="+obj.value;
+		const fn = function(data) {
+			let latitude = data.dto.latitude;
+			let longitude = data.dto.longitude;
+			
+			console.log(obj.value);
 
-		if (obj.value == 3) {
-			latitude = 35.126033;
-			alert(latitude)
-			longitude = 126.831302;
-			alert(longitude)
-
+			console.log(latitude);
+		console.log(longitude);
+			
 			map(latitude, longitude);
-		}
+		};
+		
+		
+		ajaxFun(url, "get", query, "json", fn);
+		
 
 	}
 </script>

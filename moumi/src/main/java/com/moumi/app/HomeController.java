@@ -344,5 +344,24 @@ public class HomeController {
 		return model;
 	}
 	
+	
+	@GetMapping("/location")
+	@ResponseBody
+	public Map<String, Object> location(@RequestParam String code){
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			Region dto = service.readRegion(code);
+			
+			model.put("dto", dto);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return model;
+		
+	}
+	
 
 }

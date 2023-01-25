@@ -37,5 +37,14 @@
 		FROM report
 		WHERE reportNum = #{reportNum}
 	</select>
+	
+	<select id ="readRegion" parameterType ="String" resultType="com.moumi.app.Region"> 
+		SELECT regionCode, regionName, latitude, longitude
+		FROM region	
+		WHERE regionCode = #{code}
+	</select>
+	
+	
+	
 
 </mapper>

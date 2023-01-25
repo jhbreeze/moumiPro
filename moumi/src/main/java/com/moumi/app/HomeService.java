@@ -37,6 +37,8 @@ public interface HomeService {
 	public List<Map<String, Object>> blogCount(String kwd, String startDate, String endDate);
 	
 	public String day(String kwd, String startDate, String endDate,String instagram, String blog, String twitter);
-
+	
+	
+	public Region readRegion(String code);
 
 }

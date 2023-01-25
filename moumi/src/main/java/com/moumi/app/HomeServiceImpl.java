@@ -180,6 +180,19 @@ public class HomeServiceImpl implements HomeService {
 
 	}
 
+	@Override
+	public Region readRegion(String code) {
+		Region dto = null;
+		
+		try {
+			dto = dao.selectOne("home.readRegion",code);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return dto;
+	}
+
 
 
 	
