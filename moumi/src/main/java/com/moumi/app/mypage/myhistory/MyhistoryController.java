@@ -17,7 +17,7 @@ import com.moumi.app.common.MyUtil;
 import com.moumi.app.member.SessionInfo;
 
 @Controller("mypage.myhistoryController")
-@RequestMapping("/mypage/myhistory/*")
+@RequestMapping("/mypagemyhistory/*")
 public class MyhistoryController {
 	@Autowired
 	private MyhistoryService service;
