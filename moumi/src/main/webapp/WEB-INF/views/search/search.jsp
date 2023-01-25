@@ -166,7 +166,7 @@ function ajaxFun(url, method, query, dataType, fn) {
 
 $(function() {
 	let url = "${pageContext.request.contextPath}/recommend";
-	let query = "kwd=" + encodeURIComponent('${kwd}');
+	let query = "kwd=" + encodeURIComponent('${kwd}')+"&startDate="+encodeURIComponent('${startDate}')+"&endDate="+encodeURIComponent('${endDate}');
 
 		const fn = function(data) {
 			printJSON(data);
