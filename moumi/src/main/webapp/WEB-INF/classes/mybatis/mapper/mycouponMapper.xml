@@ -4,7 +4,7 @@
 <mapper namespace="mycoupon">
 
 	<select id="myCouponList" parameterType="map" resultType="com.moumi.app.mypage.mycoupon.MyCoupon">
-		SELECT w.userCode, couponName, couponPrice, c.startDate AS startDate, c.endDate
+		SELECT w.userCode, couponName, couponPrice, TO_CHAR(c.startDate, 'yyyy-mm-dd') AS startDate, TO_CHAR(c.endDate, 'yyyy-mm-dd') AS endDate
 		FROM winner w
 		LEFT OUTER JOIN event e ON w.eventNum = e.eventNum
 		LEFT OUTER JOIN coupon c ON c.eventNum = e.eventNum
