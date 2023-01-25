@@ -25,6 +25,7 @@
 	box-shadow: 3px 3px 3px 3px #A9A9A9;
 	border-radius: 15px;
 	padding: 50px;
+	margin:0 auto; 
 }
 
 .couponDate {
