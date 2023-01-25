@@ -39,9 +39,8 @@
 		if (confirm("게시글을 삭제하시겠습니까 ? ")) {
 			let query = "recruitNum=${dto.recruitNum}&${query}";
 			let url = "${pageContext.request.contextPath}/recruit/delete?" + query;
-			//location.href = url;
-			console.log(query);
-			console.log(url);
+			
+			location.href = url;
 		}
 	}
 </c:if>
@@ -82,6 +81,13 @@ $(function(){
 	$(".btnSendRecruitLike").click(function(){
 		const $i = $(this).find("i");
 		let userLiked = $i.hasClass("bi-heart-fill");
+		let userCode = "${sessionScope.member.userCode}";
+		
+		if(userCode === "") {
+			alert(" 회원가입 후, 이용 가능합니다.");
+			return false;
+		}
+		
 		let msg = userLiked ? "게시글 공감을 취소하시겠습니까 ? " : "게시글에 공감하십니까 ? ";
 		
 		if(! confirm( msg )) {
@@ -114,7 +120,6 @@ $(function(){
 	});
 });
 
-// 진행중이면 tab-1 활성화 or not tab-2 활성화 // HERE
 
 </script>
 
