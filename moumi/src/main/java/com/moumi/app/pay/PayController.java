@@ -81,7 +81,6 @@ public class PayController {
 	public String paymentSubmit(Pay dto,HttpSession session,@RequestParam(defaultValue = "0") String coupon) throws Exception {
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		
-		
 		String query = URLEncoder.encode(dto.getUserName(),"UTF-8")+
 				"&subject="+URLEncoder.encode(dto.getSubject(),"UTF-8");
 		
