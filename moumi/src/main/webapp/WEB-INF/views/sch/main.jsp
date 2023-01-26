@@ -228,7 +228,6 @@ function viewSchedule(calEvent) {
 	$("#myDialogModal").modal("show");
 	 
 	var num = calEvent.id;
-	alert(num);
 
 	var title = calEvent.title;
 	var color = calEvent.backgroundColor;
