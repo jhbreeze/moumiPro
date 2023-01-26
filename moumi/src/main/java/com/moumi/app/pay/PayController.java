@@ -78,7 +78,7 @@ public class PayController {
 	}
 	
 	@PostMapping("payment")
-	public String paymentSubmit(Pay dto,HttpSession session,@RequestParam String coupon) throws Exception {
+	public String paymentSubmit(Pay dto,HttpSession session,@RequestParam(defaultValue = "0") String coupon) throws Exception {
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		
 		
