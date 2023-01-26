@@ -29,13 +29,23 @@ $(function() {
 		
 	});
 });
+
 </script>
 <style type="text/css">
+
+
+h2 button[aria-expanded="true"]{
+    background: #ECF4EB;
+}
+
+accordion-button{
+	background: #ECF4EB;
+}
+
 .btn{
 	background-color: #ECF4EB;
 	color: #198754;
 }
-
 
 </style>
 <div style="float: right; width: 5%; text-align: center;">
@@ -52,7 +62,7 @@ $(function() {
 		<c:forEach var="dto" items="${list}" varStatus="status">
 			<div class="accordion-item" style="border: none; overflow: hidden;">
 				<h2 class="accordion-header mb-1" id="flush-heading-${status.index}" style="float: left; width: 95%;">
-					<button class="accordion-button collapsed  backColor" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-${status.index}" aria-expanded="false" aria-controls="flush-collapse-${status.index}">
+					<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-${status.index}" aria-expanded="false" aria-controls="flush-collapse-${status.index}">
 						${dto.subject}
 					</button>
 				</h2>

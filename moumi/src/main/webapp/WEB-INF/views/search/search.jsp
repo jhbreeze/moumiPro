@@ -170,10 +170,7 @@ $(function() {
 
 		const fn = function(data) {
 			printJSON(data);
-			console.log(data);
-
 		};
-
 		ajaxFun(url, "get", query, "json", fn);
 
 	function printJSON(data) {
