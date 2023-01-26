@@ -48,6 +48,39 @@ function deleteFile(fileNum) {
 }
 
 </style>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/boot-board.css" type="text/css">
+
+<style type="text/css">
+.img-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 65px);
+	grid-gap: 5px;
+}
+
+.img-grid .item {
+    object-fit: cover;
+    width: 65px;
+    height: 65px;
+	cursor: pointer;
+}
+
+.img-box {
+	max-width: 600px;
+
+	box-sizing: border-box;
+	display: flex; 
+	flex-direction: row; 
+	flex-wrap: nowrap;
+	overflow-x: auto;
+}
+.img-box img {
+	width: 65px; height: 65px;
+	margin-right: 5px;
+	flex: 0 0 auto;
+	cursor: pointer;
+}
+</style>
+
 <div class="container">
 	<div class="body-container">	
 		<div class="body-title">

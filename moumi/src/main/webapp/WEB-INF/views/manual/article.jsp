@@ -61,7 +61,7 @@ function deleteOk() {
 					 </td>
 					</tr>
 					<tr>
-						<td colspan="3" valign="top" height="200">${dto.content}</td>
+						<td colspan="3" valign="top" height="200" align="center">${dto.content}</td>
 					</tr>
 					<tr>
 						<td colspan="3">다음글 : <c:if test="${not empty preReadDto}">
