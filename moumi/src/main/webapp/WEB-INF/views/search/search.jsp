@@ -171,7 +171,6 @@ $(function() {
 		const fn = function(data) {
 			
 		};
-
 		ajaxFun(url, "get", query, "json", fn);
 
 	function printJSON(data) {
