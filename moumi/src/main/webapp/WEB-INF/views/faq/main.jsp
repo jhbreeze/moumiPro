@@ -172,7 +172,7 @@ $(document).on('click', '.accordion-button', function(){
 			<a href="${pageContext.request.contextPath}/notice/main">공지사항</a>
 		</li>
 		<li class="side-menu3">
-			<a href="${pageContext.request.contextPath}/faq/main">자주 묻는 질문</a>
+			<a href="${pageContext.request.contextPath}/faq/main">자주 하는 질문</a>
 		</li>
 	</ul>
 </nav>

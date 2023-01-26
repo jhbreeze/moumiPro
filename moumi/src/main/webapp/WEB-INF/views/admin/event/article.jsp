@@ -7,6 +7,9 @@
 .body-container {
 	max-width: 800px;
 }
+img {
+	width: 1100px;
+}
 </style>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/boot-board.css"

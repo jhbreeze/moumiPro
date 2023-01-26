@@ -13,10 +13,6 @@
 				
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mx-auto flex-nowrap">
-				
-					<li class="nav-item">
-						<a class="nav-link" href="#">채널별 분석</a>
-					</li>
 
 					<li class="nav-item">
 						<a class="nav-link" style="color:#fff" href="${pageContext.request.contextPath}/board/list">브랜드 커뮤니티</a>

@@ -580,7 +580,7 @@ $(function(){
 
 <div class="searchLayout">
 
-	<div style="height: 700px; width: 1700px; justify-content: center;">
+	<div style="height: 850px; width: 1700px; justify-content: center;">
 
 		<div class="recommendLayout">
 			<p class="searchTitle">추천 상품</p>

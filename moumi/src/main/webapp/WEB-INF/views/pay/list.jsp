@@ -129,7 +129,7 @@ li {
 
 .paycontent {
 	width: 64rem;
-	height: 50rem;
+	height: 43rem;
 	background: #FFFFFF;
 	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
 	border-radius: 50px;
@@ -465,20 +465,6 @@ li {
 									</ul>
 								</div>
 							</div>
-							<div class="pay-detail-desc">
-								<div class="pay-detail-desc-row line"
-									style="border-bottom: none;">
-									<div class="pay-detail-desc-tit">
-										<h6 style="padding-top: 0.5rem;">페이스북분석</h6>
-									</div>
-									<ul class="pay-detail-list">
-										<li></li>
-										<li class="second"><i class="bi bi-check-lg"></i></li>
-										<li><i class="bi bi-check-lg"></i></li>
-									</ul>
-								</div>
-							</div>
-						</div>
 						<div class="pay-detail-content">
 							<div class="pay-detail-subject">
 								<p>분석결과</p>
