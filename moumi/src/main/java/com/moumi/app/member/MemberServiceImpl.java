@@ -40,13 +40,13 @@ public class MemberServiceImpl implements MemberService {
 			dao.insertData("member.insertAuthority", dto);
 
 			String result;
-			result = dto.getUserName() + "님, 회원가입 성공! <b>";
+			result = dto.getUserName() + "님, 회원가입이 성공적으로 완료되었습니다 <br> MOUMI와 함께 빠르고 간편하게 브랜드를 분석해보세요! :)";
 			Mail mail = new Mail();
 			mail.setReceiverEmail(dto.getEmail());
 
 			mail.setSenderEmail("@naver.com");
 			mail.setSenderName("MOUMI 관리자");
-			mail.setSubject("회원가입 성공 메일");
+			mail.setSubject("MOUMI 회원이 되신 걸 회원가입 성공");
 			mail.setContent(result);
 
 			boolean b = mailSender.mailSend(mail);
