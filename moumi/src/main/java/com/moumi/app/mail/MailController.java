@@ -27,6 +27,7 @@ public class MailController {
 		String msg="<span style='color:blue;'>"+dto.getReceiverEmail()+"</span> 님에게<br>";
 		if(b) {
 			msg+="메일을 성공적으로 전송 했습니다.";
+
 		} else {
 			msg+="메일을 전송하는데 실패했습니다.";
 		}
