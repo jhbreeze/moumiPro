@@ -45,7 +45,7 @@ th, td {
 						<td colspan="1">${dto.subject}</td>
 						<td colspan="4">${dto.content}</td>
 						<td colspan="1"><span
-							style="color: #DC3545; font-weight: 700;">${dto.payDate}&nbsp;~&nbsp;${dto.endDate}</span></td>
+							style="color: #DC3545; font-weight: 700;">${dto.payDate}&nbsp;<br>~${dto.endDate}</span></td>
 				</c:forEach>
 			</tbody>
 		</table>

@@ -50,7 +50,7 @@ th, td {
 						<td colspan="1">${dto.paymentNum}</td>
 						<td colspan="1">${dto.subject}</td>
 						<td colspan="4"><span style="color: #DC3545;">${dto.payDate}</span></td>
-						<td colspan="1">${dto.payDate}&nbsp;~&nbsp;${dto.endDate}</td>
+						<td colspan="1">${dto.payDate}&nbsp;<br>~&nbsp;${dto.endDate}</td>
 				</c:forEach>
 			</tbody>
 		</table>
