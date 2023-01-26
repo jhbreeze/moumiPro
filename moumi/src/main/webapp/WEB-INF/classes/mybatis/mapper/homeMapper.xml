@@ -23,7 +23,7 @@
 	</select>
 	
 	<select id = "listReport" parameterType="map" resultType="com.moumi.app.Report"> 
-		SELECT subject, content, regDate, reportNum
+		SELECT subject, content, regDate, reportNum, thumbnail
 		FROM report
 	</select>
 	

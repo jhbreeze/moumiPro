@@ -12,7 +12,6 @@ try{
     	
     	sbf.append(inputLine);
     }
-   	session.getServletContext().log(sbf.toString());
     
 } catch( Exception e ) {   
 	e.printStackTrace();
