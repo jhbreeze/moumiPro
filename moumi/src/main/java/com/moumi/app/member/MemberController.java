@@ -25,7 +25,7 @@ public class MemberController {
 	@Autowired
 	private MemberService service;
 
-	@GetMapping(value = "member")
+	@GetMapping(value = "member") 
 	public String memberForm(Model model) {
 		model.addAttribute("mode", "member");
 		return ".member.member";
