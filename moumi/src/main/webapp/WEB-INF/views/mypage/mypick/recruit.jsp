@@ -7,7 +7,7 @@
 </p>
 
 <table class="table mypick-table">
-	<thead class="fw-bold">
+	<thead class="fw-bold text-center">
 		<tr>
 			<th colspan="1">글번호</th>
 			<th colspan="1">회사명</th>

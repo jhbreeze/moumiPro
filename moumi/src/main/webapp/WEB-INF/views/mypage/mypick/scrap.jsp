@@ -7,7 +7,7 @@
 </p>
 
 <table class="table mypicktable">
-	<thead class="fw-bold">
+	<thead class="fw-bold text-center">
 		<tr>
 			<th>글번호</th>
 			<th colspan="4">제목</th>
