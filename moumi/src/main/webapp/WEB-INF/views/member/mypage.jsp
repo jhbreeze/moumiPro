@@ -147,7 +147,7 @@ table{
 							나의 쿠폰
 						</div>
 						<div class="scontent">
-							MOUMI 이벤트를 통해 얻은 쿠폰을 확인할 수 있습니다.<br> &nbsp;
+							MOUMI 이벤트를 통해 얻은 쿠폰을 <br>확인할 수 있습니다.<br> &nbsp;
 						</div>
 						<button type="button" class="btn shortcut" onclick="location.href='${pageContext.request.contextPath}/mypage/mycoupon/mycoupon';">
 							바로가기 >
@@ -159,7 +159,7 @@ table{
 							나의 활동 내역
 						</div>
 						<div class="scontent">
-							MOUMI에서 작성한 글과 댓글을 확인, 삭제할 수 있습니다.<br> &nbsp;
+							MOUMI에서 작성한 글과 댓글을 <br>확인, 삭제할 수 있습니다.<br> &nbsp;
 						</div>
 						<button type="button" class="btn shortcut" onclick="location.href='${pageContext.request.contextPath}/mypage/myhistory/main';">
 							바로가기 >
