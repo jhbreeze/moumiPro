@@ -62,7 +62,7 @@ public class MypaymentController {
 		
 		int size = 10;
 		int total_page = 0;
-		int dataCountR = 0;
+		int dataCount = 0;
 		
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		
@@ -70,9 +70,9 @@ public class MypaymentController {
 		map.put("userCode", info.getUserCode());
 		map.put("div", div);
 		
-		dataCountR = service.dataCountR(map);
-		if (dataCountR != 0) {
-			total_page = myUtil.pageCount(dataCountR, size);
+		dataCount = service.dataCount(map);
+		if (dataCount != 0) {
+			total_page = myUtil.pageCount(dataCount, size);
 		}
 		
 		if(total_page < current_page) {
@@ -92,7 +92,7 @@ public class MypaymentController {
 		
 		model.addAttribute("detail", detail);
 		model.addAttribute("pageNo", current_page);
-		model.addAttribute("dataCountR", dataCountR);
+		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("size", size);
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("paging", paging);

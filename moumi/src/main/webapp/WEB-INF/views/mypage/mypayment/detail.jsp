@@ -3,6 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <style>
+
+.mypayment-table {
+	width: 772px;
+}
+
 .fw-bold {
 	color: #198754;
 	font-weight: bold;
@@ -21,6 +26,7 @@ tbody {
 th, td {
 	margin: 35px 25px;
 }
+
 </style>
 
 
@@ -52,8 +58,10 @@ th, td {
 	<c:otherwise>구매하신 이용권이 없습니다.</c:otherwise>
 </c:choose>
 
-<div class="page-navigation">${dataCount == 0 ? "등록된 게시물이 없습니다." : paging}
-</div>
+<p class="text-end p-2 fw-bold">전체 
+	<span style="color: green" >${dataCount}</span>건
+</p>
+<div class="page-navigation">${dataCount == 0 ? "등록된 게시물이 없습니다." : paging}</div>
 
 
 

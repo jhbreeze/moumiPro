@@ -29,5 +29,19 @@
 		
 		ORDER BY p.payDate DESC
 	</select>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) 
+		FROM (
+		    SELECT m.nickName, p.paymentNum, pc.subject, pc.content, TO_CHAR(p.payDate, 'YYYY-MM-DD') payDate, TO_CHAR(p.endDate, 'YYYY-MM-DD') endDate
+			FROM payment p
+			LEFT JOIN member m ON p.userCode = m.userCode
+			LEFT JOIN payDetail pd ON p.paymentNum = pd.paymentNum
+			LEFT JOIN payCategory pc ON pd.categoryNum = pc.CategoryNum
+			WHERE p.userCode = #{userCode}
+			ORDER BY p.payDate DESC
+		)
+	</select>
+	
 </mapper>
 

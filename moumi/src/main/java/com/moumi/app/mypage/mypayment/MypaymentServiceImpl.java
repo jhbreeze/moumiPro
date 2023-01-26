@@ -52,21 +52,6 @@ public class MypaymentServiceImpl implements MypaymentService {
 		return reply;
 	}
 
-	@Override
-	public int dataCountR(Map<String, Object> map) {
-		int result = 0;
 		
-		try {
-			result = dao.selectOne("mypayment.dataCountR", map);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return result;
-	}
-	
-	
-	
-	
 	
 }

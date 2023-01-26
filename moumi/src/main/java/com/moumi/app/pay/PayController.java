@@ -96,7 +96,7 @@ public class PayController {
 			dto.setUserCode(info.getUserCode());
 			dto.setDiscount(Integer.parseInt(coupon));
 			dto.setPaymentNum(Long.parseLong(pNum));
-			dto.setPaymentPrice(dto.getPaymentPrice() - Integer.parseInt(coupon));
+			dto.setPaymentPrice(dto.getPaymentPrice());
 			service.insertPay(dto);
 		} catch (Exception e) {
 			
