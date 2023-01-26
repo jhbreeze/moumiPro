@@ -169,9 +169,7 @@ $(function() {
 	let query = "kwd=" + encodeURIComponent('${kwd}')+"&startDate="+encodeURIComponent('${startDate}')+"&endDate="+encodeURIComponent('${endDate}');
 
 		const fn = function(data) {
-			printJSON(data);
-			console.log(data);
-
+			
 		};
 
 		ajaxFun(url, "get", query, "json", fn);

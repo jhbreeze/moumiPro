@@ -263,49 +263,6 @@ public class HomeController {
 		return ".search.search";
 	}
 	
-	
-	/*
-	 * @GetMapping("recommend")
-	@ResponseBody
-	public Map<String, Object> recommend(@RequestParam String kwd) throws Exception{
-		Map<String, Object> model = new HashMap<String, Object>();
-		
-		try {
-			String query = "kwd="+URLEncoder.encode(kwd, "utf-8");
-			String spec = "http://localhost:5000/recommend?"+query;
-			String stringJson = apiSerializer.receiveToString(spec);
-			System.out.print(stringJson);
-			JSONArray jarr = new JSONArray(stringJson);
-			List<Shop11> list = new ArrayList<Shop11>();
-			for(int i=0; i<jarr.length(); i++) {
-				JSONObject job = jarr.getJSONObject(i);
-				Shop11 dto = new Shop11();
-				String brand = job.getString("brand");
-				String name = job.getString("name");
-				String url = job.getString("url");
-				String img = job.getString("img");
-				Double grade = job.getDouble("grade");
-				
-				dto.setBrand(brand);
-				dto.setName(name);
-				dto.setUrl(url);
-				dto.setImg(img);
-				dto.setGrade(grade);
-				list.add(dto);
-			}
-			System.out.println(list);
-			
-			model.put("list", list);
-		} catch (Exception e) {
-			
-		}
-		
-		return model;
-	}
-	 */
-	
-	
-	
 	@GetMapping("recommend")
 	@ResponseBody
 	public Map<String, Object> recommend(@RequestParam String kwd, @RequestParam String startDate, @RequestParam String endDate) throws Exception{
@@ -334,7 +291,6 @@ public class HomeController {
 				dto.setGrade(grade);
 				list.add(dto);
 			}
-			System.out.println(list);
 			
 			model.put("list", list);
 		} catch (Exception e) {
