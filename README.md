@@ -12,16 +12,21 @@
 
 ## 2. 사용 기술
 #### 
-  - JAVA(J2SE)
-  - JSP / Servlet
+  - JAVA 1.8
+  - Servlet & JSP
   - Python 3.11.1
   - Javascript
+  - jQuery, AJAX
+  - HTML5, CSS
   - SPRING
-  - Mybatis
+  - mybatis 3
+  - maven
   - Tiles
   - Sprng Security  
   - Oracle 18C
   - MongoDB 6.0.3
+  - Bootstrap 5.2
+  - Apache Tomcat 9.0
 
 </br>
 
